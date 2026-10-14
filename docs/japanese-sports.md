@@ -6,7 +6,7 @@
 
 | Sport | Pictogram | Items | Japanese |
 | --- | --- | --- | --- |
-| Sumo | `sport:sumo` (the referee's war fan) | `trophy:sumo-cup`, `gear:gunbai`, `gear:mawashi` | 相撲, 鳳凰飾りの銀杯, 軍配, 廻し |
+| Sumo | `sport:sumo` (two wrestlers in the tachiai) | `trophy:sumo-cup`, `gear:gunbai`, `gear:mawashi` | 相撲, 鳳凰飾りの銀杯, 軍配, 廻し |
 | Championship flags | | `trophy:championship-banner` | 優勝旗 |
 | Kendo | `sport:kendo` (the helmet) | `gear:shinai`, `gear:kendo-men` | 剣道, 竹刀, 剣道の面 |
 | Judo | `sport:judo` (the suit and belt) | `gear:judogi`, `gear:obi` | 柔道, 柔道衣, 武道の帯 |
