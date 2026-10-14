@@ -6,6 +6,10 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-10-14
+
+Nothing is cut off when an emblem turns: every cup and the pieces that were clipped at rest now draw inside their box at every angle.
+
 ### Fixed
 
 - **Tall and wide things were cut off by their own box as they turned, and a few were cut off at rest.** Every emblem is drawn in a fixed square box sized for the still drawing, and a turn grows the outline past it: tilted toward the eye by 60 degrees, the rim and the foot of all 16 cups (and the handles of the sumo cup, up to 17.6 of 64 units, a quarter of the picture) went out of the box. Each cup now has a `turnBox`, measured from its drawing over every yaw and tilt, and `emblemFrame`, `bindTurn` and `renderEmblem(id, { turnBox: true })` draw in it, so a turn is one size from the first frame to the last and the resting view of `bindTurn` is the same size too (the cup is drawn up to 30 percent smaller in its square while it can turn). A still drawing keeps its box and its size. Eleven pieces of flat art whose stroke ran past the 64 by 64 box at rest (the swim goggles, three skates, the diving board, the referee's fan, the running track and three pictograms, by up to 3.3 units) have a box that holds them. Balls, medals, crests and the other flat art needed nothing. `test/turnbox.test.ts` measures the ink of every emblem, still and turned, against its box. A frame at no turn is now the still in the box of the turn (`renderEmblem(id, { turnBox: true })`), which is the still itself for everything but those cups.
@@ -104,7 +108,9 @@ First preview: the name, the API and two sample emblems. The full set of trophie
 - Tests for the drawing, the ids, the turns and the bundle size of one item; a package check that installs the packed tarball and bundles one item from it.
 - The demo (a playground with a turn slider, and a gallery page), `docs/layout.md`, `docs/turning.md`, `docs/gallery.md`, the family header and footer, the CI, Pages and Release workflows, and `LICENSES/` and `NOTICE.md` ready for third-party art.
 
-[Unreleased]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.0.1...v0.1.0
