@@ -66,11 +66,15 @@ console.log(`${ran} examples run, ${failed} failed`);
 // Every export of the package is in the README.
 const readme = pages[0][1];
 const lib = await import(new URL("../dist/index.js", import.meta.url).href);
-// An emblem's constant (`TROPHY_HOCKEY_CUP`) is named in docs/gallery.md, which is made from the package and lists every one with its id; the rest of the exports are named in the README.
-const gallery = readFileSync(join(root, "docs", "gallery.md"), "utf8");
-const missing = Object.keys(lib).filter((name) => !readme.includes(`\`${name}`) && !new RegExp(`\\b${name}\\b`).test(readme) && !gallery.includes(`\`${name}\``));
+// An emblem's constant (`TROPHY_HOCKEY_CUP`) is not named one by one in docs/gallery.md: each gallery page states the rule once (the id in capitals, `:` and `-` made `_`) and names the one id that breaks it. So an
+// export that is an emblem is covered when the rule gives its name, or when the gallery names it; the rest of the exports are named in the README.
+const gallery = readFileSync(join(root, "docs", "gallery.md"), "utf8") + readFileSync(join(root, "docs", "gallery.ja.md"), "utf8");
+const ruleName = (id) => id.replace(/[:-]/g, "_").toUpperCase();
+const rule = gallery.includes("`trophy:lidded-cup` → `TROPHY_LIDDED_CUP`") && ruleName("trophy:lidded-cup") === "TROPHY_LIDDED_CUP";
+const byGallery = (name) => (rule && lib.EMBLEM_IDS.includes(lib[name]?.id) && ruleName(lib[name].id) === name) || gallery.includes(`\`${name}\``);
+const missing = Object.keys(lib).filter((name) => !readme.includes(`\`${name}`) && !new RegExp(`\\b${name}\\b`).test(readme) && !byGallery(name));
 if (missing.length > 0) {
   failed++;
   console.error(`FAIL neither the README nor docs/gallery.md names these exports: ${missing.join(", ")}`);
-} else console.log(`ok   the README, or the gallery list for an emblem's constant, names every export (${Object.keys(lib).length})`);
+} else console.log(`ok   the README, or the gallery's rule for an emblem's constant, names every export (${Object.keys(lib).length})`);
 process.exit(failed > 0 ? 1 : 0);

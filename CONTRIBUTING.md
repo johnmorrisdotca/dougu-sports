@@ -27,7 +27,7 @@ Bug reports and ideas go in the
   team or federation: every emblem is generic.
 - **Names are short.** An emblem's `en` and `ja` are its accessible name (the `<title>` a screen reader reads): about 26 characters at most in English
   and 12 in Japanese. What does not fit goes in `src/emblems/emblem.descriptions.ts`, for the docs and the gallery.
-- **`docs/gallery.md` is made from the package**: `pnpm gallery` rewrites it, and `pnpm test:readme` checks it.
+- **`docs/gallery.md` (English) and `docs/gallery.ja.md` (Japanese) are made from the package**: `pnpm gallery` rewrites them, and `pnpm test:readme` checks them. Each page is in one language; do not mix the two in a table.
 - **A README table, example or count that a test holds to the code** changes together with the code: `pnpm test:readme` runs
   every example of the README and of `docs/`, and checks that the README names every export.
 - **Option values and names are kebab case where they are words** (`"metal"`, `"line"`, `"color"`).
@@ -48,7 +48,7 @@ pnpm check          # lint, types, tests, the build and the packed package
 pnpm test:package   # pack it as npm does, install it in an empty project, import every entry, bundle one item
 pnpm test:demo      # build the demo and play it in a real browser at a phone's width and a desk's
 pnpm test:readme    # run the examples of the README and of docs/ against the built package
-pnpm gallery        # rewrite docs/gallery.md from the built package
+pnpm gallery        # rewrite docs/gallery.md and docs/gallery.ja.md from the built package
 pnpm screenshots    # the README's pictures, into docs/images
 pnpm dev            # the demo on http://127.0.0.1:7200/ (and /gallery.html)
 ```

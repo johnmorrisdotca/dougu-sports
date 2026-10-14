@@ -64,7 +64,7 @@ The `exports` map in `package.json` has one wildcard for each folder (`./award/*
 5. Look at it: `node scripts/emblem-sheet.mjs sheet.png trophy/<name>` draws a contact sheet at 256, 64 and 16 pixels in light and dark, and with `--turn` five yaws. Compare it with what it stands for, and keep a trophy generic (no real name, mark or engraving).
 6. Write its test, in `test/`. Every emblem is already drawn in all three styles and every theme and checked for well-formed, safe SVG, a size limit and a turn at every angle by `test/emblem.test.ts` and `test/turn.test.ts`; a test of its own says what is particular to it.
 7. Draw it yourself: nothing is copied from another project, so there is no source to add to `NOTICE.md` and no licence text for `LICENSES/`.
-8. `pnpm gallery` rewrites [gallery.md](gallery.md); `pnpm check` runs everything.
+8. `pnpm gallery` rewrites [gallery.md](gallery.md) and [gallery.ja.md](gallery.ja.md); `pnpm check` runs everything.
 
 ## The three styles
 

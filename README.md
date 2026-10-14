@@ -83,7 +83,7 @@ Put the string in a page (`element.innerHTML = svg`), write it to a file, or sen
 </tr>
 </table>
 
-Every emblem, with its id in both styles and a button that copies it, is on the [gallery page](https://johnmorrisdotca.github.io/dougu-sports/gallery.html); the same list as text, with its names, kind, source and the import that takes it alone, is [docs/gallery.md](./docs/gallery.md), made from the built package. [docs/emblems.md](./docs/emblems.md) says how the art is drawn.
+Every emblem, with its id in both styles and a button that copies it, is on the [gallery page](https://johnmorrisdotca.github.io/dougu-sports/gallery.html); the same list as text, with its name, kind, source and description, is [docs/gallery.md](./docs/gallery.md) ([日本語](./docs/gallery.ja.md)), made from the built package. [docs/emblems.md](./docs/emblems.md) says how the art is drawn.
 
 ## Use it in your project
 
@@ -424,7 +424,7 @@ The thirty-eight sports the ball, gear and sport emblems are made for are `SPORT
 | `emblemInfo(id)`, `emblemName(id, language?)`, `emblemModel(id)` | What an emblem is: its short names (which are its accessible names), kind and source, a longer `description` where it has one, and the data it is drawn from |
 | `EMBLEMS` | Every emblem as markup in the metal style at 64 pixels, by id |
 | `EMBLEM_TABLE` | Every emblem object, by id |
-| `TROPHY_HOCKEY_CUP`, `MEDAL_GOLD`, `CREST_SHIELD`, `SPORT_NHL`, `BALL_SOCCER`, `GEAR_HURLEY`... | Each emblem as a constant, named by its id in capitals (`trophy:hockey-cup`); [docs/gallery.md](./docs/gallery.md) lists every constant with its id and the module that takes it alone |
+| `TROPHY_HOCKEY_CUP`, `MEDAL_GOLD`, `CREST_SHIELD`, `SPORT_NHL`, `BALL_SOCCER`, `GEAR_HURLEY`... | Each emblem as a constant, named by its id in capitals (`trophy:hockey-cup`); [docs/gallery.md](./docs/gallery.md) ([日本語](./docs/gallery.ja.md)) lists every emblem and states the rule for its constant and the module that takes it alone |
 | `EMBLEM_IDS`, `EMBLEM_GROUPS`, `EMBLEM_FOLDERS`, `EMBLEM_ALIASES` | Every id, the groups, the folder of each group's art, and the short names (`cup` for `trophy:cup`) |
 | `AWARD_IDS`, `TROPHY_IDS`, `MEDAL_IDS`, `CREST_IDS`, `BALL_IDS`, `GEAR_IDS`, `SPORT_IDS`, `PENNANT_IDS` | The ids of each group |
 | `MEDAL_KINDS`, `CREST_SHAPES` | The kinds of medal, and the shapes of crest |
@@ -565,7 +565,7 @@ pnpm install
 pnpm check          # lint, types, tests, the build and the packed package
 pnpm dev            # the demo on http://127.0.0.1:7200/
 pnpm test:demo      # the demo in a real browser
-pnpm test:readme    # the README's and the docs' examples, and docs/gallery.md
+pnpm test:readme    # the README's and the docs' examples, and docs/gallery.md and docs/gallery.ja.md
 pnpm screenshots    # retake the README's pictures
 ```
 
