@@ -22,7 +22,7 @@ export interface ObjectContext {
   at(p: V3): [number, number, number];
 }
 
-export interface ObjectDef<Model> {
+export interface ObjectDef<Model extends object> {
   id: string;
   en: string;
   ja: string;
@@ -39,7 +39,8 @@ export interface ObjectDef<Model> {
 
 const finite = (v: number | undefined): number => (typeof v === "number" && Number.isFinite(v) ? v : 0);
 
-export function defineObject<Model>(def: ObjectDef<Model>): Piece<Model> {
+/** An object as a piece. Its `model` is the def's model with the default `view` added, so that a view of it (or a test) can turn it to any aspect from there. */
+export function defineObject<Model extends object>(def: ObjectDef<Model>): Piece<Model & { view: ObjectView }> {
   const render = (o: BallFrameOptions | undefined, turning: boolean): string => {
     const opts = resolveOptions(o);
     const rot = rotation(radians(def.view.yaw + finite(o?.yaw), 0), radians(def.view.pitch + finite(o?.pitch), 0), radians(def.view.roll + finite(o?.roll), 0));
@@ -53,5 +54,5 @@ export function defineObject<Model>(def: ObjectDef<Model>): Piece<Model> {
     const { defs, body } = def.draw({ rot, opts, turning, id, minWidth: 80 / opts.size, at });
     return wrapPiece({ title: escape(def.en), size: opts.size, theme: opts.theme, defs, body });
   };
-  return { id: def.id, en: def.en, ja: def.ja, source: "generated", kind: "ball", model: def.model, size: def.size, svg: labelled(def.en, def.ja, (o?: PieceOptions) => render(o, false)), frame: labelled(def.en, def.ja, (o?: BallFrameOptions) => render(o, true)) };
+  return { id: def.id, en: def.en, ja: def.ja, source: "generated", kind: "ball", model: { ...def.model, view: def.view }, size: def.size, svg: labelled(def.en, def.ja, (o?: PieceOptions) => render(o, false)), frame: labelled(def.en, def.ja, (o?: BallFrameOptions) => render(o, true)) };
 }

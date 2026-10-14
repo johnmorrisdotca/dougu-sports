@@ -10,7 +10,8 @@ export const BALL_AFL = /* @__PURE__ */ defineBall({
   ja: "オージーボール",
   size: { extentMm: 280, lengthMm: 280, circumferenceMm: 550.0, longCircumferenceMm: 725.0, rule: "Laws of Australian Football 2026, Law 4 The Football, 4.1 Specifications", note: "The Laws give the two circumferences (720-730 mm and 545-555 mm) and no length: 280 mm is the length of an ellipse of those two girths." },
   spec: {
-    axes: [1, 0.7, 0.7],
+    // An ellipsoid of the Laws' two girths: 550 mm round the middle makes it 175 mm across, 280 mm long.
+    axes: [1, 0.6253, 0.6253],
     view: { yaw: -30, pitch: 20, roll: -25 },
     base: "#b4202b",
     mat: { gloss: 0.55, shade: "#2a0408", grain: { f: 1.0, a: 0.34 } },

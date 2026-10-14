@@ -8,6 +8,10 @@ import { num } from "./ball.core.ts";
 const GRANITE = "#8d929a";
 const POLISHED = "#4d525b";
 const HANDLE = "#d4202c";
+// The stack's y is in units of the radius, so the half height is the height of the stone (114 mm at least) over its largest diameter (291 mm, a 914 mm circumference): 0.392, and the stone runs from -H to H. The slices
+// below are where the profile changes, as a fraction of H.
+const H = 114 / 290.9;
+const y = (t: number): number => t * H;
 
 export const BALL_CURLING_STONE = /* @__PURE__ */ defineObject({
   id: "ball:curling-stone",
@@ -19,11 +23,11 @@ export const BALL_CURLING_STONE = /* @__PURE__ */ defineObject({
   draw: (c) =>
     drawStack(c, {
       slices: [
-        { y0: -0.2, y1: -0.15, r: [0.74, 0.8], colour: POLISHED, outline: true },
-        { y0: -0.15, y1: -0.04, r: [0.8, 0.94], colour: GRANITE },
-        { y0: -0.04, y1: 0.08, r: 1, colour: POLISHED, outline: true },
-        { y0: 0.08, y1: 0.15, r: [1, 0.9], colour: GRANITE },
-        { y0: 0.15, y1: 0.2, r: [0.9, 0.78], colour: GRANITE, outline: true },
+        { y0: y(-1), y1: y(-0.75), r: [0.74, 0.8], colour: POLISHED, outline: true },
+        { y0: y(-0.75), y1: y(-0.2), r: [0.8, 0.94], colour: GRANITE },
+        { y0: y(-0.2), y1: y(0.4), r: 1, colour: POLISHED, outline: true },
+        { y0: y(0.4), y1: y(0.75), r: [1, 0.9], colour: GRANITE },
+        { y0: y(0.75), y1: y(1), r: [0.9, 0.78], colour: GRANITE, outline: true },
       ],
       top: "#9a9fa7",
       bottom: "#6a6f78",
@@ -33,8 +37,8 @@ export const BALL_CURLING_STONE = /* @__PURE__ */ defineObject({
       dish: { r: 0.74, colour: "#555a63" },
       extra: (ctx) => {
         // The handle: a post and a bar, a capsule in 3D (a thick line with round ends).
-        const post0 = ctx.at([0, 0.2, 0]), post1 = ctx.at([0, 0.34, 0]);
-        const a: V3 = [-0.42, 0.4, 0], b: V3 = [0.42, 0.4, 0];
+        const post0 = ctx.at([0, H, 0]), post1 = ctx.at([0, H + 0.14, 0]);
+        const a: V3 = [-0.42, H + 0.2, 0], b: V3 = [0.42, H + 0.2, 0];
         const p = ctx.at(a), q = ctx.at(b);
         const colour = ctx.opts.style === "line" ? "currentColor" : (ctx.opts.tint ?? HANDLE);
         const line = ctx.opts.style === "line";

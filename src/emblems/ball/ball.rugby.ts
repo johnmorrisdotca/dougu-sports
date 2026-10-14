@@ -15,8 +15,9 @@ export const BALL_RUGBY = /* @__PURE__ */ defineBall({
   ja: "ラグビーボール",
   size: { extentMm: 290.0, lengthMm: 290.0, circumferenceMm: 600.0, longCircumferenceMm: 755.0, massG: [410, 460], rule: "World Rugby Laws of the Game (Rugby Union), Law 2 The ball, clauses 1-7" },
   spec: {
-    axes: [1, 0.62, 0.62],
-    point: 0.72,
+    // Worked out from the Laws' 600 mm girth, 290 mm length and 755 mm long girth.
+    axes: [1, 0.6586, 0.6586],
+    point: 0.561,
     view: { yaw: -30, pitch: 20, roll: -30 },
     base: "#1f4e9c",
     ground: WHITE,

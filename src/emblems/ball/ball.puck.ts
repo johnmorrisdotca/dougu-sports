@@ -1,8 +1,8 @@
-// Ice hockey puck: vulcanised black rubber, 76.2 mm across and 25.4 mm thick (so 1 : 3), with a ridged edge. Drawn as a cylinder in true 3D, so it turns.
+// Ice hockey puck: vulcanised black rubber, 76.2 mm across and 25.4 mm thick (so 1 : 3), with a ridged edge. Drawn as a cylinder in true 3D, so it turns. The stack's y is in units of the radius, so the half thickness is 12.7 / 38.1, one third.
 import { drawStack } from "./ball.stack.ts";
 import { defineObject } from "./ball.object.ts";
 
-const H = 25.4 / 76.2 / 2;
+const H = 25.4 / 76.2;
 
 export const BALL_PUCK = /* @__PURE__ */ defineObject({
   id: "ball:puck",

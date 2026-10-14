@@ -8,7 +8,7 @@ export const BALL_DISCUS = /* @__PURE__ */ defineBall({
   ja: "円盤",
   size: { extentMm: 220, diameterMm: 220, thicknessMm: 45, massG: [2000, 2000], rule: "World Athletics Technical Rules (C2.1), Rule 34 Discus Throw - 'The discus shall conform to the following specifications'", note: "Men's discus, 219 to 221 mm across the rim and 44 to 46 mm thick at the middle; 2 kg is a minimum." },
   spec: {
-    axes: [1, 0.2, 1],
+    axes: [1, 45 / 220, 1],
     view: { yaw: 25, pitch: 52, roll: -12 },
     base: "#3b3f48",
     mat: { gloss: 0.7, shade: "#050608", grain: { f: 1.4, a: 0.12 } },

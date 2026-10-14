@@ -16,19 +16,20 @@ const upperArc = (ring: V3[]): V3[] => {
 };
 
 const BROWN = "#8b4a21";
-const AXES = [1, 0.55, 0.55] as const;
+// The shape is worked out from the rule's figures (see test/proportions.test.ts): the width over the length is the girth over pi over the length, and `point` is chosen so that the outline, tip round to tip,
+// is the long girth.
 const VIEW = { yaw: -20, pitch: 35, roll: -35 };
 const MAT = { gloss: 0.5, shade: "#2a1006", grain: { f: 0.95, a: 0.42 } };
 
-function football(id: string, en: string, ja: string, size: BallDef["size"], stripes: "none" | "ring" | "top", colour: string) {
+function football(id: string, en: string, ja: string, size: BallDef["size"], shape: { width: number; point: number }, stripes: "none" | "ring" | "top", colour: string) {
   return defineBall({
     id,
     en,
     ja,
     size,
     spec: {
-      axes: AXES,
-      point: 0.85,
+      axes: [1, shape.width, shape.width],
+      point: shape.point,
       view: VIEW,
       base: colour,
       mat: MAT,
@@ -45,7 +46,8 @@ function football(id: string, en: string, ja: string, size: BallDef["size"], str
   });
 }
 
+const NFL_SHAPE = { width: 0.6044, point: 0.541 };
 const SIZE: BallDef["size"] = { extentMm: 282.6, lengthMm: 282.6, circumferenceMm: 536.58, longCircumferenceMm: 717.55, massG: [396.89, 425.24], rule: "NFL Rulebook, Rule 2 The Ball, Section 1 (Dimensions)" };
-export const BALL_FOOTBALL = /* @__PURE__ */ football("ball:football", "Football (NFL)", "アメフトボール（NFL）", SIZE, "none", BROWN);
-export const BALL_FOOTBALL_CFL = /* @__PURE__ */ football("ball:football-cfl", "Football (CFL)", "フットボール（CFL）", { extentMm: 282.6, lengthMm: 282.6, circumferenceMm: 536.58, longCircumferenceMm: 717.55, massG: [396.89, 425.24], rule: "CFL Official Playing Rules, Rule 1 Conduct of the Game, Section 2 The Ball" }, "ring", BROWN);
-export const BALL_FOOTBALL_IFAF = /* @__PURE__ */ football("ball:football-ifaf", "Football (IFAF)", "アメフトボール（IFAF）", { extentMm: 283.4, lengthMm: 283.4, circumferenceMm: 533.4, longCircumferenceMm: 714.38, massG: [396.89, 425.24], rule: "IFAF Football Rules and Interpretations 2026, Rule 1 (The Game, Field, Players and Equipment), Section 3 The Ball, Article 1 a-i", note: "The IFAF figures are in a diagram of the rules, read from the rendered page." }, "top", "#a8693a");
+export const BALL_FOOTBALL = /* @__PURE__ */ football("ball:football", "Football (NFL)", "アメフトボール（NFL）", SIZE, NFL_SHAPE, "none", BROWN);
+export const BALL_FOOTBALL_CFL = /* @__PURE__ */ football("ball:football-cfl", "Football (CFL)", "フットボール（CFL）", { extentMm: 282.6, lengthMm: 282.6, circumferenceMm: 536.58, longCircumferenceMm: 717.55, massG: [396.89, 425.24], rule: "CFL Official Playing Rules, Rule 1 Conduct of the Game, Section 2 The Ball" }, NFL_SHAPE, "ring", BROWN);
+export const BALL_FOOTBALL_IFAF = /* @__PURE__ */ football("ball:football-ifaf", "Football (IFAF)", "アメフトボール（IFAF）", { extentMm: 283.4, lengthMm: 283.4, circumferenceMm: 533.4, longCircumferenceMm: 714.38, massG: [396.89, 425.24], rule: "IFAF Football Rules and Interpretations 2026, Rule 1 (The Game, Field, Players and Equipment), Section 3 The Ball, Article 1 a-i", note: "The IFAF figures are in a diagram of the rules, read from the rendered page." }, { width: 0.599, point: 0.567 }, "top", "#a8693a");

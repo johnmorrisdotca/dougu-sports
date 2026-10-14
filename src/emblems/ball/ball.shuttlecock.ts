@@ -5,12 +5,13 @@ import { type V3 } from "./ball.math.ts";
 import { blend, mix, num } from "./ball.core.ts";
 
 const FEATHERS = 16;
-// One unit is 32 mm: the skirt is 2 units across at the top, the base 0.84 across and the whole 2.06 long.
+// One unit is 32 mm (the scale below makes 92 box units 150 mm): the skirt is 2 units across at the tips (63 mm), the base 0.84 across (27 mm) and the feathers 2.05 long from the tips to the top of the base
+// (66 mm; the Law measures a feather's length that way, 62 to 70 mm).
 const ROOT_R = 0.42;
 const TIP_R = 1;
-const ROOT_Y = -0.56;
+const ROOT_Y = -1.05;
 const TIP_Y = 1.0;
-const SLOPE = 0.4;
+const SLOPE = 0.56;
 
 interface Parts {
   feather: string;
