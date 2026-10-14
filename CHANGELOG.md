@@ -6,6 +6,10 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-14
+
+Nineteen more soccer balls (26, 18, 14, 12 and 6 panels, winter orange and high-visibility yellow, futsal and beach soccer), 186 emblems in all.
+
 ### Added
 
 - **Nineteen more soccer balls** ([docs/soccer-balls.md](docs/soccer-balls.md), [日本語](docs/soccer-balls.ja.md)), all in true 3D like `ball:soccer`, turning with `ballFrame`, with their seams on the sphere and every construction a generic derivation (no brand's or tournament's ball is used; the sources are in [docs/references.md](docs/references.md#soccer-balls)): `ball:soccer-26` (the rhombicuboctahedron: 8 triangles and 18 squares), `ball:soccer-18` (three strips on each face of a cube), `ball:soccer-14` (6 propellers and 8 triangles: a truncated cube whose 12 long edges are bent into S-curves), `ball:soccer-12` (the dodecahedron) and `ball:soccer-6` (thermobonded: six twisted gores with long curved seams, our own design).
