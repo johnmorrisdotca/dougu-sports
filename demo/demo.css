@@ -36,3 +36,28 @@ details > pre { margin: 0; padding: 0 14px 14px; overflow-x: auto; font-family: 
 .cards .copies { display: flex; gap: 8px; margin: 10px 0 0; }
 .cards .copies button { min-height: 44px; }
 .cards li[hidden], #sections section[hidden] { display: none; }
+.stage:focus-visible { outline: 3px solid var(--ink); outline-offset: -3px; }
+.stage { cursor: grab; }
+.hint { margin-top: 0; }
+.fam-button.play, .case-play { min-height: 44px; min-width: 44px; }
+.play .when-on, .play .when-off, .case-play .when-on, .case-play .when-off { display: none; }
+.play[aria-pressed="false"] .when-off, .play[aria-pressed="true"] .when-on, .case-play[aria-pressed="false"] .when-off, .case-play[aria-pressed="true"] .when-on { display: inline; }
+.case { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.case li { border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); padding: 12px; display: grid; justify-items: center; gap: 8px; }
+.case-stage { min-height: 100px; display: grid; align-items: center; justify-items: center; color: var(--ink); }
+.case-stage:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.case-stage svg { display: block; }
+.compose-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+.compose-card { border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); padding: 12px; min-width: 0; }
+.compose-card h3 { margin: 0 0 8px; font-size: 1rem; }
+.compose-card .art { color: var(--ink); display: grid; justify-items: center; overflow-x: auto; }
+.compose-card .art[data-look="light"] { background: #ffffff; color: #20262d; }
+.compose-card .art[data-look="dark"] { background: #14181c; color: #eef1f3; }
+.compose-card .art svg { max-width: 100%; height: auto; }
+.compose-card pre { margin: 8px 0; padding: 8px; overflow-x: auto; font-family: var(--mono); font-size: .75rem; border: 1px solid var(--rule); border-radius: 8px; }
+.compose-card .copies { margin: 8px 0 0; }
+.compose-card .copy { min-height: 44px; }
+.sprite-grid { display: flex; flex-wrap: wrap; gap: 4px; line-height: 0; }
+.sprite-stats { font-size: .85rem; color: var(--muted); margin: 8px 0 0; }
+.compose-card img.uri { display: block; margin: 0 auto; }
+.compose-card .backdrop { width: 96px; height: 96px; background-size: contain; background-repeat: no-repeat; background-position: center; margin: 0 auto; }

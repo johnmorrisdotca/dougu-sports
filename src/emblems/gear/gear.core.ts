@@ -1,7 +1,7 @@
 // Gear: pieces of equipment drawn flat from a list of parts (a path, a colour, how it reads as a line), in the same three styles as the trophies: `metal` (a fill shaded across and along, edged in a darker tone
 // of itself), `color` (flat fills with the same edges) and `line` (`currentColor`). A piece turns like a coin: squeezed by the cosine of the yaw, and mirrored past a quarter turn. Self-contained: it imports
 // only the shared option and colour helpers of the ball folder.
-import { type Piece, type PieceOptions, type PieceSize, type PieceSource, escape, hashOf, mix, num, readColour, resolveOptions, wrapPiece } from "../ball/ball.core.ts";
+import { type BallFrameOptions, type Piece, type PieceOptions, type PieceSize, type PieceSource, escape, hashOf, labelled, mix, num, readColour, resolveOptions, wrapPiece } from "../ball/ball.core.ts";
 
 /** One part of a drawn piece. */
 export interface Part {
@@ -63,7 +63,7 @@ const turnOf = (yaw: number | undefined, pitch: number | undefined): Turn | unde
 
 /** A piece of gear from its drawing function. Turned, it flips like a coin: the drawing squeezed by the cosine of the turn, and mirrored on its back. */
 export function defineGear<Model>(def: GearDef<Model>): Piece<Model> {
-  return { id: def.id, en: def.en, ja: def.ja, source: def.source, kind: "gear", model: def.model, size: def.size, svg: (o) => def.draw(o), frame: (o) => def.draw(o, turnOf(o?.yaw, o?.pitch)) };
+  return { id: def.id, en: def.en, ja: def.ja, source: def.source, kind: "gear", model: def.model, size: def.size, svg: labelled(def.en, def.ja, (o?: PieceOptions) => def.draw(o)), frame: labelled(def.en, def.ja, (o?: BallFrameOptions) => def.draw(o, turnOf(o?.yaw, o?.pitch))) };
 }
 
 /** A drawn piece: its parts become a document in the metal, color or line style, whole or turned. */

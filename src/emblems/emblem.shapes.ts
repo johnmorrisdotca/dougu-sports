@@ -3,7 +3,7 @@
 // is drawn as it is. Imports only the core.
 import {
   type Emblem, type EmblemOptions, type EmblemSource, type FrameOptions, type Gradient, type Metal, type Resolved, type Rgb,
-  bevelGradient, defsOf, degrees, escape, hexOf, mainOf, mix, n2, onColour, orbGradient, readColour, resolve, sheetGradient, wrap,
+  bevelGradient, defsOf, degrees, escape, hexOf, labelled, mainOf, mix, n2, onColour, orbGradient, readColour, resolve, sheetGradient, wrap,
 } from "./emblem.core.ts";
 
 /**
@@ -135,16 +135,16 @@ export function defineFlat(id: string, en: string, ja: string, source: EmblemSou
     const thick = rim === 0 ? "" : `<g transform="translate(${n2(rim)} 0)">${shapesMarkup(model.front.filter((x) => x[0] === "m" || x[0] === "o").map((x) => ["s", x[1]] as const), ctx)}</g>`;
     return document(en, model, r, ctx, `<g transform="translate(${n2(x0 + w / 2)} ${n2(y0 + h / 2)}) scale(${n2(sx)} ${n2(sy)}) translate(${n2(-x0 - w / 2)} ${n2(-y0 - h / 2)})">${thick}${face(model, shown, ctx)}</g>`);
   };
-  return { id, en, ja, source, kind: "flat", model, svg: (o?: EmblemOptions) => draw(o, 0, 0), frame: (o?: FrameOptions) => draw(o, degrees(o?.yaw), degrees(o?.pitch)) };
+  return { id, en, ja, source, kind: "flat", model, svg: labelled(en, ja, (o?: EmblemOptions) => draw(o, 0, 0)), frame: labelled(en, ja, (o?: FrameOptions) => draw(o, degrees(o?.yaw), degrees(o?.pitch))) };
 }
 
 /** An icon: one drawing from shapes, which is not turned. */
 export function defineIcon(id: string, en: string, ja: string, source: EmblemSource, model: FlatModel): Emblem<FlatModel> {
-  const svg = (o?: EmblemOptions): string => {
+  const svg = labelled(en, ja, (o?: EmblemOptions): string => {
     const r = resolve(o);
     const ctx = context(model, r);
     return document(en, model, r, ctx, face(model, model.front, ctx));
-  };
+  });
   return { id, en, ja, source, kind: "icon", model, svg, frame: svg };
 }
 

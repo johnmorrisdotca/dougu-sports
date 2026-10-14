@@ -1,6 +1,6 @@
 // The emblem library's functions: draw one by id, turn one, read a string that may be an emblem's id. This file imports every drawing through the registry; a consumer that wants one drawing
 // and nothing else imports that drawing's own module (`dougu-sports/ball/soccer`) and calls its `svg`.
-import type { Emblem, EmblemOptions, EmblemStyle, EmblemTheme, FrameOptions } from "./emblem.core.ts";
+import type { Emblem, EmblemLocale, EmblemOptions, EmblemStyle, EmblemTheme, FrameOptions } from "./emblem.core.ts";
 import { EMBLEM_STYLES } from "./emblem.core.ts";
 import { BALL_IDS, CREST_SHAPES, EMBLEM_ALIASES, EMBLEM_IDS, type BallId, type CrestShape, type EmblemId, type MedalKind, type SportName } from "./emblem.ids.ts";
 import type { PieceSize } from "./ball/ball.core.ts";
@@ -129,6 +129,10 @@ export interface CrestOptions {
   size?: number;
   style?: EmblemStyle;
   theme?: EmblemTheme;
+  /** The language of the `<title>`, `"en"` (the default) or `"ja"`. */
+  locale?: EmblemLocale;
+  /** A string is the `<title>`; `false` drops it and hides the drawing from a screen reader. */
+  title?: string | false;
 }
 
 /**
@@ -144,7 +148,7 @@ export interface CrestOptions {
 export function crest(options: CrestOptions = {}): string {
   const colors = typeof options.colors === "string" ? [options.colors] : (options.colors ?? []);
   const shape = (CREST_SHAPES as readonly string[]).includes(options.shape as string) ? (options.shape as CrestShape) : "shield";
-  return EMBLEM_TABLE[`crest:${shape}`].svg({ tint: colors[0], accent: colors[1], initials: options.initials, size: options.size, style: options.style, theme: options.theme });
+  return EMBLEM_TABLE[`crest:${shape}`].svg({ tint: colors[0], accent: colors[1], initials: options.initials, size: options.size, style: options.style, theme: options.theme, locale: options.locale, title: options.title });
 }
 
 /** A medal on a ribbon: `medal("gold")`, `"silver"` or `"bronze"`; any other kind is the gold one. */

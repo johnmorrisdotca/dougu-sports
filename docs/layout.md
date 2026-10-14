@@ -8,7 +8,8 @@
 src/
   index.ts                   the full registry (every emblem, the functions, each emblem as a constant)
   emblems-entry.ts           ./emblems: renderEmblem, the helpers and the ids, with no single drawing imported by name
-  turn-entry.ts              ./turn: emblemFrame and ballFrame
+  turn-entry.ts              ./turn: emblemFrame, ballFrame and bindTurn
+  turn-control.ts            bindTurn (a module of its own, so importing an emblem never pulls it in)
   emblems/
     emblem.core.ts           options, colours, gradients, the wrapper, the Emblem type (imports nothing)
     emblem.ids.ts            the ids, the groups, the sports, the short names, and the folder of each group
@@ -18,6 +19,11 @@ src/
     emblem.shapes.ts         the renderer for a flat object (a medal, a crest: a front and a back, to flip) and for an icon
     emblem.descriptions.ts   the longer description of an emblem, for the docs and the gallery (the names are short)
     emblem.medal.ts          the builders the medals and place badges share
+    emblem.compose.ts        an emblem taken apart and put into another document with unique ids (sprite, podium, award case)
+    emblem.uri.ts            emblemDataUri
+    emblem.sprite.ts         emblemSprite
+    emblem.equipment.ts      sportEquipment
+    emblem.display.ts        podium and awardCase
     award/                   five awards
     trophy/                  twenty-two trophies
     medal/                   gold, silver and bronze, and the badges for the first three places

@@ -33,7 +33,7 @@ Bug reports and ideas go in the
 - **Option values and names are kebab case where they are words** (`"metal"`, `"line"`, `"color"`).
 - **Needs Node 22 or later**; the tests run the TypeScript source with `node --test`, which needs 22.18 or later.
 - **Ports.** This package owns local ports 7200 to 7299 and nothing outside them. The demo's server is on 7200 (`scripts/dev.mjs`),
-  the tests' on 7201 (`playwright.config.mjs`), the picture script's on 7202, and any other server or worktree takes 7203 and up.
+  the tests' on 7201 (`playwright.config.mjs`; `TEST_PORT` names another, so that two worktrees do not meet), the picture script's on 7202, and any other server or worktree takes 7203 and up.
   Check with `lsof -iTCP:<port> -sTCP:LISTEN` first, and stop a server by its process id, never by name.
 
 ## Pull requests

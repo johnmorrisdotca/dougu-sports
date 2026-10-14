@@ -1,5 +1,5 @@
 // Objects that are not an ellipsoid: a puck, a stone, a shuttlecock. They share what a ball has (the rotation, the options, the shading palette and the `Piece` shape) and draw their own geometry.
-import { type BallFrameOptions, type Piece, type PieceOptions, type PieceSize, type ResolvedOptions, escape, hashOf, radians, resolveOptions, wrapPiece } from "./ball.core.ts";
+import { type BallFrameOptions, type Piece, type PieceOptions, type PieceSize, type ResolvedOptions, escape, hashOf, labelled, radians, resolveOptions, wrapPiece } from "./ball.core.ts";
 import { type M3, type V3, apply, rotation } from "./ball.math.ts";
 
 export interface ObjectView {
@@ -53,5 +53,5 @@ export function defineObject<Model>(def: ObjectDef<Model>): Piece<Model> {
     const { defs, body } = def.draw({ rot, opts, turning, id, minWidth: 80 / opts.size, at });
     return wrapPiece({ title: escape(def.en), size: opts.size, theme: opts.theme, defs, body });
   };
-  return { id: def.id, en: def.en, ja: def.ja, source: "generated", kind: "ball", model: def.model, size: def.size, svg: (o?: PieceOptions) => render(o, false), frame: (o?: BallFrameOptions) => render(o, true) };
+  return { id: def.id, en: def.en, ja: def.ja, source: "generated", kind: "ball", model: def.model, size: def.size, svg: labelled(def.en, def.ja, (o?: PieceOptions) => render(o, false)), frame: labelled(def.en, def.ja, (o?: BallFrameOptions) => render(o, true)) };
 }

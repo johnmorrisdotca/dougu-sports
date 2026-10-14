@@ -4,7 +4,7 @@
 // Imports only the core.
 import {
   type Emblem, type EmblemOptions, type EmblemSource, type FrameOptions, type Gradient, type Metal, type Resolved, type Rgb,
-  cylinderGradient, defsOf, hexOf, mainOf, mix, orbGradient, readColour, resolve, wrap,
+  cylinderGradient, defsOf, hexOf, labelled, mainOf, mix, orbGradient, readColour, resolve, wrap,
 } from "./emblem.core.ts";
 
 /** A point of the profile: the height `y` (0 at the top of the 64 unit box), the radius `r` from the axis (x = 32), 1 for a sharp corner (a smooth run of points ends at one), and the tone of the piece that starts here. */
@@ -459,5 +459,6 @@ export function defineLathe(id: string, en: string, ja: string, source: EmblemSo
     const d = draw(model, r, yaw, pitch);
     return wrap({ title: en, size: r.size, style: r.style, theme: r.theme, defs: d.defs, body: d.body, edge: d.edge, width: r.style === "line" ? 2.3 : 0.6 });
   };
-  return { id, en, ja, source, kind: "lathe", model, svg: (o?: EmblemOptions) => frame(o), frame };
+  const still = labelled(en, ja, (o?: EmblemOptions) => frame(o));
+  return { id, en, ja, source, kind: "lathe", model, svg: still, frame: labelled(en, ja, frame) };
 }

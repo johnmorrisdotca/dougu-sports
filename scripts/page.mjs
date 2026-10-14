@@ -15,12 +15,30 @@ const WORDS = {
     name: "Dougu (道具, どうぐ) is Japanese for equipment: the things a task is done with.",
     nameLink: "The name",
     foot: "Sports emblems as SVG, with no dependencies.",
+    spin: "Auto-turn",
+    play: "Auto-turn",
+    stop: "Stop",
+    slow: "Slow",
+    medium: "Medium",
+    fast: "Fast",
+    hint: "Drag the emblem, or use the sliders or the arrow keys, to turn it.",
+    caseHeading: "A trophy case",
+    caseNote: "Each one turns when you press its button, or when you drag it. Nothing moves by itself.",
   },
   ja: {
     pitch: "トロフィー、メダル、紋章、ボールや用具など、スポーツのエンブレムをSVGで描きます。",
     name: "道具（どうぐ）は、何かをするために使うものです。",
     nameLink: "名前について",
     foot: "スポーツのエンブレムをSVGで描きます。依存パッケージはありません。",
+    spin: "自動回転",
+    play: "自動回転",
+    stop: "停止",
+    slow: "遅い",
+    medium: "ふつう",
+    fast: "速い",
+    hint: "エンブレムは、ドラッグするか、スライダーや矢印キーで回せます。",
+    caseHeading: "トロフィーケース",
+    caseNote: "それぞれのボタンを押すか、エンブレムをドラッグすると回ります。自動では動きません。",
   },
 };
 
@@ -33,7 +51,7 @@ function withFamily(html, { title, description }) {
     .replace("<!--family:footer-->", familyFooter({ id }))
     .replace(
       /<!--family:scripts ([\w.-]+)-->/,
-      (_, script) => `<script>${FAMILY_SCRIPT}</script>\n<script>familyLanguage({ id: ${JSON.stringify(id)}, words: ${JSON.stringify(WORDS)} });</script>${script === "none" ? "" : `\n<script type="module" src="${script}"></script>`}`,
+      (_, script) => `<script>${FAMILY_SCRIPT}</script>\n<script>var familyPage = familyLanguage({ id: ${JSON.stringify(id)}, words: ${JSON.stringify(WORDS)} });</script>${script === "none" ? "" : `\n<script type="module" src="${script}"></script>`}`,
     );
 }
 
@@ -69,4 +87,24 @@ export async function renderGallery() {
 <!--family:scripts gallery.js-->`;
   const html = `<!doctype html>\n<html lang="en">\n<head>\n  <!--family:head-->\n  <link rel="stylesheet" href="family.css" />\n  <link rel="stylesheet" href="demo.css" />\n</head>\n<body>\n${body}\n</body>\n</html>\n`;
   return withFamily(html, { title: "Gallery · Dougu Sports 道具", description: "Every emblem of Dougu Sports in each style, and turned, with its id and a button that copies it." });
+}
+
+/** The page for the composing functions: the podium, the award case, a sprite sheet, a data address and a sport's equipment, drawn in the browser from the built package. */
+export function renderCompose() {
+  const body = `<main>
+<!--family:header-->
+<p class="note"><a href="./">Back to the playground</a>. The podium, the award case, sprite sheets, data addresses and a sport's equipment, each drawn in your browser from <code>dist/index.js</code>, with the call that made it and a button that copies it.</p>
+<div class="fam-panel controls">
+  <div class="fam-row"><span class="fam-label">Look</span>
+    <div class="fam-seg" role="group" aria-label="Look" id="look" data-testid="look"><button type="button" data-value="inherit">Page</button><button type="button" data-value="light">Light</button><button type="button" data-value="dark">Dark</button></div></div>
+  <div class="fam-row"><span class="fam-label">Words</span>
+    <div class="fam-seg" role="group" aria-label="Language of the titles" id="locale" data-testid="locale"><button type="button" data-value="en">English</button><button type="button" data-value="ja">日本語</button></div></div>
+</div>
+<div class="compose-grid" id="cards"></div>
+<!--family:unreviewed-->
+<!--family:footer-->
+</main>
+<!--family:scripts compose.js-->`;
+  const html = `<!doctype html>\n<html lang="en">\n<head>\n  <!--family:head-->\n  <link rel="stylesheet" href="family.css" />\n  <link rel="stylesheet" href="demo.css" />\n</head>\n<body>\n${body}\n</body>\n</html>\n`;
+  return withFamily(html, { title: "Podium, award case and sprites · Dougu Sports 道具", description: "A podium, an award case, sprite sheets, data addresses and a sport's equipment, drawn from Dougu Sports." });
 }

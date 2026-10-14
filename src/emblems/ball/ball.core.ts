@@ -19,6 +19,10 @@ export interface PieceOptions {
   accent?: string;
   /** Force the grain on or off. By default it is on for a colour ball of 48 pixels or more that is not turning. */
   grain?: boolean;
+  /** The language of the `<title>`: `"en"` (the default) or `"ja"`. */
+  locale?: "en" | "ja";
+  /** A string is the `<title>` (escaped); `false` drops it and marks the drawing `aria-hidden="true"`. */
+  title?: string | false;
 }
 
 /** A turn: `yaw` degrees about the vertical axis (0 is the default view), `pitch` the tilt toward you, `roll` the turn about the line of sight. */
@@ -148,6 +152,20 @@ export function wrapPiece(o: { title: string; size: number; theme: PieceTheme; d
     `<title>${escape(o.title)}</title>${o.desc === undefined ? "" : `<desc>${escape(o.desc)}</desc>`}${auto}${o.defs === undefined || o.defs === "" ? "" : `<defs>${o.defs}</defs>`}${o.body}</svg>`
   );
 }
+
+/** A piece's drawing function, with the `<title>` its options ask for: the Japanese name, a title of the caller's own, or none (the same rule as the emblems', in emblem.core.ts). */
+export const labelled =
+  <O extends PieceOptions>(en: string, ja: string, draw: (options?: O) => string) =>
+  (options?: O): string => {
+    const svg = draw(options);
+    const title = options?.title;
+    const custom = typeof title === "string" && title.trim() !== "";
+    if (title === false) return svg.replace(/<title>[^<]*<\/title>/, "").replace(' role="img"', ' aria-hidden="true"');
+    if (!custom && options?.locale !== "ja") return svg;
+    const text = custom ? title.trim().slice(0, 300) : ja;
+    const titled = svg.replace(/<title>[^<]*<\/title>/, () => `<title>${escape(text)}</title>`);
+    return custom ? titled : titled.replace(' role="img"', ' role="img" lang="ja"');
+  };
 
 /** Degrees to radians, for a value that may be missing or not a number. */
 export const radians = (degrees: number | undefined, fallback: number): number => ((typeof degrees === "number" && Number.isFinite(degrees) ? degrees : fallback) * Math.PI) / 180;

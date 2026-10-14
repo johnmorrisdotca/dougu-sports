@@ -7,9 +7,17 @@ export type { CrestOptions, EmblemInfo, EmblemRef } from "./emblems/emblem.api.t
 export { AWARD_IDS, BALL_IDS, CREST_IDS, CREST_SHAPES, EMBLEM_ALIASES, EMBLEM_FOLDERS, EMBLEM_GROUPS, EMBLEM_IDS, GEAR_IDS, JAPANESE_IDS, MEDAL_IDS, MEDAL_KINDS, SPORT_IDS, SPORT_NAMES, TROPHY_IDS } from "./emblems/emblem.ids.ts";
 export type { AwardId, BallId, CrestId, CrestShape, EmblemGroup, EmblemId, GearId, JapaneseId, MedalId, MedalKind, SportEmblemId, SportName, TrophyId } from "./emblems/emblem.ids.ts";
 export { EMBLEM_INK, EMBLEM_PAGE, EMBLEM_STYLES, METALS } from "./emblems/emblem.core.ts";
-export type { Emblem, EmblemKind, EmblemOptions, EmblemSource, EmblemStyle, EmblemTheme, FrameOptions } from "./emblems/emblem.core.ts";
+export type { Emblem, EmblemKind, EmblemLocale, EmblemOptions, EmblemSource, EmblemStyle, EmblemTheme, FrameOptions } from "./emblems/emblem.core.ts";
 export { lineup } from "./emblems/ball/ball.index.ts";
 export type { LineupOptions } from "./emblems/ball/ball.index.ts";
 export type { PieceSize } from "./emblems/ball/ball.core.ts";
 export type { Ball, BallKind, Decor, Handle, LatheModel, Poles, Pt, Solid } from "./emblems/emblem.lathe.ts";
 export type { FlatModel, Role, Shape } from "./emblems/emblem.shapes.ts";
+export { emblemSprite } from "./emblems/emblem.sprite.ts";
+export type { Sprite, SpriteOptions, UseOptions } from "./emblems/emblem.sprite.ts";
+export { emblemDataUri } from "./emblems/emblem.uri.ts";
+export type { DataUriOptions } from "./emblems/emblem.uri.ts";
+export { sportEquipment } from "./emblems/emblem.equipment.ts";
+export type { SportEquipment } from "./emblems/emblem.equipment.ts";
+export { awardCase, podium } from "./emblems/emblem.display.ts";
+export type { AwardCaseOptions, AwardItem, DisplayOptions, PodiumOptions, PodiumPlace } from "./emblems/emblem.display.ts";

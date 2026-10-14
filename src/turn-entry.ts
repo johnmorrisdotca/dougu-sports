@@ -2,3 +2,5 @@
 // the angle, drawn by the caller (a slider, a requestAnimationFrame, a CSS-free animation).
 export { ballFrame, emblemFrame } from "./emblems/emblem.api.ts";
 export type { FrameOptions } from "./emblems/emblem.core.ts";
+export { bindTurn } from "./turn-control.ts";
+export type { TurnAngles, TurnContainer, TurnControlOptions, TurnController, TurnEvent } from "./turn-control.ts";

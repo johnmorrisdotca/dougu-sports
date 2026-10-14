@@ -31,15 +31,28 @@
         </div></div>
       <div class="fam-row" id="turn-row"><label class="fam-label" for="yaw">Turn</label><input class="range" type="range" id="yaw" min="-180" max="180" step="5" value="0" aria-label="Turn about the vertical axis, in degrees" data-testid="yaw" /><output id="yaw-out" for="yaw">0°</output></div>
       <div class="fam-row" id="tilt-row"><label class="fam-label" for="pitch">Tilt</label><input class="range" type="range" id="pitch" min="-80" max="80" step="5" value="0" aria-label="Tilt toward the eye, in degrees" data-testid="pitch" /><output id="pitch-out" for="pitch">0°</output></div>
+      <div class="fam-row" id="roll-row"><label class="fam-label" for="roll">Roll</label><input class="range" type="range" id="roll" min="-180" max="180" step="5" value="0" aria-label="Roll about the line of sight, in degrees (balls)" data-testid="roll" /><output id="roll-out" for="roll">0°</output></div>
+      <div class="fam-row" id="spin-row"><span class="fam-label" data-say="spin">Auto-turn</span>
+        <button type="button" class="fam-button play" id="play" aria-pressed="false" data-testid="play"><span class="when-off" data-say="play">Auto-turn</span><span class="when-on" data-say="stop">Stop</span></button>
+        <div class="fam-seg" role="group" aria-label="Speed" id="speed" data-testid="speed">
+          <button type="button" data-value="18" data-say="slow">Slow</button><button type="button" data-value="36" data-say="medium">Medium</button><button type="button" data-value="90" data-say="fast">Fast</button>
+        </div></div>
     </div>
     <p class="fam-panel note" id="note"></p>
     <div class="stage" id="stage" data-testid="stage" role="region" aria-label="The emblem"></div>
+    <p class="fam-panel note hint" id="hint" data-say="hint" data-testid="hint">Drag the emblem, or use the sliders or the arrow keys, to turn it.</p>
+  </section>
+
+  <section class="more" aria-labelledby="case-h">
+    <h2 id="case-h" data-say="caseHeading">A trophy case</h2>
+    <p class="fam-fine" data-say="caseNote">Each one turns when you press its button, or when you drag it. Nothing moves by itself.</p>
+    <ul class="case" id="case" data-testid="case"></ul>
   </section>
 
   <section class="more" aria-labelledby="code-h">
     <h2 id="code-h">The call</h2>
     <details id="code-box" open><summary>The call that draws it</summary><pre id="code"><code></code></pre></details>
-    <p><a class="fam-button" href="gallery.html">Every emblem in the gallery</a></p>
+    <p><a class="fam-button" href="gallery.html">Every emblem in the gallery</a> <a class="fam-button" href="compose.html">Podium, award case and sprites</a></p>
   </section>
 
   <div class="credits">
