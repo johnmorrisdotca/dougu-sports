@@ -6,6 +6,7 @@ const wave = (y: number): string => `M3 ${y}q7-6 14 0t14 0 14 0 14 0`;
 
 /** Raised legs. */
 export const SPORT_ARTISTICSWIMMING = /* @__PURE__ */ defineIcon("sport:artisticswimming", "Raised legs", "水面に上げた脚", "ours", {
+  box: "-0.3 0 64.6 64.6",
   metal: "flat",
   ink: true,
   front: [

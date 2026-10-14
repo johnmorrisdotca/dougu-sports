@@ -50,6 +50,12 @@ export interface EmblemOptions {
   numberColor?: string;
   /** Which side of a pennant is drawn at rest: `"front"` (the default) or `"back"`. */
   view?: "front" | "back";
+  /**
+   * The box the drawing is made in. A turning emblem has two: the box of its still drawing, and a box that holds every turn of it (a cup tilted toward the eye shows its rim and its foot beyond the still drawing's
+   * edges). `true` draws in the box of the turn, so that a still drawing and the frames of its turn are one size; `false` draws a turned frame in the box of the still. By default a still drawing (`svg`) is in its own
+   * box and every turned frame (`frame`) is in the box of the turn, so nothing is cut off while it turns and the size does not change from one angle to the next.
+   */
+  turnBox?: boolean;
 }
 
 /** A turn, in degrees from the resting view (0 and 0 is the still drawing): `yaw` about the vertical axis, `pitch` the tilt toward the eye. */

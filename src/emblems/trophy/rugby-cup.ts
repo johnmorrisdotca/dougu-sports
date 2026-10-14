@@ -4,6 +4,7 @@ import { defineLathe } from "../emblem.lathe.ts";
 /** A gilded two-handled cup with a lid. */
 export const TROPHY_RUGBY_CUP = /* @__PURE__ */ defineLathe("trophy:rugby-cup", "Gilded cup with a lid", "ふた付きの金色のカップ", "ours", {
   metal: "gold",
+  turnBox: "-6 -8.8 76.1 76.1",
   tones: { dark: "#3a2a22" },
   solids: [
     {

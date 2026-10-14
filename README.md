@@ -217,7 +217,7 @@ console.log(renderEmblem("medal:gold").includes(" color=")); // false
 import { ballFrame, emblemFrame } from "@johnmorrisdotca/dougu-sports/turn";
 import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
 
-console.log(emblemFrame("trophy:hockey-cup", { yaw: 0 }) === renderEmblem("trophy:hockey-cup")); // true
+console.log(emblemFrame("trophy:hockey-cup", { yaw: 0 }) === renderEmblem("trophy:hockey-cup", { turnBox: true })); // true
 console.log(emblemFrame("trophy:tennis-cup", { yaw: 90 }) === renderEmblem("trophy:tennis-cup")); // false
 console.log(ballFrame("ball:soccer", { yaw: 90 }) === ballFrame("ball:soccer", { yaw: 450 })); // true
 ```

@@ -70,6 +70,14 @@ export interface LatheModel {
   tones?: Readonly<Record<string, string>>;
   /** The elevation of the eye in degrees at rest: how much of the top of a rim shows. */
   tilt?: number;
+  /** The view box of the still drawing, `x y width height`; "0 0 64 64" unless the still reaches past it (the stroke of a rim at the top edge). */
+  box?: string;
+  /**
+   * The view box of every turned frame. A turn tilts the body toward the eye by up to 60 degrees and away by 40: the rim and the foot swing up and down by the sine of the elevation times their radius, past the
+   * 64 by 64 box of the still drawing, and the handles, balls and poles swing out to their full reach. It is the box that holds the drawing at every yaw and pitch, so the drawing does not change size as it turns.
+   * `test/turnbox.test.ts` measures every frame against it, and `scripts/turn-boxes.mjs` prints the box a model needs.
+   */
+  turnBox?: string;
   solids: readonly Solid[];
   handles?: readonly Handle[];
   balls?: readonly Ball[];
@@ -475,13 +483,17 @@ const PENTAGONS: readonly (readonly [lat: number, lon: number])[] = [
 
 /** A lathe emblem: the object with its names and its model, the still drawing and the turned one. */
 export function defineLathe(id: string, en: string, ja: string, source: EmblemSource, model: LatheModel): Emblem<LatheModel> {
-  const frame = (o?: FrameOptions): string => {
+  const rest = model.box ?? "0 0 64 64";
+  const turn = model.turnBox ?? rest;
+  // A still drawing is in its own box and a turned frame in the box of the turn, unless the options say otherwise; the box is the same for every angle.
+  const make = (o: FrameOptions | undefined, turned: boolean): string => {
     const r = resolve(o);
     const yaw = typeof o?.yaw === "number" && Number.isFinite(o.yaw) ? o.yaw % 360 : 0;
     const pitch = typeof o?.pitch === "number" && Number.isFinite(o.pitch) ? Math.max(-40, Math.min(60, o.pitch)) : 0;
     const d = draw(model, r, o, yaw, pitch);
-    return wrap({ title: en, size: r.size, style: r.style, theme: r.theme, defs: d.defs, body: d.body, edge: d.edge, width: r.style === "line" ? 2.3 : 0.6 });
+    const box = (o?.turnBox ?? turned) ? turn : rest;
+    return wrap({ title: en, size: r.size, style: r.style, theme: r.theme, defs: d.defs, body: d.body, box, edge: d.edge, width: r.style === "line" ? 2.3 : 0.6 });
   };
-  const still = labelled(en, ja, (o?: EmblemOptions) => frame(o));
-  return { id, en, ja, source, kind: "lathe", model, svg: still, frame: labelled(en, ja, frame) };
+  const still = labelled(en, ja, (o?: EmblemOptions) => make(o, false));
+  return { id, en, ja, source, kind: "lathe", model, svg: still, frame: labelled(en, ja, (o?: FrameOptions) => make(o, true)) };
 }

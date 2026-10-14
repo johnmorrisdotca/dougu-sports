@@ -89,10 +89,10 @@ test("the angle maths: a yaw wraps into -180 (excluded) to 180, as the slider's 
   assert.equal(wrapAngle(-720 - 30), -30);
 });
 
-test("it draws the emblem, at rest as the still drawing and turned as a frame", () => {
+test("it draws the emblem, at rest as the still drawing (in the box of the turn) and turned as a frame", () => {
   const el = new Fake();
   const turner = bindTurn(el, "trophy:tennis-cup", { size: 96 });
-  assert.equal(el.innerHTML, renderEmblem("trophy:tennis-cup", { size: 96 }));
+  assert.equal(el.innerHTML, renderEmblem("trophy:tennis-cup", { size: 96, turnBox: true }));
   turner.setAngles({ yaw: 100, pitch: 20 });
   assert.equal(el.innerHTML, emblemFrame("trophy:tennis-cup", { size: 96, yaw: 100, pitch: 20 }));
   assert.deepEqual(turner.angles, { yaw: 100, pitch: 20, roll: 0 });

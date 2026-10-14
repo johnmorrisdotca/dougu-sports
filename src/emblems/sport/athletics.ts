@@ -3,6 +3,7 @@ import { defineIcon } from "../emblem.shapes.ts";
 
 /** Running track. */
 export const SPORT_ATHLETICS = /* @__PURE__ */ defineIcon("sport:athletics", "Running track", "陸上競技のトラック", "ours", {
+  box: "-3.7 -3.7 71.4 71.4",
   metal: "flat",
   ink: true,
   front: [

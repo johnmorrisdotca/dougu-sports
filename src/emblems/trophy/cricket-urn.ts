@@ -4,6 +4,7 @@ import { defineLathe } from "../emblem.lathe.ts";
 /** A small terracotta urn. */
 export const TROPHY_CRICKET_URN = /* @__PURE__ */ defineLathe("trophy:cricket-urn", "Urn", "取っ手付きの壺", "ours", {
   metal: "flat",
+  turnBox: "-2.2 0 68.4 68.4",
   color: "#a8442f",
   tones: { wood: "#b98a4f" },
   solids: [

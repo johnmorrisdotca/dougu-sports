@@ -2,6 +2,7 @@
 import { capsule, drawn, rect, seg } from "./gear.core.ts";
 
 export const GEAR_HOCKEY_SKATE = /* @__PURE__ */ drawn("gear:hockey-skate", "Hockey skate", "アイスホッケースケート", {
+  box: "-0.9 -0.9 65.8 65.8",
   main: "#232a36",
   accent: "#d4202c",
   parts: [
@@ -16,6 +17,7 @@ export const GEAR_HOCKEY_SKATE = /* @__PURE__ */ drawn("gear:hockey-skate", "Hoc
 });
 
 export const GEAR_FIGURE_SKATE = /* @__PURE__ */ drawn("gear:figure-skate", "Figure skate", "フィギュアスケート靴", {
+  box: "-1.4 -1.4 66.8 66.8",
   main: "#f6f2ea",
   accent: "#c8a26a",
   parts: [
@@ -30,6 +32,7 @@ export const GEAR_FIGURE_SKATE = /* @__PURE__ */ drawn("gear:figure-skate", "Fig
 });
 
 export const GEAR_SPEED_SKATE = /* @__PURE__ */ drawn("gear:speed-skate", "Speed skate", "スピードスケート靴", {
+  box: "-1.2 -1.2 66.4 66.4",
   main: "#2a5fb0",
   accent: "#1d1f24",
   parts: [

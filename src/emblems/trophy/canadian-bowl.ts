@@ -4,6 +4,7 @@ import { defineLathe } from "../emblem.lathe.ts";
 /** A wide silver bowl with two handles on a tall tiered base. */
 export const TROPHY_CANADIAN_BOWL = /* @__PURE__ */ defineLathe("trophy:canadian-bowl", "Wide two-handled bowl", "取っ手が二つの広いボウル", "ours", {
   metal: "silver",
+  turnBox: "-10.7 -9.6 85.3 85.3",
   tones: { dark: "#2b2f36" },
   solids: [
     {

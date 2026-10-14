@@ -10,7 +10,7 @@ console.log(emblemFrame("medal:gold", { yaw: 0, pitch: 0 }) === renderEmblem("me
 console.log(emblemFrame("medal:gold", { yaw: 180 }) === renderEmblem("medal:gold")); // false
 ```
 
-`yaw` is degrees about the vertical axis and `pitch` is degrees of tilt toward the eye, both measured from the emblem's resting view; `{ yaw: 0, pitch: 0 }` is the still drawing, and a turn of 360 is the same as none.
+`yaw` is degrees about the vertical axis and `pitch` is degrees of tilt toward the eye, both measured from the emblem's resting view; `{ yaw: 0, pitch: 0 }` is the still drawing (in the box of the turn: see below), and a turn of 360 is the same as none.
 
 ## What each kind does
 
@@ -24,11 +24,26 @@ console.log(emblemFrame("medal:gold", { yaw: 180 }) === renderEmblem("medal:gold
 ```js
 import { emblemFrame, renderEmblem } from "@johnmorrisdotca/dougu-sports";
 
-console.log(emblemFrame("trophy:tennis-cup", { yaw: 0 }) === renderEmblem("trophy:tennis-cup")); // true
+console.log(emblemFrame("trophy:tennis-cup", { yaw: 0 }) === renderEmblem("trophy:tennis-cup", { turnBox: true })); // true
 console.log(emblemFrame("trophy:tennis-cup", { yaw: 120 }).includes("<path")); // true
 console.log(emblemFrame("sport:nhl", { yaw: 70 }) === renderEmblem("sport:nhl")); // false
 console.log(emblemFrame("gear:hurley", { yaw: 120 }).includes("scale(-0.5 1)")); // true
 ```
+
+## The box of a turn
+
+A drawing is made in a square view box, and a turn can reach past the box of the still: a cup tilted toward the eye by 60 degrees shows its rim and its foot above and below where they stand at rest, a handle swings out, and the flat art of a skate or a pair of goggles has a stroke on the edge. So every emblem has a box for its still drawing (`renderEmblem`) and, for a body of revolution, a larger one that holds every turn of it. **A frame is always drawn in the box of the turn**, the same box at every yaw, pitch and roll, so nothing is cut off and the drawing does not change size or jump as it turns. The box is square and the element is `size` by `size` either way, so the cup is drawn a little smaller while it can turn (up to 30 percent for the tallest) and a page does not reflow when it swaps one emblem for another.
+
+```js
+import { emblemFrame, renderEmblem } from "@johnmorrisdotca/dougu-sports";
+
+const box = (svg) => /viewBox="([^"]*)"/.exec(svg)[1];
+console.log(box(emblemFrame("trophy:hockey-cup", { yaw: 0 })) === box(emblemFrame("trophy:hockey-cup", { yaw: 90, pitch: 60 }))); // true
+console.log(box(renderEmblem("trophy:hockey-cup")) === box(emblemFrame("trophy:hockey-cup", { yaw: 0 }))); // false
+console.log(box(renderEmblem("ball:soccer")) === box(emblemFrame("ball:soccer", { yaw: 90 }))); // true
+```
+
+`turnBox: true` on `renderEmblem` draws the still in the box of the turn (what `bindTurn` does for the resting view), and `turnBox: false` on a frame draws it in the still's own box. A ball, a medal, a crest and a sport's icon need no more room than their still has, so for them the two boxes are one. `test/turnbox.test.ts` measures every emblem's ink against its box; `node scripts/turn-boxes.mjs` prints the box a new emblem needs, to put in its model as `box` and `turnBox`.
 
 ## A loop
 

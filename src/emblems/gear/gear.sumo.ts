@@ -2,6 +2,7 @@
 import { capsule, circle, drawn, seg } from "./gear.core.ts";
 
 export const GEAR_GUNBAI = /* @__PURE__ */ drawn("gear:gunbai", "Referee's war fan", "軍配", {
+  box: "-0.4 0 64.7 64.7",
   main: "#4a2428",
   accent: "#f0dca6",
   parts: [

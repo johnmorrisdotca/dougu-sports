@@ -28,7 +28,8 @@ test("every emblem is finite and well formed at every yaw and pitch, in every st
 test("no turn is the still drawing for every emblem that turns, and a turn that is not a number is no turn", () => {
   for (const id of D.EMBLEM_IDS) {
     // A ball that is turning has no grain, so its resting turn is the still drawing with the grain left out.
-    const still = D.emblemInfo(id).kind === "ball" ? D.renderEmblem(id, { grain: false }) : D.renderEmblem(id);
+    // A frame is in the box of the turn, which is the still's own box for every emblem but a few cups; `turnBox: true` draws the still in it.
+    const still = D.emblemInfo(id).kind === "ball" ? D.renderEmblem(id, { grain: false }) : D.renderEmblem(id, { turnBox: true });
     assert.equal(D.emblemFrame(id, { yaw: 0, pitch: 0 }), still, id);
     assert.equal(D.emblemFrame(id, { yaw: Number.NaN, pitch: Infinity }), still, id);
     assert.equal(D.emblemFrame(id, { yaw: "90" as never }), still, id);
@@ -46,7 +47,7 @@ test("a body of revolution keeps its outline at every yaw and moves its light", 
       assert.deepEqual(pieces(D.emblemFrame(id, { yaw })), still, `${id} ${yaw}`);
       assert.notEqual(D.emblemFrame(id, { yaw }), D.renderEmblem(id), `${id} ${yaw}`);
     }
-    assert.equal(D.emblemFrame(id, { yaw: 360 }), D.renderEmblem(id), id);
+    assert.equal(D.emblemFrame(id, { yaw: 360 }), D.renderEmblem(id, { turnBox: true }), id);
   }
 });
 

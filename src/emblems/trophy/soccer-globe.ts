@@ -4,6 +4,7 @@ import { defineLathe } from "../emblem.lathe.ts";
 /** Gold spiral figures rising to hold up a globe, with green bands at the base. */
 export const TROPHY_SOCCER_GLOBE = /* @__PURE__ */ defineLathe("trophy:soccer-globe", "Globe on a column", "柱の上の地球儀", "ours", {
   metal: "gold",
+  turnBox: "-3.8 -0.4 71.6 71.6",
   tones: { green: "#1f8a5b" },
   solids: [
     {

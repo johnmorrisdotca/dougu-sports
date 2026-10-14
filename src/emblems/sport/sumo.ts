@@ -4,6 +4,7 @@ import { defineIcon } from "../emblem.shapes.ts";
 
 /** Sumo. */
 export const SPORT_SUMO = /* @__PURE__ */ defineIcon("sport:sumo", "Sumo", "相撲", "ours", {
+  box: "-0.7 0 65.3 65.3",
   metal: "flat",
   ink: true,
   front: [

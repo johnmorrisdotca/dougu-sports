@@ -4,6 +4,7 @@ import { defineLathe } from "../emblem.lathe.ts";
 /** A ring of about thirty gold pennants standing round a silver baseball on a round base. */
 export const TROPHY_BASEBALL = /* @__PURE__ */ defineLathe("trophy:baseball", "Baseball trophy", "野球のトロフィー", "ours", {
   metal: "silver",
+  turnBox: "-9.3 -7.3 82.6 82.6",
   tones: { gilt: "#d9a620", pole: "#aab2bc", accent: "#e0b030" },
   solids: [
     {

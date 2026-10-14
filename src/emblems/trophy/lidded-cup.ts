@@ -4,6 +4,7 @@ import { defineLathe } from "../emblem.lathe.ts";
 /** A cup with a domed lid and a knob. */
 export const TROPHY_LIDDED_CUP = /* @__PURE__ */ defineLathe("trophy:lidded-cup", "Cup with a lid", "ふた付きカップ", "ours", {
   metal: "gold",
+  turnBox: "-1.2 0 66.4 66.4",
   solids: [
     {
       p: [

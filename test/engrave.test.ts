@@ -130,7 +130,7 @@ test("the engraving on a cup's plinth turns round it: each letter is set at its 
     assert.ok(!D.renderEmblem(id).includes("<text"), `${id} has no text unasked`);
     const glyphs = (yaw: number): string => D.emblemFrame(id, { engrave: "MVP 2026", yaw });
     assert.notEqual(glyphs(50), glyphs(0), id);
-    assert.equal(glyphs(360), D.renderEmblem(id, { engrave: "MVP 2026" }), id);
+    assert.equal(glyphs(360), D.renderEmblem(id, { engrave: "MVP 2026", turnBox: true }), id);
     assert.deepEqual(texts(glyphs(180)), [], `${id}: the engraving is on the far side`);
     assert.ok(texts(glyphs(200)).length < still.length || id === "trophy:football", id);
     // Never a letter wider than itself, or a flipped one.

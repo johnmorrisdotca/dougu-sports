@@ -93,7 +93,7 @@ test("each flat item flips like a coin, and the cup is a lathe that keeps its ou
     assert.equal(D.emblemFrame(id, { yaw: 360 }), D.renderEmblem(id), id);
   }
   assert.notEqual(D.emblemFrame("trophy:sumo-cup", { yaw: 90 }), D.renderEmblem("trophy:sumo-cup"));
-  assert.equal(D.emblemFrame("trophy:sumo-cup", { yaw: 360 }), D.renderEmblem("trophy:sumo-cup"));
+  assert.equal(D.emblemFrame("trophy:sumo-cup", { yaw: 360 }), D.renderEmblem("trophy:sumo-cup", { turnBox: true }));
   const body = (svg: string): string => [...svg.matchAll(/<path d="(M[^"]*Q[^"]*z)" fill="url\(#dgsc/g)].map((m) => m[1]).join("|");
   assert.equal(body(D.emblemFrame("trophy:sumo-cup", { yaw: 120 })), body(D.renderEmblem("trophy:sumo-cup")));
   // A flag's back shows the cloth without its star or its letters.

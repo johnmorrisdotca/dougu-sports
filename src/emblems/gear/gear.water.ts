@@ -2,6 +2,7 @@
 import { capsule, drawn, ellipse, rect } from "./gear.core.ts";
 
 export const GEAR_DIVING_BOARD = /* @__PURE__ */ drawn("gear:diving-board", "Diving board", "飛び込み板", {
+  box: "-1.4 -0.8 66.8 66.8",
   main: "#4b84b8",
   accent: "#8a949f",
   parts: [
@@ -13,6 +14,7 @@ export const GEAR_DIVING_BOARD = /* @__PURE__ */ drawn("gear:diving-board", "Div
 });
 
 export const GEAR_SWIM_GOGGLES = /* @__PURE__ */ drawn("gear:swim-goggles", "Swim goggles", "水泳のゴーグル", {
+  box: "-2.1 -2.1 68.2 68.2",
   main: "#2a7fd0",
   accent: "#1d1f24",
   parts: [

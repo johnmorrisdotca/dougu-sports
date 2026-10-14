@@ -187,7 +187,8 @@ export function bindTurn(container: TurnContainer, ref: EmblemRef, options: Turn
       renderId = undefined;
     }
     const at = angles.yaw === 0 && angles.pitch === 0 && angles.roll === 0;
-    container.innerHTML = !turnable || at ? renderEmblem(current, frame) : emblemFrame(current, { ...frame, ...angles });
+    // The resting view of an emblem that turns is drawn in the box of the turn too, so that the element is the same size at every angle and a drag does not make the emblem jump or zoom at its first step.
+    container.innerHTML = !turnable ? renderEmblem(current, frame) : at ? renderEmblem(current, { turnBox: true, ...frame }) : emblemFrame(current, { ...frame, ...angles });
   };
   /** One drawing for any number of changes within a frame. */
   const schedule = (): void => {

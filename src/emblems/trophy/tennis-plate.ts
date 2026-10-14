@@ -4,6 +4,7 @@ import { defineLathe } from "../emblem.lathe.ts";
 /** A silver salver with a gilt pattern. */
 export const TROPHY_TENNIS_PLATE = /* @__PURE__ */ defineLathe("trophy:tennis-plate", "Plate on a pedestal", "台付きの大皿", "ours", {
   metal: "silver",
+  turnBox: "-5.9 -8.9 75.9 75.9",
   tilt: 36,
   tones: { gilt: "#d9a620", plain: "#9aa3ad" },
   solids: [
