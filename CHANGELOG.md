@@ -6,6 +6,20 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.5.2] - 2026-10-14
+
+The README's pictures are redone, because npm shows only the README that was published: every picture now stands on one of the family's shared backgrounds, and the demo can put one behind an emblem.
+
+### Changed
+
+- **Every README picture stands on a background** from the family's shared set (`scripts/family-backgrounds.ts`, version 1.0.0, copied byte for byte from taisen-brackets and held to its sha256 by `test/family-backgrounds.test.ts`): the balls under floodlights, the cups, medals and crests on royal purple, the gear on carbon fibre (dark) or a hardwood floor (light), the vintage balls on a warm sunburst, the printed pucks on the ice, the phone sheet on a glow and the turned emblems on a dark royal, each in a light and a dark twin where the README uses both. Labels take the ink the background returns, and every grid is full and runs edge to edge. The pictures stay webp (2.4 MB in all).
+- The balls picture shows the 36 balls and pucks of the sports on four full rows; the vintage, baseball and era-style balls have a picture of their own (`vintage-desk-light.webp`, `vintage-desk-dark.webp`), the pucks have a dark twin (`pucks-dark.webp`), and the turned emblems are `turn-desk.webp` (it was `turn-desk-light.webp`).
+- `pnpm screenshots` makes every picture, on port 7210 or `TEST_PORT`.
+
+### Added
+
+- **A background choice in the demo's preview**, off by default (`?background=ice`): one of the twenty-five, in the variant of the look, behind the stage, with the stage's text in the ink it returns. It is presentation only: the emblem the package draws is the same string with or without it, and the module is loaded only when a background is chosen. The package has no new code and still no dependency.
+
 ## [0.5.1] - 2026-10-14
 
 The judo suit, the belt and the football pictograms were wrong, and are redrawn from the rules: the judogi is a real jacket and trousers (white or blue, flat and folded), the belt is tied in the flat square knot, and there is a belt for every grade. 261 emblems.
