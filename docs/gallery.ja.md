@@ -2,7 +2,7 @@
 
 [README に戻る](../README.md) · 日本語 · [English](gallery.md)
 
-パッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 244 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから `scripts/make-gallery.mjs` が生成します（`pnpm gallery`）。
+パッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 261 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから `scripts/make-gallery.mjs` が生成します（`pnpm gallery`）。
 
 id は `<グループ>:<名前>` の形です。定数とインポートパスは id から決まるので、行ごとには書いていません。
 
@@ -248,11 +248,28 @@ id は `<グループ>:<名前>` の形です。定数とインポートパス�
 | `gear:mawashi` | 廻し | gear | drawn | 力士の廻しと、前に垂らした下がり |
 | `gear:shinai` | 竹刀 | gear | drawn | 剣道の竹刀。四つ割りの竹に先革、中結、柄が付く |
 | `gear:kendo-men` | 剣道の面 | gear | drawn | 剣道の面。面金、面布団、突き垂れが付く |
-| `gear:judogi` | 柔道衣 | gear | drawn | 柔道衣。上衣、ズボン、帯 |
-| `gear:obi` | 武道の帯 | gear | drawn | 段級に応じた色の、結んだ帯（白から黒まで） |
+| `gear:judogi` | 柔道衣 | gear | drawn | 白い柔道衣を広げた姿。長い袖、右前に合わせた刺し子で厚い襟、刺し子の身頃、膝を補強したズボン、本結びにした帯 |
+| `gear:judogi-blue` | 青い柔道衣 | gear | drawn | 試合で白と並んで認められている青の柔道衣を広げた姿 |
+| `gear:judogi-folded` | 畳んだ柔道衣 | gear | drawn | 白い柔道衣をきちんと四角く畳んだ姿。上に襟の刺し子が見え、帯を巻いて結んである |
+| `gear:judogi-blue-folded` | 畳んだ青い柔道衣 | gear | drawn | 青い柔道衣をきちんと四角く畳んだ姿。上に襟の刺し子が見え、帯を巻いて結んである |
+| `gear:obi` | 武道の帯 | gear | drawn | 本結びにした黒帯。腰に二周巻き、同じ長さの端を二本垂らした形 |
+| `gear:obi-white` | 白帯 | gear | drawn | 本結びにした白帯。初級の帯 |
+| `gear:obi-yellow` | 黄帯 | gear | drawn | 本結びにした黄帯 |
+| `gear:obi-orange` | 橙帯 | gear | drawn | 本結びにした橙帯 |
+| `gear:obi-green` | 緑帯 | gear | drawn | 本結びにした緑帯 |
+| `gear:obi-blue` | 青帯 | gear | drawn | 本結びにした青帯 |
+| `gear:obi-brown` | 茶帯 | gear | drawn | 本結びにした茶帯。級の上位の帯 |
+| `gear:obi-kohaku` | 紅白帯 | gear | drawn | 本結びにした紅白帯。六段から八段の帯で、赤と白を交互に縫い合わせてある |
+| `gear:obi-red` | 紅帯 | gear | drawn | 本結びにした紅帯。九段と十段の帯 |
+| `gear:obi-women` | 女子用の黒帯 | gear | drawn | 中央に白線の入った女子用の黒帯 |
+| `gear:obi-white-yellow` | 白と黄の二色帯 | gear | drawn | 上半分が白、下半分が黄の二色帯。白帯と黄帯の間の級の帯 |
+| `gear:obi-yellow-orange` | 黄と橙の二色帯 | gear | drawn | 上半分が黄、下半分が橙の二色帯。黄帯と橙帯の間の級の帯 |
+| `gear:obi-orange-green` | 橙と緑の二色帯 | gear | drawn | 上半分が橙、下半分が緑の二色帯。橙帯と緑帯の間の級の帯 |
+| `gear:obi-green-blue` | 緑と青の二色帯 | gear | drawn | 上半分が緑、下半分が青の二色帯。緑帯と青帯の間の級の帯 |
+| `gear:obi-blue-brown` | 青と茶の二色帯 | gear | drawn | 上半分が青、下半分が茶の二色帯。青帯と茶帯の間の級の帯 |
 | `gear:yumi` | 弓道の弓 | gear | drawn | 上が長い非対称の長弓。弦を張り、握り革と籐巻きが付く |
 | `gear:ya` | 弓道の矢 | gear | drawn | 弓道の矢。矢羽根、筈、矢尻が付く |
-| `gear:karate-gi` | 空手衣 | gear | drawn | 空手衣。上衣、ズボン、帯 |
+| `gear:karate-gi` | 空手衣 | gear | drawn | 白い空手衣を広げた姿。袖が短く軽い上衣、広いV字の襟と結び紐、まっすぐなズボン、本結びにした赤い帯 |
 
 ## sport
 
@@ -293,9 +310,9 @@ id は `<グループ>:<名前>` の形です。定数とインポートパス�
 | `sport:skating` | スケート靴 | icon | ours |  |
 | `sport:sumo` | 相撲 | icon | ours | 仕切りの姿勢で向かい合う、廻しを締めた二人の力士 |
 | `sport:kendo` | 剣道 | icon | ours | 剣道の面 |
-| `sport:judo` | 柔道 | icon | ours | 柔道衣と帯 |
+| `sport:judo` | 柔道 | icon | ours | 柔道衣。右前に合わせた襟の上衣、本結びで二本の端を垂らした帯、ズボン |
 | `sport:kyudo` | 弓道 | icon | ours | 弦を張った長弓と矢 |
-| `sport:karate` | 空手 | icon | ours | 握りしめた拳 |
+| `sport:karate` | 空手 | icon | ours | 空手衣。襟を広いV字に合わせた短めの上衣、本結びの帯、まっすぐなズボン |
 
 ## pennant
 

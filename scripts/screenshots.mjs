@@ -82,7 +82,7 @@ try {
     "ball:sepak-takraw", "ball:shuttlecock-feather", "ball:puck", "ball:curling-stone", "ball:lacrosse", "ball:handball", "ball:table-tennis", "ball:sliotar", "ball:roundnet",
     "ball:soccer-1870-hand-stitched", "ball:soccer-1900-laced", "ball:soccer-1930-18-panel", "ball:soccer-1950-12-panel", "ball:soccer-1960-32-panel-leather", "ball:baseball-lemon-peel", "ball:baseball-vintage-leather", "ball:soccer-1978-triad", "ball:soccer-2022-speed-shell"]
     .map((id) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.renderEmblem(id, { size: 146 })}</figure>`).join("");
-  // Gear: thirty-six of the forty-two pieces.
+  // Gear: thirty-six of the fifty-nine pieces.
   const gear = (D) => ["gear:hockey-stick", "gear:hockey-skate", "gear:goalie-mask", "gear:field-hockey-stick", "gear:lacrosse-stick", "gear:hurley", "gear:cricket-bat", "gear:wicket", "gear:baseball-bat",
     "gear:baseball-glove", "gear:football-helmet", "gear:goalposts", "gear:basketball-hoop", "gear:volleyball-net", "gear:tennis-racket", "gear:badminton-racket", "gear:table-tennis-paddle", "gear:padel-racket",
     "gear:pickleball-paddle", "gear:curling-broom", "gear:figure-skate", "gear:speed-skate", "gear:swim-goggles", "gear:starting-blocks", "gear:relay-baton", "gear:javelin", "gear:hurdles",

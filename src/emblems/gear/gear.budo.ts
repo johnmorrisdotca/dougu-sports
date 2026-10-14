@@ -74,6 +74,8 @@ function rows(poly: readonly Pt[], y0: number, y1: number, step: number, inset =
 
 // Cloth lines are laid over the cloth as ink at low opacity (dark rows) or as light rows, so they follow any tint.
 const INK = "#0d1522";
+/** The edge of a black belt: light enough to show on a dark page. */
+const BELT_EDGE = "#5d6672";
 const dark = (d: string, w = 0.3, op = 0.2): Part => ({ d, fill: "none", stroke: INK, w, op, line: "none" });
 const light = (d: string, w = 0.3, op = 0.3): Part => ({ d, fill: "none", stroke: "#ffffff", w, op, line: "none" });
 
@@ -102,6 +104,8 @@ interface BeltSpec {
   stripe?: boolean;
   /** A bar across each end. */
   bars?: boolean;
+  /** The edge of the belt, where a darker tone of the belt itself would vanish (a black belt on a dark page). */
+  edge?: string;
 }
 
 /** A belt tied at the front: two wraps, a flat square knot and two equal ends hanging a little apart. Parts, back to front. */
@@ -135,7 +139,7 @@ function belt(s: BeltSpec): Part[] {
     parts.push(light(line(y + w * 0.3 + 0.35, xa, xb) + line(y + w * 0.7 + 0.35, xa, xb), 0.25, 0.2));
   };
   for (const [y, segments] of wraps) {
-    for (const [xa, xb, fill] of segments) parts.push({ d: path(band(xa, xb, y)), fill, cyl: 0.5, shade: 0.25 });
+    for (const [xa, xb, fill] of segments) parts.push({ d: path(band(xa, xb, y)), fill, stroke: s.edge, cyl: 0.5, shade: 0.25 });
     if (s.half === true) parts.push({ d: path(band(s.x0, s.x1, y, 0.5, 1)), fill: alt, stroke: "none", cyl: 0.5, shade: 0.25, line: "none" });
     stitches(y, s.x0 + 0.8, s.x1 - 0.8);
     if (s.stripe === true) parts.push({ d: path(band(s.x0, s.x1, y, 0.425, 0.575)), fill: "#f6f4ee", stroke: "none", line: "none" });
@@ -151,7 +155,7 @@ function belt(s: BeltSpec): Part[] {
   for (const side of [-1, 1]) {
     const a: Pt = [s.cx + side * kw * 0.2, yc + hh * 0.2];
     const b: Pt = [a[0] + side * Math.sin(rad) * s.tail, a[1] + Math.cos(rad) * s.tail];
-    parts.push({ d: path(strip(a, b, tw)), fill: tailFill, cyl: 0.55, shade: 0.25 });
+    parts.push({ d: path(strip(a, b, tw)), fill: tailFill, stroke: s.edge, cyl: 0.55, shade: 0.25 });
     if (s.half === true) {
       const q = strip(a, b, tw);
       parts.push({ d: path([lerp(q[0]!, q[3]!, 0.5), lerp(q[1]!, q[2]!, 0.5), q[2]!, q[3]!]), fill: alt, stroke: "none", cyl: 0.55, shade: 0.25, line: "none" });
@@ -163,14 +167,14 @@ function belt(s: BeltSpec): Part[] {
   }
   const kfill = s.panels === undefined ? s.main : alt;
   const blob = rect(s.cx - kw / 2, yt, kw, hh * 2, Math.min(2.4, kw * 0.22));
-  parts.push({ d: blob, fill: kfill, cyl: 0.6, shade: 0.3 });
+  parts.push({ d: blob, fill: kfill, stroke: s.edge, cyl: 0.6, shade: 0.3 });
   if (s.half === true) parts.push({ d: rect(s.cx - kw / 2, yc, kw, hh, Math.min(2.4, kw * 0.22)), fill: alt, stroke: "none", cyl: 0.6, shade: 0.3, line: "none" });
   // the folds of the knot: two diagonals that cross, from the top corners to the foot of the knot
   const fx0 = s.cx - kw / 2, fx1 = s.cx + kw / 2;
   parts.push(dark(`M${f(fx0 + 0.9)} ${f(yt + 0.9)}L${f(fx1 - 1.6)} ${f(yb - 0.9)}M${f(fx1 - 0.9)} ${f(yt + 0.9)}L${f(fx0 + 1.6)} ${f(yb - 0.9)}`, 0.34, 0.42));
   parts.push(light(`M${f(fx0 + 1.5)} ${f(yt + 0.9)}L${f(fx1 - 1)} ${f(yb - 0.9)}M${f(fx1 - 1.5)} ${f(yt + 0.9)}L${f(fx0 + 1)} ${f(yb - 0.9)}`, 0.3, 0.3));
   const wt = yc - w * 0.46, wh = w * 0.92;
-  parts.push({ d: rect(fx0 - 0.5, wt, kw + 1, wh, 0.9), fill: s.main, cyl: 0.9, shade: 0.3 });
+  parts.push({ d: rect(fx0 - 0.5, wt, kw + 1, wh, 0.9), fill: s.main, stroke: s.edge, cyl: 0.9, shade: 0.3 });
   if (s.half === true) parts.push({ d: rect(fx0 - 0.5, yc, kw + 1, wh / 2, 0.5), fill: alt, stroke: "none", cyl: 0.9, shade: 0.3, line: "none" });
   parts.push(dark(`M${f(fx0)} ${f(yc)}H${f(fx1)}`, 0.28, 0.3));
   if (s.stripe === true) parts.push({ d: rect(fx0 - 0.3, yc - w * 0.075, kw + 0.6, w * 0.15), fill: "#f6f4ee", stroke: "none", line: "none" });
@@ -239,7 +243,7 @@ function judogiFlat(): Part[] {
   parts.push(dark("M18.8 34.4H44.8", 0.3, 0.32));
   parts.push(dark("M20.2 31.4V36M43.8 31.4V36", 0.4, 0.45));
   // The belt, over the jacket, wrapped twice.
-  parts.push(...belt({ main: "$accent", cx: 32, x0: 18.2, x1: 45.8, y: 25.2, w: 2.5, sag: 0, knot: 6.4, tail: 11.4, splay: 6 }));
+  parts.push(...belt({ edge: BELT_EDGE, main: "$accent", cx: 32, x0: 18.2, x1: 45.8, y: 25.2, w: 2.5, sag: 0, knot: 6.4, tail: 11.4, splay: 6 }));
   return parts;
 }
 
@@ -272,7 +276,7 @@ function judogiFolded(): Part[] {
   parts.push(dark(rowsAlong([28, 11.4], [33.2, 18]), 0.28, 0.45));
   parts.push({ d: path(strip([36, 10.6], [22.6, 41], 1.4)), fill: INK, stroke: "none", op: 0.12, fx: true });
   // The belt wrapped round it and tied on top.
-  parts.push(...belt({ main: "$accent", cx: 32, x0: 7.6, x1: 56.4, y: 26.4, w: 3, sag: 0, knot: 7.4, tail: 12.6, splay: 6 }));
+  parts.push(...belt({ edge: BELT_EDGE, main: "$accent", cx: 32, x0: 7.6, x1: 56.4, y: 26.4, w: 3, sag: 0, knot: 7.4, tail: 12.6, splay: 6 }));
   return parts;
 }
 
@@ -323,7 +327,7 @@ const obiSpec = (extra?: Partial<BeltSpec>): readonly Part[] =>
 
 const obiPiece = (id: string, en: string, ja: string, main: string, parts: readonly Part[], accent?: string) => drawn(id, en, ja, { main, accent, parts });
 
-export const GEAR_OBI = /* @__PURE__ */ obiPiece("gear:obi", "Belt", "武道の帯", OBI_RANKS.black, obiSpec());
+export const GEAR_OBI = /* @__PURE__ */ obiPiece("gear:obi", "Belt", "武道の帯", OBI_RANKS.black, obiSpec({ edge: BELT_EDGE }));
 export const GEAR_OBI_WHITE = /* @__PURE__ */ obiPiece("gear:obi-white", "White belt", "白帯", OBI_RANKS.white, obiSpec());
 export const GEAR_OBI_YELLOW = /* @__PURE__ */ obiPiece("gear:obi-yellow", "Yellow belt", "黄帯", OBI_RANKS.yellow, obiSpec());
 export const GEAR_OBI_ORANGE = /* @__PURE__ */ obiPiece("gear:obi-orange", "Orange belt", "橙帯", OBI_RANKS.orange, obiSpec());
@@ -334,7 +338,7 @@ export const GEAR_OBI_RED = /* @__PURE__ */ obiPiece("gear:obi-red", "Red belt",
 /** The red-and-white belt of the 6th to 8th dan: panels of red and white (about 21 cm long), red at both ends. */
 export const GEAR_OBI_KOHAKU = /* @__PURE__ */ obiPiece("gear:obi-kohaku", "Red and white belt", "紅白帯", OBI_RANKS.kohaku, obiSpec({ alt: "$accent", panels: { upper: [19, 45], lower: [11, 53], tail: "$main" }, bars: false }), "#f6f4ee");
 /** The black belt of a woman in Japan: a white stripe down the middle of the belt along its whole length. */
-export const GEAR_OBI_WOMEN = /* @__PURE__ */ obiPiece("gear:obi-women", "Women's black belt", "女子用の黒帯", OBI_RANKS.black, obiSpec({ stripe: true }));
+export const GEAR_OBI_WOMEN = /* @__PURE__ */ obiPiece("gear:obi-women", "Women's black belt", "女子用の黒帯", OBI_RANKS.black, obiSpec({ stripe: true, edge: BELT_EDGE }));
 
 const OBI_BY_RANK = { white: GEAR_OBI_WHITE, yellow: GEAR_OBI_YELLOW, orange: GEAR_OBI_ORANGE, green: GEAR_OBI_GREEN, blue: GEAR_OBI_BLUE, brown: GEAR_OBI_BROWN, black: GEAR_OBI, kohaku: GEAR_OBI_KOHAKU, red: GEAR_OBI_RED } as const;
 
@@ -342,11 +346,11 @@ const OBI_BY_RANK = { white: GEAR_OBI_WHITE, yellow: GEAR_OBI_YELLOW, orange: GE
 // belt's width, running the whole length. `tint` is the colour of the upper half and `accent` the colour of the lower.
 const SPLIT = obiSpec({ half: true, alt: "$accent", bars: false });
 const split = (id: string, en: string, ja: string, a: ObiRank, b: ObiRank) => obiPiece(id, en, ja, OBI_RANKS[a], SPLIT, OBI_RANKS[b]);
-export const GEAR_OBI_WHITE_YELLOW = /* @__PURE__ */ split("gear:obi-white-yellow", "White and yellow belt", "白黄帯", "white", "yellow");
-export const GEAR_OBI_YELLOW_ORANGE = /* @__PURE__ */ split("gear:obi-yellow-orange", "Yellow and orange belt", "黄橙帯", "yellow", "orange");
-export const GEAR_OBI_ORANGE_GREEN = /* @__PURE__ */ split("gear:obi-orange-green", "Orange and green belt", "橙緑帯", "orange", "green");
-export const GEAR_OBI_GREEN_BLUE = /* @__PURE__ */ split("gear:obi-green-blue", "Green and blue belt", "緑青帯", "green", "blue");
-export const GEAR_OBI_BLUE_BROWN = /* @__PURE__ */ split("gear:obi-blue-brown", "Blue and brown belt", "青茶帯", "blue", "brown");
+export const GEAR_OBI_WHITE_YELLOW = /* @__PURE__ */ split("gear:obi-white-yellow", "White and yellow belt", "白と黄の二色帯", "white", "yellow");
+export const GEAR_OBI_YELLOW_ORANGE = /* @__PURE__ */ split("gear:obi-yellow-orange", "Yellow and orange belt", "黄と橙の二色帯", "yellow", "orange");
+export const GEAR_OBI_ORANGE_GREEN = /* @__PURE__ */ split("gear:obi-orange-green", "Orange and green belt", "橙と緑の二色帯", "orange", "green");
+export const GEAR_OBI_GREEN_BLUE = /* @__PURE__ */ split("gear:obi-green-blue", "Green and blue belt", "緑と青の二色帯", "green", "blue");
+export const GEAR_OBI_BLUE_BROWN = /* @__PURE__ */ split("gear:obi-blue-brown", "Blue and brown belt", "青と茶の二色帯", "blue", "brown");
 /** Any two colours: the belt `obi` draws for a pair. */
 const OBI_SPLIT = /* @__PURE__ */ split("gear:obi-split", "Two-colour belt", "二色の帯", "white", "yellow");
 

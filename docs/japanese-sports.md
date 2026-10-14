@@ -9,17 +9,17 @@
 | Sumo | `sport:sumo` (two wrestlers in the shikiri crouch) | `trophy:sumo-cup`, `gear:gunbai`, `gear:mawashi` | 相撲, 鳳凰飾りの銀杯, 軍配, 廻し |
 | Championship flags | | `trophy:championship-banner` | 優勝旗 |
 | Kendo | `sport:kendo` (the helmet) | `gear:shinai`, `gear:kendo-men` | 剣道, 竹刀, 剣道の面 |
-| Judo | `sport:judo` (the suit and belt) | `gear:judogi`, `gear:obi` | 柔道, 柔道衣, 武道の帯 |
+| Judo | `sport:judo` (the suit and belt) | `gear:judogi`, `gear:judogi-blue`, `gear:judogi-folded`, `gear:judogi-blue-folded`, `gear:obi` and the belts below | 柔道, 柔道衣, 武道の帯 |
 | Kyudo | `sport:kyudo` (a bow, its string and an arrow) | `gear:yumi`, `gear:ya` | 弓道, 弓道の弓, 弓道の矢 |
-| Karate | `sport:karate` (a fist) | `gear:karate-gi` | 空手, 空手衣 |
+| Karate | `sport:karate` (the suit) | `gear:karate-gi` | 空手, 空手衣 |
 
 ```js
 import { JAPANESE_IDS, emblemInfo, emblemName } from "@johnmorrisdotca/dougu-sports";
 
-console.log(JAPANESE_IDS.length); // 16
+console.log(JAPANESE_IDS.length); // 33
 console.log(emblemName("gear:gunbai", "ja")); // 軍配
 console.log(emblemName("gear:gunbai")); // Referee's war fan
-console.log(emblemInfo("gear:judogi").description?.ja); // 柔道衣。上衣、ズボン、帯
+console.log(emblemInfo("gear:judogi").description?.ja.startsWith("白い柔道衣")); // true
 ```
 
 ## The words
@@ -58,13 +58,46 @@ console.log(plain.includes("<text")); // false
 console.log(crimson.includes(">ABC<")); // true
 ```
 
+## The judo suit
+
+`gear:judogi` is the white judogi laid flat, `gear:judogi-blue` the blue one, and `gear:judogi-folded` and `gear:judogi-blue-folded` the same folded into a neat rectangle with the belt tied round it. They are drawn from the IJF's judogi rules (Sport and Organisation Rules, C1, [references](references.md#judo-and-karate-suits-and-belts)):
+
+- **Jacket (uwagi):** the lapels cross left over right, with the crossing under 10 cm below the top of the sternum, and the collar is a thick stitched lapel running from the back of the neck to the hem (the rule gives it as 4 cm wide and at most 1 cm thick). The sleeves cover the whole arm, wrist bone included, and the skirt covers the buttocks, with short vents at the sides. The cloth is heavy, so the upper body and the sleeves are drawn quilted, in rows.
+- **Trousers (zubon):** straight and loose, ending near the ankle, with a drawstring waist and reinforced knees.
+- **Colour (C1.9):** the jacket and the trousers are one colour, "snow white" (`JUDOGI_WHITE`) or blue (`JUDOGI_BLUE`, between Pantone 285M and 286M); nothing else.
+- **Belt:** the suit wears a black belt by default; `accent` takes any other colour (`OBI_RANKS`).
+- The backnumber is sewn on the back (its top 3 cm below the collar, C1.8), so a front view does not show it.
+
 ## Belts
 
-`gear:obi` is a tied belt, black by default. `OBI_RANKS` holds the colours from the first rank to the black belt, and `obi(rank, options)` draws one; `tint` takes any other colour, and `accent` the stripe at its ends. `gear:judogi` and `gear:karate-gi` take an `accent` for the colour of the belt they wear.
+The belt (obi) is drawn as it is tied: wrapped twice round the waist, crossed at the back, both ends brought to the front and tied in a flat square (reef) knot, left over right and then right over left, with the two ends of one length hanging a little apart. `gear:obi` is the black belt; the grades have their own ids:
+
+| Grade | Belt | Id |
+| --- | --- | --- |
+| Kyu, from the first | white, yellow, orange, green, blue, brown | `gear:obi-white`, `-yellow`, `-orange`, `-green`, `-blue`, `-brown` |
+| 1st to 5th dan | black | `gear:obi` |
+| 6th to 8th dan | red and white panels (kōhaku-obi) | `gear:obi-kohaku` |
+| 9th and 10th dan | solid red | `gear:obi-red` |
+| A woman's black belt in Japan | black with a white stripe down the middle | `gear:obi-women` |
+| Between two kyu | two colours, side by side along the belt: white-yellow, yellow-orange, orange-green, green-blue, blue-brown | `gear:obi-white-yellow`, `-yellow-orange`, `-orange-green`, `-green-blue`, `-blue-brown` |
+
+The Kodokan's own kyu belts are white (5th and 4th kyu) and brown (3rd to 1st kyu); the colours between them were added by other countries, so the order and the ages differ from one country to the next. The two-colour belts are the intermediate belts several countries give young judoka (France since 1990; the IJF names these four pairs); no rule found fixes how the two colours are laid on the belt, so they are drawn as two halves of the width. See the [references](references.md#judo-and-karate-suits-and-belts) for the sources.
+
+`OBI_RANKS` holds the colours (`kohaku` is the red of the panels, `red` the red of the 9th dan), and `obi(rank, options)` draws one. `rank` is a grade or a pair of grades for a two-colour belt (`obi(["white", "yellow"])`); `tint` takes any other colour, or a pair of colours; `accent` is the stripe at the ends of a one-colour belt, the white of the red-and-white belt and the second colour of a pair; `women: true` adds the stripe of the women's black belt and is ignored by every other belt. `gear:judogi` and `gear:karate-gi` take an `accent` for the colour of the belt they wear.
 
 ```js
 import { OBI_RANKS, obi } from "@johnmorrisdotca/dougu-sports";
 
-console.log(Object.keys(OBI_RANKS).join(" ")); // white yellow orange green blue brown black
+console.log(Object.keys(OBI_RANKS).join(" ")); // white yellow orange green blue brown black kohaku red
 console.log(obi("brown", { size: 24 }).includes(OBI_RANKS.brown)); // true
+console.log(obi("black", { women: true }).includes("#f6f4ee")); // true
+console.log(obi(["white", "yellow"]).includes(OBI_RANKS.yellow)); // true
 ```
+
+## The karate suit
+
+`gear:karate-gi` is drawn from the WKF competition rules (article 2.2.1): white, without stripes or piping; a lighter cloth than the judogi's (no quilting, a plain narrow collar); a jacket that covers the hips and no more than three-quarters of the thigh; sleeves that reach the bend of the wrist at most and halfway down the forearm at least, so shorter than a judogi's; ties on the jacket; trousers that cover at least two thirds of the shin and stop above the ankle bone; and a red (AKA) or blue (AO) belt, which is why the belt is red by default. `sport:karate` is the same suit as a pictogram, and `sport:judo` the judogi.
+
+## American football pictograms
+
+`sport:nfl`, `sport:cfl` and `sport:ifaf` are the balls of `ball:football`, `ball:football-cfl` and `ball:football-ifaf` as pictograms: a prolate ball on the diagonal with a row of laces on its upper side. The NFL ball has no stripes; the CFL ball has a white stripe all the way round near each end (CFL Rule 1, Section 2); the IFAF ball has two 1-inch white stripes near each end, on the two panels next to the laces only (IFAF Football Rules and Interpretations 2023, Rule 1, Section 3, Article 1 e), which is the upper half of the picture.

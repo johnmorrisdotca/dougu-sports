@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 244 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 261 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -248,11 +248,28 @@ The folders the art lives in are in [layout.md](layout.md).
 | `gear:mawashi` | Sumo belt | gear | drawn | The wrestler's belt, with the stiff cords that hang from its front |
 | `gear:shinai` | Bamboo sword | gear | drawn | The kendo practice sword: four bamboo staves with a leather tip, a tie and a hilt |
 | `gear:kendo-men` | Kendo helmet | gear | drawn | The kendo helmet: a steel grille, cloth flaps and a throat guard |
-| `gear:judogi` | Judo suit | gear | drawn | The judo suit: a jacket with crossed lapels, trousers and a belt |
-| `gear:obi` | Belt | gear | drawn | A tied belt in the colour of a rank, white to black |
+| `gear:judogi` | Judo suit | gear | drawn | The white judo suit laid flat: a jacket with long sleeves, thick stitched lapels crossed left over right and a quilted upper body, trousers with reinforced knees, and the belt tied in a flat knot |
+| `gear:judogi-blue` | Blue judo suit | gear | drawn | The blue judo suit laid flat, in the blue the competition rules allow beside white |
+| `gear:judogi-folded` | Folded judo suit | gear | drawn | The white judo suit folded into a neat rectangle, collar and lapel stitching on top, the belt tied round it |
+| `gear:judogi-blue-folded` | Folded blue judo suit | gear | drawn | The blue judo suit folded into a neat rectangle, collar and lapel stitching on top, the belt tied round it |
+| `gear:obi` | Belt | gear | drawn | A belt in the flat square knot: two layers round the waist and two equal ends hanging, black |
+| `gear:obi-white` | White belt | gear | drawn | A white belt in the flat square knot, the first kyu belt |
+| `gear:obi-yellow` | Yellow belt | gear | drawn | A yellow belt in the flat square knot |
+| `gear:obi-orange` | Orange belt | gear | drawn | An orange belt in the flat square knot |
+| `gear:obi-green` | Green belt | gear | drawn | A green belt in the flat square knot |
+| `gear:obi-blue` | Blue belt | gear | drawn | A blue belt in the flat square knot |
+| `gear:obi-brown` | Brown belt | gear | drawn | A brown belt in the flat square knot, the highest kyu belt |
+| `gear:obi-kohaku` | Red and white belt | gear | drawn | The red and white belt of the 6th to 8th dan, in panels, in the flat square knot |
+| `gear:obi-red` | Red belt | gear | drawn | The solid red belt of the 9th and 10th dan, in the flat square knot |
+| `gear:obi-women` | Women's black belt | gear | drawn | A black belt with the white stripe down its middle that women wear in Japan |
+| `gear:obi-white-yellow` | White and yellow belt | gear | drawn | A two-colour belt, white above and yellow below, between the white and yellow grades |
+| `gear:obi-yellow-orange` | Yellow and orange belt | gear | drawn | A two-colour belt, yellow above and orange below, between the yellow and orange grades |
+| `gear:obi-orange-green` | Orange and green belt | gear | drawn | A two-colour belt, orange above and green below, between the orange and green grades |
+| `gear:obi-green-blue` | Green and blue belt | gear | drawn | A two-colour belt, green above and blue below, between the green and blue grades |
+| `gear:obi-blue-brown` | Blue and brown belt | gear | drawn | A two-colour belt, blue above and brown below, between the blue and brown grades |
 | `gear:yumi` | Long bow | gear | drawn | The long asymmetric bow, held a third of the way up, with its string and wrapped grip |
 | `gear:ya` | Arrow | gear | drawn | A kyudo arrow with feather fletching, a nock and a steel point |
-| `gear:karate-gi` | Karate suit | gear | drawn | The karate suit: a jacket with crossed lapels, trousers and a belt |
+| `gear:karate-gi` | Karate suit | gear | drawn | The white karate suit laid flat: a lighter jacket with shorter sleeves, a wide V of plain lapels and tie strings, straight trousers, and a red belt in a flat knot |
 
 ## sport
 
@@ -293,9 +310,9 @@ The folders the art lives in are in [layout.md](layout.md).
 | `sport:skating` | Ice skate | icon | ours |  |
 | `sport:sumo` | Sumo | icon | ours | Two wrestlers in the crouch they face each other in at the start of a bout, with their belts |
 | `sport:kendo` | Kendo | icon | ours | The kendo helmet |
-| `sport:judo` | Judo | icon | ours | The judo suit and belt |
+| `sport:judo` | Judo | icon | ours | A judo suit: jacket with crossed lapels, a belt in a flat knot with two ends hanging, and trousers |
 | `sport:kyudo` | Kyudo | icon | ours | A long bow, its string and an arrow |
-| `sport:karate` | Karate | icon | ours | A clenched fist |
+| `sport:karate` | Karate | icon | ours | A karate suit: a short jacket with a wide V of lapels, a belt in a flat knot, and straight trousers |
 
 ## pennant
 

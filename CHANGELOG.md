@@ -6,6 +6,28 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-10-14
+
+The judo suit, the belt and the football pictograms were wrong, and are redrawn from the rules: the judogi is a real jacket and trousers (white or blue, flat and folded), the belt is tied in the flat square knot, and there is a belt for every grade. 261 emblems.
+
+### Fixed
+
+- **`gear:judogi` was not a judogi.** It was a robe with an X of two thin bands, sleeves like bat wings and a belt with a block for a buckle. It is now the jacket laid flat with long sleeves that cover the wrist bone, a thick stitched collar crossed left over right (the crossing under 10 cm below the top of the sternum), a quilted upper body, a skirt with side vents, and trousers with a drawstring waist and reinforced knees, from the IJF judogi rules (Sport and Organisation Rules, C1.9 and C1.10; [docs/references.md](docs/references.md#judo-and-karate-suits-and-belts)).
+- **`gear:obi` is the belt as it is tied**: two layers round the waist, a flat square (reef) knot and two equal ends hanging a little apart; it was a strap with a buckle. The judogi, the folded judogi and the karate-gi wear the same knot.
+- **`gear:karate-gi` is its own cut** from the WKF rules (2.2.1): lighter cloth with no quilting, a plain narrow collar, shorter sleeves and jacket than the judogi's, tie strings, straight trousers and a red (AKA) belt by default (`accent` takes a blue one).
+- **`sport:judo` and `sport:karate` are suit pictograms** that read at 16 pixels in the metal, colour and line styles (the karate one was a fist that looked like a glove).
+- **`sport:nfl`, `sport:cfl` and `sport:ifaf` are footballs** drawn from `ball:football`, `ball:football-cfl` and `ball:football-ifaf` (a prolate ball with laces; they were a thin pointed leaf): the CFL's has the white stripe round both ends, the IFAF's the stripes on the laces' side only, the NFL's none (CFL Rule 1 Section 2; IFAF Rule 1 Section 3).
+
+### Added
+
+- **`gear:judogi-blue`, `gear:judogi-folded` and `gear:judogi-blue-folded`**: the blue judogi (IJF colour rule C1.9, `JUDOGI_BLUE`), and both suits folded into a neat rectangle with the collar and lapel stitching on top and the belt tied round it. `JUDOGI_WHITE` and `JUDOGI_BLUE` are exported.
+- **A belt for every grade**: `gear:obi-white`, `-yellow`, `-orange`, `-green`, `-blue`, `-brown`, `gear:obi-kohaku` (red and white panels, 6th to 8th dan), `gear:obi-red` (9th and 10th dan), `gear:obi-women` (the black belt with the white stripe women wear in Japan) and the two-colour belts `gear:obi-white-yellow`, `-yellow-orange`, `-orange-green`, `-green-blue` and `-blue-brown`. `OBI_RANKS` gains `kohaku` and `red`, and `obi(rank, options)` takes a grade or a pair of grades (`obi(["white", "yellow"])`), `tint` as one colour or a pair, and `women: true`.
+- Japanese names and descriptions read by a Japanese reviewer (右前 for the lapels, 本結び for the knot; the two-colour belts are a European custom with no Japanese standard name, so they are 「A と B の二色帯」), tests (`test/judo.test.ts`) for the colours, the belts and the football stripes, regenerated gallery pages and gear contact sheet.
+
+### Changed
+
+- The judo and karate suits and belts are layered drawings with a larger size budget (14000 characters) than the other gear (6000).
+
 ## [0.5.0] - 2026-10-14
 
 Fifty balls in true 3D: vintage leather soccer balls, soccer balls in the style of an era, patterns of a shop wall, baseballs of other threads and volleyballs in national colours. 244 emblems.
