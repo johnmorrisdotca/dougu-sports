@@ -38,11 +38,6 @@ import { CREST_SHIELD } from "./crest/shield.ts";
 import { CREST_ROUNDEL } from "./crest/roundel.ts";
 import { CREST_DIAMOND } from "./crest/diamond.ts";
 import { CREST_PENNANT } from "./crest/pennant.ts";
-import { JERSEY_HOCKEY } from "./jersey/hockey.ts";
-import { JERSEY_BASKETBALL } from "./jersey/basketball.ts";
-import { JERSEY_SOCCER } from "./jersey/soccer.ts";
-import { JERSEY_BASEBALL } from "./jersey/baseball.ts";
-import { JERSEY_FOOTBALL } from "./jersey/football.ts";
 import { PENNANT_CHAMPIONSHIP } from "./pennant/championship.ts";
 import { BALLS } from "./ball/ball.index.ts";
 import { GEARS } from "./gear/gear.index.ts";
@@ -122,11 +117,6 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `gear:${string}`
   "crest:roundel": CREST_ROUNDEL,
   "crest:diamond": CREST_DIAMOND,
   "crest:pennant": CREST_PENNANT,
-  "jersey:hockey": JERSEY_HOCKEY,
-  "jersey:basketball": JERSEY_BASKETBALL,
-  "jersey:soccer": JERSEY_SOCCER,
-  "jersey:baseball": JERSEY_BASEBALL,
-  "jersey:football": JERSEY_FOOTBALL,
   "pennant:championship": PENNANT_CHAMPIONSHIP,
   "sport:nfl": SPORT_NFL,
   "sport:cfl": SPORT_CFL,

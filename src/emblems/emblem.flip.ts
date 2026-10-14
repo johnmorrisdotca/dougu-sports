@@ -1,6 +1,6 @@
 // The coin-flip turn for any flat drawing: it takes a finished document and returns it turned. The face is squeezed by the cosine of the yaw and shows its back past a quarter turn, and the rim
 // (the thickness of the sheet) shows as a dark edge on the side that is turning away, widest when the drawing is edge on. A piece with no drawing of its own for the back (a bat, a racket, a pictogram)
-// shows its front mirrored and a little darker, as the other side of a cut-out; a jersey or a pennant passes the drawing of its back. A pure function of strings and numbers; it imports nothing.
+// shows its front mirrored and a little darker, as the other side of a cut-out; a pennant passes the drawing of its back. A pure function of strings and numbers; it imports nothing.
 
 /** What a turn needs. `line` is the line style (the rim is drawn in the page's ink), `back` is the document of the back view, and `thick` is the thickness as a fraction of the width. */
 export interface FlipOptions {

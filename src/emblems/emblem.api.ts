@@ -2,7 +2,7 @@
 // and nothing else imports that drawing's own module (`dougu-sports/ball/soccer`) and calls its `svg`.
 import type { Emblem, EmblemOptions, EmblemStyle, EmblemTheme, FrameOptions } from "./emblem.core.ts";
 import { EMBLEM_STYLES } from "./emblem.core.ts";
-import { BALL_IDS, CREST_SHAPES, EMBLEM_ALIASES, EMBLEM_IDS, JERSEY_CUTS, type BallId, type CrestShape, type EmblemId, type JerseyCut, type MedalKind, type SportName } from "./emblem.ids.ts";
+import { BALL_IDS, CREST_SHAPES, EMBLEM_ALIASES, EMBLEM_IDS, type BallId, type CrestShape, type EmblemId, type MedalKind, type SportName } from "./emblem.ids.ts";
 import type { PieceSize } from "./ball/ball.core.ts";
 import { EMBLEM_TABLE } from "./emblem.registry.ts";
 
@@ -153,53 +153,6 @@ export function sportIcon(sport: SportName, options?: EmblemOptions): string {
   const e = Object.hasOwn(EMBLEM_TABLE, `sport:${sport}`) ? EMBLEM_TABLE[`sport:${sport}` as EmblemId] : undefined;
   if (e === undefined) throw new Error(`Unknown sport "${String(sport).slice(0, 40)}": the icons are for the names in SPORT_NAMES.`);
   return e.svg(options);
-}
-
-/** What `jersey` takes. */
-export interface JerseyOptions {
-  /** The cut: `hockey` (the default), `basketball`, `soccer`, `baseball` or `football`. Written as `"line"`, `"metal"` or `"color"` it is the finish instead, and the cut is hockey. */
-  style?: JerseyCut | EmblemStyle;
-  /** The cut, when `style` is a finish. */
-  cut?: JerseyCut;
-  /** The finish: `metal` (flat-shaded, the default), `line` or `color`. */
-  render?: EmblemStyle;
-  /** The team's main colour, its trim (collar, stripes, the number's outline) and its number's colour, as hex colours or `rgb()`. The trim is the number's colour unless a third is given. */
-  colors?: string | readonly [main?: string, trim?: string, number?: string];
-  /** The number, up to two digits: on the chest, and big on the back. Its colour reads at 4.5 to 1 on the shirt: a colour that would not is replaced by black, white or a tone of the shirt. */
-  number?: number | string;
-  /** The name above the number on the back. */
-  name?: string;
-  /** The pattern in the second colour: `"solid"` (the default), `"stripes"`, `"hoops"`, `"halves"`, `"sash"`, `"yoke"` or `"pinstripes"`; `true` is `"stripes"`. */
-  stripes?: EmblemOptions["stripes"];
-  /** The trim in the second colour (cuffs and hem; a basketball's sides): on for hockey, basketball, baseball and football unless `false`, off for soccer unless `true`. */
-  trim?: boolean;
-  /** `"front"` (the default) or `"back"`. */
-  view?: "front" | "back";
-  size?: number;
-  theme?: EmblemTheme;
-  /** A turn from the resting view, in degrees: the jersey flips like a coin and shows the other side. */
-  yaw?: number;
-  pitch?: number;
-}
-
-/**
- * A generic jersey in a team's colours with a number, front or back, for hockey, basketball, soccer, baseball or football. No cut is a real team's design.
- * @example
- * ```ts
- * import { jersey } from "@johnmorrisdotca/dougu-sports/emblems";
- * const svg = jersey({ style: "hockey", colors: ["#c8102e", "#f4f0e4", "#f4f0e4"], number: 23, name: "Morris" });
- * console.log(svg.includes(">23<"), svg.includes("<title>Hockey jersey</title>"));
- * // true true
- * ```
- */
-export function jersey(options: JerseyOptions = {}): string {
-  const finish = (EMBLEM_STYLES as readonly string[]).includes(options.style as string) ? (options.style as EmblemStyle) : options.render;
-  const named = (JERSEY_CUTS as readonly string[]).includes(options.style as string) ? options.style : options.cut;
-  const cut = (JERSEY_CUTS as readonly string[]).includes(named as string) ? (named as JerseyCut) : "hockey";
-  const colors = typeof options.colors === "string" ? [options.colors] : (options.colors ?? []);
-  const o: FrameOptions = { tint: colors[0], accent: colors[1], numberColor: colors[2], number: options.number, name: options.name, stripes: options.stripes, trim: options.trim, view: options.view, size: options.size, style: finish, theme: options.theme, yaw: options.yaw, pitch: options.pitch };
-  const e = EMBLEM_TABLE[`jersey:${cut}`];
-  return options.yaw === undefined && options.pitch === undefined ? e.svg(o) : e.frame(o);
 }
 
 /** What `pennant` takes. */

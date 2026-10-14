@@ -12,7 +12,6 @@
     "ball",
     "sports-equipment",
     "sports-icons",
-    "jersey",
     "pennant",
     "icons",
     "svg",
@@ -93,11 +92,6 @@
       "types": "./dist/emblems/gear/*.d.ts",
       "import": "./dist/emblems/gear/*.js",
       "default": "./dist/emblems/gear/*.js"
-    },
-    "./jersey/*": {
-      "types": "./dist/emblems/jersey/*.d.ts",
-      "import": "./dist/emblems/jersey/*.js",
-      "default": "./dist/emblems/jersey/*.js"
     },
     "./pennant/*": {
       "types": "./dist/emblems/pennant/*.d.ts",

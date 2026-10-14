@@ -124,8 +124,8 @@ test("a rolling ball and a flipping medal are different kinds, and the kinds are
 
 const flatTurned = D.EMBLEM_IDS.filter((id) => ["flat", "icon", "gear"].includes(D.emblemInfo(id).kind));
 
-test("every flat emblem, pictogram, award, piece of gear, jersey and pennant turns like a coin: squeezed, with a back, and a rim", () => {
-  assert.ok(flatTurned.length >= 90, `${flatTurned.length} ids turn as flat things`);
+test("every flat emblem, pictogram, award, piece of gear and pennant turns like a coin: squeezed, with a back, and a rim", () => {
+  assert.ok(flatTurned.length >= 85, `${flatTurned.length} ids turn as flat things`);
   for (const id of flatTurned) {
     const still = D.renderEmblem(id);
     for (const style of D.EMBLEM_STYLES) {
@@ -157,12 +157,7 @@ test("a turned gear, icon or award squeezes by the cosine, mirrors its back, and
   }
 });
 
-test("a jersey and a pennant show their own back, not a mirror of the front", () => {
-  const front = D.emblemFrame("jersey:soccer", { yaw: 20, number: 7, name: "Ono" });
-  const back = D.emblemFrame("jersey:soccer", { yaw: 160, number: 7, name: "Ono" });
-  assert.ok(front.includes(">7<") && !front.includes(">ONO<"), "the front has the number and no name");
-  assert.ok(back.includes(">7<") && back.includes(">ONO<"), "the back has the name and the number");
-  assert.match(back, /scale\(0\.94 /, "the back is not mirrored");
+test("a pennant shows its own back, not a mirror of the front", () => {
   const flag = D.emblemFrame("pennant:championship", { yaw: 160, engrave: "Champions", year: 2026 });
   assert.ok(!flag.includes("CHAMPIONS") && !flag.includes(">2026<"), "the back of a pennant is plain felt");
   assert.match(flag, /translate\(64 0\) scale\(-1 1\)/, "with the dowel on the other side");
