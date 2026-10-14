@@ -140,7 +140,7 @@ export { GEAR_STARTING_BLOCKS, GEAR_RELAY_BATON, GEAR_JAVELIN, GEAR_HURDLES } fr
 export { GEAR_DIVING_BOARD, GEAR_SWIM_GOGGLES } from "./emblems/gear/gear.water.ts";
 export { GEAR_GUNBAI, GEAR_MAWASHI } from "./emblems/gear/gear.sumo.ts";
 export { GEAR_SHINAI, GEAR_KENDO_MEN } from "./emblems/gear/gear.kendo.ts";
-export { GEAR_JUDOGI, GEAR_KARATE_GI, GEAR_OBI, OBI_RANKS, obi } from "./emblems/gear/gear.budo.ts";
-export type { ObiRank } from "./emblems/gear/gear.budo.ts";
+export { GEAR_JUDOGI, GEAR_JUDOGI_BLUE, GEAR_JUDOGI_FOLDED, GEAR_JUDOGI_BLUE_FOLDED, GEAR_KARATE_GI, GEAR_OBI, GEAR_OBI_WHITE, GEAR_OBI_YELLOW, GEAR_OBI_ORANGE, GEAR_OBI_GREEN, GEAR_OBI_BLUE, GEAR_OBI_BROWN, GEAR_OBI_KOHAKU, GEAR_OBI_RED, GEAR_OBI_WOMEN, GEAR_OBI_WHITE_YELLOW, GEAR_OBI_YELLOW_ORANGE, GEAR_OBI_ORANGE_GREEN, GEAR_OBI_GREEN_BLUE, GEAR_OBI_BLUE_BROWN, JUDOGI_WHITE, JUDOGI_BLUE, OBI_RANKS, obi } from "./emblems/gear/gear.budo.ts";
+export type { ObiRank, ObiOptions } from "./emblems/gear/gear.budo.ts";
 export { GEAR_YUMI, GEAR_YA } from "./emblems/gear/gear.kyudo.ts";
 export { VERSION } from "./version.ts";

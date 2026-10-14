@@ -113,8 +113,8 @@ test("the championship banner has no lettering unless some is given, takes up to
   assert.ok(D.renderEmblem(id, { style: "color" }).includes("#4b2a6b"), "purple by default");
 });
 
-test("the belt takes the colour of each rank, white to black", () => {
-  assert.deepEqual(Object.keys(D.OBI_RANKS), ["white", "yellow", "orange", "green", "blue", "brown", "black"]);
+test("the belt takes the colour of each rank, white to red", () => {
+  assert.deepEqual(Object.keys(D.OBI_RANKS), ["white", "yellow", "orange", "green", "blue", "brown", "black", "kohaku", "red"]);
   const seen = new Set<string>();
   for (const rank of Object.keys(D.OBI_RANKS) as D.ObiRank[]) {
     const svg = D.obi(rank, { size: 32 });
@@ -122,7 +122,7 @@ test("the belt takes the colour of each rank, white to black", () => {
     assert.match(svg, /width="32"/);
     seen.add(svg);
   }
-  assert.equal(seen.size, 7);
+  assert.equal(seen.size, 9);
   const ids = (svg: string): string => svg.replace(/g[0-9a-z]{4,8}c?\b/g, "G");
   assert.equal(ids(D.obi("black")), ids(D.renderEmblem("gear:obi")), "black is the default");
   assert.equal(ids(D.obi("nope" as never)), ids(D.renderEmblem("gear:obi")));
