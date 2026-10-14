@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 263 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 269 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -109,7 +109,7 @@ The folders the art lives in are in [layout.md](layout.md).
 | `ball:soccer-1998-coloured-triad` | Soccer, coloured triads | ball | generated | In the style of the 1990s match balls: the triads in blue, red and gold on white hexagons, with deep navy pentagons |
 | `ball:soccer-2002-triangle-sweep` | Soccer, triangle sweep | ball | generated | In the style of the early-2000s match balls: long thin triangles that sweep across each hexagon in graphite, with gold sparks, over charcoal pentagons |
 | `ball:soccer-2006-propeller` | Soccer, 14-panel propeller | ball | generated | In the style of the mid-2000s match balls: 14 panels (6 propellers and 8 triangles), a fine gold line inside each propeller and a gold mark on each dark triangle |
-| `ball:soccer-2010-grooved` | Soccer, 8-panel grooved | ball | generated | In the style of the early-2010s match balls: 8 panels (an octahedron whose edges are bent into S curves) with grooves for seams and fine contour lines across each panel |
+| `ball:soccer-2010-grooved` | Soccer, 8-panel grooved | ball | generated | In the style of the early-2010s match balls: 8 panels (an octahedron whose edges are bent into S curves) in white and teal, with deep dark grooves for seams and contour lines across each panel, dark teal on the white panels and white on the teal ones |
 | `ball:soccer-2014-ribbon` | Soccer, 6-panel ribbons | ball | generated | In the style of the mid-2010s match balls: 6 twisted panels in white, crossed by wide ribbons in teal, orange and violet |
 | `ball:soccer-2018-pixel` | Soccer, pixel blocks | ball | generated | In the style of the late-2010s match balls: 6 panels covered with square pixel blocks in graphite, grey, red and gold, thick on one side and thinning out |
 | `ball:soccer-2022-speed-shell` | Soccer, 20-panel shell | ball | generated | In the style of the early-2020s match balls: 20 triangular panels (an icosahedron) in burgundy, cream and gold, each carrying nested outlines like a shell |
@@ -151,15 +151,15 @@ The folders the art lives in are in [layout.md](layout.md).
 | `ball:beach-volleyball` | Beach volleyball | ball | generated |  |
 | `ball:volleyball-colours` | Volleyball, three colours | ball | generated | The 18-panel indoor volleyball with panels in three colours of your own (the `colors` option); yellow, blue and white by default |
 | `ball:volleyball-brazil` | Volleyball, Brazil | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: green, yellow and blue. Colours only, no flag or mark is drawn |
-| `ball:volleyball-japan` | Volleyball, Japan | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: white, red and a darker red. Colours only, no flag or mark is drawn |
-| `ball:volleyball-canada` | Volleyball, Canada | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: red, white and a darker red. Colours only, no flag or mark is drawn |
-| `ball:volleyball-usa` | Volleyball, USA | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: red, white and blue. Colours only, no flag or mark is drawn |
-| `ball:volleyball-italy` | Volleyball, Italy | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: green, white and red. Colours only, no flag or mark is drawn |
-| `ball:volleyball-poland` | Volleyball, Poland | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: white, red and a darker red. Colours only, no flag or mark is drawn |
-| `ball:volleyball-france` | Volleyball, France | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: blue, white and red. Colours only, no flag or mark is drawn |
-| `ball:volleyball-serbia` | Volleyball, Serbia | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: red, blue and white. Colours only, no flag or mark is drawn |
-| `ball:volleyball-netherlands` | Volleyball, Netherlands | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: red, white and blue. Colours only, no flag or mark is drawn |
-| `ball:volleyball-germany` | Volleyball, Germany | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: black, red and gold. Colours only, no flag or mark is drawn |
+| `ball:volleyball-japan` | Volleyball, Japan | ball | generated | The 18-panel indoor volleyball in colours taken from the flag (white, red and a darker red), laid out so that it does not look like another country's: white, with one broad crimson band that runs round one side, across the front and over the top, and a darker red strip underneath. Colours only, no flag or mark is drawn |
+| `ball:volleyball-canada` | Volleyball, Canada | ball | generated | The 18-panel indoor volleyball in colours taken from the flag (red, white and a darker red), laid out so that it does not look like another country's: red, with a white stripe down the middle of the front and of the back, as the flag has its white pale, and a darker red on the top and the bottom. Colours only, no flag or mark is drawn |
+| `ball:volleyball-usa` | Volleyball, USA | ball | generated | The 18-panel indoor volleyball in colours taken from the flag (red, white and blue), laid out so that it does not look like another country's: a navy field on two opposite sides, as the flag has its blue canton, and red and white stripes on the other four faces. Colours only, no flag or mark is drawn |
+| `ball:volleyball-italy` | Volleyball, Italy | ball | generated | The 18-panel indoor volleyball in colours taken from the flag (green, white and red), laid out so that it does not look like another country's: green on one side, red on the opposite side, white on the top and the bottom, and green, white and red stripes across the front and the back. Colours only, no flag or mark is drawn |
+| `ball:volleyball-poland` | Volleyball, Poland | ball | generated | The 18-panel indoor volleyball in colours taken from the flag (white, red and a darker red), laid out so that it does not look like another country's: white above and red below, as the flag is cut: the ball stands on a corner, the three faces round the top are white and the three round the bottom red, each with a darker red strip in the middle. Colours only, no flag or mark is drawn |
+| `ball:volleyball-france` | Volleyball, France | ball | generated | The 18-panel indoor volleyball in colours taken from the flag (blue, white and red), laid out so that it does not look like another country's: three big fields in blue, white and red turning round a corner of the ball, each colour on two opposite faces. Colours only, no flag or mark is drawn |
+| `ball:volleyball-serbia` | Volleyball, Serbia | ball | generated | The 18-panel indoor volleyball in colours taken from the flag (red, blue and white), laid out so that it does not look like another country's: red above, blue in the middle and white below, as the flag's bands run: a red top, a white bottom, and blue across the front and the back. Colours only, no flag or mark is drawn |
+| `ball:volleyball-netherlands` | Volleyball, Netherlands | ball | generated | The 18-panel indoor volleyball in colours taken from the flag (red, white and blue), laid out so that it does not look like another country's: thin stripes of red, white and blue on every face of a ball standing on a corner. Colours only, no flag or mark is drawn |
+| `ball:volleyball-germany` | Volleyball, Germany | ball | generated | The 18-panel indoor volleyball in colours taken from the flag (black, red and gold), laid out so that it does not look like another country's: black, red and gold as six big fields on a ball standing on a corner, each colour on two faces. Colours only, no flag or mark is drawn |
 | `ball:cricket-red` | Cricket ball, red | ball | generated |  |
 | `ball:cricket-white` | Cricket ball, white | ball | generated |  |
 | `ball:cricket-pink` | Cricket ball, pink | ball | generated | Cricket ball, pink |
@@ -269,6 +269,12 @@ The folders the art lives in are in [layout.md](layout.md).
 | `gear:obi-orange-green` | Orange and green belt | gear | drawn | A two-colour belt, orange above and green below, between the orange and green grades |
 | `gear:obi-green-blue` | Green and blue belt | gear | drawn | A two-colour belt, green above and blue below, between the green and blue grades |
 | `gear:obi-blue-brown` | Blue and brown belt | gear | drawn | A two-colour belt, blue above and brown below, between the blue and brown grades |
+| `gear:obi-step-1` | Belt step 1: centre | gear | drawn | Step 1 of tying the judo belt: the middle of the belt is set against the middle of the belly, over the jacket of the judogi |
+| `gear:obi-step-2` | Belt step 2: two wraps | gear | drawn | Step 2 of tying the judo belt: the belt is wrapped twice round the waist, and both ends come back to the front |
+| `gear:obi-step-3` | Belt step 3: cross | gear | drawn | Step 3 of tying the judo belt: the two ends are crossed in front of the belly, the wearer's left end over the right one |
+| `gear:obi-step-4` | Belt step 4: tuck under | gear | drawn | Step 4 of tying the judo belt: one end is brought up from below, under both layers of the belt round the waist |
+| `gear:obi-step-5` | Belt step 5: square knot | gear | drawn | Step 5 of tying the judo belt: the flat square knot (hon-musubi, 本結び), left over right and then right over left |
+| `gear:obi-step-6` | Belt step 6: even ends | gear | drawn | Step 6 of tying the judo belt: the knot is pulled tight and both ends hang down even, with a mark under their tips |
 | `gear:yumi` | Long bow | gear | drawn | The long asymmetric bow, held a third of the way up, with its string and wrapped grip |
 | `gear:ya` | Arrow | gear | drawn | A kyudo arrow with feather fletching, a nock and a steel point |
 | `gear:karate-gi` | Karate suit | gear | drawn | The white karate suit laid flat: a lighter jacket with three-quarter sleeves, a wide V of plain lapels and tie strings, straight trousers, and a red belt in a flat knot |

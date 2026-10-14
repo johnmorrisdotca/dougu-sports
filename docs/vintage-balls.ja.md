@@ -39,7 +39,7 @@ console.log(ballFrame("ball:soccer-2006-propeller", { yaw: 360 }) === ballFrame(
 | `ball:soccer-1998-coloured-triad` | 32 枚貼り | 白地に青、赤、金の三つ巴を置き、五角形は深い紺色にしたもの |
 | `ball:soccer-2002-triangle-sweep` | 32 枚貼り | 六角形ごとに細長い三角形が流れるように並ぶ。黒鉛色に金色を添え、五角形は炭色 |
 | `ball:soccer-2006-propeller` | 14 枚貼り（プロペラ形 6 枚、三角形 8 枚） | 各プロペラの内側に金の線、暗い三角形に金の印 |
-| `ball:soccer-2010-grooved` | 8 枚貼り（辺を S 字に曲げた正八面体） | 継ぎ目は溝で、各パネルに細い等高線のような線。淡い灰色とミント色 |
+| `ball:soccer-2010-grooved` | 8 枚貼り（辺を S 字に曲げた正八面体） | 白とティールのパネル。継ぎ目は深く暗い溝で、各パネルに等高線のような線（白いパネルには濃いティール、ティールのパネルには白）。明るい背景でも暗い背景でも、32 ピクセルでもはっきり見える濃さ |
 | `ball:soccer-2014-ribbon` | ねじれた 6 枚貼り | 白地に、ティール、オレンジ、紫の幅広いリボンが交差する |
 | `ball:soccer-2018-pixel` | 6 枚貼り | 黒鉛色、灰色、赤、金の四角いピクセルが、一方に密集し反対側へまばらになる |
 | `ball:soccer-2022-speed-shell` | 三角形 20 枚（正二十面体） | えんじ、クリーム、金のパネルそれぞれに、貝殻のように重なる輪郭線 |
@@ -78,19 +78,21 @@ console.log(ballFrame("ball:soccer-2006-propeller", { yaw: 360 }) === ballFrame(
 
 18 枚貼りの室内用ボール（3 枚の帯が 6 組）のパネルを、国旗から取った 3 色で塗ったものです。旗、紋章、マークは描かず、色だけなので、国旗プラグインの形状指定（`flags(code, { shape, size, theme })`）は必要ありません。ボールの大きさは FIVB の規則による室内用ボール（`ball:volleyball` と同じ）です。
 
-| id | 3 色 |
-| --- | --- |
-| `ball:volleyball-brazil` | 緑 `#009c3b`、黄 `#ffdf00`、青 `#002776` |
-| `ball:volleyball-japan` | 白 `#f6f4ee`、赤 `#bc002d`、濃い赤 `#7d0020` |
-| `ball:volleyball-canada` | 赤 `#d52b1e`、白、濃い赤 `#9b1c14` |
-| `ball:volleyball-usa` | 赤 `#b22234`、白、青 `#3c3b6e` |
-| `ball:volleyball-italy` | 緑 `#009246`、白、赤 `#ce2b37` |
-| `ball:volleyball-poland` | 白、赤 `#dc143c`、濃い赤 `#9b1030` |
-| `ball:volleyball-france` | 青 `#0055a4`、白、赤 `#ef4135` |
-| `ball:volleyball-serbia` | 赤 `#c6363c`、青 `#0c4076`、白 |
-| `ball:volleyball-netherlands` | 赤 `#ae1c28`、白、青 `#21468b` |
-| `ball:volleyball-germany` | 黒 `#1b1b1b`、赤 `#dd0000`、金 `#ffce00` |
-| `ball:volleyball-colours` | 3 色を指定するまでは黄、青、白 |
+| id | 3 色 | ボール上の配置 |
+| --- | --- | --- |
+| `ball:volleyball-brazil` | 緑 `#009c3b`、黄 `#ffdf00`、青 `#002776` | 3 色を、各面の中央の帯と外側の帯に順に使う |
+| `ball:volleyball-japan` | 白 `#f6f4ee`、深紅 `#bc002d`、濃い赤 `#7d0020` | 白地に、側面から正面、上面へ回る幅広い深紅の帯が 1 本。底面に濃い赤の帯 |
+| `ball:volleyball-canada` | 赤 `#d52b1e`、白、濃い赤 `#9b1c14` | 赤地で、正面と背面の中央に国旗の白い部分に倣った白い縦帯。上面と底面は濃い赤 |
+| `ball:volleyball-usa` | 赤 `#b22234`、白、紺 `#3c3b6e` | 向かい合う 2 面が紺、残る 4 面は赤と白の縞 |
+| `ball:volleyball-italy` | 緑 `#009246`、白、赤 `#ce2b37` | 緑の面と赤の面が向かい合い、上下は白。正面と背面は緑、白、赤の縞 |
+| `ball:volleyball-poland` | 白、赤 `#dc143c`、濃い赤 `#9b1030` | 頂点を真上に向けて、上半分が白、下半分が赤。国旗の上下の分け方に倣う |
+| `ball:volleyball-france` | 青 `#0055a4`、白、赤 `#ef4135` | 頂点を真上に向けて、青、白、赤の大きな 3 つの領域。各色は向かい合う 2 面を占める |
+| `ball:volleyball-serbia` | 赤 `#c6363c`、青 `#0c4076`、白 | 国旗の帯の順に、上が赤、真ん中が青、下が白 |
+| `ball:volleyball-netherlands` | 赤 `#ae1c28`、白、青 `#21468b` | 頂点を真上に向けて、全面に赤、白、青の細い縞 |
+| `ball:volleyball-germany` | 黒 `#1b1b1b`、赤 `#dd0000`、金 `#ffce00` | 頂点を真上に向けて、大きな 6 つの面。各色が 2 面ずつ |
+| `ball:volleyball-colours` | 3 色を指定するまでは黄、青、白 | 定番の 3 色のボール |
+
+国ごとに色だけでなく配置も違うので、似た色のボール（日本とポーランドはどちらも白と赤、アメリカとオランダはどちらも赤、白、青）でも、16 ピクセルで別のボールに見えます。`test/vintage.test.ts` が、10 個のボールが互いに区別できることを確かめています。どの 2 つを比べても、18 枚のパネルの色の差（CIE L\*a\*b\*）の平均が 35 以上で、はっきり違うパネルが 7 枚以上あり、配置が同じものはありません。頂点を上に向けたボールは、その頂点を軸に回ります。
 
 2 色の旗（日本、カナダ、ポーランド）は、3 色のパネル配置でも見分けられるよう、1 色の濃い色合いを 3 色目にしています。`colors` オプションを使うと、11 種類のどれにも好きな 3 色を指定できます。
 

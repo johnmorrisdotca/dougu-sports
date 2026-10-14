@@ -3,7 +3,9 @@ import { test } from "node:test";
 
 import * as D from "../src/index.ts";
 import { wellFormed } from "./helpers.ts";
-import { inkBox, pathPoints } from "./svgbox.ts";
+import { path, strip } from "../src/emblems/gear/gear.budo.ts";
+import { rect } from "../src/emblems/gear/gear.core.ts";
+import { type Box, inkBox, pathPoints } from "./svgbox.ts";
 
 const SUITS = ["gear:judogi", "gear:judogi-blue", "gear:judogi-folded", "gear:judogi-blue-folded"] as const;
 const BELTS = ["gear:obi", "gear:obi-white", "gear:obi-yellow", "gear:obi-orange", "gear:obi-green", "gear:obi-blue", "gear:obi-brown", "gear:obi-kohaku", "gear:obi-red", "gear:obi-women"] as const;
@@ -285,4 +287,78 @@ test("the back view reads in the three styles and at 16 pixels, and turns like t
   }
   assert.deepEqual(D.emblemInfo("gear:judogi-back").kind, "gear");
   assert.ok(D.JAPANESE_IDS.includes("gear:judogi-back") && D.JAPANESE_IDS.includes("gear:judogi-blue-back"));
+});
+
+// ── how the belt is tied: gear:obi-step-1 to gear:obi-step-6 ──
+
+const STEP_IDS = ["gear:obi-step-1", "gear:obi-step-2", "gear:obi-step-3", "gear:obi-step-4", "gear:obi-step-5", "gear:obi-step-6"] as const;
+
+test("the six belt steps are six drawings, in order, each with its number, a name and a caption in both languages", () => {
+  assert.equal(new Set(STEP_IDS.map((id) => D.renderEmblem(id))).size, 6, "six different drawings");
+  STEP_IDS.forEach((id, i) => {
+    const info = D.emblemInfo(id);
+    assert.equal(info.kind, "gear");
+    assert.ok(D.GEAR_IDS.includes(id) && D.JAPANESE_IDS.includes(id as D.JapaneseId), id);
+    assert.ok(info.description !== undefined && info.description.en.includes(`Step ${i + 1} `) && info.description.ja.includes(`手順${i + 1}。`), `${id}: the caption says which step it is`);
+    assert.match(info.ja, new RegExp(`^帯の結び方（${i + 1}）`), id);
+    assert.equal(D.obiStep((i + 1) as D.ObiStep), D.renderEmblem(id), `obiStep(${i + 1})`);
+  });
+  assert.equal(D.obiStep(0 as never), D.renderEmblem("gear:obi-step-6"), "a number that is no step draws the last one");
+  assert.match(D.emblemInfo("gear:obi-step-5").description?.ja ?? "", /本結び/, "the knot has its Japanese name");
+  assert.match(D.emblemInfo("gear:obi-step-1").description?.ja ?? "", /柔道衣/, "the suit has its Japanese name");
+});
+
+test("every step is the jacket of gear:judogi, lapels crossed left over right, with the belt in the belt's colour and the suit in the suit's", () => {
+  const lapel = path(strip([37, 4.8], [24.4, 35], 3.9));
+  const under = path(strip([26.8, 5.4], [33.8, 14.4], 2.9));
+  const whole = D.renderEmblem("gear:judogi", { style: "color" });
+  assert.ok(whole.includes(lapel) && whole.includes(under), "the judogi has the left front over the right");
+  for (const id of STEP_IDS) {
+    const svg = D.renderEmblem(id, { style: "color" });
+    assert.equal(wellFormed(svg), null, id);
+    const at = (d: string): number => svg.indexOf(`d="${d}"`);
+    assert.ok(at(under) > 0 && at(lapel) > at(under), `${id}: the right front under and the left front over it, as on gear:judogi`);
+    assert.ok(svg.includes(D.JUDOGI_WHITE) && svg.includes(D.OBI_RANKS.black), `${id}: a white suit and a black belt`);
+    assert.ok(D.renderEmblem(id, { style: "color", tint: "#1456b6", accent: "#2b64c8" }).includes("#2b64c8"), `${id}: the belt takes accent`);
+    assert.ok(D.renderEmblem(id, { style: "color", tint: "#123456" }).includes("#123456"), `${id}: the suit takes tint`);
+    assert.doesNotMatch(svg, /<sleeve|<text/, id);
+  }
+});
+
+test("the belt goes through the steps in order: one wrap, two with the ends, the ends crossed, one end under both wraps, the knot, the even ends", () => {
+  const svgOf = (n: number): string => D.renderEmblem(`gear:obi-step-${n}` as D.EmblemId, { style: "color" });
+  const belt = (n: number): number => (svgOf(n).match(/fill="#1f2228"/g) ?? []).length;
+  assert.ok(belt(2) > belt(1), "two wraps and two ends are more belt than one wrap");
+  assert.equal(belt(3), belt(2), "crossing the ends changes where they lie, not how many pieces there are");
+  assert.ok(belt(5) > belt(3) && belt(6) > belt(3), "the knot is more belt than the loose ends");
+  const upper = rect(18.2, 25.2, 27.6, 2.5), lower = rect(18.2, 27.4, 27.6, 2.5);
+  const at = (svg: string, d: string): number => svg.indexOf(`d="${d}"`);
+  assert.ok(at(svgOf(1), upper) < 0 && at(svgOf(1), rect(18.2, 26.3, 27.6, 2.5)) > 0, "step 1 has the one wrap, between the places of the two");
+  for (const n of [2, 3, 4]) assert.ok(at(svgOf(n), lower) > 0 && at(svgOf(n), upper) > at(svgOf(n), lower), `step ${n}: two wraps, the upper one over the lower`);
+  // Step 3: both ends are laid over the wraps, the wearer's left end (the right of the picture) on top of the other.
+  const crossing = [path(strip([29.6, 28.2], [35.6, 37.1], 2.55)), path(strip([34.4, 28.2], [28.4, 37.1], 2.55))] as const;
+  const s3 = svgOf(3);
+  assert.ok(at(s3, crossing[0]) > at(s3, upper) && at(s3, crossing[1]) > at(s3, crossing[0]), "step 3: the ends over the wraps, the second over the first");
+  // Step 4: the end that goes under is drawn before the wraps, which hide the middle of it, and is the same strip above and below them.
+  const tucked = path(strip([30.2, 21], [30.2, 34.2], 2.55));
+  const s4 = svgOf(4);
+  assert.ok(at(s4, tucked) > 0 && at(s4, tucked) < at(s4, lower), "step 4: the end passes under both wraps");
+  assert.ok(s4.includes("#d8342c"), "step 4 marks the way up");
+  // Steps 5 and 6: the knot over both wraps; just tied the ends differ in length, finished they are even and marked.
+  assert.notEqual(svgOf(5), svgOf(6));
+  assert.ok(svgOf(6).includes("#d8342c") && svgOf(1).includes("#d8342c"), "the red marks are on steps 1, 4, 5 and 6");
+});
+
+test("the steps read in the three styles at 16 pixels, stay small, and turn like the other suits without clipping", () => {
+  for (const id of STEP_IDS) {
+    for (const style of D.EMBLEM_STYLES) for (const size of [16, 32, 64, 256]) assert.equal(wellFormed(D.renderEmblem(id, { style, size })), null, `${id} ${style} ${size}`);
+    const line = D.renderEmblem(id, { style: "line", size: 16 });
+    assert.match(line, /currentColor/);
+    assert.ok(line.length < 12000, `${id} line drawing stays small (${line.length})`);
+    assert.equal(D.emblemFrame(id, { yaw: 0 }), D.renderEmblem(id), id);
+    assert.notEqual(D.emblemFrame(id, { yaw: 60 }), D.renderEmblem(id), id);
+    // The close-up and its marks stay inside the picture: the ink is measured from the paths, with every transform.
+    const box = inkBox(D.renderEmblem(id, { style: "metal" })) as Box;
+    assert.ok(box.x0 >= -0.5 && box.y0 >= -0.5 && box.x1 <= 64.5 && box.y1 <= 64.5, `${id}: ink ${JSON.stringify(box)}`);
+  }
 });

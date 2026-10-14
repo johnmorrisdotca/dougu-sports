@@ -71,37 +71,45 @@ export function drawGear(id: string, title: string, spec: GearSpec, options: Pie
   let body = "";
   let across = false;
   let along = false;
+  // Parts in a row with one transform share one group, so that a close-up of many parts says its transform once.
+  let open = "";
   for (const p of spec.parts) {
-    const t = p.t === undefined ? "" : ` transform="${escape(p.t)}"`;
+    const move = p.t ?? "";
+    if (move !== open) {
+      if (open !== "") body += "</g>";
+      if (move !== "") body += `<g transform="${escape(move)}">`;
+      open = move;
+    }
     const fill = resolve(p.fill);
     const hasFill = fill !== undefined && fill !== "none";
     if (line) {
       const mode = p.line ?? "stroke";
       if (mode === "none" || p.fx === true) continue;
-      if (mode === "ink" && hasFill) body += `<path d="${p.d}" fill="currentColor"${t}/>`;
-      else if (!hasFill && p.stroke !== undefined) body += `<path d="${p.d}" fill="none" stroke="currentColor" stroke-width="${num(p.w ?? 2, 2)}"${t}/>`;
-      else body += `<path d="${p.d}" fill="none" stroke="currentColor" stroke-width="${num(Math.max(p.w ?? 2, 1.6), 2)}"${t}/>`;
+      if (mode === "ink" && hasFill) body += `<path d="${p.d}" fill="currentColor"/>`;
+      else if (!hasFill && p.stroke !== undefined) body += `<path d="${p.d}" fill="none" stroke="currentColor" stroke-width="${num(p.w ?? 2, 2)}"/>`;
+      else body += `<path d="${p.d}" fill="none" stroke="currentColor" stroke-width="${num(Math.max(p.w ?? 2, 1.6), 2)}"/>`;
       continue;
     }
     const op = p.op === undefined ? "" : ` opacity="${p.op}"`;
     if (p.fx === true) {
-      if (!flat) body += `<path d="${p.d}" fill="${fill}"${op}${t}/>`;
+      if (!flat) body += `<path d="${p.d}" fill="${fill}"${op}/>`;
       continue;
     }
     const stroke = resolve(p.stroke) ?? (hasFill ? mix(readColour(fill) === undefined ? "#888888" : fill, -0.45) : "none");
     const w = p.w ?? 0.9;
-    body += `<path d="${p.d}" fill="${hasFill ? fill : "none"}" stroke="${stroke}" stroke-width="${num(w, 2)}"${hasFill || stroke === "none" ? ` stroke-linejoin="round"` : ` stroke-linecap="round"`}${op}${t}/>`;
+    body += `<path d="${p.d}" fill="${hasFill ? fill : "none"}" stroke="${stroke}" stroke-width="${num(w, 2)}"${hasFill || stroke === "none" ? ` stroke-linejoin="round"` : ` stroke-linecap="round"`}${op}/>`;
     if (hasFill && !flat) {
       if (p.shade !== 0) {
         along = true;
-        body += `<path d="${p.d}" fill="url(#${gid})"${p.shade === undefined ? "" : ` opacity="${p.shade}"`}${t}/>`;
+        body += `<path d="${p.d}" fill="url(#${gid})"${p.shade === undefined ? "" : ` opacity="${p.shade}"`}/>`;
       }
       if (p.cyl !== undefined && p.cyl > 0) {
         across = true;
-        body += `<path d="${p.d}" fill="url(#${gid}c)"${p.cyl === 1 ? "" : ` opacity="${p.cyl}"`}${t}/>`;
+        body += `<path d="${p.d}" fill="url(#${gid}c)"${p.cyl === 1 ? "" : ` opacity="${p.cyl}"`}/>`;
       }
     }
   }
+  if (open !== "") body += "</g>";
   const defs =
     (along ? `<linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></linearGradient>` : "") +
     (across ? `<linearGradient id="${gid}c" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".34"/><stop offset=".26" stop-color="#fff" stop-opacity=".5"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset=".88" stop-color="#000" stop-opacity=".22"/><stop offset="1" stop-color="#000" stop-opacity=".4"/></linearGradient>` : "");

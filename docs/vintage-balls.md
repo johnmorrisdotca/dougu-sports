@@ -39,7 +39,7 @@ Each is on the construction of its time, with graphics of our own that only sugg
 | `ball:soccer-1998-coloured-triad` | 32 panels | Triads in blue, red and gold on white, with deep navy pentagons |
 | `ball:soccer-2002-triangle-sweep` | 32 panels | Long thin triangles that sweep across each hexagon, graphite with gold, over charcoal pentagons |
 | `ball:soccer-2006-propeller` | 14 panels (6 propellers, 8 triangles) | A gold line inside each propeller, a gold mark on each dark triangle |
-| `ball:soccer-2010-grooved` | 8 panels (an octahedron with its edges bent into S curves) | Grooves for seams and fine contour lines across each panel, in pale grey and mint |
+| `ball:soccer-2010-grooved` | 8 panels (an octahedron with its edges bent into S curves) | White and teal panels, deep dark grooves for seams and contour lines across each panel (dark teal on the white ones, white on the teal ones), strong enough for a light page, a dark one and 32 pixels |
 | `ball:soccer-2014-ribbon` | 6 twisted panels | White, crossed by wide ribbons in teal, orange and violet |
 | `ball:soccer-2018-pixel` | 6 panels | Square pixel blocks in graphite, grey, red and gold, thick on one side and thinning out |
 | `ball:soccer-2022-speed-shell` | 20 triangles (an icosahedron) | Burgundy, cream and gold panels, each with nested outlines like a shell |
@@ -78,19 +78,21 @@ The red and blue and the black and red stitchings are a record of what the two m
 
 The 18-panel indoor ball (six groups of three strips) with its panels in three colours taken from a flag. No flag, crest or mark is drawn: it is only colours, so the flags plug-in shape (`flags(code, { shape, size, theme })`) is not needed. The ball is the indoor ball of the FIVB's rule (`ball:volleyball`'s size).
 
-| Id | The three colours |
-| --- | --- |
-| `ball:volleyball-brazil` | green `#009c3b`, yellow `#ffdf00`, blue `#002776` |
-| `ball:volleyball-japan` | white `#f6f4ee`, red `#bc002d`, a darker red `#7d0020` |
-| `ball:volleyball-canada` | red `#d52b1e`, white, a darker red `#9b1c14` |
-| `ball:volleyball-usa` | red `#b22234`, white, blue `#3c3b6e` |
-| `ball:volleyball-italy` | green `#009246`, white, red `#ce2b37` |
-| `ball:volleyball-poland` | white, red `#dc143c`, a darker red `#9b1030` |
-| `ball:volleyball-france` | blue `#0055a4`, white, red `#ef4135` |
-| `ball:volleyball-serbia` | red `#c6363c`, blue `#0c4076`, white |
-| `ball:volleyball-netherlands` | red `#ae1c28`, white, blue `#21468b` |
-| `ball:volleyball-germany` | black `#1b1b1b`, red `#dd0000`, gold `#ffce00` |
-| `ball:volleyball-colours` | yellow, blue and white until you give it three colours of your own |
+| Id | The three colours | How they sit on the ball |
+| --- | --- | --- |
+| `ball:volleyball-brazil` | green `#009c3b`, yellow `#ffdf00`, blue `#002776` | the three colours in turn, as the middle and outer strips of the faces |
+| `ball:volleyball-japan` | white `#f6f4ee`, crimson `#bc002d`, a darker red `#7d0020` | white with one broad crimson band round one side, across the front and over the top; a darker strip underneath |
+| `ball:volleyball-canada` | red `#d52b1e`, white, a darker red `#9b1c14` | red, with a white stripe down the middle of the front and the back like the flag's pale; the darker red on top and bottom |
+| `ball:volleyball-usa` | red `#b22234`, white, navy `#3c3b6e` | a navy field on two opposite sides, red and white stripes on the other four |
+| `ball:volleyball-italy` | green `#009246`, white, red `#ce2b37` | green on one side, red on the other, white above and below, and green-white-red stripes across the front and the back |
+| `ball:volleyball-poland` | white, red `#dc143c`, a darker red `#9b1030` | standing on a corner: white round the top, red round the bottom, as the flag is cut |
+| `ball:volleyball-france` | blue `#0055a4`, white, red `#ef4135` | standing on a corner: three big fields, blue, white and red, each on two opposite faces |
+| `ball:volleyball-serbia` | red `#c6363c`, blue `#0c4076`, white | the flag's bands from the top down: a red top, blue across the middle, a white bottom |
+| `ball:volleyball-netherlands` | red `#ae1c28`, white, blue `#21468b` | standing on a corner: thin red, white and blue stripes on every face |
+| `ball:volleyball-germany` | black `#1b1b1b`, red `#dd0000`, gold `#ffce00` | standing on a corner: six big fields, each colour on two faces |
+| `ball:volleyball-colours` | yellow, blue and white until you give it three colours of your own | the classic three-colour ball |
+
+Each country has a layout of its own, not only its own colours, so that two balls with alike colours (Japan and Poland are both white and red, the USA and the Netherlands both red, white and blue) still read as two balls at 16 pixels. `test/vintage.test.ts` holds the ten apart: every pair differs by a mean perceptual distance (CIE L\*a\*b\*) of 35 or more over the 18 panels, with at least 7 panels clearly different, and no two share a layout. A ball standing on a corner turns about that corner.
 
 A flag with two colours (Japan, Canada, Poland) takes a darker shade of one as its third, so that the three-colour layout still reads. The `colors` option takes any three colours for any of the eleven:
 

@@ -161,25 +161,29 @@ export const BALL_SOCCER_2006_PROPELLER = /* @__PURE__ */ ball("ball:soccer-2006
   },
 });
 
-/** The early 2010s: the 8-panel layout, an octahedron whose edges are bent into S curves, with grooves for seams and fine contour lines across each panel. */
+/** The early 2010s: the 8-panel layout, an octahedron whose edges are bent into S curves, with deep grooves for seams and contour lines across each panel: white panels with teal lines and teal panels with white ones. */
 export const BALL_SOCCER_2010_GROOVED = /* @__PURE__ */ ball("ball:soccer-2010-grooved", "Soccer, 8-panel grooved", "8枚貼り・溝つき", {
   view: { yaw: 32, pitch: 26, roll: 0 },
-  base: "#e9ecee",
-  ground: "#eceff0",
-  mat: { gloss: 0.7, shade: "#33404c", grain: { f: 1.6, a: 0.2 } },
+  base: "#f6f8f8",
+  ground: "#f6f8f8",
+  mat: { gloss: 0.7, shade: "#1f3340", grain: { f: 1.6, a: 0.2 } },
   draw(s, base, accent) {
     const g = octahedron8();
-    const tone = [base, accent ?? "#cfe3d6"];
+    const tone = [base, accent ?? "#0f9b8e"];
     let out = "";
     g.panels.forEach((p, i) => {
       if (g.parity[i] === 1) out += s.panel(p, tone[1], { n: 1 });
     });
-    const groove = "#3f4b57";
+    // Contour lines: two rings in each panel, in the other panel colour's dark or light so that they show on both.
+    const groove = "#16262f";
     g.panels.forEach((p, i) => {
-      out += s.strokes([shrink(p, g.centres[i], 0.4).filter((_, j) => j % 2 === 0)], groove, 0.35, { closed: true, deco: true, opacity: 0.6 });
+      const onAccent = g.parity[i] === 1;
+      const ink = onAccent ? "#ffffff" : mix(tone[1], -0.35);
+      for (const [k, w] of [[0.62, 0.9], [0.3, 0.8]] as const) out += s.strokes([shrink(p, g.centres[i], k).filter((_, j) => j % 2 === 0)], ink, w, { closed: true, deco: true, opacity: 0.95 });
     });
-    out += s.strokes(g.seams, groove, 1.8);
-    out += s.strokes(g.seams, "#fff", 0.55, { deco: true, opacity: 0.55, dx: 0.5, dy: 0.55 });
+    // The grooves: a wide dark channel with a lit lip beside it.
+    out += s.strokes(g.seams, groove, 3.2);
+    out += s.strokes(g.seams, "#fff", 0.8, { deco: true, opacity: 0.7, dx: 0.8, dy: 0.85 });
     return out;
   },
 });

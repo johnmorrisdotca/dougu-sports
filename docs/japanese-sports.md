@@ -9,14 +9,14 @@
 | Sumo | `sport:sumo` (two wrestlers in the shikiri crouch) | `trophy:sumo-cup`, `gear:gunbai`, `gear:mawashi` | 相撲, 鳳凰飾りの銀杯, 軍配, 廻し |
 | Championship flags | | `trophy:championship-banner` | 優勝旗 |
 | Kendo | `sport:kendo` (the helmet) | `gear:shinai`, `gear:kendo-men` | 剣道, 竹刀, 剣道の面 |
-| Judo | `sport:judo` (the suit and belt) | `gear:judogi`, `gear:judogi-blue`, `gear:judogi-folded`, `gear:judogi-blue-folded`, `gear:judogi-back`, `gear:judogi-blue-back` ([from behind, with the back number](judogi-back.md)), `gear:obi` and the belts below | 柔道, 柔道衣, 武道の帯 |
+| Judo | `sport:judo` (the suit and belt) | `gear:judogi`, `gear:judogi-blue`, `gear:judogi-folded`, `gear:judogi-blue-folded`, `gear:judogi-back`, `gear:judogi-blue-back` ([from behind, with the back number](judogi-back.md)), `gear:obi`, the belts below and [six steps of tying one](obi-steps.md) | 柔道, 柔道衣, 武道の帯 |
 | Kyudo | `sport:kyudo` (a bow, its string and an arrow) | `gear:yumi`, `gear:ya` | 弓道, 弓道の弓, 弓道の矢 |
 | Karate | `sport:karate` (the suit) | `gear:karate-gi` | 空手, 空手衣 |
 
 ```js
 import { JAPANESE_IDS, emblemInfo, emblemName } from "@johnmorrisdotca/dougu-sports";
 
-console.log(JAPANESE_IDS.length); // 35
+console.log(JAPANESE_IDS.length); // 41
 console.log(emblemName("gear:gunbai", "ja")); // 軍配
 console.log(emblemName("gear:gunbai")); // Referee's war fan
 console.log(emblemInfo("gear:judogi").description?.ja.startsWith("白い柔道衣")); // true
@@ -84,6 +84,8 @@ The belt (obi) is drawn as it is tied: wrapped twice round the waist, crossed at
 The Kodokan's own kyu belts are white (5th and 4th kyu) and brown (3rd to 1st kyu); the colours between them were added by other countries, so the order and the ages differ from one country to the next. The two-colour belts are the intermediate belts several countries give young judoka (France since 1990; the IJF names these four pairs); no rule found fixes how the two colours are laid on the belt, so they are drawn as two halves of the width. See the [references](references.md#judo-and-karate-suits-and-belts) for the sources.
 
 `OBI_RANKS` holds the colours (`kohaku` is the red of the panels, `red` the red of the 9th dan), and `obi(rank, options)` draws one. `rank` is a grade or a pair of grades for a two-colour belt (`obi(["white", "yellow"])`); `tint` takes any other colour, or a pair of colours; `accent` is the stripe at the ends of a one-colour belt, the white of the red-and-white belt and the second colour of a pair; `women: true` adds the stripe of the women's black belt and is ignored by every other belt. `gear:judogi` and `gear:karate-gi` take an `accent` for the colour of the belt they wear.
+
+How the belt is tied, step by step, is in [obi-steps.md](obi-steps.md) ([日本語](obi-steps.ja.md)): `gear:obi-step-1` to `gear:obi-step-6`.
 
 ```js
 import { OBI_RANKS, obi } from "@johnmorrisdotca/dougu-sports";

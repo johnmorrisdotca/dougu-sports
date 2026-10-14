@@ -6,6 +6,22 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+Ten national volleyballs that can be told apart, a 2010-style grooved ball that reads, and six pictures of how a judo belt is tied. 269 emblems.
+
+### Changed
+
+- **The national volleyballs have a layout of their own, not only their colours.** Japan, Poland, Canada, the USA, the Netherlands and Serbia were all a red with white and read alike at 16 pixels. Now each country lays its colours out differently (`VOLLEYBALL_PLANS` in `ball.volleyball.flag.ts`: 18 letters, one for each panel): Japan is white with one broad crimson band round one side, across the front and over the top; Canada is red with a white stripe down the front and the back, like the flag's pale; the USA has a navy field on two opposite sides and red and white stripes on the rest; Italy is green on one side, red on the other and striped across the front; Poland stands on a corner of the layout with white round the top and red round the bottom, as the flag is cut; France has three big fields, blue, white and red; Serbia has the flag's bands from the top down; the Netherlands has thin stripes of the three colours on every face; Germany has six big fields. Brazil and `ball:volleyball-colours` are as they were. Only colours: nothing is drawn on a ball. `colors`, `tint` and `accent` still replace the first, second and third colour wherever they sit.
+- **`ball:soccer-2010-grooved` is stronger.** White and teal panels (`#0f9b8e`) instead of pale grey and mint, deep dark grooves for the seams with a lit lip, and two rings of contour lines in each panel, dark teal on the white panels and white on the teal ones. It reads on a light page, on a dark one, at 32 pixels and turned. `accent` still replaces the teal.
+
+### Added
+
+- **`gear:obi-step-1` to `gear:obi-step-6`, and `obiStep(step, options)`**: how a judo belt is tied, in six close-ups of the jacket of `gear:judogi` (lapels crossed left over right, 右前) with the belt at each stage: 1 the middle of the belt against the belly, 2 wrapped twice round the waist, 3 the ends crossed in front, 4 one end tucked up under both wraps, 5 the flat square knot (本結び), 6 both ends hanging even. A red number and a few red marks say what to look at. `tint` is the jacket and `accent` the belt. Six ids rather than a `step` option, because this package makes a drawing that differs by more than a colour an id (the suits, the back views, the belts) and keeps options for colours and fill-ins. Names and captions in English and Japanese, the pages [docs/obi-steps.md](docs/obi-steps.md) and [in Japanese](docs/obi-steps.ja.md), and `JAPANESE_IDS` has 41 entries.
+- Tests: every pair of national volleyballs differs by a mean CIE L\*a\*b\* distance of 35 or more with at least 7 panels clearly different, and no two share a layout; the grooved ball's contrast against a light and a dark page; the belt steps' order, their agreement with the judogi, their names and captions, and that they turn without clipping.
+
+### Internal
+
+- `paintEach18`, `panels18` and `ON_A_CORNER` in the panelled family (a colour for each of the 18 panels, and the layout stood on a corner of its cube); `judogiFlat(torso)` and `belt`'s `tail2` for the belt steps; and a piece's parts that share one transform are now drawn in one group, which makes a close-up smaller.
+
 ## [0.6.0] - 2026-10-14
 
 A judogi has no short sleeves, and every judoka at an IJF event wears an official back number: the judo and karate drawings get their sleeves, and the judogi is drawn from behind with the back number sewn on. 263 emblems.

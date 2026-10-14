@@ -31,25 +31,25 @@ export const OBI_RANKS = {
 } as const;
 export type ObiRank = keyof typeof OBI_RANKS;
 
-type Pt = readonly [number, number];
+export type Pt = readonly [number, number];
 
 /** Judogi colours: the IJF white ("snow white") and blue (between Pantone 285M and 286M). */
 export const JUDOGI_WHITE = "#f6f4ee";
 export const JUDOGI_BLUE = "#1456b6";
 
-const f = (n: number): string => String(Math.round(n * 10) / 10);
-const path = (pts: readonly Pt[], close = true): string => `M${pts.map((p) => `${f(p[0])} ${f(p[1])}`).join("L")}${close ? "z" : ""}`;
+export const f = (n: number): string => String(Math.round(n * 10) / 10);
+export const path = (pts: readonly Pt[], close = true): string => `M${pts.map((p) => `${f(p[0])} ${f(p[1])}`).join("L")}${close ? "z" : ""}`;
 const mirror = (pts: readonly Pt[]): Pt[] => pts.map((p): Pt => [64 - p[0], p[1]]);
 /** A rectangle of width `w` along the segment from `a` to `b`, as a polygon. */
-const strip = (a: Pt, b: Pt, w: number): Pt[] => {
+export const strip = (a: Pt, b: Pt, w: number): Pt[] => {
   const dx = b[0] - a[0], dy = b[1] - a[1];
   const l = Math.hypot(dx, dy) || 1;
   const nx = (-dy / l) * (w / 2), ny = (dx / l) * (w / 2);
   return [[a[0] + nx, a[1] + ny], [b[0] + nx, b[1] + ny], [b[0] - nx, b[1] - ny], [a[0] - nx, a[1] - ny]];
 };
-const lerp = (a: Pt, b: Pt, t: number): Pt => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+export const lerp = (a: Pt, b: Pt, t: number): Pt => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
 /** A line parallel to the segment from `a` to `b`, `off` to its side, between the fractions `t0` and `t1` of its length. */
-const along = (a: Pt, b: Pt, off: number, t0: number, t1: number): string => {
+export const along = (a: Pt, b: Pt, off: number, t0: number, t1: number): string => {
   const dx = b[0] - a[0], dy = b[1] - a[1];
   const l = Math.hypot(dx, dy) || 1;
   const nx = (-dy / l) * off, ny = (dx / l) * off;
@@ -104,15 +104,15 @@ function rows(poly: readonly Pt[], y0: number, y1: number, step: number, inset =
 }
 
 // Cloth lines are laid over the cloth as ink at low opacity (dark rows) or as light rows, so they follow any tint.
-const INK = "#0d1522";
+export const INK = "#0d1522";
 /** The edge of a black belt: light enough to show on a dark page. */
-const BELT_EDGE = "#5d6672";
-const dark = (d: string, w = 0.3, op = 0.2): Part => ({ d, fill: "none", stroke: INK, w, op, line: "none" });
-const light = (d: string, w = 0.3, op = 0.3): Part => ({ d, fill: "none", stroke: "#ffffff", w, op, line: "none" });
+export const BELT_EDGE = "#5d6672";
+export const dark = (d: string, w = 0.3, op = 0.2): Part => ({ d, fill: "none", stroke: INK, w, op, line: "none" });
+export const light = (d: string, w = 0.3, op = 0.3): Part => ({ d, fill: "none", stroke: "#ffffff", w, op, line: "none" });
 
 // ───────────────────────────── the belt ─────────────────────────────
 
-interface BeltSpec {
+export interface BeltSpec {
   /** The colour of the belt, and of its second colour (the other half of a split belt, or the white of the kohaku panels). */
   main: string;
   alt?: string;
@@ -127,6 +127,8 @@ interface BeltSpec {
   knot: number;
   tail: number;
   splay: number;
+  /** The length of the end on the right as the wearer is seen (the left end of the wearer), where it is not `tail`: a knot just tied has one end longer than the other. */
+  tail2?: number;
   /** Panels of the red-and-white belt: the x where the panel colour changes along the first and the second wrap, and the colour of the ends. */
   panels?: { upper: readonly number[]; lower: readonly number[]; tail: string };
   /** A split belt: the second colour fills the lower half of the belt's width, lengthwise. */
@@ -140,7 +142,7 @@ interface BeltSpec {
 }
 
 /** A belt tied at the front: two wraps, a flat square knot and two equal ends hanging a little apart. Parts, back to front. */
-function belt(s: BeltSpec): Part[] {
+export function belt(s: BeltSpec): Part[] {
   const parts: Part[] = [];
   const hw = (s.x1 - s.x0) / 2;
   const w = s.w;
@@ -185,7 +187,8 @@ function belt(s: BeltSpec): Part[] {
   const tailFill = s.panels?.tail ?? s.main;
   for (const side of [-1, 1]) {
     const a: Pt = [s.cx + side * kw * 0.2, yc + hh * 0.2];
-    const b: Pt = [a[0] + side * Math.sin(rad) * s.tail, a[1] + Math.cos(rad) * s.tail];
+    const length = side === 1 ? (s.tail2 ?? s.tail) : s.tail;
+    const b: Pt = [a[0] + side * Math.sin(rad) * length, a[1] + Math.cos(rad) * length];
     parts.push({ d: path(strip(a, b, tw)), fill: tailFill, stroke: s.edge, cyl: 0.55, shade: 0.25 });
     if (s.half === true) {
       const q = strip(a, b, tw);
@@ -194,7 +197,7 @@ function belt(s: BeltSpec): Part[] {
     parts.push(dark(along(a, b, -tw * 0.18, 0.3, 0.98) + along(a, b, tw * 0.18, 0.3, 0.98), 0.28, 0.3));
     parts.push(light(along(a, b, -tw * 0.18 + 0.35, 0.3, 0.98) + along(a, b, tw * 0.18 + 0.35, 0.3, 0.98), 0.25, 0.2));
     if (s.stripe === true) parts.push({ d: path(strip(lerp(a, b, 0.25), lerp(a, b, 1), tw * 0.15)), fill: "#f6f4ee", stroke: "none", line: "none" });
-    if (s.bars === true) parts.push({ d: path(strip(lerp(a, b, 1 - 3.4 / s.tail), lerp(a, b, 1 - 2.2 / s.tail), tw)), fill: "$accent", stroke: "none", op: 0.9, line: "none" });
+    if (s.bars === true) parts.push({ d: path(strip(lerp(a, b, 1 - 3.4 / length), lerp(a, b, 1 - 2.2 / length), tw)), fill: "$accent", stroke: "none", op: 0.9, line: "none" });
   }
   const kfill = s.panels === undefined ? s.main : alt;
   const blob = rect(s.cx - kw / 2, yt, kw, hh * 2, Math.min(2.4, kw * 0.22));
@@ -214,13 +217,9 @@ function belt(s: BeltSpec): Part[] {
 
 // ───────────────────────────── the judogi ─────────────────────────────
 
-/**
- * The judogi laid flat: jacket (sleeves out to the sides, lapels crossed left over right, thick stitched collar, quilted upper body, vented skirt), the belt tied over it and the trousers below with a drawstring
- * waist and reinforced knees. `$main` is the cloth, `$accent` the belt.
- */
-function judogiFlat(): Part[] {
+/** The judogi's trousers laid flat: straight legs, a waistband with its drawstring, reinforced knees. */
+function judogiTrousers(): Part[] {
   const parts: Part[] = [];
-  // Trousers, behind everything: straight legs, a waistband with its drawstring, reinforced knees.
   const trousers: Pt[] = [[18.4, 37], [45.6, 37], [46.6, 62], [34.6, 62], [32, 43.6], [29.4, 62], [17.4, 62]];
   parts.push({ d: path(trousers), fill: "$main", shade: 0.3, cyl: 0.25 });
   parts.push({ d: path([[18.4, 37], [45.6, 37], [45.7, 39.8], [18.3, 39.8]]), fill: "$main", shade: 0.2 });
@@ -232,18 +231,29 @@ function judogiFlat(): Part[] {
     parts.push(dark(path(k) + rows(k, 51.4, 56.4, 1.6, 0.3), 0.28, 0.35));
   }
   parts.push(dark("M17.6 60.2H29.6M34.4 60.2H46.4", 0.3, 0.3));
+  return parts;
+}
+
+/**
+ * The judogi laid flat: jacket (sleeves out to the sides, lapels crossed left over right, thick stitched collar, quilted upper body, vented skirt), the belt tied over it and the trousers below with a drawstring
+ * waist and reinforced knees. `$main` is the cloth, `$accent` the belt.
+ */
+export function judogiFlat(torso = false): Part[] {
+  const parts: Part[] = [];
+  // Trousers, behind everything: straight legs, a waistband with its drawstring, reinforced knees. A torso (the jacket alone, for the close-ups of the belt) has no trousers, no sleeves and no belt.
+  if (!torso) parts.push(...judogiTrousers());
   // Sleeves: to the wrist, the arms hanging out and down (IJF C1.10: the sleeve covers the wrist bone, at most 5 cm short of it, and is loose all along the forearm).
-  const sleeve = JUDOGI_SLEEVE;
-  for (const pts of [sleeve, mirror(sleeve)]) parts.push({ d: path(pts), fill: "$main", cyl: 0.15, shade: 0.35 });
+  const sleeves = torso ? [] : [JUDOGI_SLEEVE, mirror(JUDOGI_SLEEVE)];
+  for (const pts of sleeves) parts.push({ d: path(pts), fill: "$main", cyl: 0.15, shade: 0.35 });
   const jacket: Pt[] = [[19.4, 6.6], [26.2, 4], [32, 3.2], [37.8, 4], [44.6, 6.6], [45.6, 8], [45.6, 36], [18.4, 36], [18.4, 8]];
   parts.push({ d: path(jacket), fill: "$main", shade: 0.35, cyl: 0.18 });
   // Quilting: rows over the shoulders, chest and sleeves (the cloth of a judogi is heavy and woven double).
   const body: Pt[] = [[19, 7], [45, 7], [45.6, 26], [18.4, 26]];
   parts.push(dark(rows(body, 8, 25, 1.4, 0.5), 0.28, 0.1));
   parts.push(light(rows(body, 8.5, 25.5, 1.4, 0.5), 0.24, 0.2));
-  for (const pts of [sleeve, mirror(sleeve)]) parts.push(dark(sleeveRows(pts), 0.28, 0.1));
+  for (const pts of sleeves) parts.push(dark(sleeveRows(pts), 0.28, 0.1));
   // The loose cuff: a hem stitched a little in from the open end, on both sleeves.
-  for (const pts of [sleeve, mirror(sleeve)]) parts.push(dark(cuffHem(pts), 0.3, 0.38));
+  for (const pts of sleeves) parts.push(dark(cuffHem(pts), 0.3, 0.38));
   // The neck: the collar goes round the back of the neck, and the opening is a V that ends under 10 cm below the sternum.
   parts.push({ d: path([[26.4, 4.2], [37.6, 4.2], [33.4, 14]]), fill: INK, stroke: INK, w: 0.3, op: 0.62, line: "none" });
   parts.push({ d: "M25.4 5.4Q32 2 38.6 5.4L37.6 8.2Q32 5.4 26.4 8.2Z", fill: "$main", cyl: 0.4, shade: 0.3 });
@@ -268,7 +278,7 @@ function judogiFlat(): Part[] {
   parts.push(dark("M18.8 34.4H44.8", 0.3, 0.32));
   parts.push(dark("M20.2 31.4V36M43.8 31.4V36", 0.4, 0.45));
   // The belt, over the jacket, wrapped twice.
-  parts.push(...belt({ edge: BELT_EDGE, main: "$accent", cx: 32, x0: 18.2, x1: 45.8, y: 25.2, w: 2.5, sag: 0, knot: 6.4, tail: 11.4, splay: 6 }));
+  if (!torso) parts.push(...belt({ edge: BELT_EDGE, main: "$accent", cx: 32, x0: 18.2, x1: 45.8, y: 25.2, w: 2.5, sag: 0, knot: 6.4, tail: 11.4, splay: 6 }));
   return parts;
 }
 

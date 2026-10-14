@@ -7,6 +7,7 @@ import { test } from "node:test";
 import * as D from "../src/index.ts";
 import { across, frameAt, lacing, lengthOf, noise, offset, place, resample, running, spiral, star, tongue } from "../src/emblems/ball/ball.decal.ts";
 import { len } from "../src/emblems/ball/ball.math.ts";
+import { VOLLEYBALL_PLANS } from "../src/emblems/ball/ball.volleyball.flag.ts";
 import { colourCentres, gorePoint, icosahedron, octahedron8 } from "../src/emblems/ball/ball.tilings.ts";
 import { wellFormed } from "./helpers.ts";
 
@@ -193,3 +194,82 @@ test("the decal tools put every shape on the sphere", () => {
 function ico(n: number): [number, number, number][] {
   return Array.from({ length: n + 1 }, (_, i) => [Math.cos(i / 6), 0, Math.sin(i / 6)]);
 }
+
+// ── national volleyballs that do not look alike ──
+
+/** CIE L*a*b* of a #rrggbb colour (D65), for a perceptual distance (CIE76) between two panels. */
+function lab(hex: string): [number, number, number] {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)) as [number, number, number];
+  const f = (t: number): number => (t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116);
+  const x = f((0.4124 * r + 0.3576 * g + 0.1805 * b) / 0.95047), y = f(0.2126 * r + 0.7152 * g + 0.0722 * b), z = f((0.0193 * r + 0.1192 * g + 0.9505 * b) / 1.08883);
+  return [116 * y - 16, 500 * (x - y), 200 * (y - z)];
+}
+const deltaE = (a: string, b: string): number => Math.hypot(...(lab(a).map((v, i) => v - (lab(b)[i] as number)) as [number, number, number]));
+
+test("the ten national volleyballs differ from each other panel by panel, by perceptual distance, and by layout", () => {
+  const names = Object.keys(VOLLEYBALL_PLANS) as Array<keyof typeof VOLLEYBALL_PLANS>;
+  assert.equal(names.length, 10);
+  const panels = (n: keyof typeof VOLLEYBALL_PLANS): string[] => [...VOLLEYBALL_PLANS[n].panels].map((ch) => VOLLEYBALL_PLANS[n].colours[ch.charCodeAt(0) - 97] as string);
+  for (const n of names) {
+    assert.equal(panels(n).length, 18, `${n} has 18 panels`);
+    assert.match(VOLLEYBALL_PLANS[n].panels, /^[abc]{18}$/, n);
+    assert.equal(new Set(VOLLEYBALL_PLANS[n].panels).size, 3, `${n} uses all three of its colours`);
+  }
+  for (let i = 0; i < names.length; i++) {
+    for (let j = i + 1; j < names.length; j++) {
+      const a = panels(names[i] as keyof typeof VOLLEYBALL_PLANS), b = panels(names[j] as keyof typeof VOLLEYBALL_PLANS);
+      const apart = a.map((c, k) => deltaE(c, b[k] as string));
+      const mean = apart.reduce((s, v) => s + v, 0) / 18;
+      const clear = apart.filter((d) => d >= 25).length;
+      // Alike by a mean of under 35 or by fewer than 7 clearly different panels is what two balls of one colour scheme look like; the real ones are at 41 and 7 or more.
+      assert.ok(mean >= 35 && clear >= 7, `${names[i]} and ${names[j]} are too alike: mean distance ${mean.toFixed(1)}, ${clear} panels clearly different`);
+      // The colours are not enough: the layout differs as well, so a recoloured copy of one is not another.
+      assert.notEqual(VOLLEYBALL_PLANS[names[i] as keyof typeof VOLLEYBALL_PLANS].panels, VOLLEYBALL_PLANS[names[j] as keyof typeof VOLLEYBALL_PLANS].panels, `${names[i]} and ${names[j]} share a layout`);
+    }
+  }
+  assert.equal(new Set(NATIONS.map((id) => D.renderEmblem(id))).size, 10, "ten different drawings");
+  assert.equal(new Set(NATIONS.map((id) => D.renderEmblem(id, { size: 16, style: "color" }))).size, 10, "and at 16 pixels");
+  // Only colours: the layouts are panels of the ball, and nothing is drawn on them.
+  for (const id of NATIONS) assert.doesNotMatch(D.renderEmblem(id), /<text|<image|<use/, id);
+});
+
+test("a national volleyball keeps its look when it turns, and its `colors` still land on the panels they name", () => {
+  for (const id of NATIONS) {
+    for (const yaw of [0, 60, 120, 180, 240, 300]) assert.equal(wellFormed(D.ballFrame(id as D.BallId, { yaw })), null, `${id} yaw ${yaw}`);
+    assert.notEqual(D.ballFrame(id as D.BallId, { yaw: 0 }), D.ballFrame(id as D.BallId, { yaw: 90 }), id);
+  }
+  // Poland on its corner: white above, red below, so at rest the top of the drawing is white and the bottom the red (the panels are painted in the three colours of the trio).
+  const poland = VOLLEYBALL_PLANS.poland;
+  assert.equal(poland.corner, true);
+  assert.deepEqual([...poland.panels].filter((_, i) => i % 6 < 3).every((ch) => ch === "a"), true, "the three faces round the top corner are white");
+});
+
+// ── the 2010-style grooved ball: strong enough to read ──
+
+/** WCAG contrast ratio between two #rrggbb colours. */
+function contrast(a: string, b: string): number {
+  const lum = (hex: string): number => {
+    const [r, g, bl] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)) as [number, number, number];
+    return 0.2126 * r + 0.7152 * g + 0.0722 * bl;
+  };
+  const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x) as [number, number];
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+test("the 2010-style ball has an accent that reads on a light page and on a dark one, grooves darker than both panels, and contour lines that survive 32 pixels", () => {
+  const svg = D.renderEmblem("ball:soccer-2010-grooved", { style: "color", size: 32 });
+  const accent = "#0f9b8e", white = "#f6f8f8", groove = "#16262f";
+  for (const colour of [accent, white, groove]) assert.ok(svg.includes(colour), colour);
+  assert.ok(contrast(accent, "#ffffff") >= 3 && contrast(accent, "#14181c") >= 3, "the accent is 3 to 1 against a white page and against a dark one");
+  assert.ok(contrast(accent, white) >= 3, "the two kinds of panel are 3 to 1 apart");
+  assert.ok(contrast(groove, accent) >= 4 && contrast(groove, white) >= 12, "the grooves are clearly darker than either panel");
+  // The accent is `accent`'s to change, as before.
+  assert.ok(D.renderEmblem("ball:soccer-2010-grooved", { accent: "#ff8800" }).includes("#ff8800"));
+  // The contour lines are two inks, one for each kind of panel, each 3 to 1 against its own panel, drawn at the floor width (80 / size units: 0.8 pixel) where they face the eye.
+  const ink = [...svg.matchAll(/stroke="(#[0-9a-f]{6})" stroke-width="([\d.]+)"[^>]*opacity="0.95"/g)].map((m) => ({ colour: m[1] as string, width: Number(m[2]) }));
+  assert.deepEqual([...new Set(ink.map((i) => i.colour))].sort(), ["#0a655c", "#ffffff"], "teal lines on the white panels, white lines on the teal ones");
+  assert.ok(contrast("#0a655c", white) >= 3 && contrast("#ffffff", accent) >= 3, "each ink reads on its panel");
+  assert.ok(Math.max(...ink.map((i) => i.width)) >= 80 / 32 - 0.01, "at 32 pixels the lines reach 0.8 pixel");
+  // The line style keeps the grooves and the contour rings, and both themes and every turn are well formed.
+  for (const theme of ["light", "dark"] as const) for (const yaw of [0, 90, 180, 270]) assert.equal(wellFormed(D.ballFrame("ball:soccer-2010-grooved", { yaw, theme, size: 16 })), null, `${theme} ${yaw}`);
+});
