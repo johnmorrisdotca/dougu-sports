@@ -31,6 +31,21 @@ export interface PieceOptions {
   face?: PuckFace;
   /** A puck: a renderer for the flag codes this package does not draw (`face.flag`), `(code, { shape, size, theme }) => svg`, the one taisen-brackets takes. Synchronous. */
   flags?: FlagRenderer;
+  /** A judogi seen from behind: the back number on it (see `Backnumber`). The back views of the judogi (`gear:judogi-back`, `gear:judogi-blue-back`) take it; anything else ignores it. */
+  backnumber?: Backnumber;
+}
+
+/**
+ * The back number sewn on the back of a judogi (IJF Sport and Organisation Rules, C1.8): the competitor's family name and the three letters of the National Olympic Committee, on a white patch under a coloured band.
+ * Only `gear:judogi-back` and `gear:judogi-blue-back` take it; anything else ignores it.
+ */
+export interface Backnumber {
+  /** The family name, in capitals: letters, digits, spaces, hyphens and apostrophes, 16 characters at most (accents are drawn as the plain letter). Without it the patch reads `TANAKA`. */
+  name?: string;
+  /** The three letters of the National Olympic Committee (`CAN`, `JPN`, `USA`): letters only, capitals, 3 at most. Without it the patch reads `JPN`. */
+  code?: string;
+  /** The band the name is on: `blue` (the default), `gold` (an Olympic champion's) or `red` (a world champion's). */
+  band?: "blue" | "gold" | "red";
 }
 
 /** A turn: `yaw` degrees about the vertical axis (0 is the default view), `pitch` the tilt toward you, `roll` the turn about the line of sight. */

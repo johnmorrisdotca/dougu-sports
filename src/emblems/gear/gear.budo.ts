@@ -10,8 +10,9 @@
 // - The karate-gi (WKF Kumite and Kata Competition Rules, valid from 1.1.2023, article 2.2.1): white, without stripes or piping; the jacket, tightened with the belt, covers the hips and reaches at most
 //   three-quarters of the thigh (g); the sleeves reach at most the bend of the wrist and at least halfway down the forearm (j); the trousers cover at least two thirds of the shin and stop above the ankle bone (l);
 //   the jacket has ties (i); the belt is red (AKA) or blue (AO), about 5 cm wide, with 15 cm free on each side of the knot (e, f).
-import type { PieceOptions } from "../ball/ball.core.ts";
-import { drawn, rect, type Part } from "./gear.core.ts";
+import type { Backnumber, PieceOptions } from "../ball/ball.core.ts";
+import { fitSize, linePath } from "../ball/ball.letters.ts";
+import { defineGear, drawGear, drawn, rect, type Part } from "./gear.core.ts";
 
 /**
  * The colours of the judo belts, which `tint` takes: the six kyu colours in order, black (1st to 5th dan), `kohaku` (the red of the red-and-white belt of the 6th to 8th dan, whose white panels are the accent) and
@@ -54,6 +55,36 @@ const along = (a: Pt, b: Pt, off: number, t0: number, t1: number): string => {
   const nx = (-dy / l) * off, ny = (dx / l) * off;
   const p0 = lerp(a, b, t0), p1 = lerp(a, b, t1);
   return `M${f(p0[0] + nx)} ${f(p0[1] + ny)}L${f(p1[0] + nx)} ${f(p1[1] + ny)}`;
+};
+/**
+ * A sleeve of the jacket's left side, hanging out and down from the armhole: its axis `deg` below the horizontal, `len` long from the middle of the armhole to the middle of the cuff, and the cuff `cuff` wide. The
+ * corners, in order: the top of the shoulder, the outer corner of the cuff, its inner corner and the underarm. Everything is measured from this shape (test/judo.test.ts).
+ */
+function hangingSleeve(top: Pt, under: Pt, deg: number, len: number, cuff: number): Pt[] {
+  const a = (deg * Math.PI) / 180;
+  const mid = lerp(top, under, 0.5);
+  const tip: Pt = [mid[0] - Math.cos(a) * len, mid[1] + Math.sin(a) * len];
+  const hx = (Math.sin(a) * cuff) / 2, hy = (Math.cos(a) * cuff) / 2;
+  return [top, [tip[0] - hx, tip[1] - hy], [tip[0] + hx, tip[1] + hy], under];
+}
+/** The judogi's sleeve (IJF C1.10): to the wrist bone, about four fifths as long as the jacket, and wide at the cuff so that the forearm has room all the way. */
+const JUDOGI_SLEEVE = hangingSleeve([19.8, 6.4], [18.6, 22.4], 60, 26, 8.8);
+/** The karate-gi's sleeve (WKF 2.2.1 j): three-quarter length, between half the forearm and the bend of the wrist. */
+const KARATE_SLEEVE = hangingSleeve([20.6, 8], [19.4, 22], 56, 23.6, 8.8);
+/** Rows of quilting across a sleeve, from its top edge to its underside, leaving the ends of each row a little short of the seams. */
+function sleeveRows(pts: readonly Pt[]): string {
+  let d = "";
+  for (let t = 0.1; t <= 0.9; t += 0.08) {
+    const a = lerp(pts[0]!, pts[1]!, t), b = lerp(pts[3]!, pts[2]!, t);
+    const a2 = lerp(a, b, 0.07), b2 = lerp(a, b, 0.93);
+    d += `M${f(a2[0])} ${f(a2[1])}L${f(b2[0])} ${f(b2[1])}`;
+  }
+  return d;
+}
+/** The hem of a sleeve's cuff, stitched across at the fraction `t` of the way from the shoulder. */
+const cuffHem = (sleeve: readonly Pt[], t = 0.9): string => {
+  const a = lerp(sleeve[0]!, sleeve[1]!, t), b = lerp(sleeve[3]!, sleeve[2]!, t);
+  return `M${f(a[0])} ${f(a[1])}L${f(b[0])} ${f(b[1])}`;
 };
 /** Horizontal rows (every `step`, from `y0` to `y1`) clipped to a convex polygon, as one path. */
 function rows(poly: readonly Pt[], y0: number, y1: number, step: number, inset = 0): string {
@@ -201,8 +232,8 @@ function judogiFlat(): Part[] {
     parts.push(dark(path(k) + rows(k, 51.4, 56.4, 1.6, 0.3), 0.28, 0.35));
   }
   parts.push(dark("M17.6 60.2H29.6M34.4 60.2H46.4", 0.3, 0.3));
-  // Sleeves: long, wide, ending past the wrist, laid out and down.
-  const sleeve: Pt[] = [[19.8, 6.4], [1.4, 20.2], [4.6, 27.6], [18.6, 22.4]];
+  // Sleeves: to the wrist, the arms hanging out and down (IJF C1.10: the sleeve covers the wrist bone, at most 5 cm short of it, and is loose all along the forearm).
+  const sleeve = JUDOGI_SLEEVE;
   for (const pts of [sleeve, mirror(sleeve)]) parts.push({ d: path(pts), fill: "$main", cyl: 0.15, shade: 0.35 });
   const jacket: Pt[] = [[19.4, 6.6], [26.2, 4], [32, 3.2], [37.8, 4], [44.6, 6.6], [45.6, 8], [45.6, 36], [18.4, 36], [18.4, 8]];
   parts.push({ d: path(jacket), fill: "$main", shade: 0.35, cyl: 0.18 });
@@ -210,15 +241,9 @@ function judogiFlat(): Part[] {
   const body: Pt[] = [[19, 7], [45, 7], [45.6, 26], [18.4, 26]];
   parts.push(dark(rows(body, 8, 25, 1.4, 0.5), 0.28, 0.1));
   parts.push(light(rows(body, 8.5, 25.5, 1.4, 0.5), 0.24, 0.2));
-  for (const pts of [sleeve, mirror(sleeve)]) {
-    let d = "";
-    for (let t = 0.1; t <= 0.9; t += 0.08) {
-      const a = lerp(pts[0]!, pts[1]!, t), b = lerp(pts[3]!, pts[2]!, t);
-      const a2 = lerp(a, b, 0.07), b2 = lerp(a, b, 0.93);
-      d += `M${f(a2[0])} ${f(a2[1])}L${f(b2[0])} ${f(b2[1])}`;
-    }
-    parts.push(dark(d, 0.28, 0.1));
-  }
+  for (const pts of [sleeve, mirror(sleeve)]) parts.push(dark(sleeveRows(pts), 0.28, 0.1));
+  // The loose cuff: a hem stitched a little in from the open end, on both sleeves.
+  for (const pts of [sleeve, mirror(sleeve)]) parts.push(dark(cuffHem(pts), 0.3, 0.38));
   // The neck: the collar goes round the back of the neck, and the opening is a V that ends under 10 cm below the sternum.
   parts.push({ d: path([[26.4, 4.2], [37.6, 4.2], [33.4, 14]]), fill: INK, stroke: INK, w: 0.3, op: 0.62, line: "none" });
   parts.push({ d: "M25.4 5.4Q32 2 38.6 5.4L37.6 8.2Q32 5.4 26.4 8.2Z", fill: "$main", cyl: 0.4, shade: 0.3 });
@@ -285,6 +310,110 @@ export const GEAR_JUDOGI_BLUE = /* @__PURE__ */ drawn("gear:judogi-blue", "Blue 
 export const GEAR_JUDOGI_FOLDED = /* @__PURE__ */ drawn("gear:judogi-folded", "Folded judo suit", "畳んだ柔道衣", { main: JUDOGI_WHITE, accent: OBI_RANKS.black, parts: judogiFolded() });
 export const GEAR_JUDOGI_BLUE_FOLDED = /* @__PURE__ */ drawn("gear:judogi-blue-folded", "Folded blue judo suit", "畳んだ青い柔道衣", { main: JUDOGI_BLUE, accent: OBI_RANKS.black, parts: judogiFolded() });
 
+// ───────────────────────────── the judogi from behind, with its back number ─────────────────────────────
+
+/** The bands of the back number (IJF C1.8): blue for everyone, gold for an Olympic champion and red for a world champion while the title is held. Each with the ink of the family name and the ink of the country code. */
+const BAND = {
+  blue: { band: "#26318f", name: "#fefefe", code: "#26318f" },
+  gold: { band: "#d8a31a", name: "#1b2430", code: "#1b2430" },
+  red: { band: "#c4202e", name: "#fefefe", code: "#c4202e" },
+} as const;
+/** The white of the patch. */
+const PATCH_WHITE = "#fcfcf9";
+/** The back number's size and place, in this drawing's units: the large one is 38 cm wide and 39 cm high (the manual of the IJF's partner, docs/references.md), and the jacket's 27.2 units across stand for about 60 cm. */
+const BACKNUMBER = { x0: 23.4, x1: 40.6, y0: 8.4, y1: 26.1 } as const;
+
+const cleanName = (value: unknown): string =>
+  typeof value === "string" ? value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().replace(/[^A-Z0-9 '-]/g, "").replace(/\s+/g, " ").trim().slice(0, 16) : "";
+const cleanCode = (value: unknown): string => (typeof value === "string" ? value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().replace(/[^A-Z]/g, "").slice(0, 3) : "");
+/** A dashed line round the edge of a rectangle, `inset` in from it: the stitching that holds the patch on. */
+function stitches(x0: number, y0: number, x1: number, y1: number, inset: number, dash = 0.9, gap = 0.75): string {
+  let d = "";
+  const run = (xa: number, ya: number, xb: number, yb: number): void => {
+    const len = Math.hypot(xb - xa, yb - ya);
+    for (let t = 0; t < len - 0.2; t += dash + gap) {
+      const e = Math.min(t + dash, len);
+      d += `M${f(xa + ((xb - xa) * t) / len)} ${f(ya + ((yb - ya) * t) / len)}L${f(xa + ((xb - xa) * e) / len)} ${f(ya + ((yb - ya) * e) / len)}`;
+    }
+  };
+  const a = x0 + inset, b = x1 - inset, c = y0 + inset, e = y1 - inset;
+  run(a, c, b, c);
+  run(b, c, b, e);
+  run(b, e, a, e);
+  run(a, e, a, c);
+  return d;
+}
+
+/**
+ * The back number as parts: a white patch with the family name in white capitals on a band across the top (the band arched), the three letters of the National Olympic Committee in capitals under it, and the rest
+ * of the patch blank, where the event's sponsor goes. A small square at the left edge stands for the label that makes it authentic. No flag (the IJF's patch has none), no logo, no mark of the IJF or of the maker.
+ */
+function backnumberParts(back: Backnumber | undefined): Part[] {
+  const parts: Part[] = [];
+  const { x0, x1, y0, y1 } = BACKNUMBER;
+  const w = x1 - x0, cx = (x0 + x1) / 2;
+  const colours = BAND[back?.band === "gold" || back?.band === "red" ? back.band : "blue"];
+  const name = back?.name === undefined ? "TANAKA" : cleanName(back.name);
+  const code = back?.code === undefined ? "JPN" : cleanCode(back.code);
+  parts.push({ d: rect(x0, y0, w, y1 - y0, 0.3), fill: PATCH_WHITE, stroke: "#7d8594", w: 0.45, shade: 0.12 });
+  parts.push(dark(stitches(x0, y0, x1, y1, 0.5), 0.26, 0.45));
+  parts.push({ d: `M${x0} ${f(y0 + 0.9)}Q${f(cx)} ${f(y0 - 0.5)} ${x1} ${f(y0 + 0.9)}L${x1} ${f(y0 + 4.6)}Q${f(cx)} ${f(y0 + 3.4)} ${x0} ${f(y0 + 4.6)}Z`, fill: colours.band, stroke: colours.band, w: 0.3, shade: 0 });
+  const letters = { weight: 0.2, wide: 0.78 } as const;
+  const nameSize = fitSize(name, letters, w - 3, 2.8);
+  if (name !== "") parts.push({ d: linePath(name, { ...letters, size: nameSize }, cx, y0 + 2.4), fill: "none", stroke: colours.name, w: letters.weight * nameSize });
+  const codeLetters = { weight: 0.24, wide: 1.05 } as const;
+  const codeSize = fitSize(code, codeLetters, 10, 3.2);
+  if (code !== "") parts.push({ d: linePath(code, { ...codeLetters, size: codeSize }, cx, y0 + 8.4), fill: "none", stroke: colours.code, w: codeLetters.weight * codeSize });
+  parts.push({ d: rect(x0 + 0.9, y0 + 7.6, 1.3, 1.3), fill: "#1b2430", stroke: "none", shade: 0, line: "ink" });
+  return parts;
+}
+
+/** The judogi laid flat and seen from behind: collar, the back of the jacket with the back number sewn on it (its top 3 cm under the collar), the belt crossed behind the waist and the trousers. `$main` is the cloth, `$accent` the belt. */
+function judogiBack(back: Backnumber | undefined): Part[] {
+  const parts: Part[] = [];
+  const trousers: Pt[] = [[18.4, 37], [45.6, 37], [46.6, 62], [34.6, 62], [32, 43.6], [29.4, 62], [17.4, 62]];
+  parts.push({ d: path(trousers), fill: "$main", shade: 0.3, cyl: 0.25 });
+  parts.push({ d: path([[18.4, 37], [45.6, 37], [45.7, 39.8], [18.3, 39.8]]), fill: "$main", shade: 0.2 });
+  parts.push(dark("M18.6 38.9H45.4", 0.3, 0.35));
+  parts.push(dark("M17.6 60.2H29.6M34.4 60.2H46.4M32 39.8V43.4", 0.3, 0.3));
+  const sleeve = JUDOGI_SLEEVE;
+  for (const pts of [sleeve, mirror(sleeve)]) parts.push({ d: path(pts), fill: "$main", cyl: 0.15, shade: 0.35 });
+  const jacket: Pt[] = [[19.4, 6.6], [26.2, 4], [32, 3.2], [37.8, 4], [44.6, 6.6], [45.6, 8], [45.6, 36], [18.4, 36], [18.4, 8]];
+  parts.push({ d: path(jacket), fill: "$main", shade: 0.35, cyl: 0.18 });
+  parts.push(dark(rows([[19, 7], [45, 7], [45.6, 35], [18.4, 35]], 9, 34, 1.4, 0.5), 0.28, 0.1));
+  parts.push(light(rows([[19, 7], [45, 7], [45.6, 35], [18.4, 35]], 9.5, 34.5, 1.4, 0.5), 0.24, 0.2));
+  for (const pts of [sleeve, mirror(sleeve)]) parts.push(dark(sleeveRows(pts), 0.28, 0.1));
+  for (const pts of [sleeve, mirror(sleeve)]) parts.push(dark(cuffHem(pts), 0.3, 0.38));
+  parts.push(dark("M18.8 34.4H44.8", 0.3, 0.32));
+  parts.push(dark("M20.2 31.4V36M43.8 31.4V36", 0.4, 0.45));
+  parts.push(...backnumberParts(back));
+  // The collar goes round the back of the neck: a thick, stitched band.
+  parts.push({ d: "M24.6 5.4Q32 2 39.4 5.4L38.8 8.2Q32 5.6 25.2 8.2Z", fill: "$main", cyl: 0.4, shade: 0.3 });
+  parts.push(dark("M25.2 6.9Q32 4.2 38.8 6.9", 0.28, 0.4));
+  // The belt, crossed behind the waist: two wraps, and the two turns that cross in the middle of the back.
+  const edge = { stroke: BELT_EDGE, cyl: 0.5, shade: 0.25 } as const;
+  parts.push({ d: path([[18.2, 27.2], [45.8, 27.2], [45.8, 29.7], [18.2, 29.7]]), fill: "$accent", ...edge });
+  parts.push({ d: path([[18.2, 29.4], [45.8, 29.4], [45.8, 31.9], [18.2, 31.9]]), fill: "$accent", ...edge });
+  parts.push({ d: path(strip([28.4, 27.2], [35.6, 31.9], 2.5)), fill: "$accent", ...edge });
+  parts.push({ d: path(strip([35.6, 27.2], [28.4, 31.9], 2.5)), fill: "$accent", ...edge });
+  parts.push(dark("M18.6 28.4H27M37 28.4H45.4M18.6 30.6H27M37 30.6H45.4", 0.26, 0.3));
+  return parts;
+}
+
+/** The title of a back view: its name, then (when the call gave a back number) the family name and the country code that are on it. */
+const backTitle = (en: string, back: Backnumber | undefined): string => {
+  if (back === undefined) return en;
+  const name = back.name === undefined ? "TANAKA" : cleanName(back.name);
+  const code = back.code === undefined ? "JPN" : cleanCode(back.code);
+  return [en, `${name} ${code}`.trim()].filter((t) => t !== "").join(", ");
+};
+const backPiece = (id: string, en: string, ja: string, main: string) => {
+  const spec = { main, accent: OBI_RANKS.black, parts: judogiBack(undefined) };
+  return defineGear({ id, en, ja, source: "drawn", model: spec, draw: (o) => drawGear(id, backTitle(en, o?.backnumber), { ...spec, parts: o?.backnumber === undefined ? spec.parts : judogiBack(o.backnumber) }, o) });
+};
+export const GEAR_JUDOGI_BACK = /* @__PURE__ */ backPiece("gear:judogi-back", "Judo suit, back view", "柔道衣の背面", JUDOGI_WHITE);
+export const GEAR_JUDOGI_BLUE_BACK = /* @__PURE__ */ backPiece("gear:judogi-blue-back", "Blue judo suit, back view", "青い柔道衣の背面", JUDOGI_BLUE);
+
 // ───────────────────────────── the karate-gi ─────────────────────────────
 
 /** The karate-gi laid flat: lighter cloth (no quilting), a plain narrow collar, shorter jacket and sleeves than the judogi, tie strings, ankle-length trousers and the belt. `$main` is the cloth, `$accent` the belt. */
@@ -296,9 +425,10 @@ function karateFlat(): Part[] {
   parts.push(dark("M19.6 41.4H44.4", 0.3, 0.3));
   parts.push({ d: "M26 41.8Q24.4 44.6 25.4 47M27.6 41.8Q28.4 44.4 27.4 46.8", fill: "none", stroke: INK, w: 0.35, op: 0.45, line: "none" });
   parts.push(dark("M18.8 60H29.6M34.4 60H45.2", 0.3, 0.25));
-  // Sleeves reach the bend of the wrist at most (WKF 2.2.1 j), so they are shorter than a judogi's, with a wide cuff.
-  const sleeve: Pt[] = [[20.6, 8], [8.6, 16.6], [11.8, 23], [19.4, 22]];
+  // Sleeves reach the bend of the wrist at most and halfway down the forearm at least (WKF 2.2.1 j): three-quarter length, a little shorter than a judogi's, with a wide cuff.
+  const sleeve = KARATE_SLEEVE;
   for (const pts of [sleeve, mirror(sleeve)]) parts.push({ d: path(pts), fill: "$main", shade: 0.3, cyl: 0.12 });
+  for (const pts of [sleeve, mirror(sleeve)]) parts.push(dark(cuffHem(pts, 0.88), 0.3, 0.3));
   const jacket: Pt[] = [[20.2, 8], [26.6, 5.2], [32, 4.4], [37.4, 5.2], [43.8, 8], [44.8, 38.6], [19.2, 38.6]];
   parts.push({ d: path(jacket), fill: "$main", shade: 0.3, cyl: 0.15 });
   // Neck: a wide V that ends lower than the judogi's, a plain thin collar.

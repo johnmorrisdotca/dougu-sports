@@ -2,6 +2,7 @@
 // package, so a bundler can take one emblem and leave the others.
 
 import type { FlagRenderer, PuckFace } from "./ball/ball.face.ts";
+import type { Backnumber } from "./ball/ball.core.ts";
 
 /** `metal`: full colour with a gradient. `line`: one outline in `currentColor`. `color`: flat fills of the main colour, with no gradient. */
 export type EmblemStyle = "metal" | "line" | "color";
@@ -67,6 +68,8 @@ export interface EmblemOptions {
   colors?: readonly string[];
   /** A puck: a renderer for the flag codes this package does not draw (`face.flag`): `(code, { shape: "round" | "square" | "rect", size, theme }) => svg`, synchronous, the same as taisen-brackets takes (hata's `flag()` is asynchronous, so load the flags first). */
   flags?: FlagRenderer;
+  /** A judogi seen from behind: the back number sewn on it, `{ name, code, band }` (see `Backnumber`). `gear:judogi-back` and `gear:judogi-blue-back` take it; anything else ignores it. */
+  backnumber?: Backnumber;
 }
 
 /** A turn, in degrees from the resting view (0 and 0 is the still drawing): `yaw` about the vertical axis, `pitch` the tilt toward the eye. */

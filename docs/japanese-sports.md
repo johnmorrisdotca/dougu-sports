@@ -9,14 +9,14 @@
 | Sumo | `sport:sumo` (two wrestlers in the shikiri crouch) | `trophy:sumo-cup`, `gear:gunbai`, `gear:mawashi` | 相撲, 鳳凰飾りの銀杯, 軍配, 廻し |
 | Championship flags | | `trophy:championship-banner` | 優勝旗 |
 | Kendo | `sport:kendo` (the helmet) | `gear:shinai`, `gear:kendo-men` | 剣道, 竹刀, 剣道の面 |
-| Judo | `sport:judo` (the suit and belt) | `gear:judogi`, `gear:judogi-blue`, `gear:judogi-folded`, `gear:judogi-blue-folded`, `gear:obi` and the belts below | 柔道, 柔道衣, 武道の帯 |
+| Judo | `sport:judo` (the suit and belt) | `gear:judogi`, `gear:judogi-blue`, `gear:judogi-folded`, `gear:judogi-blue-folded`, `gear:judogi-back`, `gear:judogi-blue-back` ([from behind, with the back number](judogi-back.md)), `gear:obi` and the belts below | 柔道, 柔道衣, 武道の帯 |
 | Kyudo | `sport:kyudo` (a bow, its string and an arrow) | `gear:yumi`, `gear:ya` | 弓道, 弓道の弓, 弓道の矢 |
 | Karate | `sport:karate` (the suit) | `gear:karate-gi` | 空手, 空手衣 |
 
 ```js
 import { JAPANESE_IDS, emblemInfo, emblemName } from "@johnmorrisdotca/dougu-sports";
 
-console.log(JAPANESE_IDS.length); // 33
+console.log(JAPANESE_IDS.length); // 35
 console.log(emblemName("gear:gunbai", "ja")); // 軍配
 console.log(emblemName("gear:gunbai")); // Referee's war fan
 console.log(emblemInfo("gear:judogi").description?.ja.startsWith("白い柔道衣")); // true
@@ -62,11 +62,11 @@ console.log(crimson.includes(">ABC<")); // true
 
 `gear:judogi` is the white judogi laid flat, `gear:judogi-blue` the blue one, and `gear:judogi-folded` and `gear:judogi-blue-folded` the same folded into a neat rectangle with the belt tied round it. They are drawn from the IJF's judogi rules (Sport and Organisation Rules, C1, [references](references.md#judo-and-karate-suits-and-belts)):
 
-- **Jacket (uwagi):** the lapels cross left over right, with the crossing under 10 cm below the top of the sternum, and the collar is a thick stitched lapel running from the back of the neck to the hem (the rule gives it as 4 cm wide and at most 1 cm thick). The sleeves cover the whole arm, wrist bone included, and the skirt covers the buttocks, with short vents at the sides. The cloth is heavy, so the upper body and the sleeves are drawn quilted, in rows.
+- **Jacket (uwagi):** the lapels cross left over right, with the crossing under 10 cm below the top of the sternum, and the collar is a thick stitched lapel running from the back of the neck to the hem (the rule gives it as 4 cm wide and at most 1 cm thick). The sleeves are long, hanging out and down to the wrist (a judogi has no short sleeves), loose at the cuff, and cover the wrist bone completely; the skirt covers the buttocks, with short vents at the sides. `sport:judo` draws them the same way. The cloth is heavy, so the upper body and the sleeves are drawn quilted, in rows.
 - **Trousers (zubon):** straight and loose, ending near the ankle, with a drawstring waist and reinforced knees.
 - **Colour (C1.9):** the jacket and the trousers are one colour, "snow white" (`JUDOGI_WHITE`) or blue (`JUDOGI_BLUE`, between Pantone 285M and 286M); nothing else.
 - **Belt:** the suit wears a black belt by default; `accent` takes any other colour (`OBI_RANKS`).
-- The backnumber is sewn on the back (its top 3 cm below the collar, C1.8), so a front view does not show it.
+- The backnumber is sewn on the back (its top 3 cm below the collar, C1.8), so a front view does not show it. `gear:judogi-back` and `gear:judogi-blue-back` draw the suit from behind with it: [judogi-back.md](judogi-back.md).
 
 ## Belts
 
@@ -96,7 +96,7 @@ console.log(obi(["white", "yellow"]).includes(OBI_RANKS.yellow)); // true
 
 ## The karate suit
 
-`gear:karate-gi` is drawn from the WKF competition rules (article 2.2.1): white, without stripes or piping; a lighter cloth than the judogi's (no quilting, a plain narrow collar); a jacket that covers the hips and no more than three-quarters of the thigh; sleeves that reach the bend of the wrist at most and halfway down the forearm at least, so shorter than a judogi's; ties on the jacket; trousers that cover at least two thirds of the shin and stop above the ankle bone; and a red (AKA) or blue (AO) belt, which is why the belt is red by default. `sport:karate` is the same suit as a pictogram, and `sport:judo` the judogi.
+`gear:karate-gi` is drawn from the WKF competition rules (article 2.2.1): white, without stripes or piping; a lighter cloth than the judogi's (no quilting, a plain narrow collar); a jacket that covers the hips and no more than three-quarters of the thigh; sleeves that reach the bend of the wrist at most and halfway down the forearm at least, so three-quarter length, a little shorter than a judogi's and never elbow-length; ties on the jacket; trousers that cover at least two thirds of the shin and stop above the ankle bone; and a red (AKA) or blue (AO) belt, which is why the belt is red by default. `sport:karate` is the same suit as a pictogram, and `sport:judo` the judogi.
 
 ## American football pictograms
 

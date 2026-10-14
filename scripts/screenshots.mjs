@@ -1,5 +1,5 @@
 // Takes the README's pictures of the demo into docs/images, as webp made in the browser: the balls, the vintage balls, the trophies with the medals and crests, the gear and the phone sheet (each light
-// and dark), the printed pucks (light and dark) and four emblems turned. Every sheet stands on one of the family's shared backgrounds (scripts/family-backgrounds.ts, drawn in code, copied from taisen-brackets
+// and dark), the printed pucks and the judo suits from behind (each light and dark) and four emblems turned. Every sheet stands on one of the family's shared backgrounds (scripts/family-backgrounds.ts, drawn in code, copied from taisen-brackets
 // and never edited here), in the dark or the light variant, and its labels take the ink the background returns, so they read. The grid runs edge to edge and every row is full.
 // It serves the demo on port 7210, or TEST_PORT (this package's own block, tests and tools from 7211 up) and stops the server it started. IMAGES_OUT writes somewhere else than docs/images; ONLY=name,name takes some.
 import { spawn } from "node:child_process";
@@ -106,6 +106,9 @@ try {
   const turned = (D) => ["trophy:tennis-cup", "medal:gold", "ball:soccer", "trophy:championship-banner"].flatMap((id) => [-120, -80, -40, 0, 40, 80, 120].map((yaw) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.emblemFrame(id, { yaw, size: 180 })}</figure>`)).join("");
   // The eight printed pucks, four to a row.
   const pucks = (D) => ["puck:canada", "puck:canada-red", "puck:canada-white", "puck:usa", "puck:usa-navy", "puck:player", "puck:signed", "puck:souvenir"].map((id) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.renderEmblem(id, { size: 240 })}</figure>`).join("");
+  // The judo suit from the front and from behind with its back number: white (TANAKA, JPN), blue (TREMBLAY, CAN) and white with a gold band (SMITH, USA), four to a row.
+  const judogi = (D) => [["gear:judogi", {}], ["gear:judogi-back", { backnumber: { name: "TANAKA", code: "JPN" } }], ["gear:judogi-blue-back", { backnumber: { name: "TREMBLAY", code: "CAN" } }], ["gear:judogi-back", { backnumber: { name: "SMITH", code: "USA", band: "gold" } }]]
+    .map(([id, o]) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.renderEmblem(id, { size: 250, ...o })}</figure>`).join("");
   // Which preset stands behind which picture, in the dark and in the light variant: the balls under floodlights, the cups and medals on royal purple, the gear on carbon fibre (dark) and a hardwood floor (light),
   // the vintage balls on a warm sunburst, the pucks on the ice, the phone on a glow and the turned emblems on a dark royal. A stronger intensity (0.9, the default is 0.6) keeps the pattern from being a mere tint.
   for (const scheme of ["light", "dark"]) {
@@ -114,6 +117,7 @@ try {
     await sheet(`hero-desk-${scheme}`, { width: 1400, cols: 9, rows: [152, 152, 132, 160], scheme, preset: "royal", intensity: 0.9 }, trophies);
     await sheet(`gear-desk-${scheme}`, { width: 1400, cols: 9, rows: [150, 150, 150, 150], scheme, preset: scheme === "dark" ? "carbon" : "hardwood", intensity: scheme === "dark" ? 1 : 0.9 }, gear);
     await sheet(`phone-${scheme}`, { width: 390, cols: 3, rows: [124, 124, 124, 124], gap: 4, phone: true, scheme, preset: "glow" }, phoneCells);
+    await sheet(`judogi-${scheme}`, { width: 1000, cols: 4, rows: [260], gap: 10, pad: 20, scheme, preset: scheme === "dark" ? "carbon" : "hardwood", intensity: scheme === "dark" ? 1 : 0.9 }, judogi);
     await sheet(`pucks-${scheme}`, { width: 1000, cols: 4, rows: [250, 250], gap: 10, pad: 20, scheme, preset: "ice" }, pucks);
   }
   await sheet("turn-desk", { width: 1280, cols: 7, rows: [176, 176, 176, 176], scheme: "dark", preset: "royal", intensity: 0.9 }, turned);

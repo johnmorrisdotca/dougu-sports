@@ -10,7 +10,7 @@ export { EMBLEM_INK, EMBLEM_PAGE, EMBLEM_STYLES, METALS } from "./emblems/emblem
 export type { Emblem, EmblemKind, EmblemLocale, EmblemOptions, EmblemSource, EmblemStyle, EmblemTheme, FrameOptions } from "./emblems/emblem.core.ts";
 export { lineup } from "./emblems/ball/ball.index.ts";
 export type { LineupOptions } from "./emblems/ball/ball.index.ts";
-export type { PieceSize } from "./emblems/ball/ball.core.ts";
+export type { Backnumber, PieceSize } from "./emblems/ball/ball.core.ts";
 export type { Ball, BallKind, Decor, Handle, LatheModel, Poles, Pt, Solid } from "./emblems/emblem.lathe.ts";
 export type { FlatModel, Role, Shape } from "./emblems/emblem.shapes.ts";
 export { emblemSprite } from "./emblems/emblem.sprite.ts";

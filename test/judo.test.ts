@@ -3,6 +3,7 @@ import { test } from "node:test";
 
 import * as D from "../src/index.ts";
 import { wellFormed } from "./helpers.ts";
+import { inkBox, pathPoints } from "./svgbox.ts";
 
 const SUITS = ["gear:judogi", "gear:judogi-blue", "gear:judogi-folded", "gear:judogi-blue-folded"] as const;
 const BELTS = ["gear:obi", "gear:obi-white", "gear:obi-yellow", "gear:obi-orange", "gear:obi-green", "gear:obi-blue", "gear:obi-brown", "gear:obi-kohaku", "gear:obi-red", "gear:obi-women"] as const;
@@ -144,4 +145,144 @@ test("the American football pictograms are the balls: laces on all three, the CF
     assert.doesNotMatch(D.renderEmblem(id), /NaN|undefined/);
   }
   assert.equal(new Set(["sport:nfl", "sport:cfl", "sport:ifaf"].map((id) => D.renderEmblem(id as D.EmblemId))).size, 3);
+});
+
+// ───────────────────────────── sleeves: judo has no short ones ─────────────────────────────
+
+type Pt = readonly [number, number];
+const dist = (a: Pt, b: Pt): number => Math.hypot(a[0] - b[0], a[1] - b[1]);
+const filled = (svg: string): string[] => [...svg.matchAll(/<path d="([^"]+)" fill="#(?!none)[0-9a-f]{3,6}"/g)].map((m) => m[1] as string);
+/** The left sleeve of a drawn suit, read off the finished drawing (never the numbers it was made from): where its cuff ends, how wide the cuff is, how long the jacket is. */
+function sleeveOf(id: D.EmblemId): { cuffMid: Pt; cuffWidth: number; outer: number; hem: number; jacket: number } {
+  const svg = D.renderEmblem(id, { style: "color" });
+  const subpaths = filled(svg).flatMap((d) => d.split(/(?=M)/).map((sub) => pathPoints(sub) as Pt[]));
+  const left = (pts: Pt[]): boolean => Math.min(...pts.map((p) => p[0])) < 10 && pts.some((p) => p[0] > 16);
+  const sleeve = subpaths.find((pts) => left(pts) && Math.min(...pts.map((p) => p[1])) < 12)!;
+  assert.ok(sleeve !== undefined, `${id} has a sleeve out to the left`);
+  // A sleeve stands out past the body's left edge (x = 17); the cuff is its two lowest corners out there.
+  const cuff = sleeve.filter((p) => p[0] < 14).sort((a, b) => b[1] - a[1]).slice(0, 2) as [Pt, Pt];
+  const shoulder = sleeve.filter((p) => p[0] > 16 && p[0] < 22).sort((a, b) => a[1] - b[1])[0] as Pt;
+  // The jacket: the tallest filled shape whose left edge is the body's, from its top to the line where its sides end.
+  const body = subpaths.filter((pts) => Math.min(...pts.map((p) => p[0])) >= 16 && Math.max(...pts.map((p) => p[1])) < 41);
+  const jacketPts = (id.startsWith("sport:") ? subpaths.find((pts) => left(pts))! : body.sort((a, b) => Math.max(...b.map((p) => p[1])) - Math.min(...b.map((p) => p[1])) - (Math.max(...a.map((p) => p[1])) - Math.min(...a.map((p) => p[1]))))[0]!) as Pt[];
+  const top = Math.min(...jacketPts.map((p) => p[1]));
+  const hem = Math.max(...jacketPts.filter((p) => p[0] >= 17 && p[0] <= 47).map((p) => p[1]));
+  return { cuffMid: [(cuff[0][0] + cuff[1][0]) / 2, (cuff[0][1] + cuff[1][1]) / 2], cuffWidth: dist(cuff[0], cuff[1]), outer: dist(shoulder, cuff.sort((a, b) => a[0] - b[0])[0]), hem, jacket: hem - top };
+}
+
+test("a judogi has no short sleeves: they hang to the wrist, at the level of the hem, and the cuff is loose (IJF C1.10)", () => {
+  // With the arms hanging, the wrist bone is at the hip, where the skirt of the jacket ends. The sleeve must cover it, at most 5 cm short, so its cuff is at the hem or below, and it is as long as the jacket.
+  for (const id of ["sport:judo", "gear:judogi", "gear:judogi-blue", "gear:judogi-back", "gear:judogi-blue-back"] as const) {
+    const s = sleeveOf(id);
+    assert.ok(s.cuffMid[1] >= s.hem - 0.05 * s.jacket, `${id}: the cuff is at y ${s.cuffMid[1].toFixed(1)}, the hem at ${s.hem}`);
+    assert.ok(s.outer >= 0.95 * s.jacket, `${id}: the sleeve's outer edge is ${s.outer.toFixed(1)} long, the jacket ${s.jacket.toFixed(1)}`);
+    // Loose: the cuff is wide enough for the forearm and a hand's width of room (a cuff 20% as wide as the jacket is long, about 15 cm on a 75 cm jacket).
+    assert.ok(s.cuffWidth >= 0.2 * s.jacket, `${id}: the cuff is ${s.cuffWidth.toFixed(1)} wide`);
+  }
+  // The old pictogram's sleeves ended at the elbow (about 12 units above the hem).
+  assert.ok(sleeveOf("sport:judo").cuffMid[1] > 38, "the pictogram's cuff is down at the hip");
+});
+
+test("the karate-gi's sleeves are three-quarter length: past halfway down the forearm and never beyond the wrist (WKF 2.2.1 j), so longer than the elbow and shorter than a judogi's", () => {
+  for (const [karate, judo] of [["gear:karate-gi", "gear:judogi"], ["sport:karate", "sport:judo"]] as const) {
+    const k = sleeveOf(karate), j = sleeveOf(judo);
+    const reach = (k.hem - k.cuffMid[1]) / k.jacket;
+    assert.ok(reach <= 0.2, `${karate}: the cuff is ${(reach * 100).toFixed(0)}% of the jacket's length above the hem (an elbow-length sleeve is 35% and more)`);
+    assert.ok(k.outer / k.jacket >= 0.8 && k.outer / k.jacket < j.outer / j.jacket, `${karate}: the sleeve is ${(k.outer / k.jacket).toFixed(2)} of the jacket, the judogi's ${(j.outer / j.jacket).toFixed(2)}`);
+    assert.ok(k.cuffWidth >= 0.2 * k.jacket, `${karate}: a wide cuff`);
+  }
+});
+
+// ───────────────────────────── the back number ─────────────────────────────
+
+/** The path that is lettering of a colour (a stroked path with no fill), read off the finished drawing. */
+const lettersOf = (svg: string, stroke: string): { d: string; w: number } | undefined => {
+  const m = new RegExp(`<path d="([^"]+)" fill="none" stroke="${stroke}" stroke-width="([\\d.]+)"`).exec(svg);
+  return m === null ? undefined : { d: m[1] as string, w: Number(m[2]) };
+};
+const inkOf = (letters: { d: string; w: number }, stroke: string) => inkBox(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="${letters.d}" fill="none" stroke="${stroke}" stroke-width="${letters.w}"/></svg>`)!;
+/** The patch: the rectangle of the back number, read off the drawing. */
+const patchOf = (svg: string): { x0: number; y0: number; x1: number; y1: number } => {
+  const d = [...svg.matchAll(/<path d="([^"]+)" fill="#fcfcf9"/g)][0]?.[1] as string;
+  const pts = pathPoints(d);
+  return { x0: Math.min(...pts.map((p) => p[0])), y0: Math.min(...pts.map((p) => p[1])), x1: Math.max(...pts.map((p) => p[0])), y1: Math.max(...pts.map((p) => p[1])) };
+};
+
+test("the back view carries the back number: the family name on the band, the country code under it, on a white patch the size of the IJF's large one", () => {
+  const svg = D.renderEmblem("gear:judogi-blue-back", { style: "color", backnumber: { name: "TREMBLAY", code: "CAN" } });
+  assert.equal(wellFormed(svg), null);
+  assert.match(svg, /<title>Blue judo suit, back view, TREMBLAY CAN<\/title>/);
+  const patch = patchOf(svg);
+  // 38 cm wide and 39 cm high (the IJF partner's manual): the patch is as wide as it is high, within 3%.
+  assert.ok(Math.abs((patch.x1 - patch.x0) / (patch.y1 - patch.y0) / (38 / 39) - 1) < 0.03, "38 by 39");
+  const name = lettersOf(svg, "#fefefe");
+  const code = lettersOf(svg, "#26318f");
+  assert.ok(name !== undefined && code !== undefined, "the name and the code are lettering");
+  const nameInk = inkOf(name!, "#fefefe"), codeInk = inkOf(code!, "#26318f");
+  const centre = (patch.x0 + patch.x1) / 2;
+  for (const [what, ink] of [["name", nameInk], ["code", codeInk]] as const) {
+    assert.ok(ink.x0 >= patch.x0 + 0.5 && ink.x1 <= patch.x1 - 0.5, `the ${what} is inside the patch`);
+    assert.ok(Math.abs((ink.x0 + ink.x1) / 2 - centre) < 0.8, `the ${what} is centred`);
+  }
+  assert.ok(nameInk.y1 < codeInk.y0, "the name is above the code");
+  assert.ok(nameInk.y0 >= patch.y0 && nameInk.y1 <= patch.y0 + 5, "the name is on the band across the top");
+  assert.ok(codeInk.y1 < patch.y0 + (patch.y1 - patch.y0) * 0.6, "the sponsor's room under the code is left blank");
+  // A longer name is set smaller to fit, a shorter one larger; the lettering is the name's own.
+  const tall = (n: string): number => { const l = lettersOf(D.renderEmblem("gear:judogi-back", { style: "color", backnumber: { name: n, code: "JPN" } }), "#fefefe")!; const b = inkOf(l, "#fefefe"); return b.y1 - b.y0; };
+  assert.ok(tall("LEE") > tall("TREMBLAYSMITHSON"), "a long name is smaller");
+  assert.notEqual(name!.d, lettersOf(D.renderEmblem("gear:judogi-blue-back", { style: "color", backnumber: { name: "TANAKA", code: "CAN" } }), "#fefefe")!.d, "another name, other letters");
+  assert.notEqual(code!.d, lettersOf(D.renderEmblem("gear:judogi-blue-back", { style: "color", backnumber: { name: "TREMBLAY", code: "JPN" } }), "#26318f")!.d, "another code, other letters");
+});
+
+test("the back number is taken as a family name in capitals and three letters, and nothing else gets on it", () => {
+  const draw = (backnumber: D.Backnumber): string => D.renderEmblem("gear:judogi-back", { style: "color", backnumber });
+  assert.equal(draw({ name: "Müller", code: "ger" }), draw({ name: "MULLER", code: "GER" }), "accents are the plain letter, lower case is capitals");
+  assert.equal(draw({ code: "CANADA" }), draw({ code: "CAN" }), "three letters");
+  assert.equal(draw({ name: "A".repeat(40) }), draw({ name: "A".repeat(16) }), "sixteen characters");
+  for (const hostile of ['"><script>alert(1)</script>', "<svg onload=x>", "&amp;"]) {
+    const svg = draw({ name: hostile, code: hostile });
+    assert.equal(wellFormed(svg), null);
+    assert.doesNotMatch(svg, /<script|onload/);
+  }
+  assert.equal(lettersOf(draw({ name: "" }), "#fefefe"), undefined, "an empty name draws no lettering");
+  assert.match(D.renderEmblem("gear:judogi-back", { style: "color", locale: "ja", backnumber: { name: "SMITH", code: "USA" } }), /<title>柔道衣の背面<\/title>/);
+  assert.match(D.renderEmblem("gear:judogi-back", { title: "my own", backnumber: { name: "SMITH" } }), /<title>my own<\/title>/);
+  assert.equal(D.renderEmblem("gear:judogi-back"), D.renderEmblem("gear:judogi-back", { backnumber: {} }).replace("<title>Judo suit, back view, TANAKA JPN</title>", "<title>Judo suit, back view</title>"), "no back number given reads TANAKA JPN");
+});
+
+test("the band is blue, or gold for an Olympic champion and red for a world champion; the suit is white or blue, with a black belt", () => {
+  const band = (b: "blue" | "gold" | "red" | undefined): string => D.renderEmblem("gear:judogi-back", { style: "color", backnumber: { band: b } });
+  assert.ok(band(undefined).includes("#26318f") && band("blue").includes("#26318f"));
+  assert.ok(band("gold").includes("#d8a31a") && !band("gold").includes("#26318f"));
+  assert.ok(band("red").includes("#c4202e") && !band("red").includes("#26318f"));
+  assert.equal(band(undefined), band("nonsense" as never), "an unknown band is blue");
+  for (const id of ["gear:judogi-back", "gear:judogi-blue-back"] as const) {
+    const svg = D.renderEmblem(id, { style: "color" });
+    assert.ok(svg.includes(id.includes("blue") ? D.JUDOGI_BLUE : D.JUDOGI_WHITE), id);
+    assert.equal(svg.includes(id.includes("blue") ? D.JUDOGI_WHITE : D.JUDOGI_BLUE), false, `${id} is one colour`);
+    assert.ok(svg.includes(D.OBI_RANKS.black), `${id} has a black belt`);
+    assert.ok(D.renderEmblem(id, { style: "color", accent: "#2b64c8" }).includes("#2b64c8"), `${id}: the belt takes an accent`);
+  }
+  assert.equal(D.emblemName("gear:judogi-blue-back", "ja"), "青い柔道衣の背面");
+});
+
+test("the back view has no flag and no logo: nothing of the IJF's, the partner's or a sponsor's is drawn", () => {
+  for (const id of ["gear:judogi-back", "gear:judogi-blue-back"] as const) {
+    const svg = D.renderEmblem(id, { backnumber: { name: "SMITH", code: "USA" }, flags: () => "<svg><circle r='3' fill='#f0f'/></svg>" });
+    assert.doesNotMatch(svg, /ijf|mybacknumber|logo|#f0f|<image|<text/i, id);
+  }
+});
+
+test("the back view reads in the three styles and at 16 pixels, and turns like the other suits", () => {
+  for (const id of ["gear:judogi-back", "gear:judogi-blue-back"] as const) {
+    for (const style of D.EMBLEM_STYLES) for (const size of [16, 64, 256]) assert.equal(wellFormed(D.renderEmblem(id, { style, size, backnumber: { name: "TANAKA", code: "JPN" } })), null, `${id} ${style} ${size}`);
+    const line = D.renderEmblem(id, { style: "line", size: 16 });
+    assert.match(line, /currentColor/);
+    assert.ok(line.length < 7000, `${id} line drawing stays small (${line.length})`);
+    assert.equal(D.emblemFrame(id, { yaw: 0 }), D.renderEmblem(id), id);
+    assert.notEqual(D.emblemFrame(id, { yaw: 60 }), D.renderEmblem(id), id);
+    assert.match(D.emblemFrame(id, { yaw: 60, backnumber: { name: "SMITH", code: "USA" } }), /stroke="#fefefe"/, "a turned frame carries the back number it was given");
+  }
+  assert.deepEqual(D.emblemInfo("gear:judogi-back").kind, "gear");
+  assert.ok(D.JAPANESE_IDS.includes("gear:judogi-back") && D.JAPANESE_IDS.includes("gear:judogi-blue-back"));
 });

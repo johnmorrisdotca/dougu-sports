@@ -56,7 +56,7 @@ export const GEAR_IDS = [
   "gear:table-tennis-paddle", "gear:badminton-racket", "gear:tennis-racket", "gear:squash-racket", "gear:racquetball-racket", "gear:padel-racket", "gear:pickleball-paddle",
   "gear:roundnet-set", "gear:volleyball-net", "gear:basketball-hoop", "gear:baseball-bat", "gear:baseball-glove", "gear:football-helmet", "gear:goalposts", "gear:hurley",
   "gear:curling-broom", "gear:figure-skate", "gear:speed-skate", "gear:diving-board", "gear:swim-goggles", "gear:starting-blocks", "gear:relay-baton", "gear:javelin", "gear:hurdles",
-  "gear:gunbai", "gear:mawashi", "gear:shinai", "gear:kendo-men", "gear:judogi", "gear:judogi-blue", "gear:judogi-folded", "gear:judogi-blue-folded",
+  "gear:gunbai", "gear:mawashi", "gear:shinai", "gear:kendo-men", "gear:judogi", "gear:judogi-blue", "gear:judogi-folded", "gear:judogi-blue-folded", "gear:judogi-back", "gear:judogi-blue-back",
   "gear:obi", "gear:obi-white", "gear:obi-yellow", "gear:obi-orange", "gear:obi-green", "gear:obi-blue", "gear:obi-brown", "gear:obi-kohaku", "gear:obi-red", "gear:obi-women", "gear:obi-white-yellow", "gear:obi-yellow-orange", "gear:obi-orange-green", "gear:obi-green-blue", "gear:obi-blue-brown",
   "gear:yumi", "gear:ya", "gear:karate-gi"
 ] as const;
@@ -67,7 +67,7 @@ export const JAPANESE_IDS = [
   "sport:sumo", "trophy:sumo-cup", "gear:gunbai", "gear:mawashi",
   "trophy:championship-banner",
   "sport:kendo", "gear:shinai", "gear:kendo-men",
-  "sport:judo", "gear:judogi", "gear:judogi-blue", "gear:judogi-folded", "gear:judogi-blue-folded",
+  "sport:judo", "gear:judogi", "gear:judogi-blue", "gear:judogi-folded", "gear:judogi-blue-folded", "gear:judogi-back", "gear:judogi-blue-back",
   "gear:obi", "gear:obi-white", "gear:obi-yellow", "gear:obi-orange", "gear:obi-green", "gear:obi-blue", "gear:obi-brown", "gear:obi-kohaku", "gear:obi-red", "gear:obi-women", "gear:obi-white-yellow", "gear:obi-yellow-orange", "gear:obi-orange-green", "gear:obi-green-blue", "gear:obi-blue-brown",
   "sport:kyudo", "gear:yumi", "gear:ya",
   "sport:karate", "gear:karate-gi",
