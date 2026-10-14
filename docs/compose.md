@@ -139,7 +139,7 @@ console.log(podium([{ name: "青木" }], { locale: "ja" }).includes("<title>表�
 
 **A flag is an image.** SVG markup is made a `data:image/svg+xml` address and drawn with `<image>`, and an SVG used as an image cannot run script or load anything, whatever it contains; a missing `xmlns` is added. A URL is accepted when it is `https:` with no credentials, a path on your own site (`/flags/fr.svg`, `./fr.svg`), or a `data:image/png|jpeg|gif|webp|avif|svg+xml` address. Anything else (`javascript:`, `http:`, `//host`, `file:`, a quote or a space) is left out and the place is drawn without a flag. Names, labels, titles and descriptions are escaped.
 
-In Japanese the description reads `1位：青木（9.80 s）、2位：…`, with full-width punctuation and 、 between the places (a label is your own text, so its unit is yours to write); in an award case a count is spoken `3回`, not `×3`, because a screen reader reads × unevenly.
+In Japanese the description reads `1位：青木（9.80 s）、2位：…`, with full-width punctuation and `、` between the places (a label is your own text, so its unit is yours to write); in an award case a count is spoken `3回`, not `×3`, because a screen reader reads × unevenly.
 
 The drawing is the page's text colour on steps tinted in gold, silver and bronze, so it reads on light and dark; it is `role="img"` with a title and a description, and the emblems inside carry no titles of their own.
 

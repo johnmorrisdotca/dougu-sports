@@ -1,17 +1,19 @@
 # Japanese sports
 
-[Back to the README](../README.md). The package is called Dougu (道具, *dōgu*: a tool, a piece of equipment), so the equipment of the Japanese sports and budō is here as first-class emblems: sumo, kendo, judo, kyudo and karate. Each is an original drawing with a generic id, in the metal, color and line styles, light and dark, and each turns.
+[Back to the README](../README.md) · [日本語](japanese-sports.ja.md) · English
+
+The package is called Dougu (*dōgu*: a tool, a piece of equipment), so the equipment of the Japanese sports and budō is here as first-class emblems: sumo, kendo, judo, kyudo and karate. Each is an original drawing with a generic id, in the metal, color and line styles, light and dark, and each turns.
 
 `JAPANESE_IDS` lists them together; each is also in its own group (`sport`, `trophy` or `gear`).
 
-| Sport | Pictogram | Items | Japanese |
-| --- | --- | --- | --- |
-| Sumo | `sport:sumo` (two wrestlers in the shikiri crouch) | `trophy:sumo-cup`, `gear:gunbai`, `gear:mawashi` | 相撲, 鳳凰飾りの銀杯, 軍配, 廻し |
-| Championship flags | | `trophy:championship-banner` | 優勝旗 |
-| Kendo | `sport:kendo` (the helmet) | `gear:shinai`, `gear:kendo-men` | 剣道, 竹刀, 剣道の面 |
-| Judo | `sport:judo` (the suit and belt) | `gear:judogi`, `gear:judogi-blue`, `gear:judogi-folded`, `gear:judogi-blue-folded`, `gear:judogi-back`, `gear:judogi-blue-back` ([from behind, with the back number](judogi-back.md)), `gear:obi`, the belts below and [six steps of tying one](obi-steps.md) | 柔道, 柔道衣, 武道の帯 |
-| Kyudo | `sport:kyudo` (a bow, its string and an arrow) | `gear:yumi`, `gear:ya` | 弓道, 弓道の弓, 弓道の矢 |
-| Karate | `sport:karate` (the suit) | `gear:karate-gi` | 空手, 空手衣 |
+| Sport | Pictogram | Items |
+| --- | --- | --- |
+| Sumo | `sport:sumo` (two wrestlers in the shikiri crouch) | `trophy:sumo-cup`, `gear:gunbai`, `gear:mawashi` |
+| Championship flags | | `trophy:championship-banner` |
+| Kendo | `sport:kendo` (the helmet) | `gear:shinai`, `gear:kendo-men` |
+| Judo | `sport:judo` (the suit and belt) | `gear:judogi`, `gear:judogi-blue`, `gear:judogi-folded`, `gear:judogi-blue-folded`, `gear:judogi-back`, `gear:judogi-blue-back` ([from behind, with the back number](judogi-back.md)), `gear:obi`, the belts below and [six steps of tying one](obi-steps.md) |
+| Kyudo | `sport:kyudo` (a bow, its string and an arrow) | `gear:yumi`, `gear:ya` |
+| Karate | `sport:karate` (the suit) | `gear:karate-gi` |
 
 ```js
 import { JAPANESE_IDS, emblemInfo, emblemName } from "@johnmorrisdotca/dougu-sports";
@@ -24,7 +26,7 @@ console.log(emblemInfo("gear:judogi").description?.ja.startsWith("白い柔道�
 
 ## The words
 
-The Japanese names use the words the sports' own governing bodies use in their rules and equipment lists: the Japan Sumo Association (日本相撲協会) for 軍配 and 廻し, the All Japan Kendo Federation (全日本剣道連盟) for 竹刀 and 面, the All Japan Judo Federation (全日本柔道連盟) for 柔道衣 and 帯, the All Japan Kyudo Federation (全日本弓道連盟) for 弓 and 矢, and for karate 空手衣. The short name of an emblem is its accessible name, so it is short; the longer description (`emblemInfo(id).description`, in English and in Japanese, with the parts' words: 面金, 面布団, 突き垂れ, 下がり) is for the docs and the gallery. The Japanese was read by a reviewer who reads Japanese (see [CONTRIBUTING](../CONTRIBUTING.md)).
+The Japanese names use the words the sports' own governing bodies use in their rules and equipment lists: the Japan Sumo Association for the war fan and the loincloth, the All Japan Kendo Federation for the bamboo sword and the helmet, the All Japan Judo Federation for the suit and the belt, the All Japan Kyudo Federation for the bow and the arrow, and for karate the suit. The words themselves, with the parts of the kendo helmet, are on the [Japanese page](japanese-sports.ja.md). The short name of an emblem is its accessible name, so it is short; the longer description (`emblemInfo(id).description`, in English and in Japanese) is for the docs and the gallery. The Japanese was read by a reviewer who reads Japanese (see [CONTRIBUTING](../CONTRIBUTING.md)).
 
 The ids and the drawings are generic: no federation's name or mark, no real trophy's name, and no lettering unless you give some.
 

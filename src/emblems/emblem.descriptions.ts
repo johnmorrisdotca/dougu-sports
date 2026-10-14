@@ -118,7 +118,7 @@ export const EMBLEM_DESCRIPTIONS: Readonly<Partial<Record<EmblemId, EmblemDescri
   "gear:obi-step-2": { en: "Step 2 of tying the judo belt: the belt is wrapped twice round the waist, and both ends come back to the front", ja: "柔道の帯の結び方、手順2。帯を腰に二重に巻き、両端を前に戻す" },
   "gear:obi-step-3": { en: "Step 3 of tying the judo belt: the two ends are crossed in front of the belly, the wearer's left end over the right one", ja: "柔道の帯の結び方、手順3。おなかの前で両端を交差させる。着る人の左の端が、右の端の上になるように重ねる" },
   "gear:obi-step-4": { en: "Step 4 of tying the judo belt: one end is brought up from below, under both layers of the belt round the waist", ja: "柔道の帯の結び方、手順4。片方の端を、腰に巻いた二重の帯の下から上へ通す" },
-  "gear:obi-step-5": { en: "Step 5 of tying the judo belt: the flat square knot (hon-musubi, 本結び), left over right and then right over left", ja: "柔道の帯の結び方、手順5。本結びで結ぶ。左を右の上に重ね、次に右を左の上に重ねる" },
+  "gear:obi-step-5": { en: "Step 5 of tying the judo belt: the flat square knot (hon-musubi), left over right and then right over left", ja: "柔道の帯の結び方、手順5。本結びで結ぶ。左を右の上に重ね、次に右を左の上に重ねる" },
   "gear:obi-step-6": { en: "Step 6 of tying the judo belt: the knot is pulled tight and both ends hang down even, with a mark under their tips", ja: "柔道の帯の結び方、手順6。結び目を締め、両端の長さをそろえて垂らす。先端の下に、長さがそろっていることを示す印がある" },
   "gear:yumi": { en: "The long asymmetric bow, held a third of the way up, with its string and wrapped grip", ja: "上が長い非対称の長弓。弦を張り、握り革と籐巻きが付く" },
   "gear:ya": { en: "A kyudo arrow with feather fletching, a nock and a steel point", ja: "弓道の矢。矢羽根、筈、矢尻が付く" },

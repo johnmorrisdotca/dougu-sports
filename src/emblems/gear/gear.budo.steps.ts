@@ -2,7 +2,7 @@
 // avoided) in close-up, and the belt (`$accent`, black by default) at each stage. The belt is the one `gear:judogi` and the belts are drawn with, so a step's belt takes `accent` like theirs.
 //
 //   1. the middle of the belt against the belly;  2. wrapped twice round the waist, both ends back in front;  3. the ends crossed in front;  4. one end brought up under both layers;
-//   5. the flat square knot (hon-musubi, 本結び);  6. both ends hanging even.
+//   5. the flat square knot (hon-musubi);  6. both ends hanging even.
 //
 // The close-up is the jacket alone, drawn 1.55 times as big, so that the belt's width and the knot read at small sizes; a red number says which step it is, and a few small red marks (the middle, the way an end
 // travels, the equal lengths) say what to look at. The marks and the number are not the suit's, so they ignore `tint` and `accent`.

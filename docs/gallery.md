@@ -273,7 +273,7 @@ The folders the art lives in are in [layout.md](layout.md).
 | `gear:obi-step-2` | Belt step 2: two wraps | gear | drawn | Step 2 of tying the judo belt: the belt is wrapped twice round the waist, and both ends come back to the front |
 | `gear:obi-step-3` | Belt step 3: cross | gear | drawn | Step 3 of tying the judo belt: the two ends are crossed in front of the belly, the wearer's left end over the right one |
 | `gear:obi-step-4` | Belt step 4: tuck under | gear | drawn | Step 4 of tying the judo belt: one end is brought up from below, under both layers of the belt round the waist |
-| `gear:obi-step-5` | Belt step 5: square knot | gear | drawn | Step 5 of tying the judo belt: the flat square knot (hon-musubi, 本結び), left over right and then right over left |
+| `gear:obi-step-5` | Belt step 5: square knot | gear | drawn | Step 5 of tying the judo belt: the flat square knot (hon-musubi), left over right and then right over left |
 | `gear:obi-step-6` | Belt step 6: even ends | gear | drawn | Step 6 of tying the judo belt: the knot is pulled tight and both ends hang down even, with a mark under their tips |
 | `gear:yumi` | Long bow | gear | drawn | The long asymmetric bow, held a third of the way up, with its string and wrapped grip |
 | `gear:ya` | Arrow | gear | drawn | A kyudo arrow with feather fletching, a nock and a steel point |

@@ -6,6 +6,14 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.7.2] - 2026-10-14
+
+The docs are one language to a page. No change to the pictures; the only change to the package is one English description.
+
+### Changed
+
+- **The docs are single-language.** `CONTRIBUTING.md` says so (one page per language, no mixed tables, the Japanese twin named `<name>.ja.md`), and a new test, `test/docs-language.test.ts`, fails when an English page holds Japanese outside code or a Japanese page holds English prose. The Japanese words that were in English pages are gone from them: [docs/japanese-sports.md](docs/japanese-sports.md) lost its Japanese column and its Japanese sentences to a new page in Japanese, [docs/japanese-sports.ja.md](docs/japanese-sports.ja.md); [docs/obi-steps.md](docs/obi-steps.md) lost its Japanese column, and [docs/obi-steps.ja.md](docs/obi-steps.ja.md) its English one; the glosses in [docs/references.md](docs/references.md) and the gallery's English description of `gear:obi-step-5` (it named the knot in kanji too) are English only. Three exceptions are named in the test with their reasons: the family list in the README, the package's own name (`道具`) in the README, and the titles of rulebooks cited in Japanese pages.
+
 ## [0.7.1] - 2026-10-14
 
 Real countries in the examples instead of made-up teams. No change to the package's code or its pictures.
@@ -26,7 +34,7 @@ Ten national volleyballs that can be told apart, a 2010-style grooved ball that 
 
 ### Added
 
-- **`gear:obi-step-1` to `gear:obi-step-6`, and `obiStep(step, options)`**: how a judo belt is tied, in six close-ups of the jacket of `gear:judogi` (lapels crossed left over right, 右前) with the belt at each stage: 1 the middle of the belt against the belly, 2 wrapped twice round the waist, 3 the ends crossed in front, 4 one end tucked up under both wraps, 5 the flat square knot (本結び), 6 both ends hanging even. A red number and a few red marks say what to look at. `tint` is the jacket and `accent` the belt. Six ids rather than a `step` option, because this package makes a drawing that differs by more than a colour an id (the suits, the back views, the belts) and keeps options for colours and fill-ins. Names and captions in English and Japanese, the pages [docs/obi-steps.md](docs/obi-steps.md) and [in Japanese](docs/obi-steps.ja.md), and `JAPANESE_IDS` has 41 entries.
+- **`gear:obi-step-1` to `gear:obi-step-6`, and `obiStep(step, options)`**: how a judo belt is tied, in six close-ups of the jacket of `gear:judogi` (lapels crossed left over right, `右前`) with the belt at each stage: 1 the middle of the belt against the belly, 2 wrapped twice round the waist, 3 the ends crossed in front, 4 one end tucked up under both wraps, 5 the flat square knot (`本結び`), 6 both ends hanging even. A red number and a few red marks say what to look at. `tint` is the jacket and `accent` the belt. Six ids rather than a `step` option, because this package makes a drawing that differs by more than a colour an id (the suits, the back views, the belts) and keeps options for colours and fill-ins. Names and captions in English and Japanese, the pages [docs/obi-steps.md](docs/obi-steps.md) and [in Japanese](docs/obi-steps.ja.md), and `JAPANESE_IDS` has 41 entries.
 - Tests: every pair of national volleyballs differs by a mean CIE L\*a\*b\* distance of 35 or more with at least 7 panels clearly different, and no two share a layout; the grooved ball's contrast against a light and a dark page; the belt steps' order, their agreement with the judogi, their names and captions, and that they turn without clipping.
 
 ### Internal
@@ -82,7 +90,7 @@ The judo suit, the belt and the football pictograms were wrong, and are redrawn 
 
 - **`gear:judogi-blue`, `gear:judogi-folded` and `gear:judogi-blue-folded`**: the blue judogi (IJF colour rule C1.9, `JUDOGI_BLUE`), and both suits folded into a neat rectangle with the collar and lapel stitching on top and the belt tied round it. `JUDOGI_WHITE` and `JUDOGI_BLUE` are exported.
 - **A belt for every grade**: `gear:obi-white`, `-yellow`, `-orange`, `-green`, `-blue`, `-brown`, `gear:obi-kohaku` (red and white panels, 6th to 8th dan), `gear:obi-red` (9th and 10th dan), `gear:obi-women` (the black belt with the white stripe women wear in Japan) and the two-colour belts `gear:obi-white-yellow`, `-yellow-orange`, `-orange-green`, `-green-blue` and `-blue-brown`. `OBI_RANKS` gains `kohaku` and `red`, and `obi(rank, options)` takes a grade or a pair of grades (`obi(["white", "yellow"])`), `tint` as one colour or a pair, and `women: true`.
-- Japanese names and descriptions read by a Japanese reviewer (右前 for the lapels, 本結び for the knot; the two-colour belts are a European custom with no Japanese standard name, so they are 「A と B の二色帯」), tests (`test/judo.test.ts`) for the colours, the belts and the football stripes, regenerated gallery pages and gear contact sheet.
+- Japanese names and descriptions read by a Japanese reviewer (`右前` for the lapels, `本結び` for the knot; the two-colour belts are a European custom with no Japanese standard name, so they are `「A と B の二色帯」`), tests (`test/judo.test.ts`) for the colours, the belts and the football stripes, regenerated gallery pages and gear contact sheet.
 
 ### Changed
 
@@ -169,7 +177,7 @@ Eleven balls and implements drawn to the rulebook's proportions, flat emblems tu
 
 ### Changed
 
-- **The gallery is two pages, one language each.** `docs/gallery.md` (English) and `docs/gallery.ja.md` (日本語) are both written by `scripts/make-gallery.mjs`, linked to each other at the top, with the columns Id, name, kind, source and description. The Constant and Import columns are gone (the long paths made GitHub squeeze the Japanese column to one character wide, so the names stacked): each page states once that the constant is the id in capitals (`trophy:lidded-cup` becomes `TROPHY_LIDDED_CUP`) and that it is imported from `@johnmorrisdotca/dougu-sports/trophy/lidded-cup`, and the generator stops if the rule fails for any emblem. `pnpm test:readme` checks both pages and accepts the rule as naming each emblem's constant.
+- **The gallery is two pages, one language each.** `docs/gallery.md` (English) and `docs/gallery.ja.md` (the Japanese) are both written by `scripts/make-gallery.mjs`, linked to each other at the top, with the columns Id, name, kind, source and description. The Constant and Import columns are gone (the long paths made GitHub squeeze the Japanese column to one character wide, so the names stacked): each page states once that the constant is the id in capitals (`trophy:lidded-cup` becomes `TROPHY_LIDDED_CUP`) and that it is imported from `@johnmorrisdotca/dougu-sports/trophy/lidded-cup`, and the generator stops if the rule fails for any emblem. `pnpm test:readme` checks both pages and accepts the rule as naming each emblem's constant.
 
 ## [0.2.0] - 2026-10-14
 
@@ -178,7 +186,7 @@ The package is now 167 emblems (24 trophies, 5 awards, 6 medals, 4 crests, 38 sp
 ### Added
 
 - **Japanese sports and budō** ([docs/japanese-sports.md](docs/japanese-sports.md)), all original drawings with generic ids and no real trophy's name: `trophy:sumo-cup` (a tall silver cup on a tall stepped stand with phoenix-crested handles, a body of revolution), `trophy:championship-banner` (a fringed banner on a pole with a gilt finial and an embroidered border, no lettering unless `initials` gives up to three letters; `tint` is the cloth, `accent` the trim), and the gear `gear:gunbai` (the referee's war fan with its tassel), `gear:mawashi`, `gear:shinai`, `gear:kendo-men`, `gear:judogi`, `gear:obi` (with `OBI_RANKS`, white to black, and `obi(rank, options)`), `gear:yumi`, `gear:ya` and `gear:karate-gi`. Five sports are added to `SPORT_NAMES` (now 38) with a pictogram each: `sumo`, `kendo`, `judo`, `kyudo`, `karate`. `JAPANESE_IDS` lists the 16 together, and the gallery page shows them in a section of their own. 
-- **Japanese names are first-class**, read by a reviewer and using the governing bodies' words (柔道衣, 空手衣, 廻し, 軍配, 竹刀, 剣道の面, 優勝旗, 弓, 矢); `emblemInfo(id).description` and `EMBLEM_DESCRIPTIONS` hold a longer description in English and Japanese for the docs and the gallery.
+- **Japanese names are first-class**, read by a reviewer and using the governing bodies' words (`柔道衣`, `空手衣`, `廻し`, `軍配`, `竹刀`, `剣道の面`, `優勝旗`, `弓`, `矢`); `emblemInfo(id).description` and `EMBLEM_DESCRIPTIONS` hold a longer description in English and Japanese for the docs and the gallery.
 - Gear has the `color` style (flat fills) as well as `metal` and `line`, and a part can be shaded across its width (`cyl`) as a round shaft is.
 - **Labels.** `EmblemOptions` takes `locale` (`"en"` or `"ja"`: the `<title>` is the emblem's Japanese name, with `lang="ja"` on the drawing) and `title` (a string is written, escaped; `false` drops the `<title>` and marks the drawing `aria-hidden="true"`). Both work for every emblem in every style, still and turned, and in `crest()` and `medal()`.
 - **`emblemDataUri(ref, options)`**: a percent-encoded `data:image/svg+xml;utf8,…` address for an `<img>`, a CSS background or a canvas, with `currentColor` made a concrete colour (`color` for the line, else the theme's ink; the default is dark ink), and a browser test that loads it in an `<img>` and on a canvas.

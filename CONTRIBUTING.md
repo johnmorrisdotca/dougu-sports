@@ -27,7 +27,8 @@ Bug reports and ideas go in the
   team or federation: every emblem is generic.
 - **Names are short.** An emblem's `en` and `ja` are its accessible name (the `<title>` a screen reader reads): about 26 characters at most in English
   and 12 in Japanese. What does not fit goes in `src/emblems/emblem.descriptions.ts`, for the docs and the gallery.
-- **`docs/gallery.md` (English) and `docs/gallery.ja.md` (Japanese) are made from the package**: `pnpm gallery` rewrites them, and `pnpm test:readme` checks them. Each page is in one language; do not mix the two in a table.
+- **`docs/gallery.md` (English) and `docs/gallery.ja.md` (Japanese) are made from the package**: `pnpm gallery` rewrites them, and `pnpm test:readme` checks them.
+- **Docs pages are single-language.** Every page of the README and of `docs/` is in one language: one page per language, made from one source where that is practical, the Japanese one named `<name>.ja.md`, and the two linked at the top with a line such as `日本語 · English`. No page mixes English and Japanese in a table or in its prose, and a demo switches language with a control. Proper nouns and code identifiers (an id such as `gear:judogi`, a constant) stay as they are on both pages, and a Japanese term that is itself the subject (the package's own name, a knot) may appear once on an English page as a quoted name. The exception is a page about the translations themselves (`docs/strings-ja.md`, a terminology reference), which may show both languages side by side. A test, `docs-language.test`, holds the docs to this and lists each exception with its reason.
 - **A README table, example or count that a test holds to the code** changes together with the code: `pnpm test:readme` runs
   every example of the README and of `docs/`, and checks that the README names every export.
 - **Option values and names are kebab case where they are words** (`"metal"`, `"line"`, `"color"`).

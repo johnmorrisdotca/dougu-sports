@@ -7,18 +7,18 @@
 <img alt="Six close-ups of a white judo jacket with a black belt, numbered 1 to 6: the middle of the belt against the belly; two wraps with both ends hanging; the ends crossed; one end brought up under both wraps; the flat square knot; the finished knot with both ends hanging even." src="images/obi-steps-light.webp">
 </picture>
 
-`gear:obi-step-1` to `gear:obi-step-6` show how the belt (obi, 帯) of a judogi (柔道衣) is tied, the standard way. Each is a close-up of the jacket of [`gear:judogi`](japanese-sports.md#the-judo-suit) with the belt at that stage of the tying. A red number in the corner says which step it is, and a few small red marks say what to look at: the middle of the belt, the way an end travels, the ends being the same length.
+`gear:obi-step-1` to `gear:obi-step-6` show how the belt (obi) of a judogi is tied, the standard way. Each is a close-up of the jacket of [`gear:judogi`](japanese-sports.md#the-judo-suit) with the belt at that stage of the tying. A red number in the corner says which step it is, and a few small red marks say what to look at: the middle of the belt, the way an end travels, the ends being the same length.
 
-| Step | Id | What it shows | In Japanese |
-| --- | --- | --- | --- |
-| 1 | `gear:obi-step-1` | Centre the belt on the belly: the middle of the belt against the middle of the belly, over the jacket. A notch marks the middle. | 帯の真ん中をおなかの中心に当てる |
-| 2 | `gear:obi-step-2` | Wrap it twice round the waist, the ends crossing behind, so that both ends come back to the front. Two layers across the belly and two loose ends. | 帯を腰に二重に巻き、両端を前に戻す |
-| 3 | `gear:obi-step-3` | Cross the ends in front of the belly, the wearer's left end (the right of the picture) over the other. | おなかの前で両端を交差させる |
-| 4 | `gear:obi-step-4` | Tuck one end up from below, under both layers of the belt. It shows under the belt and again above it, and a red arrow follows its way. | 片方の端を二重の帯の下から上へ通す |
-| 5 | `gear:obi-step-5` | Tie the flat square knot, hon-musubi (本結び): left over right, then right over left. The knot is made, the ends are not yet even. | 本結びで結ぶ |
-| 6 | `gear:obi-step-6` | Pull it tight and let both ends hang even. A mark under the tips shows they are one length. | 結び目を締め、両端をそろえて垂らす |
+| Step | Id | What it shows |
+| --- | --- | --- |
+| 1 | `gear:obi-step-1` | Centre the belt on the belly: the middle of the belt against the middle of the belly, over the jacket. A notch marks the middle. |
+| 2 | `gear:obi-step-2` | Wrap it twice round the waist, the ends crossing behind, so that both ends come back to the front. Two layers across the belly and two loose ends. |
+| 3 | `gear:obi-step-3` | Cross the ends in front of the belly, the wearer's left end (the right of the picture) over the other. |
+| 4 | `gear:obi-step-4` | Tuck one end up from below, under both layers of the belt. It shows under the belt and again above it, and a red arrow follows its way. |
+| 5 | `gear:obi-step-5` | Tie the flat square knot, hon-musubi: left over right, then right over left. The knot is made, the ends are not yet even. |
+| 6 | `gear:obi-step-6` | Pull it tight and let both ends hang even. A mark under the tips shows they are one length. |
 
-The jacket closes the way every judogi does, left over right: the wearer's left front lies on top, which is the right-hand panel of the picture, and the lapel runs from the right of the neck down to the left (the Japanese word is 右前, the right panel worn against the body; the opposite wrap is the one for the dead). It is the very drawing of `gear:judogi`, so the steps agree with the suit in [the judo suit](japanese-sports.md#the-judo-suit), and a test holds them to it. The close-up leaves out the trousers and the sleeves, so that the belt is big enough to read at small sizes.
+The jacket closes the way every judogi does, left over right: the wearer's left front lies on top, which is the right-hand panel of the picture, and the lapel runs from the right of the neck down to the left (the Japanese word is migi-mae, "right front": the right panel is worn against the body; the opposite wrap is the one for the dead). It is the very drawing of `gear:judogi`, so the steps agree with the suit in [the judo suit](japanese-sports.md#the-judo-suit), and a test holds them to it. The close-up leaves out the trousers and the sleeves, so that the belt is big enough to read at small sizes.
 
 ## Six ids, not a `step` option
 
