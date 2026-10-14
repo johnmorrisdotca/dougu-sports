@@ -128,14 +128,17 @@ test("changing the emblem, the style, the tint or the look keeps the angles", as
   expect(await page.locator("#stage").innerHTML()).toContain("<title>Gold medal</title>");
 });
 
-test("an emblem that cannot turn is drawn as it is, with no turning controls", async ({ page }) => {
-  await page.goto("/?id=sport:nhl");
-  await expect(page.locator("#turn-row")).toBeHidden();
-  await expect(page.locator("#spin-row")).toBeHidden();
-  const before = await page.locator("#stage").innerHTML();
-  await dragStage(page, 60);
-  expect(await page.locator("#stage").innerHTML()).toBe(before);
-  await expect(page.locator("#stage")).not.toHaveAttribute("tabindex", /.*/);
+test("a pictogram and a piece of gear turn like a coin, with the turning controls", async ({ page }) => {
+  for (const id of ["sport:nhl", "gear:hurley", "award:crown", "gear:gunbai"]) {
+    await page.goto(`/?id=${id}`);
+    await expect(page.locator("#turn-row")).toBeVisible();
+    await expect(page.locator("#spin-row")).toBeVisible();
+    // The stage is ready for the drag when bindTurn has made it a tab stop.
+    await expect(page.locator("#stage")).toHaveAttribute("tabindex", "0");
+    const before = await page.locator("#stage").innerHTML();
+    await dragStage(page, 60);
+    expect(await page.locator("#stage").innerHTML(), id).not.toBe(before);
+  }
 });
 
 test("the hint and the buttons say it in English and in Japanese", async ({ page }) => {
