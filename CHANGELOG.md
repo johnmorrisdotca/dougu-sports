@@ -6,6 +6,8 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-10-14
+
 Ten national volleyballs that can be told apart, a 2010-style grooved ball that reads, and six pictures of how a judo belt is tied. 269 emblems.
 
 ### Changed
