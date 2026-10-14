@@ -6,6 +6,13 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- **Nineteen more soccer balls** ([docs/soccer-balls.md](docs/soccer-balls.md), [日本語](docs/soccer-balls.ja.md)), all in true 3D like `ball:soccer`, turning with `ballFrame`, with their seams on the sphere and every construction a generic derivation (no brand's or tournament's ball is used; the sources are in [docs/references.md](docs/references.md#soccer-balls)): `ball:soccer-26` (the rhombicuboctahedron: 8 triangles and 18 squares), `ball:soccer-18` (three strips on each face of a cube), `ball:soccer-14` (6 propellers and 8 triangles: a truncated cube whose 12 long edges are bent into S-curves), `ball:soccer-12` (the dodecahedron) and `ball:soccer-6` (thermobonded: six twisted gores with long curved seams, our own design).
+- **Winter orange and high-visibility yellow** of the classic ball and of each new construction, as ids of their own (`ball:soccer-orange`, `ball:soccer-26-yellow`... twelve in all): `tint` replaces the colour and `accent` the dark panels.
+- **Futsal and beach soccer**: `ball:futsal` (size 4, circumference 62 to 64 cm, 400 to 440 g, 0.6 to 0.9 atm, a 50 to 65 cm first bounce from 2 m: Futsal Laws of the Game 2025/26, Law 2) and `ball:beach-soccer` (size 5, 68 to 70 cm, 400 to 440 g, 0.4 to 0.6 atm: Beach Soccer Laws of the Game 2024-25, Law 2). Their rules are in `size.rule` and `size.note`, and `test/proportions.test.ts` holds every new ball to its rule's size.
+- The package is now 186 emblems, 66 of them balls and implements.
+
 ## [0.2.1] - 2026-10-14
 
 Eleven balls and implements drawn to the rulebook's proportions, flat emblems turning with the hand, and the gallery as one page per language.

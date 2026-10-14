@@ -31,7 +31,7 @@ Trophies, medals, crests, the icon of every sport, and the ball and gear of the 
 </tr>
 </table>
 
-> **Status: preview.** 167 emblems: 24 trophies, 5 awards, 6 medals, 4 crests, a pictogram for each of the 38 sports, 47 balls and implements drawn in 3D, 42 pieces of gear (among them the Japanese sports and budo, [docs/japanese-sports.md](./docs/japanese-sports.md)) and a championship pennant; [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
+> **Status: preview.** 186 emblems: 24 trophies, 5 awards, 6 medals, 4 crests, a pictogram for each of the 38 sports, 66 balls and implements drawn in 3D, 42 pieces of gear (among them the Japanese sports and budo, [docs/japanese-sports.md](./docs/japanese-sports.md)) and a championship pennant; [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
 
 ## In 30 seconds
 
@@ -392,7 +392,7 @@ An emblem is a small object: `id`, `en` and `ja` names, a `source` (who drew it)
 | `trophy` | Twenty-four trophies: ten that stand for a league's cup in a generic form (a tall banded cup, a ring of pennants round a baseball, a football on a stand, a ball over a net, a wide two-handled bowl, a globe held up by spiral figures, a gilt dish, a lidded cup with a pineapple, an urn, a gilded cup), plain cups, bowls and dishes, a plaque, a belt, a wreath, a rosette, a championship ring, a rafter banner, a phoenix-handled sumo cup and a championship banner | `src/emblems/trophy/` |
 | `medal` | Gold, silver and bronze medals on a ribbon of five stripes, and a badge for each of the first three places | `src/emblems/medal/` |
 | `crest` | Four generic crests, tinted by a team's colours, with its letters | `src/emblems/crest/` |
-| `ball` | 47 balls and implements, in 3D, each with its official size: soccer, basketball, baseball, tennis, rugby, the footballs, golf, the puck, the curling stone and the rest | `src/emblems/ball/` |
+| `ball` | 66 balls and implements, in 3D, each with its official size: soccer (in 32, 26, 18, 14, 12 and 6 panels, in three colourways, with futsal and beach soccer; [docs/soccer-balls.md](./docs/soccer-balls.md)), basketball, baseball, tennis, rugby, the footballs, golf, the puck, the curling stone and the rest | `src/emblems/ball/` |
 | `gear` | 42 pieces of equipment: sticks, rackets, skates, a glove, a helmet, nets and posts, a javelin, starting blocks, and for the Japanese sports a war fan, a sumo belt, a bamboo sword, a kendo helmet, a judo suit, a belt, a long bow, an arrow and a karate suit | `src/emblems/gear/` |
 | `sport` | One pictogram for each of the thirty-eight sports | `src/emblems/sport/` |
 | `pennant` | A felt championship pennant on a dowel, with a stitched edge, lettered with its words and its year | `src/emblems/pennant/` |

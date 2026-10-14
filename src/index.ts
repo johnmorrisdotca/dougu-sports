@@ -107,6 +107,8 @@ export { BALL_SHUTTLECOCK_FEATHER, BALL_SHUTTLECOCK_NYLON } from "./emblems/ball
 export { BALL_SLIOTAR } from "./emblems/ball/ball.sliotar.ts";
 export { BALL_LACROSSE, BALL_RACQUETBALL, BALL_TABLE_TENNIS, BALL_SHOT } from "./emblems/ball/ball.smooth.ts";
 export { BALL_SOCCER, BALL_SOCCER_COLOUR } from "./emblems/ball/ball.soccer.ts";
+export { BALL_SOCCER_26, BALL_SOCCER_18, BALL_SOCCER_14, BALL_SOCCER_12, BALL_SOCCER_6, BALL_SOCCER_ORANGE, BALL_SOCCER_26_ORANGE, BALL_SOCCER_18_ORANGE, BALL_SOCCER_14_ORANGE, BALL_SOCCER_12_ORANGE, BALL_SOCCER_6_ORANGE, BALL_SOCCER_YELLOW, BALL_SOCCER_26_YELLOW, BALL_SOCCER_18_YELLOW, BALL_SOCCER_14_YELLOW, BALL_SOCCER_12_YELLOW, BALL_SOCCER_6_YELLOW } from "./emblems/ball/ball.soccer.panels.ts";
+export { BALL_FUTSAL, BALL_BEACH_SOCCER } from "./emblems/ball/ball.soccer.indoor.ts";
 export { BALL_SOFTBALL } from "./emblems/ball/ball.softball.ts";
 export { BALL_SQUASH_DOUBLE_YELLOW, BALL_SQUASH_YELLOW, BALL_SQUASH_RED, BALL_SQUASH_BLUE, BALL_SQUASH_GREEN } from "./emblems/ball/ball.squash.ts";
 export { BALL_TENNIS } from "./emblems/ball/ball.tennis.ts";

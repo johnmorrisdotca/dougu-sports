@@ -6,6 +6,7 @@ import { BALL_TENNIS } from "../src/emblems/ball/ball.tennis.ts";
 import { PIECE_INK, hashOf, readColour } from "../src/emblems/ball/ball.core.ts";
 import { apply, dot, greatCircle, len, rotation, seamCurve, slerp, smallCircle, spread, transpose } from "../src/emblems/ball/ball.math.ts";
 import { truncatedIcosahedron } from "../src/emblems/ball/ball.polyhedra.ts";
+import { dodecahedron, gores, propellers14, rhombicuboctahedron } from "../src/emblems/ball/ball.tilings.ts";
 
 /** The coordinates of every move and line in a document, and the end of every absolute arc. */
 const numbersOf = (svg: string): number[] => [...svg.matchAll(/[MLA](?:[^MLAZa-z]*?)(-?\d*\.?\d+)[ ,](-?\d*\.?\d+)(?=[MLAZa-z"])/g)].flatMap((m) => [Number(m[1]), Number(m[2])]);
@@ -23,8 +24,8 @@ function balanced(svg: string): boolean {
 }
 
 describe("the balls", () => {
-  it("has the forty-seven ids, each once, in the form ball:name", () => {
-    expect(BALLS.length).toBe(47);
+  it("has the sixty-six ids, each once, in the form ball:name", () => {
+    expect(BALLS.length).toBe(66);
     expect(new Set(BALL_IDS).size).toBe(BALL_IDS.length);
     for (const id of BALL_IDS) expect(id).toMatch(/^ball:[a-z0-9]+(?:-[a-z0-9]+)*$/);
   });
@@ -236,5 +237,107 @@ describe("the sizes", () => {
     expect(ballSize("basketball")!.circumferenceMm).toBe(760);
     expect(ballSize("rugby")!.lengthMm).toBe(290);
     expect(ballSize("squash")!.diameterMm).toBe(40);
+  });
+});
+
+/** The edges of a set of rings, each once, as pairs of vertices (to count the vertices, edges and faces of a tiling). */
+const graphOf = (rings: readonly (readonly (readonly [number, number, number])[])[]): { v: number; e: number; f: number } => {
+  const key = (p: readonly number[]): string => p.map((x) => Math.round(x * 1000)).join(",");
+  const vs = new Set<string>();
+  const es = new Set<string>();
+  for (const ring of rings) {
+    ring.forEach((p, i) => {
+      vs.add(key(p));
+      es.add([key(p), key(ring[(i + 1) % ring.length])].sort().join("|"));
+    });
+  }
+  return { v: vs.size, e: es.size, f: rings.length };
+};
+
+describe("the soccer balls' panel constructions", () => {
+  it("26 panels: a rhombicuboctahedron has 8 triangles and 18 squares, 48 edges and 24 vertices", () => {
+    const t = rhombicuboctahedron();
+    expect(t.panels.filter((p) => p.length === 3).length).toBe(8);
+    expect(t.panels.filter((p) => p.length === 4).length).toBe(18);
+    expect(graphOf(t.panels)).toEqual({ v: 24, e: 48, f: 26 });
+    expect(t.seams.length).toBe(48);
+    for (const ring of t.panels) for (const p of ring) expect(len(p)).toBeCloseTo(1, 9);
+  });
+
+  it("12 panels: a dodecahedron has 12 pentagons, 30 edges and 20 vertices, and no two neighbours share a colour", () => {
+    const t = dodecahedron();
+    expect(t.panels.every((p) => p.length === 5)).toBe(true);
+    expect(graphOf(t.panels)).toEqual({ v: 20, e: 30, f: 12 });
+    t.centres.forEach((a, i) => t.centres.forEach((b, j) => i < j && Math.abs(dot(a, b) - 1 / Math.sqrt(5)) < 1e-6 && expect(t.colour[i]).not.toBe(t.colour[j])));
+  });
+
+  it("14 panels: a truncated cube has 8 triangles and 6 propellers, and the seams are the 24 triangle edges and 12 S curves", () => {
+    const t = propellers14();
+    expect(t.triangles.length).toBe(8);
+    expect(t.propellers.length).toBe(6);
+    expect(t.seams.length).toBe(24 + 12);
+    for (const ring of [...t.triangles, ...t.propellers]) for (const p of ring) expect(len(p)).toBeCloseTo(1, 9);
+    // The S curve is the same turned half a turn about the middle of its edge: a quarter of the way along it is as far to one side as three quarters is to the other.
+    const s = t.seams.find((c) => c.length > 7)!;
+    const mid = s[Math.floor(s.length / 2)];
+    const a = s[Math.floor(s.length / 4)], b = s[s.length - 1 - Math.floor(s.length / 4)];
+    expect(dot(a, mid)).toBeCloseTo(dot(b, mid), 6);
+  });
+
+  it("6 panels: six gores whose seams each run from pole to pole", () => {
+    const g = gores(6, 180, [0, 0, 28]);
+    expect(g.panels.length).toBe(6);
+    expect(g.seams.length).toBe(6);
+    const poles = [g.seams[0][0], g.seams[0].at(-1)!];
+    for (const seam of g.seams) {
+      expect(len([seam[0][0] - poles[0][0], seam[0][1] - poles[0][1], seam[0][2] - poles[0][2]])).toBeLessThan(1e-9);
+      expect(len([seam.at(-1)![0] - poles[1][0], seam.at(-1)![1] - poles[1][1], seam.at(-1)![2] - poles[1][2]])).toBeLessThan(1e-9);
+    }
+  });
+
+  it("has the 18-panel layout as 18 panels of the cube's six faces", () => {
+    const svg = ballOf("soccer-18").svg({ size: 100 });
+    expect((svg.match(/<path d="M[^"]+Z" fill="#/g) ?? []).length).toBeGreaterThanOrEqual(10);
+  });
+
+  it("has a winter orange and a high-visibility yellow ball of the classic ball and of each new construction, and the two indoor balls", () => {
+    const constructions = ["soccer", "soccer-26", "soccer-18", "soccer-14", "soccer-12", "soccer-6"];
+    for (const c of constructions) {
+      for (const colour of ["orange", "yellow"]) {
+        const id = c === "soccer" ? `soccer-${colour}` : `${c}-${colour}`;
+        expect(isBallId(id), id).toBe(true);
+        expect(ballOf(id).svg()).toContain(colour === "orange" ? "#ff6a13" : "#e8f21c");
+        expect(ballSize(id)).toEqual(ballSize("soccer"));
+      }
+    }
+    expect(isBallId("futsal")).toBe(true);
+    expect(isBallId("beach-soccer")).toBe(true);
+  });
+
+  it("takes a tint and an accent, and turns", () => {
+    for (const id of ["soccer-26", "soccer-18", "soccer-14", "soccer-12", "soccer-6", "soccer-26-orange", "futsal", "beach-soccer"]) {
+      expect(ballOf(id).svg({ tint: "#2255ff" }), id).toContain("#2255ff");
+      expect(ballFrame(id, { yaw: 360 }), id).toBe(ballFrame(id, { yaw: 0 }));
+      expect(ballFrame(id, { yaw: 40 }), id).not.toBe(ballFrame(id, { yaw: 0 }));
+    }
+  });
+
+  it("records the indoor balls' rules: futsal size 4 at 62 to 64 cm, 400 to 440 g, and 0.6 to 0.9 atm with a 50 to 65 cm bounce; beach soccer at 68 to 70 cm, 400 to 440 g and 0.4 to 0.6 atm", () => {
+    const futsal = ballSize("futsal")!;
+    expect(futsal.circumferenceMm).toBe(630);
+    expect(futsal.diameterMm).toBeCloseTo(630 / Math.PI, 0);
+    expect(futsal.massG).toEqual([400, 440]);
+    expect(futsal.note).toMatch(/Size 4/);
+    expect(futsal.note).toMatch(/0\.6 to 0\.9 atm/);
+    expect(futsal.note).toMatch(/50 cm and 65 cm/);
+    expect(futsal.rule).toMatch(/Futsal Laws of the Game/);
+    const beach = ballSize("beach-soccer")!;
+    expect(beach.circumferenceMm).toBe(690);
+    expect(beach.massG).toEqual([400, 440]);
+    expect(beach.note).toMatch(/Size 5/);
+    expect(beach.note).toMatch(/0\.4 to 0\.6 atm/);
+    expect(beach.rule).toMatch(/Beach Soccer Laws of the Game/);
+    // Futsal is the smaller ball: size 4 against size 5.
+    expect(futsal.extentMm).toBeLessThan(ballSize("soccer")!.extentMm);
   });
 });

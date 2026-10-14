@@ -37,7 +37,7 @@ export type CrestId = (typeof CREST_IDS)[number];
 
 /** The balls: one for each ball and implement the sports use, in 3D, with the official size it comes from. The balls of one family (the three crickets, the five squash balls) share a module. */
 export const BALL_IDS = [
-  "ball:soccer", "ball:soccer-colour", "ball:teqball", "ball:basketball", "ball:basketball-6", "ball:basketball-3x3", "ball:baseball", "ball:softball", "ball:tennis", "ball:padel",
+  "ball:soccer", "ball:soccer-colour", "ball:soccer-26", "ball:soccer-18", "ball:soccer-14", "ball:soccer-12", "ball:soccer-6", "ball:soccer-orange", "ball:soccer-26-orange", "ball:soccer-18-orange", "ball:soccer-14-orange", "ball:soccer-12-orange", "ball:soccer-6-orange", "ball:soccer-yellow", "ball:soccer-26-yellow", "ball:soccer-18-yellow", "ball:soccer-14-yellow", "ball:soccer-12-yellow", "ball:soccer-6-yellow", "ball:futsal", "ball:beach-soccer", "ball:teqball", "ball:basketball", "ball:basketball-6", "ball:basketball-3x3", "ball:baseball", "ball:softball", "ball:tennis", "ball:padel",
   "ball:sliotar", "ball:volleyball", "ball:volleyball-8", "ball:beach-volleyball", "ball:cricket-red", "ball:cricket-white", "ball:cricket-pink", "ball:football", "ball:football-cfl",
   "ball:football-ifaf", "ball:rugby", "ball:afl", "ball:gaelic-football", "ball:netball", "ball:pickleball-outdoor", "ball:pickleball-indoor", "ball:squash", "ball:squash-yellow",
   "ball:squash-green", "ball:squash-red", "ball:squash-blue", "ball:racquetball", "ball:lacrosse", "ball:field-hockey", "ball:table-tennis", "ball:handball", "ball:water-polo", "ball:golf",

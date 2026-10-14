@@ -21,7 +21,9 @@ Each ball's `size.rule` names the rule; the table gives the document and where i
 
 | Balls | Rulebook and rule | Read at |
 | --- | --- | --- |
-| `ball:soccer`, `ball:soccer-colour` | IFAB Laws of the Game, Law 2 The Ball, section 2.1 Qualities and measurements | https://www.theifab.com/laws/latest/the-ball/ |
+| `ball:soccer`, `ball:soccer-colour`, `ball:soccer-26`, `ball:soccer-18`, `ball:soccer-14`, `ball:soccer-12`, `ball:soccer-6`, `ball:soccer-orange`, `ball:soccer-26-orange`, `ball:soccer-18-orange`, `ball:soccer-14-orange`, `ball:soccer-12-orange`, `ball:soccer-6-orange`, `ball:soccer-yellow`, `ball:soccer-26-yellow`, `ball:soccer-18-yellow`, `ball:soccer-14-yellow`, `ball:soccer-12-yellow`, `ball:soccer-6-yellow` | IFAB Laws of the Game, Law 2 The Ball, section 2.1 Qualities and measurements | https://www.theifab.com/laws/latest/the-ball/ |
+| `ball:futsal` | Futsal Laws of the Game 2025/26, Law 2 The Ball, section 1 Qualities and measurements (circumference 62-64 cm, 400-440 g, 0.6-0.9 atm, bounce 50-65 cm from 2 m) | https://digitalhub.fifa.com/m/20d52e6779b53321/original/FUTSAL-Laws-of-the-Game-2025-2026.pdf |
+| `ball:beach-soccer` | Beach Soccer Laws of the Game 2024-25, Law 2 The Ball, section 1 Qualities and measurements (circumference 68-70 cm, 400-440 g, 0.4-0.6 atm); the 2021/22 edition has the same figures | https://www.the-aiff.com/media/uploads/2024/11/Beach-Soccer-Laws-of-the-Game-2024-25.pdf |
 | `ball:teqball` | FITEQ Official Rules and Regulations of Teqball 2026, Rule 3 The Official Ball, 3.1.1-3.1.6 | https://cdn.buttercms.com/s6Mb1gRkRJuFP38kpMTh |
 | `ball:basketball` | FIBA Basketball Equipment 2026, Rule 2 Basketballs, 2.4 and Table 1 (size 7 = men's competitions) | https://assets.fiba.basketball/image/upload/documents-corporate-fiba-official-rules-2026-equipment-v1-0.pdf |
 | `ball:basketball-6` | FIBA Basketball Equipment 2026, Rule 2 Basketballs, 2.4 and Table 1 (size 6 = women's competitions) | https://assets.fiba.basketball/image/upload/documents-corporate-fiba-official-rules-2026-equipment-v1-0.pdf |

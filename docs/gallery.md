@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 167 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 186 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -77,6 +77,25 @@ The folders the art lives in are in [layout.md](layout.md).
 | --- | --- | --- | --- | --- |
 | `ball:soccer` | Soccer ball | ball | generated |  |
 | `ball:soccer-colour` | Soccer ball, coloured | ball | generated |  |
+| `ball:soccer-26` | Soccer ball, 26 panels | ball | generated | 26 panels: 8 triangles and 18 squares, the faces of a rhombicuboctahedron |
+| `ball:soccer-18` | Soccer ball, 18 panels | ball | generated | 18 panels: three strips on each of the six faces of a cube, the strips of neighbouring faces square to each other |
+| `ball:soccer-14` | Soccer ball, 14 panels | ball | generated | 14 panels: 6 propellers and 8 triangles, on a truncated cube whose 12 long edges are bent into S curves |
+| `ball:soccer-12` | Soccer ball, 12 panels | ball | generated | 12 panels: the 12 pentagons of a dodecahedron |
+| `ball:soccer-6` | Soccer ball, 6 panels | ball | generated | 6 panels, thermobonded (glued, not stitched): six twisted gores with a few long curved seams, and a smooth look |
+| `ball:soccer-orange` | Soccer ball, orange | ball | generated | The 32-panel soccer ball, in winter orange, a bright orange that shows against snow and in low light, with dark panels |
+| `ball:soccer-26-orange` | Soccer 26 panels, orange | ball | generated | The 26-panel soccer ball, in winter orange, a bright orange that shows against snow and in low light, with dark panels |
+| `ball:soccer-18-orange` | Soccer 18 panels, orange | ball | generated | The 18-panel soccer ball, in winter orange, a bright orange that shows against snow and in low light, with dark panels |
+| `ball:soccer-14-orange` | Soccer 14 panels, orange | ball | generated | The 14-panel soccer ball (6 propellers, 8 triangles), in winter orange, a bright orange that shows against snow and in low light, with dark panels |
+| `ball:soccer-12-orange` | Soccer 12 panels, orange | ball | generated | The 12-panel soccer ball, in winter orange, a bright orange that shows against snow and in low light, with dark panels |
+| `ball:soccer-6-orange` | Soccer 6 panels, orange | ball | generated | The thermobonded 6-panel soccer ball, in winter orange, a bright orange that shows against snow and in low light, with dark panels |
+| `ball:soccer-yellow` | Soccer ball, yellow | ball | generated | The 32-panel soccer ball, in high-visibility yellow, a fluorescent yellow that shows in low light, with dark panels |
+| `ball:soccer-26-yellow` | Soccer 26 panels, yellow | ball | generated | The 26-panel soccer ball, in high-visibility yellow, a fluorescent yellow that shows in low light, with dark panels |
+| `ball:soccer-18-yellow` | Soccer 18 panels, yellow | ball | generated | The 18-panel soccer ball, in high-visibility yellow, a fluorescent yellow that shows in low light, with dark panels |
+| `ball:soccer-14-yellow` | Soccer 14 panels, yellow | ball | generated | The 14-panel soccer ball (6 propellers, 8 triangles), in high-visibility yellow, a fluorescent yellow that shows in low light, with dark panels |
+| `ball:soccer-12-yellow` | Soccer 12 panels, yellow | ball | generated | The 12-panel soccer ball, in high-visibility yellow, a fluorescent yellow that shows in low light, with dark panels |
+| `ball:soccer-6-yellow` | Soccer 6 panels, yellow | ball | generated | The thermobonded 6-panel soccer ball, in high-visibility yellow, a fluorescent yellow that shows in low light, with dark panels |
+| `ball:futsal` | Futsal ball | ball | generated | Futsal: size 4, 62 to 64 cm round, 400 to 440 g, low bounce; 32 panels, bright blue and white with a small yellow pentagon on each of the twelve |
+| `ball:beach-soccer` | Beach soccer ball | ball | generated | Beach soccer: size 5, 68 to 70 cm round, 400 to 440 g, soft (low pressure); the 14-panel propeller layout in bright yellow, orange and blue |
 | `ball:teqball` | Teqball ball | ball | generated |  |
 | `ball:basketball` | Basketball | ball | generated |  |
 | `ball:basketball-6` | Basketball, size 6 | ball | generated | Basketball, size 6 |

@@ -4,6 +4,7 @@ import { defineBall } from "./ball.engine.ts";
 import { truncatedIcosahedron } from "./ball.polyhedra.ts";
 import { add, mul, norm } from "./ball.math.ts";
 import { blend, mix } from "./ball.core.ts";
+import { SOCCER_SIZE } from "./ball.soccer.size.ts";
 
 const SEAM = "#6b7180";
 
@@ -11,7 +12,7 @@ export const BALL_SOCCER = /* @__PURE__ */ defineBall({
   id: "ball:soccer",
   en: "Soccer ball",
   ja: "サッカーボール",
-  size: { extentMm: 219.6, diameterMm: 219.6, circumferenceMm: 690.0, massG: [410, 450], rule: "IFAB Laws of the Game, Law 2 The Ball, section 2.1 Qualities and measurements", note: "Diameter worked out from the middle of the circumference range." },
+  size: SOCCER_SIZE,
   spec: {
     view: { yaw: 30, pitch: 24, roll: 8 },
     base: "#1e2025",
@@ -32,7 +33,7 @@ export const BALL_SOCCER_COLOUR = /* @__PURE__ */ defineBall({
   id: "ball:soccer-colour",
   en: "Soccer ball, coloured",
   ja: "サッカーボール（カラー）",
-  size: { extentMm: 219.6, diameterMm: 219.6, circumferenceMm: 690.0, massG: [410, 450], rule: "IFAB Laws of the Game, Law 2 The Ball, section 2.1 Qualities and measurements", note: "Diameter worked out from the middle of the circumference range." },
+  size: SOCCER_SIZE,
   spec: {
     view: { yaw: 30, pitch: 24, roll: 8 },
     base: "#d4283c",

@@ -8,6 +8,29 @@ export interface EmblemDescription {
   readonly ja: string;
 }
 
+const SOCCER_PANELS: Record<string, EmblemDescription> = {
+  "": { en: "The 32-panel soccer ball", ja: "32枚貼りのサッカーボール" },
+  "-26": { en: "The 26-panel soccer ball", ja: "26枚貼りのサッカーボール" },
+  "-18": { en: "The 18-panel soccer ball", ja: "18枚貼りのサッカーボール" },
+  "-14": { en: "The 14-panel soccer ball (6 propellers, 8 triangles)", ja: "14枚貼り（プロペラ形6枚、三角形8枚）のサッカーボール" },
+  "-12": { en: "The 12-panel soccer ball", ja: "12枚貼りのサッカーボール" },
+  "-6": { en: "The thermobonded 6-panel soccer ball", ja: "熱接着の6枚貼りサッカーボール" },
+};
+
+const SOCCER_COLOURS: Record<string, EmblemDescription> = {
+  orange: { en: "in winter orange, a bright orange that shows against snow and in low light, with dark panels", ja: "雪の上や暗がりでも見やすい明るいオレンジ色で、暗い色のパネルが入る" },
+  yellow: { en: "in high-visibility yellow, a fluorescent yellow that shows in low light, with dark panels", ja: "暗がりでも見やすい蛍光イエローで、暗い色のパネルが入る" },
+};
+
+/** The winter orange and high-visibility yellow balls of each construction: the construction's words and the colour's. */
+function soccerColourways(): Partial<Record<EmblemId, EmblemDescription>> {
+  const out: Partial<Record<EmblemId, EmblemDescription>> = {};
+  for (const [suffix, panels] of Object.entries(SOCCER_PANELS)) {
+    for (const [colour, words] of Object.entries(SOCCER_COLOURS)) out[`ball:soccer${suffix}-${colour}` as EmblemId] = { en: `${panels.en}, ${words.en}`, ja: `${panels.ja}。${words.ja}` };
+  }
+  return out;
+}
+
 export const EMBLEM_DESCRIPTIONS: Readonly<Partial<Record<EmblemId, EmblemDescription>>> = {
   "trophy:hockey-cup": { en: "Tall banded silver cup", ja: "帯を何段も重ねた背の高い銀のカップ" },
   "trophy:basketball": { en: "Basketball trophy", ja: "バスケットボールのトロフィー" },
@@ -67,4 +90,12 @@ export const EMBLEM_DESCRIPTIONS: Readonly<Partial<Record<EmblemId, EmblemDescri
   "gear:yumi": { en: "The long asymmetric bow, held a third of the way up, with its string and wrapped grip", ja: "上が長い非対称の長弓。弦を張り、握り革と籐巻きが付く" },
   "gear:ya": { en: "A kyudo arrow with feather fletching, a nock and a steel point", ja: "弓道の矢。矢羽根、筈、矢尻が付く" },
   "gear:karate-gi": { en: "The karate suit: a jacket with crossed lapels, trousers and a belt", ja: "空手衣。上衣、ズボン、帯" },
+  "ball:soccer-26": { en: "26 panels: 8 triangles and 18 squares, the faces of a rhombicuboctahedron", ja: "三角形8枚と正方形18枚の26枚貼り。斜方立方八面体の26面と同じ構成" },
+  "ball:soccer-18": { en: "18 panels: three strips on each of the six faces of a cube, the strips of neighbouring faces square to each other", ja: "立方体の6面に3枚ずつ帯状のパネルを貼った18枚貼り。隣り合う面の帯は互いに直角" },
+  "ball:soccer-14": { en: "14 panels: 6 propellers and 8 triangles, on a truncated cube whose 12 long edges are bent into S curves", ja: "プロペラ形6枚と三角形8枚の14枚貼り。切頂立方体の長い辺12本をS字に曲げた形" },
+  "ball:soccer-12": { en: "12 panels: the 12 pentagons of a dodecahedron", ja: "正十二面体の五角形12枚で作った12枚貼り" },
+  "ball:soccer-6": { en: "6 panels, thermobonded (glued, not stitched): six twisted gores with a few long curved seams, and a smooth look", ja: "縫わずに貼り合わせる熱接着の6枚貼り。ねじれた細長いパネル6枚が、長く曲がった数本の継ぎ目でつながり、表面はなめらか" },
+  "ball:futsal": { en: "Futsal: size 4, 62 to 64 cm round, 400 to 440 g, low bounce; 32 panels, bright blue and white with a small yellow pentagon on each of the twelve", ja: "フットサル用の4号球。円周62〜64cm、重さ400〜440g、弾みにくい。32枚貼りで、明るい青と白の配色。12枚の五角形それぞれに、小さな黄色の五角形が入る" },
+  "ball:beach-soccer": { en: "Beach soccer: size 5, 68 to 70 cm round, 400 to 440 g, soft (low pressure); the 14-panel propeller layout in bright yellow, orange and blue", ja: "ビーチサッカー用の5号球。円周68〜70cm、重さ400〜440g、空気圧が低くやわらかい。14枚貼りのプロペラ形で、黄色、オレンジ、青の明るい配色" },
+  ...soccerColourways(),
 };
