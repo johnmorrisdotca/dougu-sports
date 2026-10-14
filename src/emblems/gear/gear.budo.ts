@@ -23,7 +23,7 @@ const tied = (x0: number, x1: number, y: number): string => {
   return `M${x0} ${y}H${x1}V${y + 4}H${x0}zM${c - 3} ${y - 0.6}h6v5.2h-6zM${c - 1.4} ${y + 4.6}L${c - 4.6} ${y + 14}h3.4L${c + 0.4} ${y + 4.6}zM${c + 1.4} ${y + 4.6}L${c + 4.8} ${y + 13.4}h-3.4L${c - 0.4} ${y + 4.6}z`;
 };
 
-export const GEAR_JUDOGI = /* @__PURE__ */ drawn("gear:judogi", "Judo suit", "柔道着", {
+export const GEAR_JUDOGI = /* @__PURE__ */ drawn("gear:judogi", "Judo suit", "柔道衣", {
   main: CLOTH,
   accent: "#1f2228",
   parts: [
@@ -39,7 +39,7 @@ export const GEAR_JUDOGI = /* @__PURE__ */ drawn("gear:judogi", "Judo suit", "�
   ],
 });
 
-export const GEAR_KARATE_GI = /* @__PURE__ */ drawn("gear:karate-gi", "Karate suit", "空手着", {
+export const GEAR_KARATE_GI = /* @__PURE__ */ drawn("gear:karate-gi", "Karate suit", "空手衣", {
   main: CLOTH,
   accent: "#1f2228",
   parts: [
@@ -53,7 +53,7 @@ export const GEAR_KARATE_GI = /* @__PURE__ */ drawn("gear:karate-gi", "Karate su
   ],
 });
 
-export const GEAR_OBI = /* @__PURE__ */ drawn("gear:obi", "Belt", "帯", {
+export const GEAR_OBI = /* @__PURE__ */ drawn("gear:obi", "Belt", "武道の帯", {
   main: OBI_RANKS.black,
   parts: [
     { d: "M35 34L24.4 57.6L30 61L40.6 36Z", fill: "$main", stroke: EDGE, cyl: 0.7, shade: 0.3 },

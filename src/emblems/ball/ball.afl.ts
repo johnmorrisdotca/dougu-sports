@@ -7,7 +7,7 @@ import { mix } from "./ball.core.ts";
 export const BALL_AFL = /* @__PURE__ */ defineBall({
   id: "ball:afl",
   en: "Australian football",
-  ja: "豪式フットボール球",
+  ja: "オージーボール",
   size: { extentMm: 280, lengthMm: 280, circumferenceMm: 550.0, longCircumferenceMm: 725.0, rule: "Laws of Australian Football 2026, Law 4 The Football, 4.1 Specifications", note: "The Laws give the two circumferences (720-730 mm and 545-555 mm) and no length: 280 mm is the length of an ellipse of those two girths." },
   spec: {
     axes: [1, 0.7, 0.7],

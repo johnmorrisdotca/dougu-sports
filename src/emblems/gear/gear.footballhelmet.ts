@@ -1,7 +1,7 @@
 // A football helmet, drawn for this package: a glossy shell seen from the side with a stripe over the crown, an ear hole, and a cage of bars across the face opening.
 import { drawn, ellipse } from "./gear.core.ts";
 
-export const GEAR_FOOTBALL_HELMET = /* @__PURE__ */ drawn("gear:football-helmet", "Football helmet", "フットボールのヘルメット", {
+export const GEAR_FOOTBALL_HELMET = /* @__PURE__ */ drawn("gear:football-helmet", "Football helmet", "アメフトのヘルメット", {
   main: "#cfd6de",
   accent: "#c8202c",
   parts: [

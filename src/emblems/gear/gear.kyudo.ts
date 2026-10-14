@@ -4,7 +4,7 @@ import { capsule, drawn, swell } from "./gear.core.ts";
 /** The bow's limbs: a long upper limb and a short lower one, thickest at the hand and thin at the tips. */
 const BOW = swell([44, 2], [12, 10], [16, 52], [38, 62], (t) => 1.6 + 2.6 * Math.sin(Math.PI * Math.min(1, t * 1.15)) ** 0.6, 22);
 
-export const GEAR_YUMI = /* @__PURE__ */ drawn("gear:yumi", "Long bow", "弓", {
+export const GEAR_YUMI = /* @__PURE__ */ drawn("gear:yumi", "Long bow", "弓道の弓", {
   main: "#4a2e1e",
   accent: "#d9b66a",
   parts: [
@@ -19,7 +19,7 @@ export const GEAR_YUMI = /* @__PURE__ */ drawn("gear:yumi", "Long bow", "弓", {
 
 const T = "rotate(40 32 32) translate(32 33) scale(1.22) translate(-32 -33)";
 
-export const GEAR_YA = /* @__PURE__ */ drawn("gear:ya", "Arrow", "矢", {
+export const GEAR_YA = /* @__PURE__ */ drawn("gear:ya", "Arrow", "弓道の矢", {
   main: "#d6ae63",
   accent: "#f4f1ea",
   parts: [

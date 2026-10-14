@@ -24,8 +24,8 @@ function squash(id: string, en: string, ja: string, colour: string, count: 1 | 2
 }
 
 const SIZE: BallDef["size"] = { extentMm: 40.0, diameterMm: 40.0, massG: [23.0, 25.0], rule: "World Squash 'Specifications for Squash Balls' (Recommended standards approved by the WSF; updated WSF AGM 2021, rebranded 2025), sections 1-3 and Notes 2-4", note: "Size and weight are set for the double yellow, yellow and green dot balls; the red and blue dot balls carry no limits in the specification." };
-export const BALL_SQUASH_DOUBLE_YELLOW = /* @__PURE__ */ squash("ball:squash", "Squash ball, 2 yellow dots", "スカッシュ球（ダブル黄）", "#f4d41c", 2, SIZE);
-export const BALL_SQUASH_YELLOW = /* @__PURE__ */ squash("ball:squash-yellow", "Squash ball, yellow dot", "スカッシュ球（黄）", "#f4d41c", 1, SIZE);
+export const BALL_SQUASH_DOUBLE_YELLOW = /* @__PURE__ */ squash("ball:squash", "Squash ball, 2 yellow dots", "スカッシュ球（ダブルイエロー）", "#f4d41c", 2, SIZE);
+export const BALL_SQUASH_YELLOW = /* @__PURE__ */ squash("ball:squash-yellow", "Squash ball, yellow dot", "スカッシュ球（黄色）", "#f4d41c", 1, SIZE);
 export const BALL_SQUASH_RED = /* @__PURE__ */ squash("ball:squash-red", "Squash ball, red dot", "スカッシュ球（赤）", "#d9262c", 1, SIZE);
 export const BALL_SQUASH_BLUE = /* @__PURE__ */ squash("ball:squash-blue", "Squash ball, blue dot", "スカッシュ球（青）", "#2b6fd6", 1, SIZE);
 export const BALL_SQUASH_GREEN = /* @__PURE__ */ squash("ball:squash-green", "Squash ball, green dot", "スカッシュ球（緑）", "#2aa84a", 1, SIZE);

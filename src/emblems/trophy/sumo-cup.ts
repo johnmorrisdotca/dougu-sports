@@ -6,7 +6,7 @@ import { defineLathe } from "../emblem.lathe.ts";
 const side = (a: number) => ({ a, w: 2.4, tone: "gilt", pts: [[8.4, 27], [14, 25], [18.4, 18], [17.6, 10], [15.2, 3.8], [18, 1.6], [20.2, 3.6]] }) as const;
 
 /** A tall silver cup with phoenix-crested handles on a tall stand. */
-export const TROPHY_SUMO_CUP = /* @__PURE__ */ defineLathe("trophy:sumo-cup", "Phoenix-handle cup", "鳳凰の銀杯", "ours", {
+export const TROPHY_SUMO_CUP = /* @__PURE__ */ defineLathe("trophy:sumo-cup", "Phoenix-handle cup", "鳳凰飾りの銀杯", "ours", {
   metal: "silver",
   tones: { dark: "#2b2f36", gilt: "#d9a620" },
   solids: [

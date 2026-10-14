@@ -11,7 +11,7 @@ Trophies, medals, crests, the icon of every sport, and the ball and gear of the 
   <img alt="TypeScript" src="https://img.shields.io/badge/types-TypeScript-3178c6">
 </p>
 
-<p align="center"><a href="https://johnmorrisdotca.github.io/dougu-sports/"><strong>Open the demo →</strong></a> · <a href="https://johnmorrisdotca.github.io/dougu-sports/gallery.html">Gallery</a> · <a href="./docs/gallery.md">Every id</a> · <a href="./docs/turning.md">Turning</a> · <a href="./docs/layout.md">Layout</a></p>
+<p align="center"><a href="https://johnmorrisdotca.github.io/dougu-sports/"><strong>Open the demo →</strong></a> · <a href="https://johnmorrisdotca.github.io/dougu-sports/gallery.html">Gallery</a> · <a href="./docs/gallery.md">Every id</a> · <a href="./docs/turning.md">Turning</a> · <a href="./docs/layout.md">Layout</a> · <a href="./docs/japanese-sports.md">Japanese sports</a></p>
 
 <p align="center">
 <picture>
@@ -45,7 +45,7 @@ import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
 const svg = renderEmblem("trophy:hockey-cup", { size: 48 });
 
 console.log(svg.startsWith("<svg")); // true
-console.log(svg.includes("<title>Tall banded silver cup</title>")); // true
+console.log(svg.includes("<title>Banded silver cup</title>")); // true
 ```
 
 Put the string in a page (`element.innerHTML = svg`), write it to a file, or send it from a server: it is plain SVG, with no script, no font and no network. The outline takes the page's text colour, so an emblem follows light and dark mode as the text does.
@@ -65,6 +65,7 @@ Put the string in a page (`element.innerHTML = svg`), write it to a file, or sen
 - **One module per item**, so a bundler takes only what is imported; see [Use it in your project](#use-it-in-your-project).
 - **Short names and helpers**: `"cup"` is `"trophy:cup"`, `"trophy:cup/line"` is the line style, and `crest`, `medal` and `sportIcon` draw a team's crest, a medal and a sport's icon.
 - **Typed ids**: `EmblemId` is a union of `award:*`, `trophy:*`, `medal:*`, `crest:*`, `ball:*`, `gear:*` and `sport:*` ids.
+- **Japanese sports and budō** (道具 is the name): a sumo cup, a championship banner, and the war fan, belt, bamboo sword, kendo helmet, judo and karate suits, rank belts, long bow and arrow, with Japanese names that are the governing bodies' words; see [docs/japanese-sports.md](./docs/japanese-sports.md).
 - **Generic by design**: no emblem carries a league's, a team's or a federation's name or mark.
 - **Accessible**: every drawing is `role="img"` with a `<title>`; see [Accessibility](#accessibility).
 - **Deterministic**: the same id and options give the same string; a gradient's id comes from its colour.

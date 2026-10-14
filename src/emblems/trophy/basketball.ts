@@ -2,7 +2,7 @@
 import { defineLathe } from "../emblem.lathe.ts";
 
 /** A gold ball resting over a net and rim, on a tapered column and base. */
-export const TROPHY_BASKETBALL = /* @__PURE__ */ defineLathe("trophy:basketball", "Basketball trophy", "バスケのトロフィー", "ours", {
+export const TROPHY_BASKETBALL = /* @__PURE__ */ defineLathe("trophy:basketball", "Basketball trophy", "バスケットボールのトロフィー", "ours", {
   metal: "gold",
   solids: [
     {

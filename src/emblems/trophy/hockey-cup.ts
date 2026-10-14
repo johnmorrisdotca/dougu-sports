@@ -3,7 +3,7 @@
 import { defineLathe } from "../emblem.lathe.ts";
 
 /** A tall silver cup: a small bowl on a collar over a tall tiered barrel of widening bands. */
-export const TROPHY_HOCKEY_CUP = /* @__PURE__ */ defineLathe("trophy:hockey-cup", "Banded silver cup", "段重ねの銀カップ", "ours", {
+export const TROPHY_HOCKEY_CUP = /* @__PURE__ */ defineLathe("trophy:hockey-cup", "Banded silver cup", "段付きの銀カップ", "ours", {
   metal: "silver",
   tones: { dark: "#2b2f36" },
   solids: [

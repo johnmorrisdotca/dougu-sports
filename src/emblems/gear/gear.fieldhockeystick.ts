@@ -3,7 +3,7 @@ import { capsule, circle, drawn } from "./gear.core.ts";
 
 const T = "rotate(24 32 32)";
 
-export const GEAR_FIELD_HOCKEY_STICK = /* @__PURE__ */ drawn("gear:field-hockey-stick", "Field hockey stick", "フィールド用スティック", {
+export const GEAR_FIELD_HOCKEY_STICK = /* @__PURE__ */ drawn("gear:field-hockey-stick", "Field hockey stick", "ホッケーのスティック", {
   main: "#dcb06a",
   accent: "#2a2f38",
   parts: [
