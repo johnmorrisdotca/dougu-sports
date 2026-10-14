@@ -93,4 +93,4 @@ No printed puck carries the skater-and-leaf logo of a national hockey federation
 
 ## Looking at them
 
-`node scripts/emblem-sheet.mjs sheet.png puck: --turn` draws a contact sheet of the pucks at 256, 64 and 16 pixels in light and dark, still and turned. The demo has a "Print a puck" section, and every puck is in the [gallery](https://johnmorrisdotca.github.io/dougu-sports/gallery.html).
+`node scripts/emblem-sheet.ts sheet.png puck: --turn` draws a contact sheet of the pucks at 256, 64 and 16 pixels in light and dark, still and turned. The demo has a "Print a puck" section, and every puck is in the [gallery](https://johnmorrisdotca.github.io/dougu-sports/gallery.html).

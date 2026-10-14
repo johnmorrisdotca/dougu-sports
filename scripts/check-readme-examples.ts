@@ -15,7 +15,7 @@ const work = join(root, ".readme-examples");
 rmSync(work, { recursive: true, force: true });
 mkdirSync(work, { recursive: true });
 
-const pages = [["README.md", readFileSync(join(root, "README.md"), "utf8")]];
+const pages: [string, string][] = [["README.md", readFileSync(join(root, "README.md"), "utf8")]];
 for (const name of readdirSync(join(root, "docs")).filter((n) => n.endsWith(".md"))) pages.push([`docs/${name}`, readFileSync(join(root, "docs", name), "utf8")]);
 
 let failed = 0;
@@ -33,7 +33,7 @@ for (const [file, text] of pages) {
     i = end;
     if (open[1] !== "js" || flags.includes("no-check")) continue;
     // What the block says it prints.
-    const inline = [];
+    const inline: string[] = [];
     let allInline = true;
     for (const line of body) {
       const log = /^console\.log\(.*\);\s*\/\/ ?(.*)$/.exec(line);
@@ -65,13 +65,13 @@ console.log(`${ran} examples run, ${failed} failed`);
 
 // Every export of the package is in the README.
 const readme = pages[0][1];
-const lib = await import(new URL("../dist/index.js", import.meta.url).href);
+const lib = (await import(new URL("../dist/index.js", import.meta.url).href)) as Record<string, { id?: string } | undefined> & { EMBLEM_IDS: readonly string[] };
 // An emblem's constant (`TROPHY_HOCKEY_CUP`) is not named one by one in docs/gallery.md: each gallery page states the rule once (the id in capitals, `:` and `-` made `_`) and names the one id that breaks it. So an
 // export that is an emblem is covered when the rule gives its name, or when the gallery names it; the rest of the exports are named in the README.
 const gallery = readFileSync(join(root, "docs", "gallery.md"), "utf8") + readFileSync(join(root, "docs", "gallery.ja.md"), "utf8");
-const ruleName = (id) => id.replace(/[:-]/g, "_").toUpperCase();
+const ruleName = (id: string) => id.replace(/[:-]/g, "_").toUpperCase();
 const rule = gallery.includes("`trophy:lidded-cup` → `TROPHY_LIDDED_CUP`") && ruleName("trophy:lidded-cup") === "TROPHY_LIDDED_CUP";
-const byGallery = (name) => (rule && lib.EMBLEM_IDS.includes(lib[name]?.id) && ruleName(lib[name].id) === name) || gallery.includes(`\`${name}\``);
+const byGallery = (name: string) => (rule && lib.EMBLEM_IDS.includes(lib[name]?.id ?? "") && ruleName(lib[name]?.id ?? "") === name) || gallery.includes(`\`${name}\``);
 const missing = Object.keys(lib).filter((name) => !readme.includes(`\`${name}`) && !new RegExp(`\\b${name}\\b`).test(readme) && !byGallery(name));
 if (missing.length > 0) {
   failed++;

@@ -1,11 +1,12 @@
 // The gallery: every emblem of the built package, by group, with its id, its three styles, five turns, and buttons that copy its id and the call that draws it. A filter narrows the list by id or name.
-import * as D from "./dist/index.js";
+// The package is imported from ../src here so that the editor and `pnpm typecheck` see its types; the build of the demo (scripts/page.ts) turns the import into ./dist/index.js, the built package.
+import * as D from "../src/index.ts";
 
-const $ = (id) => document.getElementById(id);
-const esc = (text) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const $ = <T extends HTMLElement = HTMLElement>(id: string): T => document.getElementById(id) as T;
+const esc = (text: unknown) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const TURNS = [-120, -60, 0, 60, 120];
 
-function card(id) {
+function card(id: D.EmblemId) {
   const info = D.emblemInfo(id);
   const styles = D.EMBLEM_STYLES.map((style) => `<figure>${D.renderEmblem(id, { style, size: 72, grain: false })}<figcaption>${style}</figcaption></figure>`).join("");
   const turns = `<div class="turns" role="group" aria-label="${esc(info.en)} turned">${TURNS.map((yaw) => D.emblemFrame(id, { yaw, size: 48 })).join("")}</div>`;
@@ -19,8 +20,8 @@ function card(id) {
 }
 
 // The Japanese sports and budo are shown together, after the groups, each emblem once.
-const JAPAN = new Set(D.JAPANESE_IDS);
-const sections = Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, group, ids.filter((id) => !JAPAN.has(id))]);
+const JAPAN = new Set<string>(D.JAPANESE_IDS);
+const sections: [string, string, readonly D.EmblemId[]][] = Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, group, ids.filter((id) => !JAPAN.has(id))]);
 sections.push(["japan", 'Japanese sports <span lang="ja">日本の競技</span>', D.JAPANESE_IDS]);
 $("sections").innerHTML = sections
   .filter(([, , ids]) => ids.length > 0)
@@ -28,21 +29,21 @@ $("sections").innerHTML = sections
   .join("");
 
 function filter() {
-  const words = $("find").value.toLowerCase().split(/\s+/).filter(Boolean);
+  const words = $<HTMLInputElement>("find").value.toLowerCase().split(/\s+/).filter(Boolean);
   let shown = 0;
-  for (const li of document.querySelectorAll(".cards li")) {
-    const match = words.every((w) => li.dataset.text.includes(w));
+  for (const li of document.querySelectorAll<HTMLElement>(".cards li")) {
+    const match = words.every((w) => (li.dataset.text ?? "").includes(w));
     li.hidden = !match;
     if (match) shown++;
   }
-  for (const section of document.querySelectorAll("#sections section")) section.hidden = section.querySelectorAll("li:not([hidden])").length === 0;
+  for (const section of document.querySelectorAll<HTMLElement>("#sections section")) section.hidden = section.querySelectorAll("li:not([hidden])").length === 0;
   $("count").textContent = `${shown} of ${D.EMBLEM_IDS.length} emblems`;
 }
 $("find").addEventListener("input", filter);
 filter();
 
 /** Copies text with the clipboard, or with a hidden field where the page may not use it. */
-async function copy(text) {
+async function copy(text: string) {
   try {
     await navigator.clipboard.writeText(text);
     return;
@@ -64,10 +65,10 @@ async function copy(text) {
 }
 
 document.addEventListener("click", async (event) => {
-  const button = event.target.closest("button.copy");
+  const button = (event.target as Element).closest<HTMLButtonElement>("button.copy");
   if (!button) return;
   const label = button.textContent;
-  await copy(button.dataset.code);
+  await copy(button.dataset.code ?? "");
   button.textContent = "Copied";
   setTimeout(() => { button.textContent = label; }, 1400);
 });

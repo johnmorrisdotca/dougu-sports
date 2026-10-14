@@ -65,4 +65,4 @@
 
 ## 見てみる
 
-`node scripts/emblem-sheet.mjs sheet.png puck: --turn` で、パックを 256、64、16 ピクセルで、明るい背景と暗い背景に、静止と回転で並べた一覧画像が描けます。デモには「Print a puck」の節があり、すべてのパックは[ギャラリー](https://johnmorrisdotca.github.io/dougu-sports/gallery.html)にもあります。
+`node scripts/emblem-sheet.ts sheet.png puck: --turn` で、パックを 256、64、16 ピクセルで、明るい背景と暗い背景に、静止と回転で並べた一覧画像が描けます。デモには「Print a puck」の節があり、すべてのパックは[ギャラリー](https://johnmorrisdotca.github.io/dougu-sports/gallery.html)にもあります。

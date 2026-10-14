@@ -1,32 +1,46 @@
 // Writes docs/gallery.md (English) and docs/gallery.ja.md (Japanese), the list of every emblem the built package holds: its id, name, kind, source and description, each page in one language only. The constant
 // and the import follow from the id by a rule stated once at the top of each page, and this script checks that the rule holds for every emblem. Made from the package, so it cannot fall behind the code.
 //
-//   node scripts/make-gallery.mjs           rewrite both pages (build first: `pnpm gallery` does)
-//   node scripts/make-gallery.mjs --check   exit 1, and say so, when either page is not what the package makes
+//   node scripts/make-gallery.ts           rewrite both pages (build first: `pnpm gallery` does)
+//   node scripts/make-gallery.ts --check   exit 1, and say so, when either page is not what the package makes
 //
 // The pictures are on the demo's gallery page (`pnpm dev`, then /gallery.html): GitHub does not draw inline SVG, so this page is the text of it.
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import process from "node:process";
 import { URL } from "node:url";
 
-const D = await import(new URL("../dist/index.js", import.meta.url).href);
+import type { EmblemInfo } from "../src/emblems/emblem.api.ts";
+import type { EmblemId } from "../src/emblems/emblem.ids.ts";
+
+/** The words of one page: its file, its table head, and the text round the tables. */
+interface Page {
+  file: string;
+  head: string[];
+  top: (count: number) => string;
+  rule: string;
+  none: string;
+  name: (info: EmblemInfo) => string;
+  description: (info: EmblemInfo) => string;
+}
+
+const D = (await import(new URL("../dist/index.js", import.meta.url).href)) as typeof import("../src/index.ts") & Record<string, { id?: string } | undefined>;
 const NAME = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).name;
 
 const DIST = new URL("../dist/emblems/", import.meta.url);
 /** The module of a folder that exports a constant. */
-const moduleOf = (folder, constant) => readdirSync(new URL(`${folder}/`, DIST)).find((file) => file.endsWith(".js") && new RegExp(`export const ${constant} =`).test(readFileSync(new URL(`${folder}/${file}`, DIST), "utf8")))?.slice(0, -3);
+const moduleOf = (folder: string, constant: string) => readdirSync(new URL(`${folder}/`, DIST)).find((file) => file.endsWith(".js") && new RegExp(`export const ${constant} =`).test(readFileSync(new URL(`${folder}/${file}`, DIST), "utf8")))?.slice(0, -3);
 
 /** Folders whose items share modules named for the family (`ball/ball.soccer`), so that the import of one is not its id. */
 const FAMILY_FOLDERS = new Set(["ball", "gear"]);
 /** The one id whose constant is not the id's name: the plain squash ball is the double-yellow-dot one. */
-const OTHER_NAME = { "ball:squash": "BALL_SQUASH_DOUBLE_YELLOW" };
+const OTHER_NAME: Record<string, string> = { "ball:squash": "BALL_SQUASH_DOUBLE_YELLOW" };
 
 /** The words of a page, one set for each language; the rows are the same data. */
-const PAGES = {
+const PAGES: Record<"en" | "ja", Page> = {
   en: {
     file: "gallery.md",
     head: ["Id", "English", "Kind", "Source", "Description"],
-    top: (count) => `# Gallery\n\n[Back to the README](../README.md) · [日本語](gallery.ja.md) · English\n\nEvery emblem in the package, by group: ${count} of them. The pictures are on the demo's gallery page; this list is the text of it, made by \`scripts/make-gallery.mjs\` from the built package (\`pnpm gallery\`).`,
+    top: (count: number) => `# Gallery\n\n[Back to the README](../README.md) · [日本語](gallery.ja.md) · English\n\nEvery emblem in the package, by group: ${count} of them. The pictures are on the demo's gallery page; this list is the text of it, made by \`scripts/make-gallery.ts\` from the built package (\`pnpm gallery\`).`,
     rule: `Ids are \`<group>:<name>\`. The constant and the import follow from the id, so they are not repeated in every row:
 
 - The constant is the id in capitals with \`:\` and \`-\` made \`_\`: \`trophy:lidded-cup\` → \`TROPHY_LIDDED_CUP\`. One id breaks it: \`ball:squash\` is \`BALL_SQUASH_DOUBLE_YELLOW\`, the double-yellow-dot ball.
@@ -37,13 +51,13 @@ The printed pucks (\`puck:*\`) are made in one family module, \`${NAME}/ball/bal
 
 The folders the art lives in are in [layout.md](layout.md).`,
     none: "_No emblems yet._",
-    name: (info) => info.en,
-    description: (info) => info.description?.en ?? "",
+    name: (info: EmblemInfo) => info.en,
+    description: (info: EmblemInfo) => info.description?.en ?? "",
   },
   ja: {
     file: "gallery.ja.md",
     head: ["Id", "日本語", "種類", "出どころ", "説明"],
-    top: (count) => `# ギャラリー\n\n[README に戻る](../README.md) · 日本語 · [English](gallery.md)\n\nパッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 ${count} 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから \`scripts/make-gallery.mjs\` が生成します（\`pnpm gallery\`）。`,
+    top: (count: number) => `# ギャラリー\n\n[README に戻る](../README.md) · 日本語 · [English](gallery.md)\n\nパッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 ${count} 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから \`scripts/make-gallery.ts\` が生成します（\`pnpm gallery\`）。`,
     rule: `id は \`<グループ>:<名前>\` の形です。定数とインポートパスは id から決まるので、行ごとには書いていません。
 
 - 定数は、id を大文字にし、\`:\` と \`-\` を \`_\` に置き換えたものです。\`trophy:lidded-cup\` → \`TROPHY_LIDDED_CUP\`。例外は 1 つだけで、\`ball:squash\` は \`BALL_SQUASH_DOUBLE_YELLOW\`（黄色い点が 2 つ付いたボール）です。
@@ -54,22 +68,22 @@ The folders the art lives in are in [layout.md](layout.md).`,
 
 エンブレムのソース（元の画像）が入っているフォルダーは、[layout.md](layout.md)（英語）にまとめてあります。`,
     none: "_まだエンブレムはありません。_",
-    name: (info) => info.ja,
-    description: (info) => info.description?.ja ?? "",
+    name: (info: EmblemInfo) => info.ja,
+    description: (info: EmblemInfo) => info.description?.ja ?? "",
   },
 };
 
 /** The rows of every group, checked against the rule that the text above the tables states. */
-const check = (id, folder) => {
+const check = (id: string, folder: string) => {
   const constant = OTHER_NAME[id] ?? id.replace(/[:-]/g, "_").toUpperCase();
   const name = id.slice(id.indexOf(":") + 1);
   if (D[constant]?.id !== id) throw new Error(`${id} is not exported as ${constant}, the name the gallery states`);
   if (!FAMILY_FOLDERS.has(folder) && moduleOf(folder, constant) !== name) throw new Error(`${id} is not in ${folder}/${name}`);
 };
 
-const pageOf = (lang) => {
+const pageOf = (lang: "en" | "ja") => {
   const L = PAGES[lang];
-  const rows = Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => {
+  const rows = (Object.entries(D.EMBLEM_GROUPS) as [keyof typeof D.EMBLEM_GROUPS, readonly EmblemId[]][]).map(([group, ids]) => {
     const folder = D.EMBLEM_FOLDERS[group];
     const body = ids.length === 0
       ? L.none
@@ -84,7 +98,7 @@ const pageOf = (lang) => {
 };
 
 let stale = false;
-for (const lang of Object.keys(PAGES)) {
+for (const lang of ["en", "ja"] as const) {
   const file = new URL(`../docs/${PAGES[lang].file}`, import.meta.url);
   const text = pageOf(lang);
   if (process.argv.includes("--check")) {

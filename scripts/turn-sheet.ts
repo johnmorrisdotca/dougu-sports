@@ -1,7 +1,7 @@
 // Draws a sheet of the emblems that used to be cut off, at the angles where they were cut off most, so that the clipping can be looked at: each drawing is an image of the size the SVG says, with a thin frame round it,
 // so whatever the view box cuts off is missing at the frame. Chromium draws it (Playwright is a dev dependency). Run it from a checkout, before and after a change, and compare the two:
 //
-//   node scripts/turn-sheet.mjs <out.png> [--scale=2]
+//   node scripts/turn-sheet.ts <out.png> [--scale=2]
 import { writeFileSync } from "node:fs";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
@@ -11,11 +11,11 @@ import { chromium } from "@playwright/test";
 const args = process.argv.slice(2);
 const flags = Object.fromEntries(args.filter((a) => a.startsWith("--")).map((a) => a.slice(2).split("=")));
 const out = args.find((a) => !a.startsWith("--")) ?? "turn-sheet.png";
-const D = await import(pathToFileURL(join(process.cwd(), "src/index.ts")).href);
+const D = (await import(pathToFileURL(join(process.cwd(), "src/index.ts")).href)) as typeof import("../src/index.ts");
 
 const SIZE = 150;
-/** The worst angle of each cup, found by sweeping every 5 degrees of yaw and the whole of the tilt (scripts/turn-boxes.mjs), and the pieces of flat art whose still drawing reaches past the box. */
-const CUPS = [
+/** The worst angle of each cup, found by sweeping every 5 degrees of yaw and the whole of the tilt (scripts/turn-boxes.ts), and the pieces of flat art whose still drawing reaches past the box. */
+const CUPS: [string, number, number][] = [
   ["trophy:sumo-cup", 90, 60],
   ["trophy:canadian-bowl", 0, 60],
   ["trophy:baseball", 0, 60],
@@ -29,7 +29,7 @@ const CUPS = [
 ];
 const FLATS = ["gear:swim-goggles", "gear:figure-skate", "gear:diving-board", "gear:speed-skate", "gear:gunbai", "sport:athletics", "sport:sumo"];
 
-const cell = (svg, caption) => `<figure><img width="${SIZE}" height="${SIZE}" src="data:image/svg+xml;utf8,${encodeURIComponent(svg)}"><figcaption>${caption}</figcaption></figure>`;
+const cell = (svg: string, caption: string) => `<figure><img width="${SIZE}" height="${SIZE}" src="data:image/svg+xml;utf8,${encodeURIComponent(svg)}"><figcaption>${caption}</figcaption></figure>`;
 let html = `<!doctype html><meta charset="utf-8"><style>body{margin:0;background:#fff;font:11px system-ui;color:#222}h2{font-size:13px;margin:10px 12px 2px}.row{display:flex;gap:8px;margin:4px 12px;align-items:flex-start}.name{width:120px;padding-top:60px}figure{margin:0}img{outline:1px dashed #b33;outline-offset:0;background:#fff}figcaption{text-align:center;color:#666}</style>`;
 html += `<h2>A cup at the angle where it was cut off most: the still, and the same turn in metal and in line. The red dashes are the edge of the drawing.</h2>`;
 for (const [id, yaw, pitch] of CUPS) {

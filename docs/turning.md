@@ -43,7 +43,7 @@ console.log(box(renderEmblem("trophy:hockey-cup")) === box(emblemFrame("trophy:h
 console.log(box(renderEmblem("ball:soccer")) === box(emblemFrame("ball:soccer", { yaw: 90 }))); // true
 ```
 
-`turnBox: true` on `renderEmblem` draws the still in the box of the turn (what `bindTurn` does for the resting view), and `turnBox: false` on a frame draws it in the still's own box. A ball, a medal, a crest and a sport's icon need no more room than their still has, so for them the two boxes are one. `test/turnbox.test.ts` measures every emblem's ink against its box; `node scripts/turn-boxes.mjs` prints the box a new emblem needs, to put in its model as `box` and `turnBox`.
+`turnBox: true` on `renderEmblem` draws the still in the box of the turn (what `bindTurn` does for the resting view), and `turnBox: false` on a frame draws it in the still's own box. A ball, a medal, a crest and a sport's icon need no more room than their still has, so for them the two boxes are one. `test/turnbox.test.ts` measures every emblem's ink against its box; `node scripts/turn-boxes.ts` prints the box a new emblem needs, to put in its model as `box` and `turnBox`.
 
 ## A loop
 

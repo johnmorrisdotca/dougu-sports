@@ -1,8 +1,10 @@
 // The demo's pages, made from demo/index.html and the family's shared head, header, footer and language chooser (family-template.mjs), and the gallery, made from the built package. The Pages build
-// (site.mjs) writes them into site/, and the dev server (dev.mjs) serves the same text, so the tests play the page that is published.
+// (site.ts) writes them into site/, and the dev server (dev.ts) serves the same text, so the tests play the page that is published.
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
-import { transformSync } from "esbuild";
+import { build, transformSync } from "esbuild";
+import type { Plugin } from "esbuild";
 
 import { FAMILY_SCRIPT, familyFooter, familyHead, familyHeader, familyUnreviewed } from "./family-template.mjs";
 
@@ -45,7 +47,7 @@ const WORDS = {
 };
 
 /** A page's text with the family's blocks put in where its comments say. */
-function withFamily(html, { title, description }) {
+function withFamily(html: string, { title, description }: { title: string; description: string }) {
   return html
     .replace("<!--family:head-->", familyHead({ id, title, description }))
     .replace("<!--family:header-->", familyHeader({ id }))
@@ -53,7 +55,7 @@ function withFamily(html, { title, description }) {
     .replace("<!--family:footer-->", familyFooter({ id }))
     .replace(
       /<!--family:scripts ([\w.-]+)-->/,
-      (_, script) => `<script>${FAMILY_SCRIPT}</script>\n<script>var familyPage = familyLanguage({ id: ${JSON.stringify(id)}, words: ${JSON.stringify(WORDS)} });</script>${script === "none" ? "" : `\n<script type="module" src="${script}"></script>`}`,
+      (_: string, script: string) => `<script>${FAMILY_SCRIPT}</script>\n<script>var familyPage = familyLanguage({ id: ${JSON.stringify(id)}, words: ${JSON.stringify(WORDS)} });</script>${script === "none" ? "" : `\n<script type="module" src="${script}"></script>`}`,
     );
 }
 
@@ -67,9 +69,9 @@ export function renderIndex() {
  * browser, so the page stays light and cannot fall behind the package. A reader without script has docs/gallery.md, the same list as text. Needs `pnpm build` first, as the page imports ./dist.
  */
 export async function renderGallery() {
-  const D = await import(new URL("../dist/index.js", import.meta.url).href);
-  const japan = new Set(D.JAPANESE_IDS);
-  const nav = [...Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, group, ids.filter((id) => !japan.has(id)).length]), ["japan", "Japanese sports", D.JAPANESE_IDS.length]]
+  const D = (await import(new URL("../dist/index.js", import.meta.url).href)) as typeof import("../src/index.ts");
+  const japan = new Set<string>(D.JAPANESE_IDS);
+  const nav = [...Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, group, ids.filter((id) => !japan.has(id)).length] as const), ["japan", "Japanese sports", D.JAPANESE_IDS.length] as const]
     .filter(([, , count]) => count > 0)
     .map(([key, title, count]) => `<a href="#g-${key}">${title} <span>${count}</span></a>`)
     .join(" ");
@@ -109,6 +111,30 @@ export function renderCompose() {
 <!--family:scripts compose.js-->`;
   const html = `<!doctype html>\n<html lang="en">\n<head>\n  <!--family:head-->\n  <link rel="stylesheet" href="family.css" />\n  <link rel="stylesheet" href="demo.css" />\n</head>\n<body>\n${body}\n</body>\n</html>\n`;
   return withFamily(html, { title: "Podium, award case and sprites · Dougu Sports 道具", description: "A podium, an award case, sprite sheets, data addresses and a sport's equipment, drawn from Dougu Sports." });
+}
+
+/** The scripts of the demo's pages: demo/<name>.ts, served and published as <name>.js. */
+export const DEMO_SCRIPTS = ["demo", "compose", "gallery"];
+
+/**
+ * The files a demo script imports for their types, and the files the browser loads in their place: the script imports ../src/index.ts, so that the editor and `pnpm typecheck` see the package's types,
+ * and the page imports ./dist/index.js, the package as it is built and published. esbuild leaves the import in place and only changes its address.
+ */
+const AS_BUILT: Record<string, string> = { "src/index.ts": "./dist/index.js", "scripts/family-backgrounds.ts": "./family-backgrounds.js" };
+const asBuilt: Plugin = {
+  name: "as-built",
+  setup(b) {
+    b.onResolve({ filter: /^\.\.\/(src|scripts)\// }, (args) => {
+      const target = AS_BUILT[args.path.slice(3)];
+      return target === undefined ? undefined : { path: target, external: true };
+    });
+  },
+};
+
+/** One of the demo's scripts (demo/<name>.ts) as the JavaScript a browser runs. */
+export async function demoScript(name: string): Promise<string> {
+  const built = await build({ entryPoints: [fileURLToPath(new URL(`../demo/${name}.ts`, import.meta.url))], bundle: true, write: false, format: "esm", target: "es2022", plugins: [asBuilt], logLevel: "silent" });
+  return built.outputFiles[0].text;
 }
 
 /** The family's background module as the plain JavaScript the demo's preview imports when a background is chosen (the module is TypeScript, copied from taisen-brackets into scripts/; the demo is the only thing that loads it). */

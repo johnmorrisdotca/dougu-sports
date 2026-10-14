@@ -1,5 +1,5 @@
 import { describe, expect, it } from "./vitest-shim.ts";
-import { galleryHtml } from "../scripts/dougu/gallery-page.mjs";
+import { galleryHtml } from "../scripts/dougu/gallery-page.ts";
 import { BALLS, lineup } from "../src/emblems/ball/ball.index.ts";
 import { GEARS } from "../src/emblems/gear/gear.index.ts";
 

@@ -1,9 +1,10 @@
 import { expect, test } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
-const noSideways = (page) => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
+const noSideways = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
 
 test("the playground draws an emblem and does not scroll sideways", async ({ page }) => {
-  const errors = [];
+  const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
   await expect(page.locator("#stage > svg")).toBeVisible();
@@ -14,7 +15,7 @@ test("the playground draws an emblem and does not scroll sideways", async ({ pag
 test("every emblem draws, in every style, and the address says which", async ({ page }) => {
   test.slow();
   await page.goto("/");
-  const ids = await page.locator("#emblem option").evaluateAll((options) => options.map((o) => o.value));
+  const ids = await page.locator("#emblem option").evaluateAll((options) => options.map((o) => (o as HTMLOptionElement).value));
   expect(ids.length).toBeGreaterThanOrEqual(140);
   // Choosing in the page is the same call as the address, and cheaper than a page load for each of a hundred and forty emblems.
   for (const [index, id] of ids.entries()) {
@@ -92,7 +93,7 @@ test("the engrave field engraves a medal, and the address and the call say so, a
 });
 
 test("the puck workshop prints the words, the name and number and a signature, and turns", async ({ page }) => {
-  const errors = [];
+  const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
   const stage = page.locator("#puck-stage");
@@ -120,7 +121,7 @@ test("the puck workshop prints the words, the name and number and a signature, a
 });
 
 test("the gallery lists every emblem with its id, finds one by a word, and copies its id", async ({ page }) => {
-  const errors = [];
+  const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/gallery.html");
   await expect(page.locator(".cards li").first()).toBeVisible();
@@ -146,16 +147,16 @@ test("the gallery lists every emblem with its id, finds one by a word, and copie
 test("44 pixels is the least a control gives a finger", async ({ page }) => {
   await page.goto("/gallery.html");
   await expect(page.locator(".cards li").first()).toBeVisible();
-  for (const control of await page.locator(".copy").all().then((all) => all.slice(0, 4))) expect((await control.boundingBox()).height).toBeGreaterThanOrEqual(43.5);
+  for (const control of await page.locator(".copy").all().then((all) => all.slice(0, 4))) expect((await control.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
   await page.goto("/");
   for (const control of await page.locator("#style button, #theme button, #size button, #tint button, #emblem, #engrave, #yaw, #pitch, #puck-design, #puck-ring, #puck-text, #puck-name, #puck-number, #puck-sign button, #puck-seed").all()) {
-    const box = await control.boundingBox();
+    const box = (await control.boundingBox())!;
     expect(box.height).toBeGreaterThanOrEqual(43.5);
   }
 });
 
 test("the background is off by default, and a chosen one is a picture behind the stage that leaves the emblem as it was", async ({ page }) => {
-  const errors = [];
+  const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/?id=trophy:hockey-cup");
   const background = () => page.locator("#stage").evaluate((stage) => stage.style.backgroundImage);

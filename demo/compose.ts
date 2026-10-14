@@ -1,11 +1,16 @@
 // The composing API on one page: a podium, an award case, a sprite sheet, a data address in an <img>, a CSS background and a canvas, and a sport's equipment. Every card draws from the built package and shows
 // the call that made it, with a button that copies it.
-import * as D from "./dist/index.js";
+// The package is imported from ../src here so that the editor and `pnpm typecheck` see its types; the build of the demo (scripts/page.ts) turns the import into ./dist/index.js, the built package.
+import * as D from "../src/index.ts";
 
-const $ = (id) => document.getElementById(id);
-const esc = (text) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const $ = <T extends HTMLElement = HTMLElement>(id: string): T => document.getElementById(id) as T;
+const esc = (text: unknown) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const params = new URLSearchParams(location.search);
-const state = { look: ["inherit", "light", "dark"].includes(params.get("look")) ? params.get("look") : "inherit", sport: D.SPORT_NAMES.includes(params.get("sport")) ? params.get("sport") : "nhl", locale: "en" };
+type Look = "inherit" | "light" | "dark";
+const looks: readonly string[] = ["inherit", "light", "dark"];
+const lookAsked = params.get("look") ?? "";
+const sportAsked = params.get("sport") ?? "";
+const state: { look: Look; sport: D.SportName; locale: "en" | "ja" } = { look: looks.includes(lookAsked) ? (lookAsked as Look) : "inherit", sport: D.SPORT_NAMES.find((name) => name === sportAsked) ?? "nhl", locale: "en" };
 
 // Three small flags, drawn here as SVG strings; the podium takes SVG markup or a URL for a flag, and draws it as an image.
 const FLAGS = {
@@ -14,7 +19,7 @@ const FLAGS = {
   it: '<svg viewBox="0 0 3 2"><rect width="1" height="2" fill="#009246"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ce2b37"/></svg>',
 };
 
-const card = (id, title, art, code, extra = "") =>
+const card = (id: string, title: string, art: string, code: string, extra = "") =>
   `<article class="compose-card" id="${id}" data-testid="${id}"><h3>${esc(title)}</h3><div class="art" data-look="${state.look === "inherit" ? "page" : state.look}">${art}</div>${extra}<details><summary>The call</summary><pre><code>${esc(code)}</code></pre></details><p class="copies"><button type="button" class="fam-button copy" data-code="${esc(code)}" aria-label="Copy the call for ${esc(title)}">Copy the call</button></p></article>`;
 
 function podiumCard() {
@@ -33,12 +38,12 @@ function caseCard() {
 }
 
 /** The number of elements a piece of markup makes, counted by a real parser. */
-function nodes(markup) {
+function nodes(markup: string) {
   const box = document.createElement("div");
   box.innerHTML = markup;
   return box.getElementsByTagName("*").length;
 }
-const kB = (n) => `${(n / 1024).toFixed(1)} kB`;
+const kB = (n: number) => `${(n / 1024).toFixed(1)} kB`;
 
 function spriteCard() {
   const ids = ["ball:soccer", "medal:gold"];
@@ -60,9 +65,9 @@ function uriCard() {
   const art = `<img class="uri" id="uri-img" data-testid="uri-img" alt="Hockey pictogram, from a data address" width="96" height="96" src="${uri}"><div class="backdrop" id="uri-bg" data-testid="uri-bg" role="img" aria-label="Gold medal, as a CSS background" style="background-image:url('${medal}')"></div><canvas id="uri-canvas" data-testid="uri-canvas" width="96" height="96" aria-label="Hockey pictogram drawn on a canvas" role="img"></canvas>`;
   const code = `import { emblemDataUri } from "@johnmorrisdotca/dougu-sports/emblems";\n\nconst src = emblemDataUri("sport:nhl", { size: 96, color: "${color}" });\nimg.src = src;\nelement.style.backgroundImage = \`url("\${emblemDataUri("medal:gold")}")\`;\nconst picture = new Image();\npicture.onload = () => context.drawImage(picture, 0, 0);\npicture.src = src;\n`;
   setTimeout(() => {
-    const canvas = $("uri-canvas");
+    const canvas = $<HTMLCanvasElement>("uri-canvas");
     const picture = new Image();
-    picture.onload = () => canvas.getContext("2d").drawImage(picture, 0, 0, 96, 96);
+    picture.onload = () => canvas.getContext("2d")!.drawImage(picture, 0, 0, 96, 96);
     picture.src = uri;
   }, 0);
   return card("uri", "Data address", art, code);
@@ -70,7 +75,7 @@ function uriCard() {
 
 function equipmentCard() {
   const e = D.sportEquipment(state.sport);
-  const ids = [e.ball, ...e.gear, e.trophy, e.medal].filter(Boolean);
+  const ids = [e.ball, ...e.gear, e.trophy, e.medal].filter((id) => id !== undefined);
   const options = D.SPORT_NAMES.map((s) => `<option value="${s}"${s === state.sport ? " selected" : ""}>${s}</option>`).join("");
   const art = `<div class="sprite-grid" data-testid="equipment-art" style="gap:12px;line-height:1.3">${ids.map((id) => `<figure style="margin:0;text-align:center;font-size:.7rem;line-height:1.3">${D.renderEmblem(id, { size: 64, theme: state.look, locale: state.locale, grain: false })}<figcaption>${esc(id)}</figcaption></figure>`).join("")}</div>`;
   const extra = `<p><label class="fam-label" for="sport">Sport</label> <select class="fam-field" id="sport" data-testid="sport">${options}</select></p>`;
@@ -80,8 +85,8 @@ function equipmentCard() {
 
 function render() {
   $("cards").innerHTML = [podiumCard(), caseCard(), spriteCard(), uriCard(), equipmentCard()].join("");
-  for (const b of $("look").querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state.look));
-  for (const b of $("locale").querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state.locale));
+  for (const b of $("look").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state.look));
+  for (const b of $("locale").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state.locale));
   const next = new URLSearchParams();
   if (state.look !== "inherit") next.set("look", state.look);
   if (state.sport !== "nhl") next.set("sport", state.sport);
@@ -92,13 +97,13 @@ function render() {
   }
 }
 
-$("look").addEventListener("click", (event) => { const b = event.target.closest("button"); if (b) { state.look = b.dataset.value; render(); } });
-$("locale").addEventListener("click", (event) => { const b = event.target.closest("button"); if (b) { state.locale = b.dataset.value; render(); } });
-document.addEventListener("change", (event) => { if (event.target.id === "sport") { state.sport = event.target.value; render(); $("sport").focus(); } });
+$("look").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { state.look = b.dataset.value as Look; render(); } });
+$("locale").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { state.locale = b.dataset.value as "en" | "ja"; render(); } });
+document.addEventListener("change", (event) => { const field = event.target as HTMLSelectElement; if (field.id === "sport") { state.sport = field.value as D.SportName; render(); $("sport").focus(); } });
 render();
 
 /** Copies text with the clipboard, or with a hidden field where the page may not use it. */
-async function copy(text) {
+async function copy(text: string) {
   try {
     await navigator.clipboard.writeText(text);
     return;
@@ -119,10 +124,10 @@ async function copy(text) {
   }
 }
 document.addEventListener("click", async (event) => {
-  const button = event.target.closest("button.copy");
+  const button = (event.target as Element).closest<HTMLButtonElement>("button.copy");
   if (!button) return;
   const label = button.textContent;
-  await copy(button.dataset.code);
+  await copy(button.dataset.code ?? "");
   button.textContent = "Copied";
   setTimeout(() => { button.textContent = label; }, 1400);
 });

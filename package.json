@@ -1,6 +1,6 @@
 {
   "name": "@johnmorrisdotca/dougu-sports",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "Dougu Sports 道具, sports emblems as SVG strings: trophies, medals, crests, sport icons, and the ball and gear of every sport, in metal, line or flat colour, with optional 3D turning. Light and dark, accessible, tree-shakeable. Zero dependencies.",
   "keywords": [
     "sports",
@@ -113,18 +113,18 @@
   "scripts": {
     "build": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\" && tsc -p tsconfig.json",
     "lint": "eslint .",
-    "typecheck": "tsc -p tsconfig.check.json",
-    "test": "node --test test/*.test.ts test/*.test.js",
-    "test:package": "pnpm build && node scripts/check-package.mjs",
-    "test:readme": "pnpm build && node scripts/make-gallery.mjs --check && node scripts/check-readme-examples.mjs",
-    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build && node scripts/check-package.mjs",
+    "typecheck": "tsc -p tsconfig.check.json && tsc -p tsconfig.tools.json && tsc -p tsconfig.demo.json",
+    "test": "node --test test/*.test.ts",
+    "test:package": "pnpm build && node scripts/check-package.ts",
+    "test:readme": "pnpm build && node scripts/make-gallery.ts --check && node scripts/check-readme-examples.ts",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build && node scripts/check-package.ts",
     "prepublishOnly": "pnpm check",
     "family:readme": "node scripts/family-readme.mjs",
-    "dev": "pnpm build && node scripts/dev.mjs",
-    "gallery": "pnpm build && node scripts/make-gallery.mjs",
-    "site": "pnpm build && node scripts/site.mjs",
+    "dev": "pnpm build && node scripts/dev.ts",
+    "gallery": "pnpm build && node scripts/make-gallery.ts",
+    "site": "pnpm build && node scripts/site.ts",
     "test:demo": "pnpm site && playwright test",
-    "screenshots": "pnpm site && node scripts/screenshots.mjs"
+    "screenshots": "pnpm site && node scripts/screenshots.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",

@@ -12,11 +12,11 @@ import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
+const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8")) as { name: string; version: string; main: string; module: string; types: string; files: string[]; dependencies?: Record<string, string>; exports: Record<string, string | Record<string, string>> };
 const windows = process.platform === "win32";
 const scratch = mkdtempSync(join(tmpdir(), "dougu-package-"));
 
-function run(command, args, cwd, viaShell = false) {
+function run(command: string, args: string[], cwd: string, viaShell = false) {
   const shell = viaShell && windows;
   const ran = spawnSync(shell && /[\\/]/.test(command) ? `"${command}"` : command, args, { cwd, encoding: "utf8", shell });
   if (ran.status !== 0) {
@@ -27,7 +27,7 @@ function run(command, args, cwd, viaShell = false) {
 }
 
 // 1. Pack, with npm.
-const packed = JSON.parse(run("npm", ["pack", "--json", "--ignore-scripts", "--pack-destination", scratch], root, true));
+const packed = JSON.parse(run("npm", ["pack", "--json", "--ignore-scripts", "--pack-destination", scratch], root, true)) as { filename: string; size: number; unpackedSize: number; files: { path: string }[] }[];
 const tarball = join(scratch, packed[0].filename);
 const inTarball = new Set(packed[0].files.map((file) => file.path));
 console.log(`ok   npm pack: ${packed[0].filename}, ${packed[0].files.length} files`);
@@ -40,7 +40,7 @@ console.log("ok   no demo, doc or picture is in the tarball");
 
 // 2. Everything package.json points at is in the tarball.
 // A wildcard target (`./dist/emblems/ball/*.js`) stands for every file of its folder that npm packed.
-const expand = (file) => {
+const expand = (file: string): string[] => {
   if (!file.includes("*")) return [file];
   const [before, after] = file.replace(/^\.\//, "").split("*");
   return [...inTarball].filter((path) => path.startsWith(before) && path.endsWith(after) && !path.slice(before.length, -after.length || undefined).includes("/"));
@@ -74,7 +74,7 @@ run("npm", ["install", "--no-audit", "--no-fund", "--silent", tarball], project,
 console.log("ok   npm install of the tarball");
 
 // What the built package in this checkout makes: the installed one must make the same.
-const local = await import(new URL("../dist/index.js", import.meta.url).href);
+const local = (await import(new URL("../dist/index.js", import.meta.url).href)) as typeof import("../src/index.ts");
 const medal = local.renderEmblem("medal:gold", { style: "line", size: 40 });
 const cup = local.emblemFrame("trophy:hockey-cup", { yaw: 40, pitch: 10, tint: "#1f4e9c" });
 const ball = local.renderEmblem("ball:soccer", { style: "color", tint: "#0b6e4f" });
@@ -82,13 +82,13 @@ const rolled = local.ballFrame("ball:soccer", { yaw: 70, pitch: -20 });
 const hurley = local.renderEmblem("gear:hurley", { style: "line" });
 
 // 4. Every entry in `exports`, by ESM and by require; a wildcard entry once for each module in its folder.
-const entries = [];
+const entries: string[] = [];
 for (const key of Object.keys(pkg.exports)) {
   if (!key.includes("*")) {
     entries.push(key === "." ? pkg.name : `${pkg.name}/${key.slice(2)}`);
     continue;
   }
-  const folder = pkg.exports[key].import.replace(/^\.\//, "").replace(/\*\.js$/, "");
+  const folder = (pkg.exports[key] as Record<string, string>).import.replace(/^\.\//, "").replace(/\*\.js$/, "");
   const names = [...inTarball].filter((path) => path.startsWith(folder) && path.endsWith(".js")).map((path) => path.slice(folder.length, -3));
   for (const name of names) entries.push(`${pkg.name}/${key.slice(2).replace("*", name)}`);
 }

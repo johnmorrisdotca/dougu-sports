@@ -1,10 +1,11 @@
 // The composing page in a real browser: a data address loads in an <img>, as a CSS background and on a canvas, a sprite draws, and the podium and the award case are on the page.
 import { expect, test } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
-const noSideways = (page) => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
+const noSideways = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
 
 test("the cards draw, with a button that copies the call, and the page does not scroll sideways", async ({ page }) => {
-  const errors = [];
+  const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/compose.html");
   for (const id of ["podium", "case", "sprite", "uri", "equipment"]) await expect(page.getByTestId(id)).toBeVisible();
@@ -33,7 +34,7 @@ test("a data address loads in an <img>, as a CSS background and on a canvas", as
   await page.goto("/compose.html");
   const img = page.getByTestId("uri-img");
   await expect(img).toBeVisible();
-  const loaded = await img.evaluate(async (el) => { await el.decode(); return [el.naturalWidth, el.naturalHeight]; });
+  const loaded = await img.evaluate(async (el) => { const image = el as HTMLImageElement; await image.decode(); return [image.naturalWidth, image.naturalHeight]; });
   expect(loaded).toEqual([96, 96]);
   // The background loads: the address in the style is an image the browser can decode.
   const background = await page.getByTestId("uri-bg").evaluate(async (el) => {
@@ -45,8 +46,9 @@ test("a data address loads in an <img>, as a CSS background and on a canvas", as
   });
   expect(background).toEqual([true, 96]);
   // The canvas holds the drawing, in the red of the call: `currentColor` crossed the image boundary as a colour, not as black.
-  await expect.poll(() => page.getByTestId("uri-canvas").evaluate((canvas) => {
-    const data = canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height).data;
+  await expect.poll(() => page.getByTestId("uri-canvas").evaluate((element) => {
+    const canvas = element as unknown as HTMLCanvasElement;
+    const data = canvas.getContext("2d")!.getImageData(0, 0, canvas.width, canvas.height).data;
     let red = 0;
     let drawn = 0;
     for (let i = 0; i < data.length; i += 4) {
@@ -60,12 +62,14 @@ test("a data address loads in an <img>, as a CSS background and on a canvas", as
 test("every kind of emblem, theme and colour loads as a data address and paints a canvas", async ({ page }) => {
   await page.goto("/compose.html");
   const result = await page.evaluate(async () => {
-    const D = await import("/dist/index.js");
-    const cases = [];
+    const dist = "/dist/index.js";
+    const D = await import(dist);
+    type Options = { style?: string; tint?: string; theme?: string; color?: string; locale?: string; title?: string | boolean };
+    const cases: [string, Options][] = [];
     for (const id of ["trophy:hockey-cup", "medal:gold", "crest:shield", "sport:nhl", "award:crown", "ball:soccer", "ball:puck", "gear:hurley", "gear:cricket-bat"]) {
       for (const options of [{}, { style: "line" }, { style: "color", tint: "#1f4e9c" }, { theme: "dark" }, { theme: "auto", style: "line" }, { color: "#0b6e4f", style: "line" }, { locale: "ja", title: "金メダル & <b>\"'" }, { title: false }]) cases.push([id, options]);
     }
-    const out = { failed: [], ink: {} };
+    const out: { failed: string[]; ink: Record<string, { light: number; dark: number }> } = { failed: [], ink: {} };
     for (const [id, options] of cases) {
       const picture = new Image();
       picture.src = D.emblemDataUri(id, { size: 48, ...options });
@@ -77,7 +81,7 @@ test("every kind of emblem, theme and colour loads as a data address and paints 
       }
       const canvas = document.createElement("canvas");
       canvas.width = canvas.height = 48;
-      const context = canvas.getContext("2d");
+      const context = canvas.getContext("2d")!;
       context.drawImage(picture, 0, 0, 48, 48);
       const data = context.getImageData(0, 0, 48, 48).data;
       let drawn = 0;
@@ -112,7 +116,8 @@ test("a sprite draws what the inline emblem draws, and costs a fraction of the n
   expect(sprite * 5).toBeLessThan(inline);
   // The same pixels: one ball from the sheet and one drawn inline, at the same size on the same ground.
   const same = await page.evaluate(async () => {
-    const D = await import("/dist/index.js");
+    const dist = "/dist/index.js";
+    const D = await import(dist);
     const sprite = D.emblemSprite(["ball:soccer", "medal:gold"]);
     const host = document.createElement("div");
     host.style.cssText = "position:fixed;left:0;top:0;background:#fff;line-height:0;padding:4px";
@@ -123,7 +128,7 @@ test("a sprite draws what the inline emblem draws, and costs a fraction of the n
   });
   expect(same).toHaveLength(4);
   for (const box of same) expect([box[2], box[3]]).toEqual([40, 40]);
-  const shot = async (box) => page.screenshot({ clip: { x: box[0], y: box[1], width: box[2], height: box[3] } });
+  const shot = async (box: number[]) => page.screenshot({ clip: { x: box[0], y: box[1], width: box[2], height: box[3] } });
   const [useBall, inlineBall, useMedal, inlineMedal] = await Promise.all(same.map(shot));
   // PNG bytes of the same drawing agree to within a hair; a sprite whose gradients failed would not.
   for (const [a, b] of [[useBall, inlineBall], [useMedal, inlineMedal]]) expect(Math.abs(a.length - b.length)).toBeLessThan(a.length * 0.08);

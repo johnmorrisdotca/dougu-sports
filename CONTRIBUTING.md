@@ -19,7 +19,7 @@ Bug reports and ideas go in the
   a cup 7.1 kB or a ball 6.8 kB gzipped, most of it the renderer).
 - **Trophies are generic and drawn, never traced.** A trophy is drawn in simplified SVG from what the object is known to look like, and is
   named for what it is (`trophy:hockey-cup`: a tall banded silver cup); no id, title, doc or drawing carries a real trophy's name, mark,
-  logo or engraving. Look at a contact sheet (`node scripts/emblem-sheet.mjs sheet.png trophy/<name>`) at 256, 64 and 16 pixels, light and dark.
+  logo or engraving. Look at a contact sheet (`node scripts/emblem-sheet.ts sheet.png trophy/<name>`) at 256, 64 and 16 pixels, light and dark.
 - **Japanese names are read** by someone who reads Japanese before they ship.
 - **Test what you change.** Tests sit in `test/`. A rule you change has a test that would have caught it.
 - **Art is drawn for this package, never copied.** No icon set, emoji, clip art or photograph goes in, so `LICENSES/` holds the MIT text and nothing
@@ -32,9 +32,9 @@ Bug reports and ideas go in the
 - **A README table, example or count that a test holds to the code** changes together with the code: `pnpm test:readme` runs
   every example of the README and of `docs/`, and checks that the README names every export.
 - **Option values and names are kebab case where they are words** (`"metal"`, `"line"`, `"color"`).
-- **Needs Node 22 or later**; the tests run the TypeScript source with `node --test`, which needs 22.18 or later.
-- **Ports.** This package owns local ports 7200 to 7299 and nothing outside them. The demo's server is on 7200 (`scripts/dev.mjs`),
-  the tests' on 7201 (`playwright.config.mjs`; `TEST_PORT` names another, so that two worktrees do not meet), the picture script's on 7202, and any other server or worktree takes 7203 and up.
+- **Needs Node 22 or later** to use the package, and **22.18 or later** to work on it: the tests, the scripts (`scripts/*.ts`) and the demo's server run TypeScript directly with Node's own type stripping, with no `tsx` and no build step. So the TypeScript in `scripts/`, `test/`, `e2e/` and `demo/` uses only syntax that can be erased: no `enum`, no `namespace`, no constructor parameter properties (`erasableSyntaxOnly` rejects them), `import type` for types, and a `.ts` extension on every relative import. `pnpm typecheck` checks all of it. The demo's scripts (`demo/*.ts`) run in a browser, so `scripts/page.ts` builds them with esbuild into `.js`.
+- **Ports.** This package owns local ports 7200 to 7299 and nothing outside them. The demo's server is on 7200 (`scripts/dev.ts`),
+  the tests' on 7201 (`playwright.config.ts`; `TEST_PORT` names another, so that two worktrees do not meet), the picture script's on 7202, and any other server or worktree takes 7203 and up.
   Check with `lsof -iTCP:<port> -sTCP:LISTEN` first, and stop a server by its process id, never by name.
 
 ## Pull requests

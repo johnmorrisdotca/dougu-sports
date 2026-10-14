@@ -53,7 +53,7 @@ picture.onload = () => context.drawImage(picture, 0, 0);
 picture.src = emblemDataUri("ball:soccer", { size: 128 });
 ```
 
-A test in a real browser (`e2e/compose.demo.mjs`) loads every kind of emblem, in several themes and colours and with a Japanese and a hostile title, in an `<img>`, and draws each on a canvas.
+A test in a real browser (`e2e/compose.demo.ts`) loads every kind of emblem, in several themes and colours and with a Japanese and a hostile title, in an `<img>`, and draws each on a canvas.
 
 ## One emblem, many times: `emblemSprite`
 

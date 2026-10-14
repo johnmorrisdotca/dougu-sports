@@ -1,10 +1,13 @@
 // The gallery page of every ball and every piece of gear: its id, its names, its size and the rule that gives it, both styles, and for a ball a turning demo. The page is one static HTML file: the
 // cards are drawn here, so it reads with no script; a small module in it imports the library (`libBase`, a path from the page to the built files) to turn a ball when it is clicked or focused.
-const esc = (text) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+import type { Piece, PieceSize } from "../../src/emblems/ball/ball.core.ts";
+import type { lineup as lineupOf } from "../../src/emblems/ball/ball.index.ts";
 
-const SIZE_LINE = (size) => {
+const esc = (text: unknown) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+const SIZE_LINE = (size: PieceSize | undefined) => {
   if (size === undefined) return "";
-  const parts = [];
+  const parts: string[] = [];
   if (size.diameterMm !== undefined) parts.push(`${size.diameterMm} mm across`);
   if (size.lengthMm !== undefined) parts.push(`${size.lengthMm} mm long`);
   if (size.thicknessMm !== undefined) parts.push(`${size.thicknessMm} mm thick`);
@@ -39,7 +42,7 @@ button.pill[aria-pressed="true"]{background:var(--accent);color:var(--bg);border
 .sources{font-size:.8rem;color:var(--sub)}
 `;
 
-const SCRIPT = (libBase) => `
+const SCRIPT = (libBase: string) => `
 import { ballFrame } from ${JSON.stringify(`${libBase}/emblems/ball/ball.index.js`)};
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 // A ball turns while the pointer is over it, or after it was clicked until it is clicked again, or while "Turn all" is on.
@@ -83,12 +86,12 @@ spin.addEventListener("click", () => {
 if (reduce) spin.title = "Your device asks for less motion: a ball turns only when you click it";
 `;
 
-const ballCard = (b) => `<figure id="${esc(b.id.replace(":", "-"))}"><div class="pic"><button type="button" class="turn" data-ball="${esc(b.id)}" aria-pressed="false" aria-label="Turn ${esc(b.en)}"><span data-slot>${b.svg({ size: 112 })}</span></button><span class="line">${b.svg({ size: 56, style: "line" })}</span></div><figcaption><span class="en">${esc(b.en)}</span><span class="ja" lang="ja">${esc(b.ja)}</span><code>${esc(b.id)}</code><br>${esc(SIZE_LINE(b.size))}</figcaption></figure>`;
-const gearCard = (g) => `<figure id="${esc(g.id.replace(":", "-"))}"><div class="pic"><span style="width:112px;height:112px">${g.svg({ size: 112 })}</span><span class="line">${g.svg({ size: 56, style: "line" })}</span></div><figcaption><span class="en">${esc(g.en)}</span><span class="ja" lang="ja">${esc(g.ja)}</span><code>${esc(g.id)}</code><br>${g.source === "drawn" ? "drawn by us" : `from ${esc({ noto: "Noto Emoji", commons: "Wikimedia Commons", gameicons: "game-icons.net" }[g.source] ?? g.source)}`}</figcaption></figure>`;
+const ballCard = (b: Piece) => `<figure id="${esc(b.id.replace(":", "-"))}"><div class="pic"><button type="button" class="turn" data-ball="${esc(b.id)}" aria-pressed="false" aria-label="Turn ${esc(b.en)}"><span data-slot>${b.svg({ size: 112 })}</span></button><span class="line">${b.svg({ size: 56, style: "line" })}</span></div><figcaption><span class="en">${esc(b.en)}</span><span class="ja" lang="ja">${esc(b.ja)}</span><code>${esc(b.id)}</code><br>${esc(SIZE_LINE(b.size))}</figcaption></figure>`;
+const gearCard = (g: Piece) => `<figure id="${esc(g.id.replace(":", "-"))}"><div class="pic"><span style="width:112px;height:112px">${g.svg({ size: 112 })}</span><span class="line">${g.svg({ size: 56, style: "line" })}</span></div><figcaption><span class="en">${esc(g.en)}</span><span class="ja" lang="ja">${esc(g.ja)}</span><code>${esc(g.id)}</code><br>${g.source === "drawn" ? "drawn by us" : `from ${esc(({ noto: "Noto Emoji", commons: "Wikimedia Commons", gameicons: "game-icons.net" } as Record<string, string>)[g.source] ?? g.source)}`}</figcaption></figure>`;
 
 /** The page. `pieces` holds BALLS, GEARS and lineup; `libBase` is the path from the page to the folder of built files (default `./dist`). */
-export function galleryHtml({ BALLS, GEARS, lineup }, libBase = "./dist") {
-  const row = (ids, scale, height) => lineup(ids, { scale, height, gap: 10, style: "colour" });
+export function galleryHtml({ BALLS, GEARS, lineup }: { BALLS: readonly Piece[]; GEARS: readonly Piece[]; lineup: typeof lineupOf }, libBase = "./dist") {
+  const row = (ids: readonly string[], scale: "true" | "same", height: number) => lineup(ids, { scale, height, gap: 10, style: "colour" });
   const sample = ["golf", "table-tennis", "squash", "tennis", "baseball", "puck", "soccer", "basketball", "football", "shot", "discus"];
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Balls and gear</title><style>${STYLE}</style></head>

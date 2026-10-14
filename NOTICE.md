@@ -72,4 +72,4 @@ Facts only: a dimension or a mass is a fact, not a work. The NHL's puck rule was
 | What | Made from | Terms |
 | --- | --- | --- |
 | The demo's page | Written for this package, with the family stylesheet `demo/family.css` | MIT |
-| The README's pictures (`docs/images`) | Taken by `scripts/screenshots.mjs` from the demo, which draws the package's own emblems | MIT |
+| The README's pictures (`docs/images`) | Taken by `scripts/screenshots.ts` from the demo, which draws the package's own emblems | MIT |

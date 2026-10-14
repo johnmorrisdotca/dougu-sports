@@ -6,6 +6,21 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.7.3] - 2026-10-14
+
+The repository's own tooling is TypeScript. No change to the package: the same files are published, and the pictures are byte for byte the same.
+
+### Changed
+
+- **The scripts, the browser tests, the test helpers and the demo's source are `.ts`.** `scripts/*.ts` (build, gallery, package check, README examples, release notes, contact sheets, the pictures script, the demo's server and page maker), `e2e/*.demo.ts`, `playwright.config.ts` and `test/pieces-gallery.test.ts` were `.mjs` or `.js`. They run with Node's own type stripping, with no `tsx` and no build step, so `package.json`'s scripts call the `.ts` files directly. The shared family files stay as they are, byte for byte: `scripts/family-template.mjs` and `scripts/family-readme.mjs` (plain JavaScript, with the types of the template written by hand in `scripts/family-template.d.mts`) and `scripts/family-backgrounds.ts`.
+- **`pnpm typecheck` checks all of it.** `tsconfig.check.json` covers `src` and `test`, the new `tsconfig.tools.json` covers `scripts`, `e2e` and the Playwright config (with the browser's types, since the tests and the pictures script run code in the page), and the new `tsconfig.demo.json` covers `demo`. The syntax is the erasable kind only (`erasableSyntaxOnly` was already on), with `import type` and `.ts` extensions.
+- **The demo's scripts are `demo/*.ts`, built with esbuild.** A browser cannot run TypeScript, so `scripts/page.ts` builds each one into `demo.js`, `compose.js` and `gallery.js` for the dev server (on each request) and for `pnpm site`. A script imports the package from `../src/index.ts`, so that it is type-checked against the real source; the build changes that one import to `./dist/index.js`, the built package, as before. The page is the same.
+- **Node.** Working on the repository needs Node 22.18 or later (where type stripping is on by default); CI already runs 22 and 24. `engines` stays `>=22`, because the published package is plain JavaScript and needs no more. `CONTRIBUTING.md` says so.
+
+### Fixed
+
+- **The belts note counted the two-colour pairs wrong.** `docs/japanese-sports.md` and `docs/japanese-sports.ja.md` said the IJF names "these four pairs" under a table of five. The IJF's page names four (white-yellow, yellow-orange, orange-green, green-blue); blue-brown is drawn for completeness and no source found names it. Both pages now say that.
+
 ## [0.7.2] - 2026-10-14
 
 The docs are one language to a page. No change to the pictures; the only change to the package is one English description.

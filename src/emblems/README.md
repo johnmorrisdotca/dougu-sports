@@ -24,5 +24,5 @@ renderGear("hockey-stick", { size: 48 });
 
 | Script | What it does |
 | --- | --- |
-| `contact-sheet.mjs` | the contact sheet at 256, 64 and 16 px, in colour and as line drawings, light and dark |
-| `gallery.mjs`, `gallery-page.mjs` | the gallery page: every id, both styles, a turning demo for each ball, the balls at their true sizes |
+| `contact-sheet.ts` | the contact sheet at 256, 64 and 16 px, in colour and as line drawings, light and dark |
+| `gallery.ts`, `gallery-page.ts` | the gallery page: every id, both styles, a turning demo for each ball, the balls at their true sizes |

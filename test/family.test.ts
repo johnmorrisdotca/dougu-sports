@@ -65,7 +65,7 @@ test("this package is on npm: the header has the npm pill and the footer the ins
 });
 
 test("the demo page is made with the family's header and footer", () => {
-  const page = read("scripts/page.mjs");
+  const page = read("scripts/page.ts");
   for (const call of ["familyHead(", "familyHeader(", "familyFooter(", "familyUnreviewed(", "FAMILY_SCRIPT"]) assert.ok(page.includes(call), call);
   const html = read("demo/index.html");
   for (const marker of ["family:head", "family:header", "family:unreviewed", "family:footer", "family:scripts"]) assert.ok(html.includes(`<!--${marker}`), marker);

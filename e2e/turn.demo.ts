@@ -1,10 +1,11 @@
 // bindTurn in the playground, in a real browser: a drag, the arrow keys and the auto-turn turn the emblem, and the sliders follow.
 import { expect, test } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
-const yaw = (page) => page.locator("#yaw").inputValue().then(Number);
-const dragStage = async (page, dx, dy = 0) => {
+const yaw = (page: Page) => page.locator("#yaw").inputValue().then(Number);
+const dragStage = async (page: Page, dx: number, dy = 0) => {
   await page.locator("#stage").scrollIntoViewIfNeeded();
-  const box = await page.locator("#stage").boundingBox();
+  const box = (await page.locator("#stage").boundingBox())!;
   const x = box.x + box.width / 2;
   const y = box.y + box.height / 2;
   await page.mouse.move(x, y);
@@ -42,7 +43,7 @@ test("dragging the emblem turns it and moves the sliders and their readouts", as
 });
 
 // What a drag to the right does to what is drawn, measured on the page: the front of every kind carries to the right, and a flat thing shows its rim on the left.
-const darkPanels = (page) =>
+const darkPanels = (page: Page) =>
   page.locator("#stage svg").first().evaluate((svg) => {
     const box = svg.getBoundingClientRect();
     return [...svg.querySelectorAll('path[fill="#1e2025"]')].map((el) => {
@@ -50,7 +51,7 @@ const darkPanels = (page) =>
       return { x: b.x + b.width / 2 - box.x - box.width / 2, y: b.y + b.height / 2 - box.y - box.height / 2 };
     });
   });
-const nearestTo = (list, at) => list.reduce((best, p) => (Math.hypot(p.x - at.x, p.y - at.y) < Math.hypot(best.x - at.x, best.y - at.y) ? p : best));
+const nearestTo = (list: { x: number; y: number }[], at: { x: number; y: number }) => list.reduce((best, p) => (Math.hypot(p.x - at.x, p.y - at.y) < Math.hypot(best.x - at.x, best.y - at.y) ? p : best));
 
 test("a drag to the right carries the front of a ball to the right, and to the left carries it left", async ({ page }) => {
   await page.goto("/?id=ball:soccer");
@@ -81,7 +82,7 @@ test("a drag to the right shows the rim of a medal on its left, the edge that co
   const rimSide = () =>
     page.locator("#stage svg").first().evaluate((svg) => {
       const rim = svg.querySelector('g[transform^="translate("][transform$=" 0)"]');
-      return rim === null ? undefined : Number(/translate\((-?[\d.]+) 0\)/.exec(rim.getAttribute("transform"))?.[1]);
+      return rim === null ? undefined : Number(/translate\((-?[\d.]+) 0\)/.exec(rim.getAttribute("transform") ?? "")?.[1]);
     });
   await dragStage(page, 40);
   await expect.poll(rimSide).toBeLessThan(0);
@@ -152,7 +153,7 @@ test("a drag, a slider or a key takes over from the spin without a jump", async 
   // A drag holds the spin while the pointer is down, and it carries on from the new angle.
   await page.locator("#play").click();
   await page.locator("#stage").scrollIntoViewIfNeeded();
-  const box = await page.locator("#stage").boundingBox();
+  const box = (await page.locator("#stage").boundingBox())!;
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   const held = await yaw(page);
@@ -224,6 +225,6 @@ test("the trophy case turns each emblem on its own button, and nothing moves bef
 
 test("the turning controls are 44 pixels tall at least, and the page does not scroll sideways", async ({ page }) => {
   await page.goto("/?id=ball:soccer");
-  for (const control of await page.locator("#play, #speed button, #roll, #case .case-play").all()) expect((await control.boundingBox()).height).toBeGreaterThanOrEqual(43.5);
+  for (const control of await page.locator("#play, #speed button, #roll, #case .case-play").all()) expect((await control.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });

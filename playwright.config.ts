@@ -1,5 +1,5 @@
 // The demo's own tests: a real browser, real taps. `pnpm test:demo` builds the demo and runs them.
-// The server is scripts/dev.mjs on port 7201: this package's block of ports is 7200 to 7299, and tests use 7201 and up.
+// The server is scripts/dev.ts on port 7201: this package's block of ports is 7200 to 7299, and tests use 7201 and up.
 import { defineConfig, devices } from "@playwright/test";
 
 // This package's ports are 7200 to 7299; tests use 7201 unless TEST_PORT names another (a worktree takes its own).
@@ -8,12 +8,12 @@ const phone = { viewport: { width: 390, height: 844 }, hasTouch: true, isMobile:
 
 export default defineConfig({
   testDir: "e2e",
-  testMatch: "*.demo.mjs",
+  testMatch: "*.demo.ts",
   fullyParallel: true,
   forbidOnly: true,
   reporter: "list",
   use: { baseURL: `http://127.0.0.1:${port}`, reducedMotion: "reduce", locale: "en-US" },
-  webServer: { command: "node scripts/dev.mjs", env: { PORT: String(port) }, url: `http://127.0.0.1:${port}/`, reuseExistingServer: false },
+  webServer: { command: "node scripts/dev.ts", env: { PORT: String(port) }, url: `http://127.0.0.1:${port}/`, reuseExistingServer: false },
   projects: [
     { name: "chromium-phone", use: { ...devices["Desktop Chrome"], ...phone } },
     { name: "chromium-desk", use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 900 } } },

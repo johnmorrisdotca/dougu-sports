@@ -6,7 +6,7 @@ import { extname, join, normalize } from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
-import { backgroundsModule, renderCompose, renderGallery, renderIndex } from "./page.mjs";
+import { DEMO_SCRIPTS, backgroundsModule, demoScript, renderCompose, renderGallery, renderIndex } from "./page.ts";
 
 const root = join(fileURLToPath(import.meta.url), "..", "..");
 const port = Number(process.env.PORT ?? 7200);
@@ -19,8 +19,8 @@ createServer(async (request, response) => {
   const file = join(base, rel);
   if (!file.startsWith(root)) { response.writeHead(403).end("no"); return; }
   try {
-    const body = rel === "index.html" ? Buffer.from(renderIndex()) : rel === "gallery.html" ? Buffer.from(await renderGallery()) : rel === "compose.html" ? Buffer.from(renderCompose()) : rel === "family-backgrounds.js" ? Buffer.from(backgroundsModule()) : await readFile(file);
-    response.writeHead(200, { "content-type": TYPES[extname(file)] ?? "application/octet-stream", "cache-control": "no-store" }).end(body);
+    const body = rel === "index.html" ? Buffer.from(renderIndex()) : rel === "gallery.html" ? Buffer.from(await renderGallery()) : rel === "compose.html" ? Buffer.from(renderCompose()) : rel === "family-backgrounds.js" ? Buffer.from(backgroundsModule()) : DEMO_SCRIPTS.some((name) => rel === `${name}.js`) ? Buffer.from(await demoScript(rel.slice(0, -3))) : await readFile(file);
+    response.writeHead(200, { "content-type": TYPES[extname(file) as keyof typeof TYPES] ?? "application/octet-stream", "cache-control": "no-store" }).end(body);
   } catch {
     response.writeHead(404, { "content-type": "text/plain" }).end("not found");
   }
