@@ -3,10 +3,6 @@
 // family, and the README block written from it. The other packages hold the same hashes in src/family.test.js (vitest);
 // this is the same check for a package that tests with node:test. Changing a shared file means changing it in every
 // repository at once, with the new hash recorded here.
-//
-// THIS COPY OF THE TEMPLATE IS AHEAD OF THE FAMILY'S. It is the template of 2026-10-15b (kyogijo-stadiums' and taisen-brackets'
-// copy, sha256 34016d06…) with exactly three lines added for this package: its row in FAMILY, its line in FAMILY_PITCH, and its id in
-// FAMILY_NOT_ON_NPM. The family-wide pass that adds Dougu Sports to every repository replaces this hash with the one it records.
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
@@ -32,9 +28,9 @@ const sha = (path: string) => createHash("sha256").update(readFileSync(path)).di
 const pkg = JSON.parse(read("package.json")) as { name: string };
 const id = pkg.name.replace(/^@[^/]+\//, "");
 
-// The template of 2026-10-15b, with Dougu Sports added, lists twenty-seven packages. The family's list is swept again, in every repository at once, when
+// The template of 2026-10-15c lists twenty-eight packages, Dougu Sports and Senshu Jerseys (both on npm) the last two. The family's list is swept again, in every repository at once, when
 // a package is added to it, and this hash is then the new one.
-const TEMPLATE = { version: "2026-10-15b", sha256: "e3225436d845b80ae0c04677086cb693dba4ede02266910239a95307daa0e118" };
+const TEMPLATE = { version: "2026-10-15c", sha256: "6fd8dcbdf819abcaeec890f75ee77e553ffab4ea9b0e2df40674d9b99da4a906" };
 const WRITER_SHA256 = "6752eaa287a9007af87d9019e4cee4c36fe1d79b60bf24478e7851ebe75138c4";
 
 test("the family template is the one file, byte for byte, in every package", () => {
@@ -48,7 +44,7 @@ test("it lists every package of the family, in order, each with its Japanese nam
     template.FAMILY.map((one) => one.id),
     [
       "korokoro", "kyuubu", "hitotsu", "toranpu", "tane", "narabe", "tenka", "kumimoji", "tsunagi", "jarajara",
-      "suido", "domino", "kotoba", "sugoroku", "kazu", "meikyuu", "hikidashi", "chizu", "bushu", "tobiishi", "jirai", "gunjin", "karakuri", "houseki", "kyogijo-stadiums", "taisen-brackets", "dougu-sports",
+      "suido", "domino", "kotoba", "sugoroku", "kazu", "meikyuu", "hikidashi", "chizu", "bushu", "tobiishi", "jirai", "gunjin", "karakuri", "houseki", "kyogijo-stadiums", "taisen-brackets", "dougu-sports", "senshu-jerseys",
     ],
   );
   for (const one of template.FAMILY) {
