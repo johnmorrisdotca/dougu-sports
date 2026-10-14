@@ -36,7 +36,8 @@ export function flipSvg(svg: string, o: FlipOptions): string {
   const sx = Math.max(Math.abs(across), 0.02);
   const sy = Math.max(Math.abs(tilt), 0.02);
   const thick = w * (o.thick ?? 0.035);
-  const dx = thick * Math.sin(o.yaw * RAD);
+  // A turn to a positive yaw carries the front toward the right, as it does for a ball and a cup (and for a drag to the right), so the rim is seen on the left, on the edge that comes toward the eye.
+  const dx = -thick * Math.sin(o.yaw * RAD);
   const dy = -thick * Math.sin(o.pitch * RAD) * 0.6;
   const mirror = showBack && own === undefined;
   const cx = x0 + w / 2;

@@ -41,6 +41,54 @@ test("dragging the emblem turns it and moves the sliders and their readouts", as
   expect(cursor).toEqual(["none", "none", "grab"]);
 });
 
+// What a drag to the right does to what is drawn, measured on the page: the front of every kind carries to the right, and a flat thing shows its rim on the left.
+const darkPanels = (page) =>
+  page.locator("#stage svg").first().evaluate((svg) => {
+    const box = svg.getBoundingClientRect();
+    return [...svg.querySelectorAll('path[fill="#1e2025"]')].map((el) => {
+      const b = el.getBoundingClientRect();
+      return { x: b.x + b.width / 2 - box.x - box.width / 2, y: b.y + b.height / 2 - box.y - box.height / 2 };
+    });
+  });
+const nearestTo = (list, at) => list.reduce((best, p) => (Math.hypot(p.x - at.x, p.y - at.y) < Math.hypot(best.x - at.x, best.y - at.y) ? p : best));
+
+test("a drag to the right carries the front of a ball to the right, and to the left carries it left", async ({ page }) => {
+  await page.goto("/?id=ball:soccer");
+  const panel = nearestTo(await darkPanels(page), { x: 0, y: 0 });
+  await dragStage(page, 10);
+  await expect.poll(async () => nearestTo(await darkPanels(page), panel).x).toBeGreaterThan(panel.x + 2);
+  const right = nearestTo(await darkPanels(page), panel);
+  await dragStage(page, -20);
+  await expect.poll(async () => nearestTo(await darkPanels(page), right).x).toBeLessThan(right.x - 2);
+});
+
+test("a drag to the right carries the face of a cup to the right: its light slides that way", async ({ page }) => {
+  await page.goto("/?id=trophy:tennis-cup");
+  const light = () =>
+    page.locator('#stage svg path[fill="#fff"]').first().evaluate((el) => {
+      const b = el.getBoundingClientRect();
+      return b.x + b.width / 2;
+    });
+  const start = await light();
+  await dragStage(page, 40);
+  await expect.poll(light).toBeGreaterThan(start + 1);
+  await dragStage(page, -80);
+  await expect.poll(light).toBeLessThan(start - 1);
+});
+
+test("a drag to the right shows the rim of a medal on its left, the edge that comes toward the eye", async ({ page }) => {
+  await page.goto("/?id=medal:gold");
+  const rimSide = () =>
+    page.locator("#stage svg").first().evaluate((svg) => {
+      const rim = svg.querySelector('g[transform^="translate("][transform$=" 0)"]');
+      return rim === null ? undefined : Number(/translate\((-?[\d.]+) 0\)/.exec(rim.getAttribute("transform"))?.[1]);
+    });
+  await dragStage(page, 40);
+  await expect.poll(rimSide).toBeLessThan(0);
+  await dragStage(page, -80);
+  await expect.poll(rimSide).toBeGreaterThan(0);
+});
+
 test("the arrow keys turn it, Home puts it back, and the stage can be reached by keyboard", async ({ page }) => {
   await page.goto("/?id=ball:soccer");
   await page.locator("#stage").focus();

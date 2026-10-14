@@ -6,6 +6,10 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- **A flat thing turned the other way from a ball and a cup.** A ball rolls and a cup slides its light so that a positive yaw carries the front toward the right (and a drag to the right, or the Right arrow, is a positive yaw), but the coin turn of a medal, a crest, a pictogram, a piece of gear and a pennant showed its rim on the right, as if the front went left, so that dragging a medal to the right turned it against the hand. The rim is now on the left for a positive yaw (and on the right for a negative one), the edge that comes toward the eye, in the still and the line style alike. Only the side of the rim changes: the squeeze, the back and every angle are as before, `yaw` and `setAngles` mean the same, and `bindTurn` keeps its signs (right is more yaw, up is more pitch). A unit test holds the rim's side for every flat emblem and the ball's roll, and the demo's tests drag a ball, a cup and a medal to the right and measure which way each goes.
+
 ## [0.2.0] - 2026-10-14
 
 The package is now 167 emblems (24 trophies, 5 awards, 6 medals, 4 crests, 38 sports, 47 balls, 42 gear and a pennant) and every one is its own drawing: the copied art and its licences are gone, the five Japanese sports and budo (sumo, kendo, judo, kyudo, karate) are in, text can be engraved on medals, plaques, cups, a ring, a banner and a pennant, every emblem turns through one coin-flip turn, and there are labels in two languages, data addresses, sprites, a podium, an award case, `sportEquipment` for all 38 sports and `bindTurn` to turn an emblem with a drag, the keys or a clock.

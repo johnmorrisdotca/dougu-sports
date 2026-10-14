@@ -104,7 +104,8 @@ test("a medal flips like a coin: its back is plain, it is edge on at a quarter t
   assert.match(D.emblemFrame("medal:gold", { yaw: 90 }), /scale\(0\.02 1\)/);
   assert.match(D.emblemFrame("medal:gold", { pitch: 60 }), /scale\(1 0\.5\)/);
   assert.equal(D.emblemFrame("medal:gold", { yaw: 40 }), D.emblemFrame("medal:gold", { yaw: 400 }));
-  assert.match(D.emblemFrame("medal:gold", { yaw: 45 }), /translate\(2\.12 0\)/, "the rim shows as it turns");
+  assert.match(D.emblemFrame("medal:gold", { yaw: 45 }), /translate\(-2\.12 0\)/, "the rim shows as it turns, on the left for a positive yaw");
+  assert.match(D.emblemFrame("medal:gold", { yaw: -45 }), /translate\(2\.12 0\)/, "and on the right for a negative one");
 });
 
 test("the ribbon of a medal has the five stripes of a games and draws no rings", () => {
@@ -143,6 +144,38 @@ test("every flat emblem, pictogram, award, piece of gear and pennant turns like 
     }
     assert.ok(still.length > 0);
   }
+});
+
+test("every kind turns the same way: a positive yaw carries the front toward the right, so a flat thing shows its rim on the left", () => {
+  const rimAt = (svg: string): number => {
+    const filtered = /<feOffset in="s" dx="(-?[\d.]+)"[^>]*result="o3"/.exec(svg)?.[1];
+    if (filtered !== undefined) return Number(filtered);
+    return Number(/<g transform="translate\((-?[\d.]+) 0\)">/.exec(svg)?.[1]);
+  };
+  for (const id of flatTurned) {
+    for (const style of D.EMBLEM_STYLES) {
+      const at = (yaw: number): string => D.emblemFrame(id, { yaw, style });
+      // Not every flat emblem has a rim to see in every style (a flat model with no thickness says none), but one that has shows it on the side the front moves away from.
+      const [right, left] = [rimAt(at(60)), rimAt(at(-60))];
+      if (Number.isNaN(right) && Number.isNaN(left)) continue;
+      assert.ok(right < 0, `${id} ${style}: a turn of +60 degrees puts the rim on the left (${right})`);
+      assert.ok(left > 0, `${id} ${style}: a turn of -60 degrees puts it on the right (${left})`);
+    }
+  }
+  // A ball: its front rolls toward the right. The same panel, at 0 and 10 degrees, lies further right.
+  const centre = (yaw: number): number[] => {
+    const svg = D.emblemFrame("ball:soccer", { yaw });
+    return [...svg.matchAll(/<path d="([^"]+)" fill="#1e2025"/g)].map((m) => {
+      const xs = (m[1] ?? "").match(/-?\d+(?:\.\d+)?/g)?.filter((_, i) => i % 2 === 0).map(Number) ?? [];
+      return (Math.min(...xs) + Math.max(...xs)) / 2;
+    });
+  };
+  const middle = Number(/<circle cx="(-?[\d.]+)"/.exec(D.emblemFrame("ball:soccer", { yaw: 0 }))?.[1]);
+  const [before, after] = [centre(0), centre(10)];
+  const nearest = (xs: number[], to: number): number => xs.reduce((best, x) => (Math.abs(x - to) < Math.abs(best - to) ? x : best), xs[0] ?? NaN);
+  const mid = nearest(before, middle);
+  const moved = nearest(after, mid);
+  assert.ok(moved > mid, `the ball's panel nearest the middle moves right (${mid} to ${moved})`);
 });
 
 test("a turned gear, icon or award squeezes by the cosine, mirrors its back, and has a thin dark rim that is widest edge on", () => {
