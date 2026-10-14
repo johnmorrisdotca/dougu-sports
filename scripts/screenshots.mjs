@@ -75,11 +75,12 @@ try {
     const styled = ["trophy:hockey-cup", "trophy:rugby-cup", "trophy:tennis-cup"].flatMap((id) => D.EMBLEM_STYLES.map((style) => one(id, { style, size: 144 }, style))).join("");
     return row(cups, 144) + row(awards, 144) + row(medals, 124) + styled;
   };
-  // Balls and pucks: soccer in its constructions and colours, the ball of every big sport, the small ones, and the odd ones out.
+  // Balls and pucks: soccer in its constructions and colours, the ball of every big sport, the small ones, the odd ones out, and a row of vintage leather and era-style balls.
   const balls = (D) => ["ball:soccer", "ball:soccer-26", "ball:soccer-14", "ball:soccer-6", "ball:soccer-orange", "ball:soccer-12-yellow", "ball:soccer-colour", "ball:futsal", "ball:beach-soccer",
     "ball:basketball", "ball:basketball-3x3", "ball:baseball", "ball:softball", "ball:football", "ball:rugby", "ball:afl", "ball:volleyball", "ball:beach-volleyball",
     "ball:tennis", "ball:padel", "ball:pickleball-outdoor", "ball:squash", "ball:racquetball", "ball:golf", "ball:cricket-red", "ball:cricket-pink", "ball:water-polo",
-    "ball:sepak-takraw", "ball:shuttlecock-feather", "ball:puck", "ball:curling-stone", "ball:lacrosse", "ball:handball", "ball:table-tennis", "ball:sliotar", "ball:roundnet"]
+    "ball:sepak-takraw", "ball:shuttlecock-feather", "ball:puck", "ball:curling-stone", "ball:lacrosse", "ball:handball", "ball:table-tennis", "ball:sliotar", "ball:roundnet",
+    "ball:soccer-1870-hand-stitched", "ball:soccer-1900-laced", "ball:soccer-1930-18-panel", "ball:soccer-1950-12-panel", "ball:soccer-1960-32-panel-leather", "ball:baseball-lemon-peel", "ball:baseball-vintage-leather", "ball:soccer-1978-triad", "ball:soccer-2022-speed-shell"]
     .map((id) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.renderEmblem(id, { size: 146 })}</figure>`).join("");
   // Gear: thirty-six of the forty-two pieces.
   const gear = (D) => ["gear:hockey-stick", "gear:hockey-skate", "gear:goalie-mask", "gear:field-hockey-stick", "gear:lacrosse-stick", "gear:hurley", "gear:cricket-bat", "gear:wicket", "gear:baseball-bat",
@@ -92,7 +93,7 @@ try {
   // Four rows of seven turns: a cup, a medal flipping, a ball rolling and a flat banner.
   const turned = (D) => ["trophy:tennis-cup", "medal:gold", "ball:soccer", "trophy:championship-banner"].flatMap((id) => [-120, -80, -40, 0, 40, 80, 120].map((yaw) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.emblemFrame(id, { yaw, size: 180 })}</figure>`)).join("");
   for (const scheme of ["light", "dark"]) {
-    await sheet(`balls-desk-${scheme}`, { width: 1400, cols: 9, rows: [150, 150, 150, 150], scheme }, balls);
+    await sheet(`balls-desk-${scheme}`, { width: 1400, cols: 9, rows: [150, 150, 150, 150, 150], scheme }, balls);
     await sheet(`hero-desk-${scheme}`, { width: 1400, cols: 9, rows: [152, 152, 132, 160], scheme }, trophies);
     await sheet(`gear-desk-${scheme}`, { width: 1400, cols: 9, rows: [150, 150, 150, 150], scheme }, gear);
     await sheet(`phone-${scheme}`, { width: 390, cols: 3, rows: [124, 124, 124, 124], gap: 4, phone: true, scheme }, phone);

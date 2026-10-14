@@ -6,6 +6,24 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-14
+
+Fifty balls in true 3D: vintage leather soccer balls, soccer balls in the style of an era, patterns of a shop wall, baseballs of other threads and volleyballs in national colours. 244 emblems.
+
+### Added
+
+- **Five vintage soccer balls** ([docs/vintage-balls.md](docs/vintage-balls.md), [日本語](docs/vintage-balls.ja.md)), in worn tan, brown and chestnut leather with scuffs and stitch lines, each on the construction of its period: `ball:soccer-1870-hand-stitched` (eight long panels, a button at each end, cross-stitched), `ball:soccer-1900-laced` (eight panels, a round cap at each end and a criss-crossed lace across a slit), `ball:soccer-1930-18-panel` (eighteen strips, six panels of three), `ball:soccer-1950-12-panel` (twelve pentagons in four tones) and `ball:soccer-1960-32-panel-leather`. The four older balls carry the 27 to 28 inch circumference of the 1872 Laws.
+- **Eleven soccer balls in the style of an era**, with graphics of our own on the construction of the time and no real design, mark or name: `ball:soccer-1970-black-white`, `-1978-triad` (three curved triangles in a pinwheel on each hexagon), `-1986-decorated-triad`, `-1998-coloured-triad`, `-2002-triangle-sweep`, `-2006-propeller` (14 panels), `-2010-grooved` (8 panels), `-2014-ribbon` (6 panels), `-2018-pixel`, `-2022-speed-shell` (20 panels) and `ball:soccer-training-high-vis`.
+- **Eighteen shop-wall soccer balls**, six generic patterns in three colourways each: stars (`-blue`, `-red`, `-night`), hexagon outlines (`-cyan`, `-magenta`, `-lime`), flames (`-fire`, `-ice`, `-toxic`), chevrons (`-red`, `-green`, `-blue`), a two-tone swirl (`-blue`, `-red`, `-teal`) and a metallic glossy finish (`-gold`, `-silver`, `-cobalt`), as `ball:soccer-stars-blue` and so on.
+- **Five baseballs and softballs**: `ball:baseball-lemon-peel` (the early four-seam ball), `ball:baseball-red-blue` and `ball:baseball-black-red` (the figure-8 seam stitched in two colours, the laces of the two leagues in a 1930s player's account), `ball:baseball-vintage-leather` and `ball:softball-11-optic` (the 27.9 cm optic yellow ball of the WBSC Slow Pitch rules, 166.5 to 173.6 g). The red figure-8 stitch is the existing `ball:baseball`.
+- **Eleven volleyballs in national colours**: `ball:volleyball-brazil`, `-japan`, `-canada`, `-usa`, `-italy`, `-poland`, `-france`, `-serbia`, `-netherlands` and `-germany`, the 18-panel indoor ball with its panels in three colours of the flag (colours only, no flag drawn), and `ball:volleyball-colours`. A new **`colors` option** (`renderEmblem`, `emblemFrame`, `ballFrame`) takes any three colours for any of them.
+- **New tilings and tools**: `octahedron8` (an octahedron whose edges are bent into S curves), `icosahedron`, `gorePoint` and `colourCentres` in `ball.tilings.ts`; `ball.decal.ts` (shapes laid on the sphere with `frameAt`, `tongue` leaves and ribbons, rows of stitches, a lace, scuffs); `paint18` and `seams18` in the panelled family; `panels` on the engine's surface (several polygons of one fill as one path); `wear` and a second thread colour in the seamed balls.
+- Tests (`test/vintage.test.ts`) for the new ids, names and descriptions, the sizes, the `colors` option, the new tilings and the decal tools. The contact sheets in `docs/pieces`, the README's ball picture (now with a row of vintage balls) and both gallery pages are redrawn and rewritten.
+
+### Changed
+
+- The `ball:soccer` family is now 55 balls in the proportions test (the 21 of 0.3.0, the five vintage, eleven era-style and eighteen patterned), and the balls hold their size budget (14 kB in colour, 13 kB as a line drawing; 8.5 kB on average).
+
 ## [0.4.1] - 2026-10-14
 
 The printed pucks take the same flag renderer as taisen-brackets.
@@ -140,7 +158,8 @@ First preview: the name, the API and two sample emblems. The full set of trophie
 - Tests for the drawing, the ids, the turns and the bundle size of one item; a package check that installs the packed tarball and bundles one item from it.
 - The demo (a playground with a turn slider, and a gallery page), `docs/layout.md`, `docs/turning.md`, `docs/gallery.md`, the family header and footer, the CI, Pages and Release workflows, and `LICENSES/` and `NOTICE.md` ready for third-party art.
 
-[Unreleased]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.4.1...HEAD
+[Unreleased]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.3.2...v0.4.0
 [0.3.2]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.3.1...v0.3.2

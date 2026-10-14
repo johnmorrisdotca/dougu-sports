@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](soccer-balls.ja.md) · English
 
-The package draws 21 soccer balls, all in true 3D, all turning with `ballFrame`, all with their seams on the sphere. Every construction is generic: it is worked out here from a polyhedron or a curve, and no brand's or tournament's ball, pattern or graphics is used. The sources and derivations are in [references.md](references.md#soccer-balls).
+The package draws 21 soccer balls, all in true 3D, all turning with `ballFrame`, all with their seams on the sphere. Every construction is generic: it is worked out here from a polyhedron or a curve, and no brand's or tournament's ball, pattern or graphics is used. The sources and derivations are in [references.md](references.md#soccer-balls). Thirty-four more soccer balls (vintage leather, era-style match balls and shop-wall patterns) are in [vintage-balls.md](vintage-balls.md).
 
 ## The ids
 

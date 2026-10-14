@@ -30,6 +30,8 @@ export interface Surface {
   project(u: V3): [number, number, number];
   /** A closed polygon on the surface, cut at the limb. Its edges follow the sphere. `n` is the samples an edge gets. */
   panel(ring: readonly V3[], fill: string, o?: { ink?: boolean; opacity?: number; n?: number }): string;
+  /** Several closed polygons of one fill, drawn as one path (a smaller document than a path for each). */
+  panels(rings: ReadonlyArray<readonly V3[]>, fill: string, o?: { ink?: boolean; opacity?: number; n?: number }): string;
   /** A curve on the surface: only what faces you. `closed` joins its ends; `deco` marks a line that is not part of the ball's form (a highlight), which the line style leaves out. */
   stroke(pts: readonly V3[], colour: string, width: number, o?: StrokeOptions): string;
   /** Several curves drawn as one path. */
@@ -70,7 +72,7 @@ export interface BallSpec {
   ground?: string;
   mat: Material;
   /** Lays the panels and seams. `base` is the main colour, or the tint; `accent` is the second colour or undefined. */
-  draw: (s: Surface, base: string, accent: string | undefined) => string;
+  draw: (s: Surface, base: string, accent: string | undefined, colors?: readonly [string, string, string]) => string;
   /** Where the ball's centre is in the 100 by 100 box (50, 50 by default): a hammer's head sits in a corner to leave room for the wire. */
   centre?: readonly [number, number];
   /** Where the ball is in space, in units of its radius from the middle of the whole (0, 0, 0 by default), turned with it: a hammer's head is at one end of the hammer, which turns about its middle. */
@@ -281,6 +283,12 @@ function surfaceOf(g: Geometry, line: boolean, minWidth: number): Surface {
       if (d === "") return "";
       return `<path d="${d}" fill="${line ? INK : fill}"${o?.opacity === undefined ? "" : ` opacity="${o.opacity}"`}/>`;
     },
+    panels(rings, fill, o) {
+      if (line && o?.ink !== true) return "";
+      const d = rings.map((ring) => ringPath(g, sampleRing(ring, o?.n ?? 4))).join("");
+      if (d === "") return "";
+      return `<path d="${d}" fill="${line ? INK : fill}"${o?.opacity === undefined ? "" : ` opacity="${o.opacity}"`}/>`;
+    },
     stroke: (pts, colour, width, o) => s.strokes([pts], colour, width, o),
     strokes(curves, colour, width, o) {
       if (line && (o?.deco === true || o?.ink === false)) return "";
@@ -385,9 +393,9 @@ export function drawBall(title: string, key: string, spec: BallSpec, opts: Resol
   const minWidth = 80 / opts.size;
   const base = opts.tint ?? spec.base;
   const surface = surfaceOf(g, line, minWidth);
-  const layers = spec.draw(surface, base, opts.accent);
+  const layers = spec.draw(surface, base, opts.accent, opts.colors);
   const sil = silhouette(g);
-  const id = `k${hashOf(`${key}|${opts.style}|${opts.tint ?? ""}|${opts.accent ?? ""}|${sil.tag}${sil.d}`)}`;
+  const id = `k${hashOf(`${key}|${opts.style}|${opts.tint ?? ""}|${opts.accent ?? ""}${opts.colors === undefined ? "" : `|${opts.colors.join("")}`}|${sil.tag}${sil.d}`)}`;
   // A long outline (the hull of a pointed ball) is written once, in the definitions, and used wherever the silhouette is.
   const long = sil.d.length > 400;
   const outline = long ? `<path id="${id}s" d="${sil.d}"/>` : "";

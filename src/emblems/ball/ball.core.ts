@@ -25,6 +25,8 @@ export interface PieceOptions {
   locale?: "en" | "ja";
   /** A string is the `<title>` (escaped); `false` drops it and marks the drawing `aria-hidden="true"`. */
   title?: string | false;
+  /** A ball with panels in several colours (the national volleyballs): the colours of its panels, three of them, each a hex colour or `rgb()` (any that is not is dropped; one or two are repeated to make three). Anything else ignores it. */
+  colors?: readonly string[];
   /** A puck: the print on its top face (see `PuckFace`). The printed pucks (`puck:*`) take it, and so does `ball:puck` through `renderEmblem`, `emblemFrame` and `ballFrame`. Anything else ignores it. */
   face?: PuckFace;
   /** A puck: a renderer for the flag codes this package does not draw (`face.flag`), `(code, { shape, size, theme }) => svg`, the one taisen-brackets takes. Synchronous. */
@@ -135,6 +137,8 @@ export interface ResolvedOptions {
   theme: PieceTheme;
   tint: string | undefined;
   accent: string | undefined;
+  /** Three colours for the panels, or undefined. */
+  colors: readonly [string, string, string] | undefined;
   grain: boolean | undefined;
   face: PuckFace | undefined;
   flags: FlagRenderer | undefined;
@@ -152,12 +156,22 @@ function faceKeyOf(face: unknown): string {
   }
 }
 
+/** Up to three colours from a list, any that is not a colour dropped and the rest repeated to make three; undefined when none is one. */
+function coloursOf(list: unknown): readonly [string, string, string] | undefined {
+  if (!Array.isArray(list)) return undefined;
+  const ok = list.slice(0, 3).flatMap((c) => {
+    const rgb = typeof c === "string" ? readColour(c) : undefined;
+    return rgb === undefined ? [] : [hexOf(rgb)];
+  });
+  return ok.length === 0 ? undefined : [ok[0], ok[1 % ok.length], ok[2 % ok.length]];
+}
+
 export function resolveOptions(o: PieceOptions | undefined): ResolvedOptions {
   const size = typeof o?.size === "number" && Number.isFinite(o.size) && o.size > 0 ? Math.min(Math.round(o.size * 100) / 100, 4096) : 64;
   const theme = o?.theme === "auto" || o?.theme === "light" || o?.theme === "dark" ? o.theme : "inherit";
   const tint = readColour(o?.tint);
   const accent = readColour(o?.accent);
-  return { style: o?.style === "line" ? "line" : "colour", size, theme, tint: tint === undefined ? undefined : hexOf(tint), accent: accent === undefined ? undefined : hexOf(accent), grain: typeof o?.grain === "boolean" ? o.grain : undefined, face: typeof o?.face === "object" && o.face !== null ? o.face : undefined, flags: typeof o?.flags === "function" ? o.flags : undefined, faceKey: faceKeyOf(o?.face) + (typeof o?.flags === "function" ? `|fn:${o.flags.name}` : "") };
+  return { style: o?.style === "line" ? "line" : "colour", size, theme, tint: tint === undefined ? undefined : hexOf(tint), accent: accent === undefined ? undefined : hexOf(accent), colors: coloursOf(o?.colors), grain: typeof o?.grain === "boolean" ? o.grain : undefined, face: typeof o?.face === "object" && o.face !== null ? o.face : undefined, flags: typeof o?.flags === "function" ? o.flags : undefined, faceKey: faceKeyOf(o?.face) + (typeof o?.flags === "function" ? `|fn:${o.flags.name}` : "") };
 }
 
 /** The ink of a drawing when a theme sets it, and the page it is made to read on. */

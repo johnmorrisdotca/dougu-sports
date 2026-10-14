@@ -63,6 +63,8 @@ export interface EmblemOptions {
    * (made safe first), `emblem` a dougu id, `flag` a country code (`ca` and `us` are drawn here; another needs the `flags` option, a renderer like hata's). See `PuckFace`. Anything that is not a puck ignores it.
    */
   face?: PuckFace;
+  /** A ball with panels in several colours (the national volleyballs, `ball:volleyball-flag` and the rest): three colours for its panels, each a hex colour or `rgb()`; one that is not a colour is dropped, and fewer than three are repeated. Anything else ignores it. */
+  colors?: readonly string[];
   /** A puck: a renderer for the flag codes this package does not draw (`face.flag`): `(code, { shape: "round" | "square" | "rect", size, theme }) => svg`, synchronous, the same as taisen-brackets takes (hata's `flag()` is asynchronous, so load the flags first). */
   flags?: FlagRenderer;
 }

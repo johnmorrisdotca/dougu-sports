@@ -16,7 +16,7 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 <p align="center">
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-dark.webp">
-<img alt="Thirty-six balls and pucks drawn in 3D, in four rows of nine: soccer balls of several constructions and colours, then basketball, the 3x3 ball, baseball, softball, a football, a rugby ball, an Australian football and two volleyballs, then tennis, padel, pickleball with its holes, squash with its two dots, racquetball, golf, red and pink cricket and water polo, then sepak takraw, a shuttlecock, a puck, a curling stone, lacrosse, handball, table tennis, a sliotar and a roundnet ball." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-light.webp" width="760">
+<img alt="Forty-five balls and pucks drawn in 3D, in five rows of nine: soccer balls of several constructions and colours, then basketball, the 3x3 ball, baseball, softball, a football, a rugby ball, an Australian football and two volleyballs, then tennis, padel, pickleball with its holes, squash with its two dots, racquetball, golf, red and pink cricket and water polo, then sepak takraw, a shuttlecock, a puck, a curling stone, lacrosse, handball, table tennis, a sliotar and a roundnet ball, and last a row of vintage leather balls (hand-stitched, laced, 18 strips, 12 panels, 32 panels), a lemon-peel baseball and an aged baseball, and soccer balls in the style of the late 1970s and the early 2020s." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-light.webp" width="760">
 </picture>
 </p>
 
@@ -45,7 +45,7 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 </tr>
 </table>
 
-> **Status: preview.** 194 emblems: 24 trophies, 5 awards, 6 medals, 4 crests, a pictogram for each of the 38 sports, 66 balls and implements drawn in 3D, 8 printed pucks ([docs/pucks.md](./docs/pucks.md)), 42 pieces of gear (among them the Japanese sports and budo, [docs/japanese-sports.md](./docs/japanese-sports.md)) and a championship pennant; [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
+> **Status: preview.** 244 emblems: 24 trophies, 5 awards, 6 medals, 4 crests, a pictogram for each of the 38 sports, 116 balls and implements drawn in 3D, 8 printed pucks ([docs/pucks.md](./docs/pucks.md)), 42 pieces of gear (among them the Japanese sports and budo, [docs/japanese-sports.md](./docs/japanese-sports.md)) and a championship pennant; [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
 
 ## In 30 seconds
 
@@ -73,7 +73,7 @@ Put the string in a page (`element.innerHTML = svg`), write it to a file, or sen
 
 ## Features
 
-- **Equipment first (道具 is the word for it)**: 66 balls and implements drawn in 3D, from the 32-panel soccer ball to the 26, 18, 14, 12 and 6 panel constructions, futsal, beach soccer and the pucks and stones, each with its official size, 8 printed pucks (a flag, a leaf, stars and stripes, a player's number, a made-up signature, your own picture: [docs/pucks.md](./docs/pucks.md)), and 42 pieces of gear (sticks, rackets, helmets, skates, nets, and the Japanese budo kit) drawn to match; see [docs/gallery.md](./docs/gallery.md).
+- **Equipment first (道具 is the word for it)**: 116 balls and implements drawn in 3D, from the 32-panel soccer ball to the 26, 18, 14, 12 and 6 panel constructions, vintage leather balls, era-style and shop-wall soccer balls, baseballs of other threads, volleyballs in national colours ([docs/vintage-balls.md](./docs/vintage-balls.md)), futsal, beach soccer and the pucks and stones, each with its official size, 8 printed pucks (a flag, a leaf, stars and stripes, a player's number, a made-up signature, your own picture: [docs/pucks.md](./docs/pucks.md)), and 42 pieces of gear (sticks, rackets, helmets, skates, nets, and the Japanese budo kit) drawn to match; see [docs/gallery.md](./docs/gallery.md).
 - **Three styles** for every emblem: `metal` (polished metal: a gradient, a highlight and a soft rim of reflected light, edged in a darker tone of its own metal, with no heavy outline), `line` (one clean outline in the page's text colour, made to read at 14 pixels) and `color` (flat fills); see [Theming](#theming).
 - **Size, tint, accent and theme** as options: a tint recolours the main part (a medal's metal, a crest's colour, a ball's patches), an accent the second colour (a ribbon, a crest's band, the pennants), a theme sets the ink for light, dark or either.
 - **Turning**: `emblemFrame` and `ballFrame` return the emblem at an angle, in plain SVG: every emblem turns, a ball rolls, a cup keeps its outline and moves its light, and everything flat (gear, a bat, a crown, a sport's icon) flips like a coin; `bindTurn` lets a drag, the arrow keys or an auto-turn do the turning in a page; see [docs/turning.md](./docs/turning.md).
@@ -407,7 +407,7 @@ An emblem is a small object: `id`, `en` and `ja` names, a `source` (who drew it)
 | `trophy` | Twenty-four trophies: ten that stand for a league's cup in a generic form (a tall banded cup, a ring of pennants round a baseball, a football on a stand, a ball over a net, a wide two-handled bowl, a globe held up by spiral figures, a gilt dish, a lidded cup with a pineapple, an urn, a gilded cup), plain cups, bowls and dishes, a plaque, a belt, a wreath, a rosette, a championship ring, a rafter banner, a phoenix-handled sumo cup and a championship banner | `src/emblems/trophy/` |
 | `medal` | Gold, silver and bronze medals on a ribbon of five stripes, and a badge for each of the first three places | `src/emblems/medal/` |
 | `crest` | Four generic crests, tinted by a team's colours, with its letters | `src/emblems/crest/` |
-| `ball` | 66 balls and implements, in 3D, each with its official size: soccer (in 32, 26, 18, 14, 12 and 6 panels, in three colourways, with futsal and beach soccer; [docs/soccer-balls.md](./docs/soccer-balls.md)), basketball, baseball, tennis, rugby, the footballs, golf, the puck, the curling stone and the rest | `src/emblems/ball/` |
+| `ball` | 116 balls and implements, in 3D, each with its official size: soccer (in 32, 26, 18, 14, 12 and 6 panels, in three colourways, with futsal and beach soccer; [docs/soccer-balls.md](./docs/soccer-balls.md); and vintage leather, era-style and patterned balls, [docs/vintage-balls.md](./docs/vintage-balls.md)), basketball, baseball, tennis, rugby, the footballs, golf, the puck, the curling stone and the rest | `src/emblems/ball/` |
 | `puck` | 8 printed pucks: the same puck with a print on its top face that turns with it (a flag and CANADA, a red leaf, stars and stripes, a player's name and number, a made-up signature, a souvenir), and a `face` option for any picture, emblem or flag code; [docs/pucks.md](./docs/pucks.md) | `src/emblems/ball/ball.puck.print.ts` |
 | `gear` | 42 pieces of equipment: sticks, rackets, skates, a glove, a helmet, nets and posts, a javelin, starting blocks, and for the Japanese sports a war fan, a sumo belt, a bamboo sword, a kendo helmet, a judo suit, a belt, a long bow, an arrow and a karate suit | `src/emblems/gear/` |
 | `sport` | One pictogram for each of the thirty-eight sports | `src/emblems/sport/` |
@@ -459,6 +459,7 @@ The thirty-eight sports the ball, gear and sport emblems are made for are `SPORT
 | `size` | A number of pixels, 4096 at most | `64` |
 | `tint` | `#rgb`, `#rrggbb` or `rgb(r, g, b)` | the emblem's own colour |
 | `accent` | `#rgb`, `#rrggbb` or `rgb(r, g, b)` | the emblem's second colour (a ribbon, a band, pennants) |
+| `colors` | Three colours, each `#rgb`, `#rrggbb` or `rgb(r, g, b)` (a volleyball in national colours: [docs/vintage-balls.md](./docs/vintage-balls.md#volleyballs-in-national-colours-11)); fewer are repeated, and what is not a colour is dropped | the ball's own three |
 | `initials` | Up to three letters (a crest, or the championship banner) | none: the crest has a star, the banner a ring and a star |
 | `theme` | `"inherit"`, `"auto"`, `"light"`, `"dark"` | `"inherit"` |
 | `grain` | `true` or `false` (a ball only) | on for a ball of 48 pixels or more that is not turning |
@@ -593,7 +594,7 @@ Bug reports and ideas go in the [issues](https://github.com/johnmorrisdotca/doug
 
 ## Changes
 
-See [CHANGELOG.md](./CHANGELOG.md). 0.4.0 adds eight printed pucks and a `face` option (194 emblems: [docs/pucks.md](./docs/pucks.md)); 0.3.0 adds nineteen soccer balls (26, 18, 14, 12 and 6 panels, winter orange and high-visibility yellow, futsal and beach soccer: 186 emblems); 0.2.1 draws every ball and implement to the rulebook's proportions; 0.2.0 is 167 emblems, every one drawn here, with the Japanese sports, engraving, a turn for every emblem and the compose helpers; 0.1.0 brought the first full set of 148; 0.0.1 was the first preview.
+See [CHANGELOG.md](./CHANGELOG.md). 0.5.0 adds fifty balls: vintage leather soccer balls, era-style and shop-wall soccer balls, baseballs of other threads and volleyballs in national colours, with a `colors` option (244 emblems: [docs/vintage-balls.md](./docs/vintage-balls.md)); 0.4.0 adds eight printed pucks and a `face` option (194 emblems: [docs/pucks.md](./docs/pucks.md)); 0.3.0 adds nineteen soccer balls (26, 18, 14, 12 and 6 panels, winter orange and high-visibility yellow, futsal and beach soccer: 186 emblems); 0.2.1 draws every ball and implement to the rulebook's proportions; 0.2.0 is 167 emblems, every one drawn here, with the Japanese sports, engraving, a turn for every emblem and the compose helpers; 0.1.0 brought the first full set of 148; 0.0.1 was the first preview.
 
 ## Credits
 

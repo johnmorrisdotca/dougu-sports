@@ -233,3 +233,94 @@ export function gores(count = 6, twist = 150, tilt: readonly [number, number, nu
   }
   return { panels, centres, seams, pieces };
 }
+
+/** The point of a gore: gore `i` of `count`, `u` of the way across it (0 on its left seam, 1 on its right) and `s` from the south pole (-1) to the north (1), turned by `tilt` like `gores`. */
+export function gorePoint(count = 6, twist = 150, tilt: readonly [number, number, number] = [0, 0, 0]): (i: number, u: number, s: number) => V3 {
+  const m = rotation((tilt[0] * Math.PI) / 180, (tilt[1] * Math.PI) / 180, (tilt[2] * Math.PI) / 180);
+  return (i, u, s) => apply(m, lonLat((2 * Math.PI * (i + u)) / count + ((twist * Math.PI) / 180) * (s / 2), (s * Math.PI) / 2));
+}
+
+/** Colours the centres with `k` colours so that no two neighbours (centres at angle `gap` or less apart) share one, by search; the result is the colour of each. */
+export function colourCentres(centres: readonly V3[], gap: number, k = 4): number[] {
+  const colour: number[] = centres.map(() => -1);
+  const next = (i: number, j: number): boolean => dot(centres[i], centres[j]) > Math.cos(gap) - 1e-6 && i !== j;
+  const paint = (i: number): boolean => {
+    if (i === centres.length) return true;
+    for (let c = 0; c < k; c++) {
+      if (centres.every((_, j) => j >= i || !next(i, j) || colour[j] !== c)) {
+        colour[i] = c;
+        if (paint(i + 1)) return true;
+      }
+    }
+    colour[i] = -1;
+    return false;
+  };
+  paint(0);
+  return colour;
+}
+
+type Icosahedron = Tiling & { colour: number[] };
+let icosa: Icosahedron | undefined;
+
+/**
+ * The 20-panel layout: an icosahedron. Its 12 vertices are the cyclic permutations of (0, +-1, +-phi); its 20 triangles are about the directions of a dodecahedron's vertices. `colour` is a
+ * four-colouring of the triangles (no two that share an edge match), found by search.
+ */
+export function icosahedron(): Icosahedron {
+  if (icosa !== undefined) return icosa;
+  const verts: V3[] = [];
+  for (const a of signs) for (const b of signs) verts.push(norm([0, a, b * PHI]), norm([a, b * PHI, 0]), norm([b * PHI, 0, a]));
+  const near = (a: V3, b: V3): boolean => Math.abs(dot(a, b) - 1 / Math.sqrt(5)) < 1e-6;
+  const centres: V3[] = [];
+  for (let i = 0; i < 12; i++) for (let j = i + 1; j < 12; j++) for (let k = j + 1; k < 12; k++) if (near(verts[i], verts[j]) && near(verts[i], verts[k]) && near(verts[j], verts[k])) centres.push(norm(add(add(verts[i], verts[j]), verts[k])));
+  const t = tiling(verts, centres, centres.map(() => 0), 5);
+  // Triangles that share an edge have centres at the angle whose cosine is sqrt 5 / 3.
+  icosa = { ...t, colour: colourCentres(centres, Math.acos(Math.sqrt(5) / 3) + 1e-6, 4) };
+  return icosa;
+}
+
+export interface Octahedron {
+  /** The eight triangular panels, with their edges bent into S curves (dense rings: use one sample per edge). */
+  panels: V3[][];
+  centres: V3[];
+  /** Every one of the 12 edges once, as an S curve from one end to the other. */
+  seams: V3[][];
+  /** 0 or 1, so that no two panels that share an edge match. */
+  parity: number[];
+}
+
+const octas = new Map<number, Octahedron>();
+
+/**
+ * The 8-panel layout: an octahedron whose twelve edges are bent into S curves, a quarter of the way along to one side and three quarters of the way to the other, so the eight triangles are
+ * twisted into curved panels. The curve is the same turned half a turn about the edge's middle, and it is carried to itself by the cube's rotations, so the panels are alike and the layout has a hand.
+ */
+export function octahedron8(lift = 0.16, steps = 14): Octahedron {
+  const hit = octas.get(lift * 1000 + steps);
+  if (hit !== undefined) return hit;
+  const edge = (a: V3, b: V3): V3[] => {
+    const [p, q] = keyOf(a) < keyOf(b) ? [a, b] : [b, a];
+    const pts = Array.from({ length: steps + 1 }, (_, j) => bent(p, q, j / steps, lift, 0.5));
+    return keyOf(a) < keyOf(b) ? pts : pts.reverse();
+  };
+  const panels: V3[][] = [];
+  const centres: V3[] = [];
+  const parity: number[] = [];
+  const seams: V3[][] = [];
+  const seen = new Set<string>();
+  for (const sx of signs) for (const sy of signs) for (const sz of signs) {
+    const a: V3 = [sx, 0, 0], b: V3 = [0, sy, 0], c: V3 = [0, 0, sz];
+    panels.push([...edge(a, b).slice(0, -1), ...edge(b, c).slice(0, -1), ...edge(c, a).slice(0, -1)]);
+    centres.push(norm([sx, sy, sz]));
+    parity.push(sx * sy * sz > 0 ? 0 : 1);
+    for (const [p, q] of [[a, b], [b, c], [c, a]] as const) {
+      const key = [keyOf(p), keyOf(q)].sort().join("|");
+      if (seen.has(key)) continue;
+      seen.add(key);
+      seams.push(edge(p, q));
+    }
+  }
+  const result: Octahedron = { panels, centres, seams, parity };
+  octas.set(lift * 1000 + steps, result);
+  return result;
+}

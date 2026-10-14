@@ -14,7 +14,7 @@ const sized = [...BALLS, ...PUCKS].filter((b) => b.size !== undefined);
 describe("the proportions of the balls and implements", () => {
   it("measures every ball and implement", () => {
     expect(sized.length).toBe(BALLS.length + PUCKS.length);
-    expect(BALLS.length).toBeGreaterThan(65);
+    expect(BALLS.length).toBeGreaterThan(115);
   });
 
   for (const piece of sized) {
@@ -36,16 +36,17 @@ describe("the proportions of the balls and implements", () => {
     });
   }
 
-  it("draws the new soccer balls as spheres of their rules' sizes: the 11-a-side constructions and colourways at 68 to 70 cm, futsal at 62 to 64 cm (size 4), beach soccer at 68 to 70 cm", () => {
+  it("draws the soccer balls as spheres of their rules' sizes: the 11-a-side constructions, colourways, era styles and patterns at 68 to 70 cm, the vintage ones at the 27 to 28 inches of the 1872 Laws, futsal at 62 to 64 cm (size 4), beach soccer at 68 to 70 cm", () => {
     const soccer = BALLS.filter((b) => /^ball:(soccer|futsal|beach-soccer)/.test(b.id));
-    expect(soccer.length).toBe(21);
+    expect(soccer.length).toBe(55);
     for (const b of soccer) {
       const m = measure(b);
       const circumference = b.size!.circumferenceMm!;
       // A sphere: as high as it is wide, and its width is the circumference over pi.
       expect(within(m.heightMm / m.widthMm, 1), `${b.id} is round`).toBe(true);
       expect(within(m.widthMm, circumference / Math.PI), `${b.id} width ${m.widthMm.toFixed(1)} mm`).toBe(true);
-      const [low, high] = b.id === "ball:futsal" ? [620, 640] : [680, 700];
+      const vintage = /^ball:soccer-(1870|1900|1930|1950)-/.test(b.id);
+      const [low, high] = b.id === "ball:futsal" ? [620, 640] : vintage ? [685, 712] : [680, 700];
       expect(circumference >= low && circumference <= high, b.id).toBe(true);
     }
     // Futsal is the smaller ball: the width in the true-scale lineup is its millimetres.

@@ -69,9 +69,9 @@ console.log(shield.includes(">HC<"), gold.includes("<title>Gold medal</title>"),
 
 ## Balls and gear
 
-`ball:*` (66 balls and implements), `puck:*` (8 printed pucks, [pucks.md](pucks.md)) and `gear:*` (42 pieces of equipment) come from their own engines, described in [src/emblems/README.md](../src/emblems/README.md): a ball is drawn in true 3D (a rotation, a projection, panels cut at the limb, shading and a grain that stays where it is while the ball turns), and carries the official size of the rulebook it is from, which `lineup` draws at (a puck beside a basketball looks right). Gear is a flat drawing in layers, all of it drawn here: in `metal` each part is edged in a darker tone of itself and shaded across and along, in `color` the fills are flat, and in `line` it is one outline in the page's ink. A piece of gear flips like a coin when it is turned. A prolate ball (a football, a rugby ball) is drawn to a point at its ends.
+`ball:*` (116 balls and implements), `puck:*` (8 printed pucks, [pucks.md](pucks.md)) and `gear:*` (42 pieces of equipment) come from their own engines, described in [src/emblems/README.md](../src/emblems/README.md): a ball is drawn in true 3D (a rotation, a projection, panels cut at the limb, shading and a grain that stays where it is while the ball turns), and carries the official size of the rulebook it is from, which `lineup` draws at (a puck beside a basketball looks right). Gear is a flat drawing in layers, all of it drawn here: in `metal` each part is edged in a darker tone of itself and shaded across and along, in `color` the fills are flat, and in `line` it is one outline in the page's ink. A piece of gear flips like a coin when it is turned. A prolate ball (a football, a rugby ball) is drawn to a point at its ends.
 
-![The 66 balls and implements, in colour at three sizes and as line drawings, on a light page.](pieces/balls-light.webp)
+![The 116 balls and implements, in colour at three sizes and as line drawings, on a light page.](pieces/balls-light.webp)
 
 ![The 42 pieces of gear, in colour at three sizes and as line drawings, on a light page.](pieces/gear-light.webp)
 

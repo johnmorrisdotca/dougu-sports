@@ -2,7 +2,7 @@
 
 [README に戻る](../README.md) · 日本語 · [English](gallery.md)
 
-パッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 194 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから `scripts/make-gallery.mjs` が生成します（`pnpm gallery`）。
+パッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 244 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから `scripts/make-gallery.mjs` が生成します（`pnpm gallery`）。
 
 id は `<グループ>:<名前>` の形です。定数とインポートパスは id から決まるので、行ごとには書いていません。
 
@@ -98,18 +98,68 @@ id は `<グループ>:<名前>` の形です。定数とインポートパス�
 | `ball:soccer-6-yellow` | 6枚貼り・蛍光イエロー | ball | generated | 熱接着の6枚貼りサッカーボール。暗がりでも見やすい蛍光イエローで、暗い色のパネルが入る |
 | `ball:futsal` | フットサルボール | ball | generated | フットサル用の4号球。円周62〜64cm、重さ400〜440g、弾みにくい。32枚貼りで、明るい青と白の配色。12枚の五角形それぞれに、小さな黄色の五角形が入る |
 | `ball:beach-soccer` | ビーチサッカーボール | ball | generated | ビーチサッカー用の5号球。円周68〜70cm、重さ400〜440g、空気圧が低くやわらかい。14枚貼りのプロペラ形で、黄色、オレンジ、青の明るい配色 |
+| `ball:soccer-1870-hand-stitched` | 手縫いのサッカーボール | ball | generated | 1800年代後半の手縫いボール。使い込んだ薄茶色の革の細長いパネル8枚を、糸の十字がはっきり見える縫い目でつなぎ、両端のパネルが集まるところにボタンが付く |
+| `ball:soccer-1900-laced` | 紐つきのサッカーボール | ball | generated | 1900年代の紐つきボール。茶色い革のパネル8枚、両端の丸いキャップ、内袋（ブラダー）を入れたあとに十字に紐を掛けて閉じる切れ目 |
+| `ball:soccer-1930-18-panel` | 18枚貼りの革ボール | ball | generated | 1930年代の18枚貼り。栗色と薄茶色の革の帯状パネル18枚（3枚ずつ6組）を使い、継ぎ目を縫い合わせたもの |
+| `ball:soccer-1950-12-panel` | 12枚貼りの革ボール | ball | generated | 1950年代の12枚貼り。栗色の革の五角形12枚を4種類の色合いにして、隣り合うパネルが同じ色合いにならないようにし、継ぎ目を縫い合わせたもの |
+| `ball:soccer-1960-32-panel-leather` | 32枚貼りの革ボール | ball | generated | 1960年代の32枚貼りの革ボール。五角形12枚と六角形20枚を使い、薄茶色の六角形に栗色の五角形を配して、継ぎ目を縫い合わせたもの |
+| `ball:soccer-1970-black-white` | 70年代風・白黒 | ball | generated | 1970年代前半の試合球風。32枚貼りで、白い輪のある黒い五角形と、中央に淡いくぼみと点のある白い六角形 |
+| `ball:soccer-1978-triad` | 70年代後期風・三つ巴 | ball | generated | 1970年代後半の試合球風。32枚貼りで、六角形ごとに太い曲線の三角形を3枚、風車のように配し、その先端が五角形のまわりに集まる |
+| `ball:soccer-1986-decorated-triad` | 80年代風・飾り三つ巴 | ball | generated | 1980年代の試合球風。素焼きのような赤の三つ巴で、羽根ごとに白い珠の列を飾り、五角形は金の輪をあしらった暗い色にしたもの |
+| `ball:soccer-1998-coloured-triad` | 90年代風・色つき三つ巴 | ball | generated | 1990年代の試合球風。白い六角形に青、赤、金の三つ巴を配し、五角形は深い紺色にしたもの |
+| `ball:soccer-2002-triangle-sweep` | 00年代風・三角の流れ | ball | generated | 2000年代前半の試合球風。六角形ごとに細長い三角形が黒鉛色で流れるように並び、金色の小さな三角形が添えられ、五角形は炭色 |
+| `ball:soccer-2006-propeller` | 14枚貼り・プロペラ形 | ball | generated | 2000年代半ばの試合球風。14枚貼り（プロペラ形6枚、三角形8枚）で、各プロペラの内側に細い金の線、暗い色の三角形に金の印が入る |
+| `ball:soccer-2010-grooved` | 8枚貼り・溝つき | ball | generated | 2010年代前半の試合球風。8枚貼り（辺をS字に曲げた正八面体）で、継ぎ目は溝、各パネルには細い等高線のような線が入る |
+| `ball:soccer-2014-ribbon` | 6枚貼り・リボン柄 | ball | generated | 2010年代半ばの試合球風。ねじれた6枚貼りの白いボールに、ティール、オレンジ、紫の幅広いリボンが交差する |
+| `ball:soccer-2018-pixel` | ピクセル柄 | ball | generated | 2010年代後半の試合球風。6枚貼りで、黒鉛色、灰色、赤、金の四角いピクセルが一方に密集し、反対側へまばらになっていく |
+| `ball:soccer-2022-speed-shell` | 20枚貼り・貝殻柄 | ball | generated | 2020年代前半の試合球風。20枚貼り（正二十面体）で、えんじ、クリーム、金の三角形のパネルそれぞれに、貝殻のように重なる輪郭線が入る |
+| `ball:soccer-training-high-vis` | 蛍光トレーニングボール | ball | generated | 現代の高視認性トレーニングボール。蛍光の黄緑色の32枚貼りで、黒い輪をあしらった濃いピンクの五角形と、六角形ごとに3本の黒い速度線が入る |
+| `ball:soccer-stars-blue` | 星柄・青 | ball | generated | 店頭によくある柄：すべてのパネルに角が5つの星。配色は青 |
+| `ball:soccer-stars-red` | 星柄・赤 | ball | generated | 店頭によくある柄：すべてのパネルに角が5つの星。配色は赤 |
+| `ball:soccer-stars-night` | 星柄・夜空 | ball | generated | 店頭によくある柄：すべてのパネルに角が5つの星。配色は夜空の紺に金 |
+| `ball:soccer-hexagons-cyan` | 六角形柄・シアン | ball | generated | 店頭によくある柄：六角形の中に二重の輪郭線を入れた蜂の巣のような柄と、塗りつぶした五角形。配色はシアン |
+| `ball:soccer-hexagons-magenta` | 六角形柄・マゼンタ | ball | generated | 店頭によくある柄：六角形の中に二重の輪郭線を入れた蜂の巣のような柄と、塗りつぶした五角形。配色はマゼンタ |
+| `ball:soccer-hexagons-lime` | 六角形柄・ライム | ball | generated | 店頭によくある柄：六角形の中に二重の輪郭線を入れた蜂の巣のような柄と、塗りつぶした五角形。配色はライム |
+| `ball:soccer-flames-fire` | 炎柄・ファイア | ball | generated | 店頭によくある柄：暗い色の五角形から外へ伸びる5本の炎。外側の炎と、明るい内側の炎の二重。配色はファイア：黒地にオレンジと黄色 |
+| `ball:soccer-flames-ice` | 炎柄・アイス | ball | generated | 店頭によくある柄：暗い色の五角形から外へ伸びる5本の炎。外側の炎と、明るい内側の炎の二重。配色はアイス：紺地に青と水色 |
+| `ball:soccer-flames-toxic` | 炎柄・トキシック | ball | generated | 店頭によくある柄：暗い色の五角形から外へ伸びる5本の炎。外側の炎と、明るい内側の炎の二重。配色はトキシック：濃い紫地に緑と黄色 |
+| `ball:soccer-chevrons-red` | シェブロン柄・赤 | ball | generated | 店頭によくある柄：極から極へ伸びる8枚のパネルを1枚おきに色づけし、3本のV字の帯を重ねて、ボールを一周するジグザグにしたもの。配色は赤と黒 |
+| `ball:soccer-chevrons-green` | シェブロン柄・緑 | ball | generated | 店頭によくある柄：極から極へ伸びる8枚のパネルを1枚おきに色づけし、3本のV字の帯を重ねて、ボールを一周するジグザグにしたもの。配色は緑と黄色 |
+| `ball:soccer-chevrons-blue` | シェブロン柄・青 | ball | generated | 店頭によくある柄：極から極へ伸びる8枚のパネルを1枚おきに色づけし、3本のV字の帯を重ねて、ボールを一周するジグザグにしたもの。配色は青とオレンジ |
+| `ball:soccer-swirl-blue` | 渦巻き柄・青 | ball | generated | 店頭によくある柄：ボールを巻くようにねじれた4枚のパネルを、2枚ずつ2色に塗り分けたもの。配色は青と白 |
+| `ball:soccer-swirl-red` | 渦巻き柄・赤 | ball | generated | 店頭によくある柄：ボールを巻くようにねじれた4枚のパネルを、2枚ずつ2色に塗り分けたもの。配色は赤と黒 |
+| `ball:soccer-swirl-teal` | 渦巻き柄・ティール | ball | generated | 店頭によくある柄：ボールを巻くようにねじれた4枚のパネルを、2枚ずつ2色に塗り分けたもの。配色はオレンジとティール |
+| `ball:soccer-metallic-gold` | メタリック・金 | ball | generated | 店頭によくある柄：空と地面を映す磨いた金属の質感の32枚貼り。六角形は明るい金属、五角形は暗い金属。配色は金 |
+| `ball:soccer-metallic-silver` | メタリック・銀 | ball | generated | 店頭によくある柄：空と地面を映す磨いた金属の質感の32枚貼り。六角形は明るい金属、五角形は暗い金属。配色は銀 |
+| `ball:soccer-metallic-cobalt` | メタリック・コバルト | ball | generated | 店頭によくある柄：空と地面を映す磨いた金属の質感の32枚貼り。六角形は明るい金属、五角形は暗い金属。配色はコバルトブルー |
 | `ball:teqball` | テックボール用ボール | ball | generated |  |
 | `ball:basketball` | バスケットボール | ball | generated |  |
 | `ball:basketball-6` | バスケットボール6号球 | ball | generated | バスケットボール（6号球） |
 | `ball:basketball-3x3` | 3x3バスケットボール | ball | generated |  |
 | `ball:baseball` | 野球のボール | ball | generated |  |
 | `ball:softball` | ソフトボール | ball | generated |  |
+| `ball:baseball-lemon-peel` | レモンピール型野球ボール | ball | generated | 1850〜60年代の初期のレモンピール型ボール。4枚の革と、2点で交わる4本の縫い目でできており、古びた革に濃い色の糸 |
+| `ball:baseball-red-blue` | 赤青の縫い糸の野球ボール | ball | generated | 8の字の縫い目を赤と青の糸で交互に縫ったもの。1930年代の選手の回想にあるアメリカンリーグのボールの縫い糸 |
+| `ball:baseball-black-red` | 黒赤の縫い糸の野球ボール | ball | generated | 8の字の縫い目を黒と赤の糸で交互に縫ったもの。1930年代の選手の回想にあるナショナルリーグのボールの縫い糸 |
+| `ball:baseball-vintage-leather` | 古びた革の野球ボール | ball | generated | 茶色く変色して傷のついた古い革に、色あせた赤い糸で8の字に縫ったボール |
+| `ball:softball-11-optic` | 11インチ蛍光ソフト | ball | generated | 11インチの蛍光イエローのソフトボール。赤い縫い目、円周27.9cm、重さ166.5〜173.6g（WBSCスローピッチ規則） |
 | `ball:tennis` | テニスボール | ball | generated |  |
 | `ball:padel` | パデルボール | ball | generated |  |
 | `ball:sliotar` | シリター | ball | generated |  |
 | `ball:volleyball` | バレーボール | ball | generated |  |
 | `ball:volleyball-8` | バレーボール（8枚貼り） | ball | generated |  |
 | `ball:beach-volleyball` | ビーチバレーボール | ball | generated |  |
+| `ball:volleyball-colours` | 三色のバレーボール | ball | generated | 3色を自由に指定できる（colors オプション）18枚貼りの室内用バレーボール。初期設定は黄、青、白 |
+| `ball:volleyball-brazil` | バレー（ブラジル） | ball | generated | 国旗の色を取り入れた18枚貼りの室内用バレーボール：緑、黄、青。色だけで、旗や紋章は描かない |
+| `ball:volleyball-japan` | バレー（日本） | ball | generated | 国旗の色を取り入れた18枚貼りの室内用バレーボール：白、赤、濃い赤。色だけで、旗や紋章は描かない |
+| `ball:volleyball-canada` | バレー（カナダ） | ball | generated | 国旗の色を取り入れた18枚貼りの室内用バレーボール：赤、白、濃い赤。色だけで、旗や紋章は描かない |
+| `ball:volleyball-usa` | バレー（アメリカ） | ball | generated | 国旗の色を取り入れた18枚貼りの室内用バレーボール：赤、白、青。色だけで、旗や紋章は描かない |
+| `ball:volleyball-italy` | バレー（イタリア） | ball | generated | 国旗の色を取り入れた18枚貼りの室内用バレーボール：緑、白、赤。色だけで、旗や紋章は描かない |
+| `ball:volleyball-poland` | バレー（ポーランド） | ball | generated | 国旗の色を取り入れた18枚貼りの室内用バレーボール：白、赤、濃い赤。色だけで、旗や紋章は描かない |
+| `ball:volleyball-france` | バレー（フランス） | ball | generated | 国旗の色を取り入れた18枚貼りの室内用バレーボール：青、白、赤。色だけで、旗や紋章は描かない |
+| `ball:volleyball-serbia` | バレー（セルビア） | ball | generated | 国旗の色を取り入れた18枚貼りの室内用バレーボール：赤、青、白。色だけで、旗や紋章は描かない |
+| `ball:volleyball-netherlands` | バレー（オランダ） | ball | generated | 国旗の色を取り入れた18枚貼りの室内用バレーボール：赤、白、青。色だけで、旗や紋章は描かない |
+| `ball:volleyball-germany` | バレー（ドイツ） | ball | generated | 国旗の色を取り入れた18枚貼りの室内用バレーボール：黒、赤、金。色だけで、旗や紋章は描かない |
 | `ball:cricket-red` | クリケットボール（赤） | ball | generated |  |
 | `ball:cricket-white` | クリケットボール（白） | ball | generated |  |
 | `ball:cricket-pink` | ピンクのクリケット球 | ball | generated | クリケットボール（ピンク） |

@@ -21,10 +21,10 @@ const COLOR_LIMIT = 3200;
 const BIG_LIMIT = { metal: 14000, line: 13000, color: 14000 } as const;
 const isPiece = (id: D.EmblemId): boolean => D.emblemInfo(id).kind === "ball" || D.emblemInfo(id).kind === "gear";
 
-test("the ids number 194 in their groups, with no id twice, and the groups hold what they say", () => {
+test("the ids number 244 in their groups, with no id twice, and the groups hold what they say", () => {
   assert.equal(new Set(D.EMBLEM_IDS).size, D.EMBLEM_IDS.length);
-  assert.equal(D.EMBLEM_IDS.length, 194);
-  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 5, trophy: 24, medal: 6, crest: 4, ball: 66, puck: 8, gear: 42, sport: 38, pennant: 1 });
+  assert.equal(D.EMBLEM_IDS.length, 244);
+  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 5, trophy: 24, medal: 6, crest: 4, ball: 116, puck: 8, gear: 42, sport: 38, pennant: 1 });
 });
 
 test("no id, title or name is a real trophy, mark or competition", () => {

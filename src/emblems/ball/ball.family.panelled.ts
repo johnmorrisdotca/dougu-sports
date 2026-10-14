@@ -24,8 +24,8 @@ const onFace = (f: (typeof FACES)[number], p: number, q: number): V3 => {
   return norm(v);
 };
 
-/** The 18 panels of a ball. `colours[i]` is the three strips of face i, or one colour for the middle strip and one for the outer two. */
-export function strips18(s: Surface, colours: ReadonlyArray<readonly [string, string]>, seam: string, width = 1.1): string {
+/** The 18 panels of a ball, painted and not outlined. `colours[i]` is the three strips of face i, or one colour for the middle strip and one for the outer two. */
+export function paint18(s: Surface, colours: ReadonlyArray<readonly [string, string]>): string {
   let out = "";
   FACES.forEach((f, fi) => {
     const [outer, middle] = colours[fi % colours.length];
@@ -35,6 +35,11 @@ export function strips18(s: Surface, colours: ReadonlyArray<readonly [string, st
       out += s.panel(ring, i === 1 ? middle : outer, { n: 6, ink: false });
     }
   });
+  return out;
+}
+
+/** The seams of the 18-panel layout, each once: the lines between strips and the twelve edges of the cube. */
+export function seams18(): V3[][] {
   const curves: V3[][] = [];
   for (const f of FACES) for (const q of [-SPLIT, SPLIT]) curves.push(arc(onFace(f, -1, q), onFace(f, 1, q), 10));
   for (const a of [-1, 1]) for (const b of [-1, 1]) {
@@ -42,9 +47,13 @@ export function strips18(s: Surface, colours: ReadonlyArray<readonly [string, st
     curves.push(arc(norm([a, -1, b]), norm([a, 1, b]), 12));
     curves.push(arc(norm([-1, a, b]), norm([1, a, b]), 12));
   }
-  out += s.strokes(curves, seam, width);
-  out += s.strokes(curves, "#fff", width * 0.35, { deco: true, opacity: 0.4, dx: 0.25, dy: 0.3 });
-  return out;
+  return curves;
+}
+
+/** The 18 panels of a ball. `colours[i]` is the three strips of face i, or one colour for the middle strip and one for the outer two. */
+export function strips18(s: Surface, colours: ReadonlyArray<readonly [string, string]>, seam: string, width = 1.1): string {
+  const curves = seams18();
+  return paint18(s, colours) + s.strokes(curves, seam, width) + s.strokes(curves, "#fff", width * 0.35, { deco: true, opacity: 0.4, dx: 0.25, dy: 0.3 });
 }
 
 /** The 8 panels of an octahedral ball: the octants, coloured by `pick(sx, sy, sz)`. */

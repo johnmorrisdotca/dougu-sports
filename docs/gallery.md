@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 194 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 244 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -98,18 +98,68 @@ The folders the art lives in are in [layout.md](layout.md).
 | `ball:soccer-6-yellow` | Soccer 6 panels, yellow | ball | generated | The thermobonded 6-panel soccer ball, in high-visibility yellow, a fluorescent yellow that shows in low light, with dark panels |
 | `ball:futsal` | Futsal ball | ball | generated | Futsal: size 4, 62 to 64 cm round, 400 to 440 g, low bounce; 32 panels, bright blue and white with a small yellow pentagon on each of the twelve |
 | `ball:beach-soccer` | Beach soccer ball | ball | generated | Beach soccer: size 5, 68 to 70 cm round, 400 to 440 g, soft (low pressure); the 14-panel propeller layout in bright yellow, orange and blue |
+| `ball:soccer-1870-hand-stitched` | Soccer ball, hand-stitched | ball | generated | Late 1800s: eight long panels of worn tan leather sewn by hand with a visible cross of thread, and a button where they meet at each end |
+| `ball:soccer-1900-laced` | Soccer ball, laced | ball | generated | 1900s: eight panels of brown leather, a round cap at each end, and a slit shut with a criss-crossed lace once the bladder was in |
+| `ball:soccer-1930-18-panel` | Soccer ball, 18 strips | ball | generated | 1930s: 18 strips of chestnut and tan leather, six panels of three, the seams stitched |
+| `ball:soccer-1950-12-panel` | Soccer ball, 12 panels | ball | generated | 1950s: 12 pentagons of chestnut leather in four tones, so that no two that touch match, the seams stitched |
+| `ball:soccer-1960-32-panel-leather` | Soccer ball, 32 leather | ball | generated | 1960s: the 32 panels (12 pentagons and 20 hexagons) in leather, chestnut pentagons on tan hexagons, stitched along the seams |
+| `ball:soccer-1970-black-white` | Soccer, 1970s black-white | ball | generated | In the style of the early-1970s match balls: 32 panels, black pentagons with a white ring and white hexagons with a pale dished centre and a dot |
+| `ball:soccer-1978-triad` | Soccer, late-1970s triads | ball | generated | In the style of the late-1970s match balls: 32 panels, each hexagon carrying three bold curved triangles in a pinwheel, their points meeting round each pentagon |
+| `ball:soccer-1986-decorated-triad` | Soccer, decorated triads | ball | generated | In the style of the 1980s match balls: the triads in clay red, each blade ornamented with a row of white beads, and dark pentagons ringed in gold |
+| `ball:soccer-1998-coloured-triad` | Soccer, coloured triads | ball | generated | In the style of the 1990s match balls: the triads in blue, red and gold on white hexagons, with deep navy pentagons |
+| `ball:soccer-2002-triangle-sweep` | Soccer, triangle sweep | ball | generated | In the style of the early-2000s match balls: long thin triangles that sweep across each hexagon in graphite, with gold sparks, over charcoal pentagons |
+| `ball:soccer-2006-propeller` | Soccer, 14-panel propeller | ball | generated | In the style of the mid-2000s match balls: 14 panels (6 propellers and 8 triangles), a fine gold line inside each propeller and a gold mark on each dark triangle |
+| `ball:soccer-2010-grooved` | Soccer, 8-panel grooved | ball | generated | In the style of the early-2010s match balls: 8 panels (an octahedron whose edges are bent into S curves) with grooves for seams and fine contour lines across each panel |
+| `ball:soccer-2014-ribbon` | Soccer, 6-panel ribbons | ball | generated | In the style of the mid-2010s match balls: 6 twisted panels in white, crossed by wide ribbons in teal, orange and violet |
+| `ball:soccer-2018-pixel` | Soccer, pixel blocks | ball | generated | In the style of the late-2010s match balls: 6 panels covered with square pixel blocks in graphite, grey, red and gold, thick on one side and thinning out |
+| `ball:soccer-2022-speed-shell` | Soccer, 20-panel shell | ball | generated | In the style of the early-2020s match balls: 20 triangular panels (an icosahedron) in burgundy, cream and gold, each carrying nested outlines like a shell |
+| `ball:soccer-training-high-vis` | Soccer, high-vis training | ball | generated | A modern high-visibility training ball: 32 panels in fluorescent yellow-green with hot pink pentagons ringed in black and three dark speed marks on each hexagon |
+| `ball:soccer-stars-blue` | Soccer, stars, blue | ball | generated | A shop-wall pattern: a five-pointed star on every panel; the blue colourway |
+| `ball:soccer-stars-red` | Soccer, stars, red | ball | generated | A shop-wall pattern: a five-pointed star on every panel; the red colourway |
+| `ball:soccer-stars-night` | Soccer, stars, night | ball | generated | A shop-wall pattern: a five-pointed star on every panel; the gold on night blue colourway |
+| `ball:soccer-hexagons-cyan` | Soccer, hexagons, cyan | ball | generated | A shop-wall pattern: two outlines inside each hexagon, one in the other, like a honeycomb, and solid pentagons; the cyan colourway |
+| `ball:soccer-hexagons-magenta` | Soccer, hexagons, magenta | ball | generated | A shop-wall pattern: two outlines inside each hexagon, one in the other, like a honeycomb, and solid pentagons; the magenta colourway |
+| `ball:soccer-hexagons-lime` | Soccer, hexagons, lime | ball | generated | A shop-wall pattern: two outlines inside each hexagon, one in the other, like a honeycomb, and solid pentagons; the lime colourway |
+| `ball:soccer-flames-fire` | Soccer, flames, fire | ball | generated | A shop-wall pattern: five tongues of flame leaving each dark pentagon, an outer one and a lighter inner one; the fire: orange and yellow on black colourway |
+| `ball:soccer-flames-ice` | Soccer, flames, ice | ball | generated | A shop-wall pattern: five tongues of flame leaving each dark pentagon, an outer one and a lighter inner one; the ice: blue and pale blue on navy colourway |
+| `ball:soccer-flames-toxic` | Soccer, flames, toxic | ball | generated | A shop-wall pattern: five tongues of flame leaving each dark pentagon, an outer one and a lighter inner one; the toxic: green and yellow on deep purple colourway |
+| `ball:soccer-chevrons-red` | Soccer, chevrons, red | ball | generated | A shop-wall pattern: eight gores from pole to pole, every other one coloured, crossed by three V-shaped bands that make a zigzag round the ball; the red and black colourway |
+| `ball:soccer-chevrons-green` | Soccer, chevrons, green | ball | generated | A shop-wall pattern: eight gores from pole to pole, every other one coloured, crossed by three V-shaped bands that make a zigzag round the ball; the green and yellow colourway |
+| `ball:soccer-chevrons-blue` | Soccer, chevrons, blue | ball | generated | A shop-wall pattern: eight gores from pole to pole, every other one coloured, crossed by three V-shaped bands that make a zigzag round the ball; the blue and orange colourway |
+| `ball:soccer-swirl-blue` | Soccer, swirl, blue | ball | generated | A shop-wall pattern: four gores that twist round the ball, two in one colour and two in the other; the blue and white colourway |
+| `ball:soccer-swirl-red` | Soccer, swirl, red | ball | generated | A shop-wall pattern: four gores that twist round the ball, two in one colour and two in the other; the red and black colourway |
+| `ball:soccer-swirl-teal` | Soccer, swirl, teal | ball | generated | A shop-wall pattern: four gores that twist round the ball, two in one colour and two in the other; the orange and teal colourway |
+| `ball:soccer-metallic-gold` | Soccer, metallic, gold | ball | generated | A shop-wall pattern: 32 panels in a polished metallic finish that mirrors the sky and the ground, a light metal on the hexagons and a dark one on the pentagons; the gold colourway |
+| `ball:soccer-metallic-silver` | Soccer, metallic, silver | ball | generated | A shop-wall pattern: 32 panels in a polished metallic finish that mirrors the sky and the ground, a light metal on the hexagons and a dark one on the pentagons; the silver colourway |
+| `ball:soccer-metallic-cobalt` | Soccer, metallic, cobalt | ball | generated | A shop-wall pattern: 32 panels in a polished metallic finish that mirrors the sky and the ground, a light metal on the hexagons and a dark one on the pentagons; the cobalt blue colourway |
 | `ball:teqball` | Teqball ball | ball | generated |  |
 | `ball:basketball` | Basketball | ball | generated |  |
 | `ball:basketball-6` | Basketball, size 6 | ball | generated | Basketball, size 6 |
 | `ball:basketball-3x3` | Basketball, 3x3 | ball | generated |  |
 | `ball:baseball` | Baseball | ball | generated |  |
 | `ball:softball` | Softball | ball | generated |  |
+| `ball:baseball-lemon-peel` | Baseball, lemon-peel | ball | generated | The early lemon-peel ball of the 1850s and 1860s: a cover of four pieces and four lines of stitching that meet at two points, in aged leather with dark thread |
+| `ball:baseball-red-blue` | Baseball, red and blue | ball | generated | The figure-8 seam stitched with alternate red and blue stitches, the American League's laces as a 1930s player remembered them |
+| `ball:baseball-black-red` | Baseball, black and red | ball | generated | The figure-8 seam stitched with alternate black and red stitches, the National League's laces as a 1930s player remembered them |
+| `ball:baseball-vintage-leather` | Baseball, aged leather | ball | generated | The figure-8 ball in aged leather the colour of tea, scuffed, with faded red thread |
+| `ball:softball-11-optic` | Softball, 11 in, optic | ball | generated | The 11 in softball in optic yellow with red stitching: 27.9 cm round, 166.5 to 173.6 g (WBSC Slow Pitch rules) |
 | `ball:tennis` | Tennis ball | ball | generated |  |
 | `ball:padel` | Padel ball | ball | generated |  |
 | `ball:sliotar` | Sliotar | ball | generated |  |
 | `ball:volleyball` | Volleyball | ball | generated |  |
 | `ball:volleyball-8` | Volleyball, 8 panels | ball | generated |  |
 | `ball:beach-volleyball` | Beach volleyball | ball | generated |  |
+| `ball:volleyball-colours` | Volleyball, three colours | ball | generated | The 18-panel indoor volleyball with panels in three colours of your own (the `colors` option); yellow, blue and white by default |
+| `ball:volleyball-brazil` | Volleyball, Brazil | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: green, yellow and blue. Colours only, no flag or mark is drawn |
+| `ball:volleyball-japan` | Volleyball, Japan | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: white, red and a darker red. Colours only, no flag or mark is drawn |
+| `ball:volleyball-canada` | Volleyball, Canada | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: red, white and a darker red. Colours only, no flag or mark is drawn |
+| `ball:volleyball-usa` | Volleyball, USA | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: red, white and blue. Colours only, no flag or mark is drawn |
+| `ball:volleyball-italy` | Volleyball, Italy | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: green, white and red. Colours only, no flag or mark is drawn |
+| `ball:volleyball-poland` | Volleyball, Poland | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: white, red and a darker red. Colours only, no flag or mark is drawn |
+| `ball:volleyball-france` | Volleyball, France | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: blue, white and red. Colours only, no flag or mark is drawn |
+| `ball:volleyball-serbia` | Volleyball, Serbia | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: red, blue and white. Colours only, no flag or mark is drawn |
+| `ball:volleyball-netherlands` | Volleyball, Netherlands | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: red, white and blue. Colours only, no flag or mark is drawn |
+| `ball:volleyball-germany` | Volleyball, Germany | ball | generated | The 18-panel indoor volleyball in colours taken from the flag: black, red and gold. Colours only, no flag or mark is drawn |
 | `ball:cricket-red` | Cricket ball, red | ball | generated |  |
 | `ball:cricket-white` | Cricket ball, white | ball | generated |  |
 | `ball:cricket-pink` | Cricket ball, pink | ball | generated | Cricket ball, pink |
