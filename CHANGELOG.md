@@ -6,6 +6,10 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-14
+
+Eleven balls and implements drawn to the rulebook's proportions, flat emblems turning with the hand, and the gallery as one page per language.
+
 ### Fixed
 
 - **Eleven balls and implements were drawn out of proportion to the rulebook, the puck by half.** The puck was drawn 1 : 6 (thickness to diameter) where IIHF Rule 13 makes it 1 : 3, because the half thickness was divided by two twice; the curling stone's body was 0.200 of its diameter where the rules (a 914 mm circumference, a height of at least 114 mm) make it 0.392, and its handle now stands on the taller body; the feather shuttlecocks' feathers were 50 mm long where the Law gives 62 to 70 mm (now 66 mm); the discus was 2.2% too thin; the American, Canadian and IFAF footballs were 9% too slim and the rugby ball 6% too slim, with their outlines 4 to 7% too short; the Australian football was 12% too fat. The footballs and the rugby ball now take their width from the girth (the circumference over pi) and their `point` from the long girth, and the Australian football is an ellipsoid of its two girths. Nothing in the `size` metadata changed. A new test, `test/proportions.test.ts`, draws every ball and implement edge-on, measures the drawing itself (not the constants it was made from) and holds its ratio, size and, for the pointed balls, outline to the figures in `size` within 2%; it also checks that only a ball or an implement claims a real size, and that `lineup` at the true scale gives every piece the same pixels per millimetre. The ball contact sheets in `docs/pieces` are redrawn.
@@ -85,7 +89,8 @@ First preview: the name, the API and two sample emblems. The full set of trophie
 - Tests for the drawing, the ids, the turns and the bundle size of one item; a package check that installs the packed tarball and bundles one item from it.
 - The demo (a playground with a turn slider, and a gallery page), `docs/layout.md`, `docs/turning.md`, `docs/gallery.md`, the family header and footer, the CI, Pages and Release workflows, and `LICENSES/` and `NOTICE.md` ready for third-party art.
 
-[Unreleased]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/johnmorrisdotca/dougu-sports/releases/tag/v0.0.1
