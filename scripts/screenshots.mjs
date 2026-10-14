@@ -1,7 +1,7 @@
-// Takes the README's pictures of the demo into docs/images: every emblem in each style (desk, light and dark), the stage on a phone, and an emblem turned.
+// Takes the README's pictures of the demo into docs/images, as webp made in the browser: the balls, the trophies with the medals and crests, and the gear (each light and dark, nine columns by four full rows), the stage on a phone, and four emblems turned.
 // It serves the demo on port 7202, or TEST_PORT (this package's own block, tests and tools from 7201 up; the tests use 7201) and stops the server it started.
 import { spawn } from "node:child_process";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { chromium } from "@playwright/test";
@@ -22,40 +22,82 @@ try {
     poll();
   });
   const browser = await chromium.launch();
-  /** Opens the demo, replaces the page by a sheet the callback makes from the built package, and photographs the sheet. */
-  const sheet = async (name, { width, height = 900, scheme = "light", phone = false }, make) => {
-    const context = await browser.newContext({ viewport: { width, height }, colorScheme: scheme, hasTouch: phone, isMobile: phone, deviceScaleFactor: 2, reducedMotion: "reduce" });
+  /** Photographs a page element as a webp, made in the browser (no tool beyond Chromium), small enough for a README. */
+  const webp = async (png, file) => {
+    const page = await browser.newPage();
+    const base64 = await page.evaluate(async (data) => {
+      const image = new Image();
+      image.src = `data:image/png;base64,${data}`;
+      await image.decode();
+      const canvas = document.createElement("canvas");
+      canvas.width = image.width;
+      canvas.height = image.height;
+      canvas.getContext("2d").drawImage(image, 0, 0);
+      const blob = await new Promise((done) => canvas.toBlob(done, "image/webp", 0.85));
+      const reader = new globalThis.FileReader();
+      reader.readAsDataURL(blob);
+      await new Promise((done) => { reader.onloadend = done; });
+      return String(reader.result).split(",")[1];
+    }, png.toString("base64"));
+    await page.close();
+    writeFileSync(file, Buffer.from(base64, "base64"));
+  };
+  /**
+   * Opens the demo, replaces the page by a grid of equal cells the callback fills from the built package, and photographs it.
+   * Every row is full (the cell count is `cols` times the number of `rows`), each row has its own height and the grid runs edge to edge, so no picture has a ragged last row or a band of empty paper.
+   */
+  const sheet = async (name, { width, cols, rows, gap = 6, pad = 14, scheme = "light", phone = false }, make) => {
+    const context = await browser.newContext({ viewport: { width, height: 900 }, colorScheme: scheme, hasTouch: phone, isMobile: phone, deviceScaleFactor: 2, reducedMotion: "reduce" });
     const page = await context.newPage();
     await page.goto(`http://127.0.0.1:${port}/`);
     await page.waitForSelector("#stage svg");
-    await page.evaluate(async (source) => {
+    await page.evaluate(async ({ source, cols, rows, gap, pad, width }) => {
       const D = await import("/dist/index.js");
       const box = document.createElement("div");
       box.id = "sheet";
-      box.style.cssText = `display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;padding:18px;width:max-content;max-width:${window.innerWidth}px;background:${matchMedia("(prefers-color-scheme: dark)").matches ? "#141614" : "#f4efe4"};color:${matchMedia("(prefers-color-scheme: dark)").matches ? "#ece8dc" : "#1f2320"};font:600 13px system-ui,sans-serif`;
+      const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+      box.style.cssText = `display:grid;grid-template-columns:repeat(${cols},minmax(0,1fr));grid-template-rows:${rows.map((h) => `${h}px`).join(" ")};gap:${gap}px;padding:${pad}px;width:${width}px;box-sizing:border-box;background:${dark ? "#141614" : "#f4efe4"};color:${dark ? "#ece8dc" : "#1f2320"};font:600 11px system-ui,sans-serif`;
       box.innerHTML = new Function("D", `return (${source})(D)`)(D);
       document.body.replaceChildren(box);
-    }, make.toString());
-    await (await page.$("#sheet")).screenshot({ path: `${out}/${name}.png` });
+    }, { source: make.toString(), cols, rows, gap, pad, width });
+    await webp(await (await page.$("#sheet")).screenshot({ type: "png" }), `${out}/${name}.webp`);
     await context.close();
   };
-  // The ten trophies that stand for a league's cup, then a medal of each metal and a crest, then the same cup in the three styles.
   // (Each function is sent to the page as text, so each carries what it uses.)
-  const everyStyle = (D) => {
-    const figure = (id, o, caption) => `<figure style="margin:0;text-align:center">${D.renderEmblem(id, o)}<figcaption>${caption ?? D.emblemName(id)}</figcaption></figure>`;
-    const FAMOUS = ["trophy:hockey-cup", "trophy:baseball", "trophy:football", "trophy:basketball", "trophy:canadian-bowl", "trophy:soccer-globe", "trophy:tennis-plate", "trophy:tennis-cup", "trophy:cricket-urn", "trophy:rugby-cup"];
-    const trophies = FAMOUS.map((id) => figure(id, { size: 150 })).join("");
-    const rest = ["medal:gold", "medal:silver", "medal:bronze", "medal:place-1", "crest:shield", "crest:roundel", "trophy:rosette", "trophy:laurel", "trophy:belt"].map((id) => figure(id, { size: 96 })).join("");
-    const styles = D.EMBLEM_STYLES.map((style) => figure("trophy:hockey-cup", { style, size: 120 }, style)).join("");
-    return `${trophies}<div style="flex-basis:100%"></div>${rest}<div style="flex-basis:100%"></div>${styles}`;
+  // Every picture is nine columns of equal cells, four rows, so each row is full and none is ragged.
+  // Trophies, awards, medals and crests, and three cups in the three styles.
+  const trophies = (D) => {
+    const one = (id, o = {}, caption = "") => `<figure style="margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center">${D.renderEmblem(id, o)}${caption ? `<figcaption style="margin-top:-2px;opacity:.7">${caption}</figcaption>` : ""}</figure>`;
+    const row = (ids, size) => ids.map((id) => one(id, { size })).join("");
+    const cups = ["trophy:hockey-cup", "trophy:baseball", "trophy:football", "trophy:basketball", "trophy:canadian-bowl", "trophy:soccer-globe", "trophy:tennis-plate", "trophy:tennis-cup", "trophy:cricket-urn"];
+    const awards = ["trophy:rugby-cup", "trophy:sumo-cup", "trophy:soccer-ball", "trophy:laurel", "trophy:rosette", "trophy:belt", "trophy:championship-banner", "trophy:ring", "trophy:plaque"];
+    const medals = ["medal:gold", "medal:silver", "medal:bronze", "medal:place-1", "medal:place-2", "medal:place-3", "crest:shield", "crest:roundel", "crest:diamond"];
+    const styled = ["trophy:hockey-cup", "trophy:rugby-cup", "trophy:tennis-cup"].flatMap((id) => D.EMBLEM_STYLES.map((style) => one(id, { style, size: 144 }, style))).join("");
+    return row(cups, 144) + row(awards, 144) + row(medals, 124) + styled;
   };
-  const phone = (D) => ["trophy:hockey-cup", "trophy:baseball", "trophy:football", "trophy:soccer-globe", "trophy:tennis-cup", "medal:gold"].map((id) => `<figure style="margin:0;text-align:center">${D.renderEmblem(id, { size: 96 })}<figcaption>${D.emblemName(id)}</figcaption></figure>`).join("");
-  const turned = (D) => ["trophy:tennis-cup", "trophy:hockey-cup", "medal:gold", "ball:soccer"].map((id) => `<div style="display:flex;gap:10px">${[-120, -60, 0, 60, 120].map((yaw) => D.emblemFrame(id, { yaw, size: 110 })).join("")}</div>`).join("");
-  await sheet("hero-desk-light", { width: 1280 }, everyStyle);
-  await sheet("hero-desk-dark", { width: 1280, scheme: "dark" }, everyStyle);
-  await sheet("phone-light", { width: 390, height: 844, phone: true }, phone);
-  await sheet("phone-dark", { width: 390, height: 844, phone: true, scheme: "dark" }, phone);
-  await sheet("turn-desk-light", { width: 1280 }, turned);
+  // Balls and pucks: soccer in its constructions and colours, the ball of every big sport, the small ones, and the odd ones out.
+  const balls = (D) => ["ball:soccer", "ball:soccer-26", "ball:soccer-14", "ball:soccer-6", "ball:soccer-orange", "ball:soccer-12-yellow", "ball:soccer-colour", "ball:futsal", "ball:beach-soccer",
+    "ball:basketball", "ball:basketball-3x3", "ball:baseball", "ball:softball", "ball:football", "ball:rugby", "ball:afl", "ball:volleyball", "ball:beach-volleyball",
+    "ball:tennis", "ball:padel", "ball:pickleball-outdoor", "ball:squash", "ball:racquetball", "ball:golf", "ball:cricket-red", "ball:cricket-pink", "ball:water-polo",
+    "ball:sepak-takraw", "ball:shuttlecock-feather", "ball:puck", "ball:curling-stone", "ball:lacrosse", "ball:handball", "ball:table-tennis", "ball:sliotar", "ball:roundnet"]
+    .map((id) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.renderEmblem(id, { size: 146 })}</figure>`).join("");
+  // Gear: thirty-six of the forty-two pieces.
+  const gear = (D) => ["gear:hockey-stick", "gear:hockey-skate", "gear:goalie-mask", "gear:field-hockey-stick", "gear:lacrosse-stick", "gear:hurley", "gear:cricket-bat", "gear:wicket", "gear:baseball-bat",
+    "gear:baseball-glove", "gear:football-helmet", "gear:goalposts", "gear:basketball-hoop", "gear:volleyball-net", "gear:tennis-racket", "gear:badminton-racket", "gear:table-tennis-paddle", "gear:padel-racket",
+    "gear:pickleball-paddle", "gear:curling-broom", "gear:figure-skate", "gear:speed-skate", "gear:swim-goggles", "gear:starting-blocks", "gear:relay-baton", "gear:javelin", "gear:hurdles",
+    "gear:kendo-men", "gear:shinai", "gear:gunbai", "gear:mawashi", "gear:judogi", "gear:obi", "gear:yumi", "gear:ya", "gear:karate-gi"]
+    .map((id) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.renderEmblem(id, { size: 146 })}</figure>`).join("");
+  // Three columns by four rows on a phone: cups, a medal, balls, gear.
+  const phone = (D) => ["trophy:hockey-cup", "trophy:baseball", "trophy:soccer-globe", "trophy:tennis-cup", "medal:gold", "crest:shield", "ball:soccer", "ball:basketball", "ball:curling-stone", "gear:hockey-skate", "gear:baseball-glove", "gear:tennis-racket"].map((id) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.renderEmblem(id, { size: 120 })}</figure>`).join("");
+  // Four rows of seven turns: a cup, a medal flipping, a ball rolling and a flat banner.
+  const turned = (D) => ["trophy:tennis-cup", "medal:gold", "ball:soccer", "trophy:championship-banner"].flatMap((id) => [-120, -80, -40, 0, 40, 80, 120].map((yaw) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.emblemFrame(id, { yaw, size: 180 })}</figure>`)).join("");
+  for (const scheme of ["light", "dark"]) {
+    await sheet(`balls-desk-${scheme}`, { width: 1400, cols: 9, rows: [150, 150, 150, 150], scheme }, balls);
+    await sheet(`hero-desk-${scheme}`, { width: 1400, cols: 9, rows: [152, 152, 132, 160], scheme }, trophies);
+    await sheet(`gear-desk-${scheme}`, { width: 1400, cols: 9, rows: [150, 150, 150, 150], scheme }, gear);
+    await sheet(`phone-${scheme}`, { width: 390, cols: 3, rows: [124, 124, 124, 124], gap: 4, phone: true, scheme }, phone);
+  }
+  await sheet("turn-desk-light", { width: 1280, cols: 7, rows: [176, 176, 176, 176] }, turned);
   await browser.close();
   console.log(`pictures written to ${out}`);
 } finally {

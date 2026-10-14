@@ -1,7 +1,7 @@
 <h1 align="center">Dougu Sports <sub>道具</sub></h1>
 
 <p align="center"><strong>Sports emblems as SVG strings, with optional 3D turning.</strong><br>
-Trophies, medals, crests, the icon of every sport, and the ball and gear of the sports, each one a function that returns SVG: in polished metal, in one line, or in flat colour, light and dark, any size, any tint. Turn one about its axis and it is another string. Each emblem is its own module, so a page that wants one trophy takes one trophy. MIT, with no dependencies.</p>
+The ball and the gear of every sport, trophies, medals, crests and the icon of every sport, each one a function that returns SVG: in polished metal, in one line, or in flat colour, light and dark, any size, any tint. Turn one about its axis and it is another string. Each emblem is its own module, so a page that wants one trophy takes one trophy. MIT, with no dependencies.</p>
 
 <p align="center">
   <a href="https://github.com/johnmorrisdotca/dougu-sports/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/johnmorrisdotca/dougu-sports/actions/workflows/ci.yml/badge.svg"></a>
@@ -15,18 +15,32 @@ Trophies, medals, crests, the icon of every sport, and the ball and gear of the 
 
 <p align="center">
 <picture>
-<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/hero-desk-dark.png">
-<img alt="Ten trophies drawn in metal, each a generic form that stands for a league's cup: a tall banded silver cup, a ring of gold pennants round a baseball, a football on a three-sided stand, a basketball over a net, a wide two-handled bowl on a tall base, a globe held up by spiral figures, a gilt dish, a lidded cup with a pineapple, a terracotta urn and a gilded lidded cup. Below them gold, silver and bronze medals, crests, a rosette, a wreath and a belt, and one cup in the three styles." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/hero-desk-light.png" width="760">
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-dark.webp">
+<img alt="Thirty-six balls and pucks drawn in 3D, in four rows of nine: soccer balls of several constructions and colours, then basketball, the 3x3 ball, baseball, softball, a football, a rugby ball, an Australian football and two volleyballs, then tennis, padel, pickleball with its holes, squash with its two dots, racquetball, golf, red and pink cricket and water polo, then sepak takraw, a shuttlecock, a puck, a curling stone, lacrosse, handball, table tennis, a sliotar and a roundnet ball." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-light.webp" width="760">
+</picture>
+</p>
+
+<p align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/hero-desk-dark.webp">
+<img alt="Trophies, medals and crests, in four rows of nine: nine famous cups, then a gilded cup, a phoenix-handle cup, a soccer ball trophy, a wreath, a rosette, a belt, a banner, a ring and a plaque, then three medals, three place badges and three crests, and last three cups each in metal, line and colour." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/hero-desk-light.webp" width="760">
+</picture>
+</p>
+
+<p align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/gear-desk-dark.webp">
+<img alt="Thirty-six pieces of gear in four rows of nine: hockey stick and skate, a goalie mask, field hockey, lacrosse and hurling sticks, a cricket bat and wicket, a baseball bat and glove, a football helmet and goalposts, a basketball hoop, a volleyball net, rackets and paddles, a curling broom, skates, swim goggles, starting blocks, a baton, a javelin, a hurdle, and the kendo, sumo, judo, kyudo and karate gear of Japan." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/gear-desk-light.webp" width="760">
 </picture>
 </p>
 
 <table align="center">
 <tr>
 <td align="center" valign="top">
-<img alt="A two-handled cup, a banded cup, a medal and a soccer ball each turned through five angles: the cups keep their outline and move their light and handles, the medal flips like a coin to show its plain back, and the ball rolls." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/turn-desk-light.png" width="470"><br><em>Turned: a ball rolls, a medal flips</em>
+<img alt="A two-handled cup, a medal, a soccer ball and a championship banner each turned through seven angles: the cup keeps its outline and moves its light and handles, the medal and the banner flip like a coin to show their plain backs, and the ball rolls." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/turn-desk-light.webp" width="470"><br><em>Turned: a ball rolls, a medal flips</em>
 </td>
 <td align="center" valign="top">
-<img alt="The same emblems on a phone, light." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/phone-light.png" width="200"><br><em>On a phone</em>
+<img alt="Cups, a medal, balls and gear on a phone, three to a row." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/phone-light.webp" width="200"><br><em>On a phone</em>
 </td>
 </tr>
 </table>
@@ -59,6 +73,7 @@ Put the string in a page (`element.innerHTML = svg`), write it to a file, or sen
 
 ## Features
 
+- **Equipment first (道具 is the word for it)**: 66 balls and implements drawn in 3D, from the 32-panel soccer ball to the 26, 18, 14, 12 and 6 panel constructions, futsal, beach soccer and the pucks and stones, each with its official size, and 42 pieces of gear (sticks, rackets, helmets, skates, nets, and the Japanese budo kit) drawn to match; see [docs/gallery.md](./docs/gallery.md).
 - **Three styles** for every emblem: `metal` (polished metal: a gradient, a highlight and a soft rim of reflected light, edged in a darker tone of its own metal, with no heavy outline), `line` (one clean outline in the page's text colour, made to read at 14 pixels) and `color` (flat fills); see [Theming](#theming).
 - **Size, tint, accent and theme** as options: a tint recolours the main part (a medal's metal, a crest's colour, a ball's patches), an accent the second colour (a ribbon, a crest's band, the pennants), a theme sets the ink for light, dark or either.
 - **Turning**: `emblemFrame` and `ballFrame` return the emblem at an angle, in plain SVG: every emblem turns, a ball rolls, a cup keeps its outline and moves its light, and everything flat (gear, a bat, a crown, a sport's icon) flips like a coin; `bindTurn` lets a drag, the arrow keys or an auto-turn do the turning in a page; see [docs/turning.md](./docs/turning.md).
@@ -78,8 +93,8 @@ Put the string in a page (`element.innerHTML = svg`), write it to a file, or sen
 
 <table>
 <tr>
-<td align="center" valign="top"><img alt="Ten trophies, medals and crests, and one cup in the three styles." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/hero-desk-light.png" width="360"><br><em>Trophies, medals and crests, and one cup in three styles</em></td>
-<td align="center" valign="top"><img alt="Cups, a medal and a ball turned through five angles." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/turn-desk-light.png" width="360"><br><em>Turned through five angles</em></td>
+<td align="center" valign="top"><img alt="Balls and pucks in four rows of nine." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-light.webp" width="360"><br><em>Balls and pucks, trophies, medals and gear</em></td>
+<td align="center" valign="top"><img alt="A cup, a medal, a ball and a banner turned through seven angles." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/turn-desk-light.webp" width="360"><br><em>Turned through seven angles</em></td>
 </tr>
 </table>
 
