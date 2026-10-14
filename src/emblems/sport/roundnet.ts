@@ -2,7 +2,7 @@
 import { circlePath as circ, defineIcon, ellipsePath as ell } from "../emblem.shapes.ts";
 
 /** Round net. */
-export const SPORT_ROUNDNET = /* @__PURE__ */ defineIcon("sport:roundnet", "Round net", "ラウンドネットの円形ネット", "ours", {
+export const SPORT_ROUNDNET = /* @__PURE__ */ defineIcon("sport:roundnet", "Round net", "ラウンドネット", "ours", {
   metal: "flat",
   ink: true, ribbon: "#e0a81c",
   front: [

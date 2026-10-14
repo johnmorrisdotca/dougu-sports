@@ -48,9 +48,10 @@ export function renderIndex() {
  */
 export async function renderGallery() {
   const D = await import(new URL("../dist/index.js", import.meta.url).href);
-  const nav = Object.entries(D.EMBLEM_GROUPS)
-    .filter(([, ids]) => ids.length > 0)
-    .map(([group, ids]) => `<a href="#g-${group}">${group} <span>${ids.length}</span></a>`)
+  const japan = new Set(D.JAPANESE_IDS);
+  const nav = [...Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, group, ids.filter((id) => !japan.has(id)).length]), ["japan", "Japanese sports", D.JAPANESE_IDS.length]]
+    .filter(([, , count]) => count > 0)
+    .map(([key, title, count]) => `<a href="#g-${key}">${title} <span>${count}</span></a>`)
     .join(" ");
   const body = `<main>
 <!--family:header-->

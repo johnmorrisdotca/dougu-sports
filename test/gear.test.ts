@@ -2,7 +2,7 @@ import { describe, expect, it } from "./vitest-shim.ts";
 import { GEAR_IDS, GEARS, gearOf, isGearId, renderGear } from "../src/emblems/gear/gear.index.ts";
 import { GEAR_BASEBALL_GLOVE } from "../src/emblems/gear/gear.baseballglove.ts";
 import { GEAR_SQUASH_RACKET } from "../src/emblems/gear/gear.rackets.ts";
-import { capsule, monoOf, rect, strings } from "../src/emblems/gear/gear.core.ts";
+import { capsule, rect, strings, swell } from "../src/emblems/gear/gear.core.ts";
 
 function balanced(svg: string): boolean {
   const stack: string[] = [];
@@ -16,9 +16,9 @@ function balanced(svg: string): boolean {
 }
 
 describe("the gear", () => {
-  it("has thirty-three ids, each once, in the form gear:name", () => {
-    expect(GEARS.length).toBe(33);
-    expect(new Set(GEAR_IDS).size).toBe(33);
+  it("has forty-two ids, each once, in the form gear:name", () => {
+    expect(GEARS.length).toBe(42);
+    expect(new Set(GEAR_IDS).size).toBe(42);
     for (const id of GEAR_IDS) expect(id).toMatch(/^gear:[a-z0-9]+(?:-[a-z0-9]+)*$/);
   });
 
@@ -26,10 +26,9 @@ describe("the gear", () => {
     for (const g of GEARS) {
       expect(g.en.length).toBeGreaterThan(3);
       expect(g.ja).toMatch(/[\u3040-\u30ff\u4e00-\u9fff]/);
-      expect(["drawn", "noto", "commons", "gameicons"]).toContain(g.source);
+      expect(g.source).toBe("drawn");
       expect(g.kind).toBe("gear");
     }
-    expect(GEARS.filter((g) => g.source === "drawn").length).toBe(22);
   });
 
   it("draws every piece in both styles as a well-formed safe document", () => {
@@ -78,22 +77,32 @@ describe("the gear", () => {
 
   it("holds its size budgets", () => {
     for (const g of GEARS) {
-      const limit = g.source === "drawn" ? 6000 : 16000;
+      const limit = 6000;
       for (const style of ["colour", "line"] as const) expect(g.svg({ style }).length, `${g.id} ${style}`).toBeLessThanOrEqual(limit);
     }
   });
+});
 
-  it("carries the credit its licence asks for inside every copied piece", () => {
-    for (const g of GEARS.filter((p) => p.source !== "drawn")) {
-      const svg = g.svg();
-      expect(svg, g.id).toContain("<desc>");
-      if (g.source === "noto") expect(svg).toContain("Copyright 2013 Google, Inc.");
-      if (g.source === "noto") expect(svg).toContain("Apache-2.0");
-      if (g.source === "gameicons") {
-        expect(svg).toContain("Delapouite");
-        expect(svg).toContain("CC BY 3.0");
-      }
-      if (g.source === "commons") expect(svg).toMatch(/CC0|Public domain/);
+describe("the styles and the turn of the gear", () => {
+  it("draws the color style flat and the metal style shaded, as the trophies are", () => {
+    for (const g of GEARS) {
+      const flat = g.svg({ style: "color" } as never);
+      expect(flat, g.id).not.toMatch(/Gradient|url\(#/);
+      expect(g.svg({ style: "metal" } as never), g.id).toBe(g.svg());
+    }
+    expect(GEAR_BASEBALL_GLOVE.svg()).toContain("linearGradient");
+    expect(GEAR_BASEBALL_GLOVE.svg({ style: "color" } as never)).not.toBe(GEAR_BASEBALL_GLOVE.svg());
+  });
+
+  it("flips like a coin when turned: no turn is the still drawing, a quarter turn is edge on, a half turn is mirrored", () => {
+    for (const g of GEARS) {
+      expect(g.frame({ yaw: 0, pitch: 0 }), g.id).toBe(g.svg());
+      expect(g.frame({ yaw: 360 }), g.id).toBe(g.svg());
+      expect(g.frame({ yaw: Number.NaN }), g.id).toBe(g.svg());
+      expect(g.frame({ yaw: 90 }), g.id).toMatch(/scale\(0\.03 1\)/);
+      expect(g.frame({ yaw: 180 }), g.id).toMatch(/scale\(-1 1\)/);
+      expect(g.frame({ pitch: 60 }), g.id).toMatch(/scale\(1 0\.5\)/);
+      for (const yaw of [-170, -45, 30, 135, 1000]) expect(g.frame({ yaw, pitch: 20, style: "line" }), `${g.id} ${yaw}`).not.toMatch(/NaN|undefined|Infinity/);
     }
   });
 });
@@ -105,11 +114,10 @@ describe("the drawing helpers", () => {
     expect(strings(32, 20, 10, 14, 4)).toMatch(/^M/);
   });
 
-  it("turns a colour drawing into ink: dark parts become the ink, light parts are left out", () => {
-    const out = monoOf('<linearGradient id="a"><stop/></linearGradient><path fill="#101010" d="M0 0"/><path fill="#ffffff" d="M1 1"/><path stroke="#ff0000" fill="url(#a)" d="M2 2"/>');
-    expect(out).toContain('fill="currentColor"');
-    expect(out).toContain('fill="none"');
-    expect(out).toContain('stroke="currentColor"');
-    expect(out).not.toContain("linearGradient");
+  it("draws a shape of varying width along a curve as a closed path", () => {
+    const d = swell([10, 10], [20, 0], [40, 20], [50, 10], (t) => 2 + 4 * t, 8);
+    expect(d).toMatch(/^M[\d. L-]+z$/);
+    expect(d).not.toMatch(/NaN/);
+    expect(d.split("L").length).toBe(2 * 9);
   });
 });

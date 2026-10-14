@@ -2,7 +2,7 @@
 import { circlePath as circ, defineIcon, ellipsePath as ell } from "../emblem.shapes.ts";
 
 /** Ball and hoop. */
-export const SPORT_NETBALL = /* @__PURE__ */ defineIcon("sport:netball", "Ball and hoop", "ネットボールのボールとゴールリング", "ours", {
+export const SPORT_NETBALL = /* @__PURE__ */ defineIcon("sport:netball", "Ball and hoop", "ネットボールのゴール", "ours", {
   metal: "flat",
   ink: true,
   front: [

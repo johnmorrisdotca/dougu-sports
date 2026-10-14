@@ -33,4 +33,4 @@ function cricket(id: string, en: string, ja: string, base: string, thread: strin
 const SIZE: BallDef["size"] = { extentMm: 72.1, diameterMm: 72.1, circumferenceMm: 226.5, massG: [156, 163], rule: "Laws of Cricket, Law 4 The Ball, 4.1 Weight and size (Size 1, Size 2, Size 3)", note: "Size 1 (men's). Diameter worked out from the middle of the circumference range. The Laws do not set a colour." };
 export const BALL_CRICKET_RED = /* @__PURE__ */ cricket("ball:cricket-red", "Cricket ball, red", "クリケットボール（赤）", "#a9161e", "#f2e8d2", SIZE, "#2a0408");
 export const BALL_CRICKET_WHITE = /* @__PURE__ */ cricket("ball:cricket-white", "Cricket ball, white", "クリケットボール（白）", "#f3f0e8", "#2a2a2a", SIZE, "#4a4a58");
-export const BALL_CRICKET_PINK = /* @__PURE__ */ cricket("ball:cricket-pink", "Cricket ball, pink", "クリケットボール（ピンク）", "#e45a8c", "#2a2a2a", SIZE, "#4a0a22");
+export const BALL_CRICKET_PINK = /* @__PURE__ */ cricket("ball:cricket-pink", "Cricket ball, pink", "ピンクのクリケット球", "#e45a8c", "#2a2a2a", SIZE, "#4a0a22");

@@ -121,6 +121,7 @@ test("a rolling ball and a flipping medal are different kinds, and the kinds are
   assert.equal(D.emblemInfo("ball:soccer").kind, "ball");
   assert.equal(D.emblemInfo("trophy:hockey-cup").kind, "lathe");
   assert.equal(D.emblemInfo("sport:nhl").kind, "icon");
-  assert.equal(D.emblemInfo("trophy:cup").source, "material");
+  assert.equal(D.emblemInfo("trophy:cup").source, "ours");
+  assert.equal(D.emblemInfo("trophy:cup").kind, "icon");
   assert.equal(D.emblemInfo("trophy:hockey-cup").source, "ours");
 });

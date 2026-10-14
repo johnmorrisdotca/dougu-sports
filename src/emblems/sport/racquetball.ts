@@ -2,7 +2,7 @@
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
 /** Racquetball racket and ball. */
-export const SPORT_RACQUETBALL = /* @__PURE__ */ defineIcon("sport:racquetball", "Racquetball racket and ball", "ラケットボールのラケットとボール", "ours", {
+export const SPORT_RACQUETBALL = /* @__PURE__ */ defineIcon("sport:racquetball", "Racquetball racket", "ラケットボールのラケット", "ours", {
   metal: "flat",
   ink: true,
   front: [

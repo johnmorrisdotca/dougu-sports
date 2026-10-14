@@ -2,7 +2,7 @@
 import { defineIcon, ellipsePath as ell } from "../emblem.shapes.ts";
 
 /** Oval ball. */
-export const SPORT_AFL = /* @__PURE__ */ defineIcon("sport:afl", "Oval ball", "オーストラリアンフットボールのボール", "ours", {
+export const SPORT_AFL = /* @__PURE__ */ defineIcon("sport:afl", "Oval ball", "オーストラリアンフットボール", "ours", {
   metal: "flat",
   ink: true,
   front: [

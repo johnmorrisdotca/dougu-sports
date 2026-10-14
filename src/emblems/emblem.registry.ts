@@ -26,6 +26,8 @@ import { TROPHY_PLAQUE } from "./trophy/plaque.ts";
 import { TROPHY_BELT } from "./trophy/belt.ts";
 import { TROPHY_LAUREL } from "./trophy/laurel.ts";
 import { TROPHY_ROSETTE } from "./trophy/rosette.ts";
+import { TROPHY_SUMO_CUP } from "./trophy/sumo-cup.ts";
+import { TROPHY_CHAMPIONSHIP_BANNER } from "./trophy/championship-banner.ts";
 import { MEDAL_GOLD } from "./medal/gold.ts";
 import { MEDAL_SILVER } from "./medal/silver.ts";
 import { MEDAL_BRONZE } from "./medal/bronze.ts";
@@ -71,6 +73,11 @@ import { SPORT_FIELDHOCKEY } from "./sport/fieldhockey.ts";
 import { SPORT_HANDBALL } from "./sport/handball.ts";
 import { SPORT_ATHLETICS } from "./sport/athletics.ts";
 import { SPORT_SKATING } from "./sport/skating.ts";
+import { SPORT_SUMO } from "./sport/sumo.ts";
+import { SPORT_KENDO } from "./sport/kendo.ts";
+import { SPORT_JUDO } from "./sport/judo.ts";
+import { SPORT_KYUDO } from "./sport/kyudo.ts";
+import { SPORT_KARATE } from "./sport/karate.ts";
 
 /** The balls and the gear are drawn by families, each family in a module of its own, and listed in order by their own indexes. */
 const PIECES: Readonly<Record<string, Emblem>> = Object.fromEntries([...BALLS, ...GEARS].map((piece) => [piece.id, piece]));
@@ -102,6 +109,8 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `gear:${string}`
   "trophy:belt": TROPHY_BELT,
   "trophy:laurel": TROPHY_LAUREL,
   "trophy:rosette": TROPHY_ROSETTE,
+  "trophy:sumo-cup": TROPHY_SUMO_CUP,
+  "trophy:championship-banner": TROPHY_CHAMPIONSHIP_BANNER,
   "medal:gold": MEDAL_GOLD,
   "medal:silver": MEDAL_SILVER,
   "medal:bronze": MEDAL_BRONZE,
@@ -145,6 +154,11 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `gear:${string}`
   "sport:handball": SPORT_HANDBALL,
   "sport:athletics": SPORT_ATHLETICS,
   "sport:skating": SPORT_SKATING,
+  "sport:sumo": SPORT_SUMO,
+  "sport:kendo": SPORT_KENDO,
+  "sport:judo": SPORT_JUDO,
+  "sport:kyudo": SPORT_KYUDO,
+  "sport:karate": SPORT_KARATE,
 };
 
 /** Every emblem, by id. */

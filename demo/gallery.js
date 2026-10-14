@@ -8,15 +8,19 @@ const TURNS = [-120, -60, 0, 60, 120];
 function card(id) {
   const info = D.emblemInfo(id);
   const styles = D.EMBLEM_STYLES.map((style) => `<figure>${D.renderEmblem(id, { style, size: 72, grain: false })}<figcaption>${style}</figcaption></figure>`).join("");
-  const turns = info.kind === "icon" || info.kind === "gear" ? "" : `<div class="turns" role="group" aria-label="${esc(info.en)} turned">${TURNS.map((yaw) => D.emblemFrame(id, { yaw, size: 48 })).join("")}</div>`;
+  const turns = info.kind === "icon" ? "" : `<div class="turns" role="group" aria-label="${esc(info.en)} turned">${TURNS.map((yaw) => D.emblemFrame(id, { yaw, size: 48 })).join("")}</div>`;
   const call = `renderEmblem("${id}")`;
-  const text = `${id} ${info.en} ${info.ja} ${info.kind} ${info.source}`.toLowerCase();
-  return `<li id="${esc(id.replace(":", "-"))}" data-text="${esc(text)}"><h3>${esc(info.en)} <span lang="ja">${esc(info.ja)}</span></h3><p><code>${esc(id)}</code> · ${info.kind} · ${info.source}</p><div class="styles">${styles}</div>${turns}<p class="copies"><button type="button" class="fam-button copy" data-code="${esc(id)}" aria-label="Copy the id ${esc(id)}">Copy id</button> <button type="button" class="fam-button copy" data-code="${esc(call)}" aria-label="Copy the call for ${esc(id)}">Copy call</button></p></li>`;
+  const text = `${id} ${info.en} ${info.ja} ${info.kind} ${info.source} ${info.description?.en ?? ""} ${info.description?.ja ?? ""}`.toLowerCase();
+  return `<li id="${esc(id.replace(":", "-"))}" data-text="${esc(text)}"><h3>${esc(info.en)} <span lang="ja">${esc(info.ja)}</span></h3><p><code>${esc(id)}</code> · ${info.kind} · ${info.source}</p>${info.description === undefined ? "" : `<p class="about">${esc(info.description.en)}<br><span lang="ja">${esc(info.description.ja)}</span></p>`}<div class="styles">${styles}</div>${turns}<p class="copies"><button type="button" class="fam-button copy" data-code="${esc(id)}" aria-label="Copy the id ${esc(id)}">Copy id</button> <button type="button" class="fam-button copy" data-code="${esc(call)}" aria-label="Copy the call for ${esc(id)}">Copy call</button></p></li>`;
 }
 
-$("sections").innerHTML = Object.entries(D.EMBLEM_GROUPS)
-  .filter(([, ids]) => ids.length > 0)
-  .map(([group, ids]) => `<section class="more" id="g-${group}" aria-labelledby="h-${group}"><h2 id="h-${group}">${group}</h2><ul class="cards">${ids.map(card).join("")}</ul></section>`)
+// The Japanese sports and budo are shown together, after the groups, each emblem once.
+const JAPAN = new Set(D.JAPANESE_IDS);
+const sections = Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, group, ids.filter((id) => !JAPAN.has(id))]);
+sections.push(["japan", 'Japanese sports <span lang="ja">日本の競技</span>', D.JAPANESE_IDS]);
+$("sections").innerHTML = sections
+  .filter(([, , ids]) => ids.length > 0)
+  .map(([key, title, ids]) => `<section class="more" id="g-${key}" aria-labelledby="h-${key}"><h2 id="h-${key}">${title}</h2><ul class="cards">${ids.map(card).join("")}</ul></section>`)
   .join("");
 
 function filter() {

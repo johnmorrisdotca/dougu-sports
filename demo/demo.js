@@ -35,7 +35,7 @@ function draw() {
   $("note").textContent = `${info.en} · ${info.ja} · ${info.kind}, from ${info.source}.`;
   $("emblem").value = state.id;
   for (const group of ["style", "theme", "size", "tint"]) for (const b of $(group).querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state[group]));
-  const canTurn = info.kind !== "icon" && info.kind !== "gear";
+  const canTurn = info.kind !== "icon";
   $("turn-row").hidden = !canTurn;
   $("tilt-row").hidden = !canTurn;
   $("yaw").value = String(state.yaw);

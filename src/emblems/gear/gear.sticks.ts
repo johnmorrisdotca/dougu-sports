@@ -3,7 +3,7 @@ import { capsule, drawn, poly, rect, seg } from "./gear.core.ts";
 
 const TURN = "translate(30 29) rotate(28) scale(.78) translate(-32 -33)";
 
-export const GEAR_GOALIE_STICK = /* @__PURE__ */ drawn("gear:goalie-stick", "Goalie stick", "ゴールキーパーのスティック", {
+export const GEAR_GOALIE_STICK = /* @__PURE__ */ drawn("gear:goalie-stick", "Goalie stick", "ゴーリーのスティック", {
   main: "#d9b57a",
   accent: "#1d1f24",
   parts: [
@@ -15,7 +15,7 @@ export const GEAR_GOALIE_STICK = /* @__PURE__ */ drawn("gear:goalie-stick", "Goa
   ],
 });
 
-export const GEAR_HURLEY = /* @__PURE__ */ drawn("gear:hurley", "Hurley", "ハーリー（ハーリングのスティック）", {
+export const GEAR_HURLEY = /* @__PURE__ */ drawn("gear:hurley", "Hurley", "ハーリングのスティック", {
   main: "#e0c48e",
   accent: "#8a949f",
   parts: [

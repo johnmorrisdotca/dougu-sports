@@ -29,8 +29,8 @@ export interface BallFrameOptions extends PieceOptions {
 }
 
 /** Where a drawing comes from. */
-export type PieceSource = "generated" | "drawn" | "noto" | "mdi" | "commons" | "gameicons";
-/** `ball` is turned in 3D; `gear` is a flat drawing in a colour and a line style. */
+export type PieceSource = "generated" | "drawn";
+/** `ball` is turned in 3D; `gear` is a flat drawing in a metal, a colour and a line style, which flips like a coin when turned. */
 export type PieceKind = "ball" | "gear";
 
 /** The official size of a ball or an implement, from the rulebook that governs it. Lengths in millimetres, mass in grams. */
@@ -66,7 +66,7 @@ export interface Piece<Model = unknown> {
   readonly size?: PieceSize;
   /** The still drawing: a document of SVG. */
   svg: (options?: PieceOptions) => string;
-  /** The piece turned (a ball in 3D; gear is drawn as it is). */
+  /** The piece turned: a ball in 3D, gear flipped like a coin. */
   frame: (options?: BallFrameOptions) => string;
 }
 

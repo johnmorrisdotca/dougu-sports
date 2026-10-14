@@ -17,14 +17,14 @@ const THEMES = ["inherit", "auto", "light", "dark"] as const;
 const METAL_LIMIT = 4500;
 const LINE_LIMIT = 2600;
 const COLOR_LIMIT = 3200;
-// A ball is drawn in 3D with its own panels, seams and shading, and a piece of gear is a detailed drawing (some copied from open icon sets): they are bigger, and are held to limits of their own.
+// A ball is drawn in 3D with its own panels, seams and shading, and a piece of gear is a detailed drawing in layers: they are bigger, and are held to limits of their own.
 const BIG_LIMIT = { metal: 14000, line: 13000, color: 14000 } as const;
 const isPiece = (id: D.EmblemId): boolean => D.emblemInfo(id).kind === "ball" || D.emblemInfo(id).kind === "gear";
 
-test("the ids number 148 in their groups, with no id twice, and the groups hold what they say", () => {
+test("the ids number 164 in their groups, with no id twice, and the groups hold what they say", () => {
   assert.equal(new Set(D.EMBLEM_IDS).size, D.EMBLEM_IDS.length);
-  assert.equal(D.EMBLEM_IDS.length, 148);
-  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 5, trophy: 20, medal: 6, crest: 4, ball: 47, gear: 33, sport: 33 });
+  assert.equal(D.EMBLEM_IDS.length, 164);
+  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 5, trophy: 22, medal: 6, crest: 4, ball: 47, gear: 42, sport: 38 });
 });
 
 test("no id, title or name is a real trophy, mark or competition", () => {
@@ -53,8 +53,7 @@ test("every emblem draws well-formed, titled, safe SVG in every style and theme,
         assert.equal(svg, D.renderEmblem(id, { style, theme }), where);
         assert.ok(svg.includes(`<title>${info.en}</title>`), where);
         assert.match(svg, /role="img"/);
-        // A copied drawing carries its credit, with the address of its source, in a <desc>: text, not a link.
-        assert.doesNotMatch(svg.replace(' xmlns="http://www.w3.org/2000/svg"', "").replace(/<desc>[^<]*<\/desc>/g, ""), UNSAFE, where);
+        assert.doesNotMatch(svg.replace(' xmlns="http://www.w3.org/2000/svg"', ""), UNSAFE, where);
         assert.doesNotMatch(svg, /NaN|undefined|Infinity|null/, where);
       }
       const size = D.renderEmblem(id, { style }).length;

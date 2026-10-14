@@ -1,68 +1,19 @@
 # Notice: where the art comes from
 
-The code of this package is under the MIT licence (see [LICENSE](LICENSE) and [LICENSES/MIT.txt](LICENSES/MIT.txt)). Every emblem is either drawn for this package (`source: "ours"`, `"generated"` or `"drawn"` in `emblemInfo`) or made from one of the sources below, and each emblem made from a source has a row in the second table. The licence text of each source is in [LICENSES/](LICENSES/).
+The code of this package is under the MIT licence (see [LICENSE](LICENSE) and [LICENSES/MIT.txt](LICENSES/MIT.txt)). **Every emblem is drawn for this package** (`source: "ours"`, `"generated"` or `"drawn"` in `emblemInfo`) or made by its own code, and so is under the same MIT licence. Nothing is copied from another project: no icon set, no emoji font, no clip art and no photograph is in the package, so there is no third-party licence to carry and none is shipped (`LICENSES/` holds the MIT text and nothing else).
 
-No emblem carries the name, mark or logo of a league, a team, a federation or an event: the trophies, crests and balls are descriptive and generic.
+No emblem carries the name, mark or logo of a league, a team, a federation or an event: the trophies, crests, balls and gear are descriptive and generic. That includes the Japanese items (`trophy:sumo-cup`, `trophy:championship-banner` and the `gear:*` of sumo, kendo, judo, kyudo and karate): they are original drawings of what such an object looks like, with generic ids, and carry no trophy's name, no federation's mark and no lettering unless the caller gives some.
 
-## The sources the art may come from
+## How the art is made
 
-| Source | What it is | Licence | Text kept in | Credit it asks for |
-| --- | --- | --- | --- | --- |
-| Material Symbols, Google (https://fonts.google.com/icons) | Icons as paths | Apache License 2.0 | [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt) | None required; named here |
-| Noto Emoji and Noto Color Emoji, Google (https://github.com/googlefonts/noto-emoji) | Emoji drawings | Apache License 2.0 (the emoji; the fonts are under the SIL OFL 1.1, and none is used) | [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt) | None required; named here |
-| Material Design Icons, Pictogrammers (https://pictogrammers.com/library/mdi/) | Icons as paths | Apache License 2.0 | [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt) | None required; named here |
-| game-icons.net (https://game-icons.net/) | Icons by many authors | Creative Commons Attribution 3.0 | [LICENSES/CC-BY-3.0.txt](LICENSES/CC-BY-3.0.txt) | The author of each icon, with a link to the licence, and a note that it was changed |
-| Drawn for this package | Everything marked `ours` | MIT | [LICENSES/MIT.txt](LICENSES/MIT.txt) | None |
+- The trophies, medals, crests, awards and sport pictograms are drawn in SVG by hand in a simplified, generic form. No real trophy, medal, logo, mark or engraving was copied or traced, and no photograph was traced (photographs were looked at, never copied).
+- The balls (`src/emblems/ball/`) are drawn by this package's own code: a rotation, a projection and our own geometry (a seam curve, the truncated icosahedron, a layout of curved panels, a fitted basketball channel).
+- The gear (`src/emblems/gear/`) is drawn by us from a list of parts (a path, a colour, how it reads as a line); the bow, the arrow and the other tapering shapes are made by a small function of ours (`swell`), and the rest are paths written for this package.
+- The Japanese words for the Japanese items are the ones the sports' governing bodies use in their own rules and equipment lists (kendo, judo, kyudo and karate federations and the sumo association); the bodies' names and marks are not used in any id, title or drawing.
 
-## The emblems made from a source
+## The balls' sizes
 
-Sixteen emblems are Material Symbols (Google, Apache License 2.0), fetched at a pinned commit by `scripts/fetch-material-symbols.mjs` (`src/emblems/emblem.material.data.ts` is its output) and not changed, except that the metal style paints the filled symbol with a gradient and a darker edge, and the line style draws the outlined symbol. The package has no runtime dependency on them. Copyright Google LLC; the licence text is [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt).
-
-| Emblem | Made from | Author | How it was changed | Licence |
-| --- | --- | --- | --- | --- |
-| `trophy:cup` | Material Symbols `emoji_events` | Google | Painted by the metal style | Apache-2.0 |
-| `award:medal` | Material Symbols `military_tech` | Google | Painted by the metal style | Apache-2.0 |
-| `award:badge` | Material Symbols `workspace_premium` | Google | Painted by the metal style | Apache-2.0 |
-| `award:crown` | Material Symbols `crown` | Google | Painted by the metal style | Apache-2.0 |
-| `award:star` | Material Symbols `star` | Google | Painted by the metal style | Apache-2.0 |
-| `award:shield` | Material Symbols `shield` | Google | Painted by the metal style | Apache-2.0 |
-| `sport:nfl`, `sport:cfl`, `sport:ifaf` | Material Symbols `sports_football` | Google | Drawn in the page's ink | Apache-2.0 |
-| `sport:nhl` | Material Symbols `sports_hockey` | Google | Drawn in the page's ink | Apache-2.0 |
-| `sport:nba` | Material Symbols `sports_basketball` | Google | Drawn in the page's ink | Apache-2.0 |
-| `sport:mlb` | Material Symbols `sports_baseball` | Google | Drawn in the page's ink | Apache-2.0 |
-| `sport:soccer` | Material Symbols `sports_soccer` | Google | Drawn in the page's ink | Apache-2.0 |
-| `sport:tennis` | Material Symbols `sports_tennis` | Google | Drawn in the page's ink | Apache-2.0 |
-| `sport:volleyball` | Material Symbols `sports_volleyball` | Google | Drawn in the page's ink | Apache-2.0 |
-| `sport:cricket` | Material Symbols `sports_cricket` | Google | Drawn in the page's ink | Apache-2.0 |
-| `sport:rugby` | Material Symbols `sports_rugby` | Google | Drawn in the page's ink | Apache-2.0 |
-| `sport:handball` | Material Symbols `sports_handball` | Google | Drawn in the page's ink | Apache-2.0 |
-
-The other trophies, the medals, the place badges, the crests, the other sport pictograms and every ball are drawn for this package, under its MIT licence. The trophies are drawn in SVG by hand in a simplified, generic form; no real trophy, medal, logo, mark or engraving was copied or traced, and no photograph was traced (photographs were looked at, never copied).
-
-## The balls and the gear
-
-The balls (`src/emblems/ball/`) are drawn by this package's own code: a rotation, a projection and our own geometry (a seam curve, the truncated icosahedron, a layout of curved panels, a fitted basketball channel). No picture is copied for them. The sizes they carry (`size` on each ball: the diameter or length, the circumference and the mass, with the rule they come from) are facts read from the rulebooks listed below; no text, table or drawing of a rulebook is copied.
-
-Some of the gear (`src/emblems/gear/`) is drawn by us (22 pieces: rackets, sticks, skates, the athletics and pool gear, the nets and posts: `source: "drawn"`). The rest is copied, with changes, from the open artwork below, each module naming its source, its pinned version and the SHA-256 of the file as published in its header, and each drawing carrying its credit in a `<desc>`. The changes are the ones the Apache-2.0 licence asks to have marked: the editors' wrappers and metadata removed, the coordinates written absolute and rounded, the ids renamed; for the glove, the black background square left out and the shape filled with leather and shaded; for the goalie mask, a pale face laid under the ink. `scripts/dougu/fetch-gear.mjs` fetches the files again from the pinned versions and checks their hashes; `scripts/dougu/build-gear.mjs` writes the modules from them. The full licence texts are in [LICENSES/](LICENSES/): [Apache-2.0](LICENSES/Apache-2.0.txt), [MIT](LICENSES/MIT.txt) (this package) and [CC BY 3.0](LICENSES/CC-BY-3.0.txt), and each upstream's own licence file as found in [LICENSES/upstream/](LICENSES/upstream/).
-
-| Gear | Artwork | Licence | Copyright or credit, as read | Line style from |
-| --- | --- | --- | --- | --- |
-| `gear:hockey-stick` | Noto Emoji: [`2D/svg/emoji_u1f3d2.svg`](https://github.com/googlefonts/noto-emoji/blob/e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e/2D/svg/emoji_u1f3d2.svg) | Apache-2.0 | Copyright 2013 Google, Inc. All Rights Reserved. | Pictogrammers MDI `svg/hockey-sticks.svg` (Apache-2.0, icon by Google) |
-| `gear:field-hockey-stick` | Noto Emoji: [`2D/svg/emoji_u1f3d1.svg`](https://github.com/googlefonts/noto-emoji/blob/e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e/2D/svg/emoji_u1f3d1.svg) | Apache-2.0 | Copyright 2013 Google, Inc. All Rights Reserved. | Commons `Field_hockey_stick_with_ball_Pinhead_icon.svg` (CC0) |
-| `gear:lacrosse-stick` | Noto Emoji: [`2D/svg/emoji_u1f94d.svg`](https://github.com/googlefonts/noto-emoji/blob/e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e/2D/svg/emoji_u1f94d.svg) | Apache-2.0 | Copyright 2013 Google, Inc. All Rights Reserved. | worked out from the colour artwork |
-| `gear:cricket-bat` | Noto Emoji: [`2D/svg/emoji_u1f3cf.svg`](https://github.com/googlefonts/noto-emoji/blob/e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e/2D/svg/emoji_u1f3cf.svg) | Apache-2.0 | Copyright 2013 Google, Inc. All Rights Reserved. | Pictogrammers MDI `svg/cricket.svg` (Apache-2.0, icon by Google) |
-| `gear:table-tennis-paddle` | Noto Emoji: [`2D/svg/emoji_u1f3d3.svg`](https://github.com/googlefonts/noto-emoji/blob/e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e/2D/svg/emoji_u1f3d3.svg) | Apache-2.0 | Copyright 2013 Google, Inc. All Rights Reserved. | Pictogrammers MDI `svg/table-tennis.svg` (Apache-2.0, icon by Google) |
-| `gear:badminton-racket` | Noto Emoji: [`2D/svg/emoji_u1f3f8.svg`](https://github.com/googlefonts/noto-emoji/blob/e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e/2D/svg/emoji_u1f3f8.svg) | Apache-2.0 | Copyright 2013 Google, Inc. All Rights Reserved. | Pictogrammers MDI `svg/badminton.svg` (Apache-2.0, icon by Nick) |
-| `gear:tennis-racket` | Noto Emoji: [`2D/svg/emoji_u1f3be.svg`](https://github.com/googlefonts/noto-emoji/blob/e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e/2D/svg/emoji_u1f3be.svg) | Apache-2.0 | Copyright 2013 Google, Inc. All Rights Reserved. | Pictogrammers MDI `svg/tennis.svg` (Apache-2.0, icon by Google) |
-| `gear:goal-net` | Noto Emoji: [`2D/svg/emoji_u1f945.svg`](https://github.com/googlefonts/noto-emoji/blob/e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e/2D/svg/emoji_u1f945.svg) | Apache-2.0 | Copyright 2013 Google, Inc. All Rights Reserved. | worked out from the colour artwork |
-| `gear:football-helmet` | Wikimedia Commons: [`FootballHelmet.svg`](https://commons.wikimedia.org/wiki/File:FootballHelmet.svg) | CC0 | Author: Simanek / Credit: https://openclipart.org/detail/86827/football-helmet | Pictogrammers MDI `svg/football-helmet.svg` (Apache-2.0, icon by Austin Andrews) |
-| `gear:goalie-mask` | Wikimedia Commons: [`Hockey Mask (188584) - The Noun Project.svg`](https://commons.wikimedia.org/wiki/File:Hockey_Mask_(188584)_-_The_Noun_Project.svg) | CC0 | Author: Philippe Tardif / Credit: Noun Project - https://thenounproject.com/icon/188584 | worked out from the colour artwork |
-| `gear:baseball-glove` | game-icons.net: [`delapouite/baseball-glove.svg`](https://game-icons.net/1x1/delapouite/baseball-glove.html) | CC BY 3.0 | Baseball glove icon by Delapouite under CC BY 3.0 | the same artwork as ink |
-
-- **Noto Emoji** ([googlefonts/noto-emoji](https://github.com/googlefonts/noto-emoji), read at commit `e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e`): the files under `2D/svg/` only. Their licence is `2D/svg/LICENSE`, the Apache License 2.0, whose copyright line reads "Copyright 2013 Google, Inc. All Rights Reserved." The repository's root `LICENSE` is the SIL Open Font License 1.1 ("Copyright 2013 Google LLC") and governs the fonts, not these images; `2D/fonts/LICENSE` is also the OFL and has no copyright line. None of the fonts is used.
-- **Pictogrammers Material Design Icons** ([Templarian/MaterialDesign-SVG](https://github.com/Templarian/MaterialDesign-SVG), read at commit `9e04201d4557e729822fb57f62a316c3dea1d4a8`): used only for the one-path line versions. The repository's `LICENSE` is the "Pictogrammers Free License", which has no copyright line and says the icons are redistributed under the Apache License 2.0 or their respective licences; the repository's `package.json` names Austin Andrews as author and Apache-2.0 as the licence, and each icon's author is in its `meta.json` (Google, Nick, Austin Andrews). Treated as Apache-2.0, with the icon's author credited.
-- **Wikimedia Commons**: only files whose own file page says CC0 or Public domain, read on 2026-10-14 with the MediaWiki API and the page itself: `FootballHelmet.svg` (CC0, Simanek, via Openclipart), `Field hockey stick with ball Pinhead icon.svg` (CC0, Quincy Morgan and the Temaki contributors, Pinhead v12.0.0) and `Hockey Mask (188584) - The Noun Project.svg` (CC0, Philippe Tardif). The revisions are in `scripts/dougu/gear-assets.json`.
-- **game-icons.net** ([game-icons/icons](https://github.com/game-icons/icons), read at commit `82d948812bfe3f269ef8f731dcdb07b08160edc4`): "Baseball glove icon by Delapouite under CC BY 3.0" (https://delapouite.com; licence https://creativecommons.org/licenses/by/3.0/). The repository has no `LICENSE`; its `license.txt` says "Icons provided under the Creative Commons 3.0 BY or CC0 if mentioned below" and asks for a mention such as "Icons made by {author}"; the credit is in the drawing's `<desc>` and here: Icons made by Delapouite. Available on https://game-icons.net.
+The sizes the balls carry (`size` on each ball: the diameter or length, the circumference and the mass, with the rule they come from) are facts read from the rulebooks listed below; no text, table or drawing of a rulebook is copied.
 
 ### The rulebooks the balls' sizes are read from
 

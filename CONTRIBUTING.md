@@ -22,10 +22,11 @@ Bug reports and ideas go in the
   logo or engraving. Look at a contact sheet (`node scripts/emblem-sheet.mjs sheet.png trophy/<name>`) at 256, 64 and 16 pixels, light and dark.
 - **Japanese names are read** by someone who reads Japanese before they ship.
 - **Test what you change.** Tests sit in `test/`. A rule you change has a test that would have caught it.
-- **Art is shipped only when its licence lets it be**, with the notice kept in `NOTICE.md` and the licence text in `LICENSES/`.
-  Allowed: art drawn for this package, Apache-2.0 (Material Symbols, Noto, Pictogrammers MDI), CC BY 3.0 (game-icons.net, with
-  each author credited), CC0, public domain. No GPL or LGPL, no non-commercial or no-derivatives licence, and no logo or mark of a
-  league, team or federation: every emblem is generic.
+- **Art is drawn for this package, never copied.** No icon set, emoji, clip art or photograph goes in, so `LICENSES/` holds the MIT text and nothing
+  else, and `NOTICE.md` has no sources to list (it keeps the rulebooks the balls' sizes are read from: facts, not art). No logo or mark of a league,
+  team or federation: every emblem is generic.
+- **Names are short.** An emblem's `en` and `ja` are its accessible name (the `<title>` a screen reader reads): about 26 characters at most in English
+  and 12 in Japanese. What does not fit goes in `src/emblems/emblem.descriptions.ts`, for the docs and the gallery.
 - **`docs/gallery.md` is made from the package**: `pnpm gallery` rewrites it, and `pnpm test:readme` checks it.
 - **A README table, example or count that a test holds to the code** changes together with the code: `pnpm test:readme` runs
   every example of the README and of `docs/`, and checks that the README names every export.

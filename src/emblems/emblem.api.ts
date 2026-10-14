@@ -4,6 +4,7 @@ import type { Emblem, EmblemOptions, EmblemStyle, EmblemTheme, FrameOptions } fr
 import { EMBLEM_STYLES } from "./emblem.core.ts";
 import { BALL_IDS, CREST_SHAPES, EMBLEM_ALIASES, EMBLEM_IDS, type BallId, type CrestShape, type EmblemId, type MedalKind, type SportName } from "./emblem.ids.ts";
 import type { PieceSize } from "./ball/ball.core.ts";
+import { EMBLEM_DESCRIPTIONS, type EmblemDescription } from "./emblem.descriptions.ts";
 import { EMBLEM_TABLE } from "./emblem.registry.ts";
 
 /** What can name an emblem: an id, a short name (`"cup"` for `"trophy:cup"`), either with a style (`"trophy:cup/line"`), or the emblem itself. */
@@ -95,13 +96,16 @@ export interface EmblemInfo {
   kind: Emblem["kind"];
   /** A ball's or an implement's official size, with the rule it is from, where the rulebook gives one. */
   size?: PieceSize;
+  /** What is drawn, in more words than the short name (which is the accessible name), for the docs and a gallery; not every emblem has one. */
+  description?: EmblemDescription;
 }
 
 /** The names, source and kind of an emblem. */
 export function emblemInfo(id: EmblemId): EmblemInfo {
   const e = EMBLEM_TABLE[id];
   const size = (e as { size?: PieceSize }).size;
-  return size === undefined ? { id, en: e.en, ja: e.ja, source: e.source, kind: e.kind } : { id, en: e.en, ja: e.ja, source: e.source, kind: e.kind, size };
+  const description = EMBLEM_DESCRIPTIONS[id];
+  return { id, en: e.en, ja: e.ja, source: e.source, kind: e.kind, ...(size === undefined ? {} : { size }), ...(description === undefined ? {} : { description }) };
 }
 
 /** An emblem's name in a language. */

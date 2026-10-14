@@ -45,8 +45,8 @@ export const METALS = { gold: "#d9a620", silver: "#aeb6c0", bronze: "#b8733a" } 
 /** A metal by name, or `flat` for a colour that is no metal (a crest's blue, a sport's plain ink). */
 export type Metal = keyof typeof METALS | "flat";
 
-/** Where an emblem's art comes from: drawn for this package (`ours`) or taken from a source listed in NOTICE.md. */
-export type EmblemSource = "ours" | "material" | "generated" | "drawn" | "noto" | "mdi" | "commons" | "gameicons";
+/** Where an emblem's art comes from: drawn for this package (`ours`, `drawn`) or made by this package's own code (`generated`). Nothing is copied from another project. */
+export type EmblemSource = "ours" | "generated" | "drawn";
 /** What an emblem is: a flat object (a front and a back, to flip), a ball (a sphere or a solid, turned in 3D), a body of revolution (`lathe`), an icon (one drawing, not turned) or a piece of gear (a flat drawing, not turned). */
 export type EmblemKind = "flat" | "ball" | "lathe" | "icon" | "gear";
 

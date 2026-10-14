@@ -1,7 +1,7 @@
 // Ice skates drawn by us, all facing right: a hockey skate, a figure skate and a speed skate.
 import { capsule, drawn, rect, seg } from "./gear.core.ts";
 
-export const GEAR_HOCKEY_SKATE = /* @__PURE__ */ drawn("gear:hockey-skate", "Hockey skate", "アイスホッケーのスケート靴", {
+export const GEAR_HOCKEY_SKATE = /* @__PURE__ */ drawn("gear:hockey-skate", "Hockey skate", "アイスホッケースケート", {
   main: "#232a36",
   accent: "#d4202c",
   parts: [

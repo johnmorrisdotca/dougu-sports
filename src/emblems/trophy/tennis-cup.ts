@@ -2,7 +2,7 @@
 import { defineLathe } from "../emblem.lathe.ts";
 
 /** A two-handled cup with a lid and a small pineapple finial. */
-export const TROPHY_TENNIS_CUP = /* @__PURE__ */ defineLathe("trophy:tennis-cup", "Two-handled cup with a pineapple", "取っ手が二つあり、ふたにパイナップルの飾りが付いたカップ", "ours", {
+export const TROPHY_TENNIS_CUP = /* @__PURE__ */ defineLathe("trophy:tennis-cup", "Pineapple cup", "パイナップル飾りのカップ", "ours", {
   metal: "gold",
   tones: { dark: "#2b2f36" },
   solids: [

@@ -14,7 +14,7 @@ console.log(metal.includes("linearGradient"), line.includes("linearGradient"), l
 
 ## The three styles
 
-- **`metal`** (the default) is polished metal, drawn the way Material and Fluent icons are: clean shapes, no heavy black outline. Each round part has its own shading, a dark edge, a bright band left of the middle, the metal, a darker side and a faint light from the rim; a narrow highlight runs down it; a step or a ledge shows its top as a lighter ring; and the edge of a part is a darker tone of the metal, so the drawing holds on a white page and on a dark one.
+- **`metal`** (the default) is polished metal, drawn the way modern icon sets are: clean shapes, no heavy black outline. Each round part has its own shading, a dark edge, a bright band left of the middle, the metal, a darker side and a faint light from the rim; a narrow highlight runs down it; a step or a ledge shows its top as a lighter ring; and the edge of a part is a darker tone of the metal, so the drawing holds on a white page and on a dark one.
 - **`line`** is one clean outline in `currentColor`, with the small details left out, so that it takes the page's text colour and reads at 14 pixels. `"trophy:hockey-cup/line"` is the same as `{ style: "line" }`; the option wins if both are given.
 - **`color`** is flat fills of the same tones, with no gradient.
 
@@ -47,7 +47,7 @@ Ten of them stand for the cup of a league or a sport, in a generic form that a r
 | `trophy:cricket-urn` | A small terracotta urn with square handles, on a wooden base |
 | `trophy:rugby-cup` | A gilded two-handled cup with a lid and a tall finial |
 
-The rest are the plain `trophy:lidded-cup`, `trophy:bowl`, `trophy:salver`, `trophy:globe` and `trophy:soccer-ball`, the Material cup `trophy:cup`, and the flat `trophy:plaque`, `trophy:belt`, `trophy:laurel` and `trophy:rosette`.
+The rest are the plain `trophy:lidded-cup`, `trophy:bowl`, `trophy:salver`, `trophy:globe` and `trophy:soccer-ball`, the plain two-handled cup `trophy:cup`, and the flat `trophy:plaque`, `trophy:belt`, `trophy:laurel` and `trophy:rosette`. The two Japanese ones, `trophy:sumo-cup` and `trophy:championship-banner`, are in [japanese-sports.md](japanese-sports.md).
 
 ## Medals, crests and pictograms
 
@@ -64,16 +64,16 @@ console.log(shield.includes(">HC<"), gold.includes("<title>Gold medal</title>"),
 // true true true
 ```
 
-- **Pictograms** (`sport:*`) are one for each of the thirty-three sports: twelve are Material Symbols icons and the rest are drawn here, each as the equipment (a stone, a shuttlecock, a racket, a net, a stick, an oval ball). They are drawn in the page's ink, and the metal style gives them a grey sheet when they are tinted.
-- **Awards** (`award:*`) are Material Symbols: a medal, a badge, a crown, a star and a shield, painted with the metal gradient and an edge in the metal style.
+- **Pictograms** (`sport:*`) are one for each of the thirty-eight sports, all drawn here, each as the equipment (a stone, a shuttlecock, a racket, a net, a stick, an oval ball, and for the Japanese sports a war fan, a helmet, a suit, a bow, a fist). They are drawn in the page's ink, and the metal style gives them a grey sheet when they are tinted.
+- **Awards** (`award:*`) are a medal on a ribbon, a badge, a crown, a star and a shield, drawn here and painted with the metal gradient, a bevel and an edge of the metal's own darker tone in the metal style, in flat fills in `color` and as one outline in `line`.
 
 ## Balls and gear
 
-`ball:*` (47 balls and implements) and `gear:*` (33 pieces of equipment) come from their own engines, described in [src/emblems/README.md](../src/emblems/README.md): a ball is drawn in true 3D (a rotation, a projection, panels cut at the limb, shading and a grain that stays where it is while the ball turns), and carries the official size of the rulebook it is from, which `lineup` draws at (a puck beside a basketball looks right). Gear is a flat drawing, drawn here or copied from open icon sets, each credited in its own `<desc>`. A prolate ball (a football, a rugby ball) is drawn to a point at its ends.
+`ball:*` (47 balls and implements) and `gear:*` (42 pieces of equipment) come from their own engines, described in [src/emblems/README.md](../src/emblems/README.md): a ball is drawn in true 3D (a rotation, a projection, panels cut at the limb, shading and a grain that stays where it is while the ball turns), and carries the official size of the rulebook it is from, which `lineup` draws at (a puck beside a basketball looks right). Gear is a flat drawing in layers, all of it drawn here: in `metal` each part is edged in a darker tone of itself and shaded across and along, in `color` the fills are flat, and in `line` it is one outline in the page's ink. A piece of gear flips like a coin when it is turned. A prolate ball (a football, a rugby ball) is drawn to a point at its ends.
 
 ![The 47 balls and implements, in colour at three sizes and as line drawings, on a light page.](pieces/balls-light.webp)
 
-![The 33 pieces of gear, in colour at three sizes and as line drawings, on a light page.](pieces/gear-light.webp)
+![The 42 pieces of gear, in colour at three sizes and as line drawings, on a light page.](pieces/gear-light.webp)
 
 ```js
 import { emblemInfo, lineup } from "@johnmorrisdotca/dougu-sports/emblems";
@@ -88,4 +88,4 @@ console.log(lineup(["ball:golf", "ball:tennis", "ball:soccer"], { height: 80 }).
 
 ## Where the art comes from
 
-Sixteen emblems are Material Symbols (Apache 2.0), fetched at a pinned commit by `scripts/fetch-material-symbols.mjs`; some gear is copied from Noto Emoji, Wikimedia Commons (CC0) and game-icons.net (CC BY 3.0), with its licence and credit; everything else is drawn for this package. [NOTICE.md](../NOTICE.md) has every source, licence and change, and [references.md](references.md) what the sizes and the looks were read from.
+Every emblem is drawn for this package, and nothing is copied from another project. Earlier versions used sixteen Material Symbols icons and some gear from Noto Emoji, Wikimedia Commons and game-icons.net; all of it has been redrawn, and the third-party art, the scripts that fetched it and its licence files are gone. [NOTICE.md](../NOTICE.md) says so, and [references.md](references.md) says what the sizes and the looks were read from.

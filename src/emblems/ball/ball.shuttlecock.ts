@@ -82,7 +82,7 @@ const VIEW = { yaw: 0, pitch: 22, roll: -32 };
 export const BALL_SHUTTLECOCK_FEATHER = /* @__PURE__ */ defineObject({
   id: "ball:shuttlecock-feather",
   en: "Shuttlecock, feather",
-  ja: "シャトルコック（水鳥の羽根）",
+  ja: "水鳥シャトル",
   size: { extentMm: 150, diameterMm: 63, lengthMm: 66, massG: [4.74, 5.5], rule: "BWF Laws of Badminton, Law 2 Shuttle (2.1 general, 2.2 Feathered shuttle 2.2.1-2.2.6, 2.3 Non-feathered shuttle, 2.4 modifications) and Laws 3 Testing a shuttle for speed", note: "62 to 70 mm long with the tips on a circle 58 to 68 mm across, on a base 25 to 28 mm across; the box is drawn at the scale of the shuttlecock, which fills a part of it." },
   view: VIEW,
   scale: 0.43,
@@ -94,7 +94,7 @@ export const BALL_SHUTTLECOCK_FEATHER = /* @__PURE__ */ defineObject({
 export const BALL_SHUTTLECOCK_NYLON = /* @__PURE__ */ defineObject({
   id: "ball:shuttlecock-nylon",
   en: "Shuttlecock, nylon",
-  ja: "シャトルコック（ナイロン）",
+  ja: "ナイロンシャトル",
   size: { extentMm: 150, diameterMm: 63, lengthMm: 66, massG: [4.74, 5.5], rule: "BWF Laws of Badminton, Law 2 Shuttle (2.1 general, 2.2 Feathered shuttle 2.2.1-2.2.6, 2.3 Non-feathered shuttle, 2.4 modifications) and Laws 3 Testing a shuttle for speed", note: "A non-feathered shuttle follows the same measures, with a tolerance of 10 per cent (Law 2.3); the box is drawn at the scale of the shuttlecock, which fills a part of it." },
   view: VIEW,
   scale: 0.43,

@@ -4,9 +4,9 @@ import { test } from "node:test";
 
 import * as D from "../src/index.ts";
 
-test("there are thirty-three sports, named once, in lower case", () => {
-  assert.equal(D.SPORT_NAMES.length, 33);
-  assert.equal(new Set(D.SPORT_NAMES).size, 33);
+test("there are thirty-eight sports, named once, in lower case", () => {
+  assert.equal(D.SPORT_NAMES.length, 38);
+  assert.equal(new Set(D.SPORT_NAMES).size, 38);
   for (const name of D.SPORT_NAMES) assert.match(name, /^[a-z]+$/);
 });
 
