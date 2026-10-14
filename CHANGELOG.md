@@ -6,6 +6,14 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-10-14
+
+The printed pucks take the same flag renderer as taisen-brackets.
+
+### Changed
+
+- **The puck's flag renderer is the one taisen-brackets takes.** `flags` is now an option of the call (`renderEmblem`, `emblemFrame`, `ballFrame`), beside `face`, and no longer a field of `face`; it is called `flags(code, { shape: "round" | "square" | "rect", size, theme: "inherit" | "light" | "dark" })` (the puck asks for `"rect"`), may return `null` or `undefined` for a code it has no flag for, and is synchronous, so one adapter over hata serves every package. New types `FlagRequest` and `FlagShape`. `FlagRenderer` changed accordingly; the 0.4.0 form (`face.flags`, shapes `4:3`/`1:1`/`round`) is gone.
+
 ## [0.4.0] - 2026-10-14
 
 Printed pucks: eight souvenir pucks with a print on the top face that turns with the puck, and a `face` option that takes any picture, emblem or flag code. 194 emblems.
@@ -132,7 +140,8 @@ First preview: the name, the API and two sample emblems. The full set of trophie
 - Tests for the drawing, the ids, the turns and the bundle size of one item; a package check that installs the packed tarball and bundles one item from it.
 - The demo (a playground with a turn slider, and a gallery page), `docs/layout.md`, `docs/turning.md`, `docs/gallery.md`, the family header and footer, the CI, Pages and Release workflows, and `LICENSES/` and `NOTICE.md` ready for third-party art.
 
-[Unreleased]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.3.2...v0.4.0
 [0.3.2]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.3.0...v0.3.1
