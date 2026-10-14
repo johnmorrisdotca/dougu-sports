@@ -6,6 +6,14 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.3.2] - 2026-10-14
+
+The README pictures fill their frames: balls first, then trophies, then gear, each a full grid.
+
+### Changed
+
+- **README pictures are full grids.** The opening picture is now thirty-six balls and pucks in four full rows of nine, followed by one of trophies, medals and crests and one of gear (each light and dark), then a turn strip of four rows of seven and a phone shot of twelve emblems. No row is ragged and there is no empty band. They are webp (made in the browser by `pnpm screenshots`, about 60 to 400 kB each) instead of png.
+
 ## [0.3.1] - 2026-10-14
 
 Nothing is cut off when an emblem turns: every cup and the pieces that were clipped at rest now draw inside their box at every angle.
@@ -108,7 +116,8 @@ First preview: the name, the API and two sample emblems. The full set of trophie
 - Tests for the drawing, the ids, the turns and the bundle size of one item; a package check that installs the packed tarball and bundles one item from it.
 - The demo (a playground with a turn slider, and a gallery page), `docs/layout.md`, `docs/turning.md`, `docs/gallery.md`, the family header and footer, the CI, Pages and Release workflows, and `LICENSES/` and `NOTICE.md` ready for third-party art.
 
-[Unreleased]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.3.2...HEAD
+[0.3.2]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.2.0...v0.2.1
