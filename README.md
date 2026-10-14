@@ -405,7 +405,7 @@ Bug reports and ideas go in the [issues](https://github.com/johnmorrisdotca/doug
 
 ## Changes
 
-See [CHANGELOG.md](./CHANGELOG.md). Nothing is released yet: the scaffold is version 0.0.0.
+See [CHANGELOG.md](./CHANGELOG.md). 0.0.1 is the first preview: the name, the API and two sample emblems; the full set follows.
 
 ## Credits
 
