@@ -15,7 +15,7 @@ Every emblem is `role="img"` with a `<title>`. Two options change it, and they w
 ```js
 import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
 
-console.log(renderEmblem("trophy:hockey-cup", { locale: "ja" }).includes("<title>帯を何段も重ねた背の高い銀のカップ</title>")); // true
+console.log(renderEmblem("trophy:hockey-cup", { locale: "ja" }).includes("<title>段付きの銀カップ</title>")); // true
 console.log(renderEmblem("ball:soccer", { title: "Match ball" }).includes("<title>Match ball</title>")); // true
 console.log(renderEmblem("ball:soccer", { title: "<script>" }).includes("<script>")); // false
 console.log(renderEmblem("ball:soccer", { title: false }).includes("<title>")); // false
@@ -25,7 +25,7 @@ console.log(renderEmblem("ball:soccer", { title: false }).includes("<title>")); 
 
 `emblemDataUri(ref, options?)` returns `data:image/svg+xml;utf8,…` for `img.src`, `background-image: url("…")` and a canvas. It takes the options of `renderEmblem` and one more, `color`.
 
-An image cannot inherit its page's text colour: `currentColor` inside an `<img>` is black. The line style, a sport's pictogram and the Material icons are drawn in `currentColor`, so the ink is settled when the address is made:
+An image cannot inherit its page's text colour: `currentColor` inside an `<img>` is black. The line style, a sport's pictogram and the awards are drawn in `currentColor`, so the ink is settled when the address is made:
 
 | You pass | The ink is |
 | --- | --- |
@@ -159,7 +159,7 @@ const svg = awardCase(
   ],
   { perRow: 5 },
 );
-console.log(svg.includes("<desc>Tall banded silver cup ×4 (1994 to 2010), Gold medal ×12, Shield crest</desc>")); // true
+console.log(svg.includes("<desc>Banded silver cup ×4 (1994 to 2010), Gold medal ×12, Shield crest</desc>")); // true
 console.log(svg.includes("×4") && svg.includes("×12")); // true
 console.log(awardCase([{ emblem: "medal:gold" }], { locale: "ja" }).includes("<title>トロフィーケース</title>")); // true
 ```

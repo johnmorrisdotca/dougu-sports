@@ -9,7 +9,7 @@ test("the cards draw, with a button that copies the call, and the page does not 
   await page.goto("/compose.html");
   for (const id of ["podium", "case", "sprite", "uri", "equipment"]) await expect(page.getByTestId(id)).toBeVisible();
   await expect(page.getByTestId("podium").locator("svg[role=img] > title").first()).toHaveText("Podium");
-  await expect(page.getByTestId("case").locator("svg[role=img] > desc")).toContainText("Tall banded silver cup ×4");
+  await expect(page.getByTestId("case").locator("svg[role=img] > desc")).toContainText("Banded silver cup ×4");
   const card = page.getByTestId("podium");
   await card.getByRole("button", { name: /Copy the call/ }).click();
   await expect(card.getByRole("button", { name: /Copy the call/ })).toHaveText("Copied");

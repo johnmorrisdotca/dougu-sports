@@ -14,4 +14,5 @@ export const TROPHY_BASKETBALL = /* @__PURE__ */ defineLathe("trophy:basketball"
     },
   ],
   balls: [{ kind: "basket", cy: 12.4, r: 10 }],
+  plate: { y0: 54.2, y1: 58.4 },
 });

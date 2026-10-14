@@ -1,6 +1,7 @@
 // Gear: pieces of equipment drawn flat from a list of parts (a path, a colour, how it reads as a line), in the same three styles as the trophies: `metal` (a fill shaded across and along, edged in a darker tone
-// of itself), `color` (flat fills with the same edges) and `line` (`currentColor`). A piece turns like a coin: squeezed by the cosine of the yaw, and mirrored past a quarter turn. Self-contained: it imports
-// only the shared option and colour helpers of the ball folder.
+// of itself), `color` (flat fills with the same edges) and `line` (`currentColor`). A piece turns like a coin through the one turn every flat drawing shares (emblem.flip.ts): squeezed by the cosine of the yaw,
+// its back mirrored, with a thin rim. Self-contained: it imports only the shared option and colour helpers of the ball folder and the coin-flip turn.
+import { flipSvg } from "../emblem.flip.ts";
 import { type BallFrameOptions, type Piece, type PieceOptions, type PieceSize, type PieceSource, escape, hashOf, labelled, mix, num, readColour, resolveOptions, wrapPiece } from "../ball/ball.core.ts";
 
 /** One part of a drawn piece. */
@@ -44,30 +45,22 @@ export interface GearDef<Model = unknown> {
   source: PieceSource;
   size?: PieceSize;
   model: Model;
-  draw: (options: PieceOptions | undefined, turn?: Turn) => string;
+  draw: (options: PieceOptions | undefined) => string;
 }
 
-/** How much a flat piece is squeezed across and down when it is turned: the cosine of the yaw (negative past a quarter turn, which mirrors it) and of the pitch. */
-export interface Turn {
-  sx: number;
-  sy: number;
-}
+/** A turn in degrees, as a finite number (0 for anything else). */
+const turn = (value: number | undefined): number => (typeof value === "number" && Number.isFinite(value) ? value % 360 : 0);
 
-const turnOf = (yaw: number | undefined, pitch: number | undefined): Turn | undefined => {
-  const cosine = (degrees: number | undefined): number => (typeof degrees === "number" && Number.isFinite(degrees) ? Math.cos(((degrees % 360) * Math.PI) / 180) : 1);
-  const sx = cosine(yaw);
-  const sy = Math.abs(cosine(pitch));
-  if (sx === 1 && sy === 1) return undefined;
-  return { sx: Math.abs(sx) < 0.03 ? (sx < 0 ? -0.03 : 0.03) : sx, sy: Math.max(sy, 0.03) };
-};
+/** A piece of gear turned like a coin: a flat cut-out with a front, a mirrored back and a thin rim. */
+const flip = (draw: (options: PieceOptions | undefined) => string) => (o: BallFrameOptions | undefined): string => flipSvg(draw(o), { yaw: turn(o?.yaw), pitch: turn(o?.pitch), line: o?.style === "line", thick: 0.025 });
 
-/** A piece of gear from its drawing function. Turned, it flips like a coin: the drawing squeezed by the cosine of the turn, and mirrored on its back. */
+/** A piece of gear from its drawing function. Turned, it flips like a coin (`flipSvg`): the front, then its mirrored back, with a thin rim. */
 export function defineGear<Model>(def: GearDef<Model>): Piece<Model> {
-  return { id: def.id, en: def.en, ja: def.ja, source: def.source, kind: "gear", model: def.model, size: def.size, svg: labelled(def.en, def.ja, (o?: PieceOptions) => def.draw(o)), frame: labelled(def.en, def.ja, (o?: BallFrameOptions) => def.draw(o, turnOf(o?.yaw, o?.pitch))) };
+  return { id: def.id, en: def.en, ja: def.ja, source: def.source, kind: "gear", model: def.model, size: def.size, svg: labelled(def.en, def.ja, (o?: PieceOptions) => def.draw(o)), frame: labelled(def.en, def.ja, flip(def.draw)) };
 }
 
-/** A drawn piece: its parts become a document in the metal, color or line style, whole or turned. */
-export function drawGear(id: string, title: string, spec: GearSpec, options: PieceOptions | undefined, turn?: Turn): string {
+/** A drawn piece: its parts become a document in the metal, color or line style, whole or turned (the turn is `flipSvg`'s). */
+export function drawGear(id: string, title: string, spec: GearSpec, options: PieceOptions | undefined): string {
   const o = resolveOptions(options);
   const line = o.style === "line";
   const flat = options?.style === "color";
@@ -113,10 +106,8 @@ export function drawGear(id: string, title: string, spec: GearSpec, options: Pie
     (along ? `<linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></linearGradient>` : "") +
     (across ? `<linearGradient id="${gid}c" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".34"/><stop offset=".26" stop-color="#fff" stop-opacity=".5"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset=".88" stop-color="#000" stop-opacity=".22"/><stop offset="1" stop-color="#000" stop-opacity=".4"/></linearGradient>` : "");
   const box = spec.box ?? "0 0 64 64";
-  const [x0, y0, bw, bh] = box.split(" ").map(Number) as [number, number, number, number];
   const inner = line ? `<g stroke-linecap="round" stroke-linejoin="round">${body}</g>` : `<g stroke-linecap="round">${body}</g>`;
-  const g = turn === undefined ? inner : `<g transform="translate(${num(x0 + bw / 2, 2)} ${num(y0 + bh / 2, 2)}) scale(${num(turn.sx, 3)} ${num(turn.sy, 3)}) translate(${num(-x0 - bw / 2, 2)} ${num(-y0 - bh / 2, 2)})">${inner}</g>`;
-  return wrapPiece({ title: escape(title), size: o.size, theme: o.theme, defs, body: g, box });
+  return wrapPiece({ title: escape(title), size: o.size, theme: o.theme, defs, body: inner, box });
 }
 
 /** The pieces' drawing helpers: shapes written as path strings. */
@@ -139,7 +130,7 @@ export function capsule(x1: number, y1: number, x2: number, y2: number, w: numbe
 
 /** A piece we drew: the common case of `defineGear`. */
 export function drawn(id: string, en: string, ja: string, spec: GearSpec, size?: PieceSize): Piece<GearSpec> {
-  return defineGear({ id, en, ja, source: "drawn", size, model: spec, draw: (o, turn) => drawGear(id, en, spec, o, turn) });
+  return defineGear({ id, en, ja, source: "drawn", size, model: spec, draw: (o) => drawGear(id, en, spec, o) });
 }
 
 /** The strings of a racket's head: a grid of lines clipped to an ellipse. */

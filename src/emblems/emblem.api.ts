@@ -162,3 +162,41 @@ export function sportIcon(sport: SportName, options?: EmblemOptions): string {
   if (e === undefined) throw new Error(`Unknown sport "${String(sport).slice(0, 40)}": the icons are for the names in SPORT_NAMES.`);
   return e.svg(options);
 }
+
+/** What `pennant` takes. */
+export interface PennantOptions {
+  /** The felt, the stitching, and the lettering (the stitching's colour unless a third is given), as hex colours or `rgb()`. */
+  colors?: string | readonly [felt?: string, stitching?: string, lettering?: string];
+  /** The words, in capitals ("Champions", "優勝"); more than one line with line breaks. The engraving options `label`, `rank` and `year` work too. */
+  text?: string;
+  /** The label and rank, as for any engraving: ignored when `text` is given. */
+  label?: string;
+  rank?: number | string;
+  /** The year, in smaller letters under the words. */
+  year?: number | string;
+  /** `"front"` (the default) or `"back"`: plain felt, with the dowel on the other side. */
+  view?: "front" | "back";
+  size?: number;
+  style?: EmblemStyle;
+  theme?: EmblemTheme;
+  /** A turn from the resting view, in degrees. */
+  yaw?: number;
+  pitch?: number;
+}
+
+/**
+ * A felt championship pennant with a stitched edge, lettered with its words and its year.
+ * @example
+ * ```ts
+ * import { pennant } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const svg = pennant({ colors: ["#1f4e8c", "#f2c230"], text: "Champions", year: 2026 });
+ * console.log(svg.includes(">CHAMPIONS<"), svg.includes(">2026<"));
+ * // true true
+ * ```
+ */
+export function pennant(options: PennantOptions = {}): string {
+  const colors = typeof options.colors === "string" ? [options.colors] : (options.colors ?? []);
+  const o: FrameOptions = { tint: colors[0], accent: colors[1], numberColor: colors[2], engrave: options.text, label: options.label, rank: options.rank, year: options.year, view: options.view, size: options.size, style: options.style, theme: options.theme, yaw: options.yaw, pitch: options.pitch };
+  const e = EMBLEM_TABLE["pennant:championship"];
+  return options.yaw === undefined && options.pitch === undefined ? e.svg(o) : e.frame(o);
+}

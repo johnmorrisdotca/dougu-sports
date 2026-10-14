@@ -23,6 +23,7 @@ details > pre { margin: 0; padding: 0 14px 14px; overflow-x: auto; font-family: 
 .cards p { margin: 0 0 8px; font-size: .8rem; }
 .cards p.about { color: var(--muted); }
 .cards .styles, .cards .turns { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; }
+.cards .engraved small { font-size: .8rem; align-self: center; font-family: ui-monospace, monospace; }
 .cards .turns { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--rule); }
 .cards figure { margin: 0; text-align: center; font-size: .75rem; color: var(--muted); }
 .cards svg { display: block; margin: 0 auto 2px; }

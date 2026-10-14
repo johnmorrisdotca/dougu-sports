@@ -8,10 +8,14 @@ const TURNS = [-120, -60, 0, 60, 120];
 function card(id) {
   const info = D.emblemInfo(id);
   const styles = D.EMBLEM_STYLES.map((style) => `<figure>${D.renderEmblem(id, { style, size: 72, grain: false })}<figcaption>${style}</figcaption></figure>`).join("");
-  const turns = info.kind === "icon" ? "" : `<div class="turns" role="group" aria-label="${esc(info.en)} turned">${TURNS.map((yaw) => D.emblemFrame(id, { yaw, size: 48 })).join("")}</div>`;
+  const turns = `<div class="turns" role="group" aria-label="${esc(info.en)} turned">${TURNS.map((yaw) => D.emblemFrame(id, { yaw, size: 48 })).join("")}</div>`;
+  // An emblem that takes an engraving shows one: the front, then turned a third of a turn, then its back.
+  const takes = D.renderEmblem(id, { engrave: "MVP" }) !== D.renderEmblem(id) || D.renderEmblem(id, { year: 2026 }) !== D.renderEmblem(id);
+  const cut = { engrave: "MVP 2026", engraveBack: "2026", size: 72 };
+  const engraved = takes ? `<div class="turns engraved" role="group" aria-label="${esc(info.en)} engraved">${[0, 50, 180].map((yaw) => D.emblemFrame(id, { ...cut, yaw })).join("")}<small>engrave: "MVP 2026"</small></div>` : "";
   const call = `renderEmblem("${id}")`;
   const text = `${id} ${info.en} ${info.ja} ${info.kind} ${info.source} ${info.description?.en ?? ""} ${info.description?.ja ?? ""}`.toLowerCase();
-  return `<li id="${esc(id.replace(":", "-"))}" data-text="${esc(text)}"><h3>${esc(info.en)} <span lang="ja">${esc(info.ja)}</span></h3><p><code>${esc(id)}</code> · ${info.kind} · ${info.source}</p>${info.description === undefined ? "" : `<p class="about">${esc(info.description.en)}<br><span lang="ja">${esc(info.description.ja)}</span></p>`}<div class="styles">${styles}</div>${turns}<p class="copies"><button type="button" class="fam-button copy" data-code="${esc(id)}" aria-label="Copy the id ${esc(id)}">Copy id</button> <button type="button" class="fam-button copy" data-code="${esc(call)}" aria-label="Copy the call for ${esc(id)}">Copy call</button></p></li>`;
+  return `<li id="${esc(id.replace(":", "-"))}" data-text="${esc(text)}"><h3>${esc(info.en)} <span lang="ja">${esc(info.ja)}</span></h3><p><code>${esc(id)}</code> · ${info.kind} · ${info.source}</p>${info.description === undefined ? "" : `<p class="about">${esc(info.description.en)}<br><span lang="ja">${esc(info.description.ja)}</span></p>`}<div class="styles">${styles}</div>${turns}${engraved}<p class="copies"><button type="button" class="fam-button copy" data-code="${esc(id)}" aria-label="Copy the id ${esc(id)}">Copy id</button> <button type="button" class="fam-button copy" data-code="${esc(call)}" aria-label="Copy the call for ${esc(id)}">Copy call</button></p></li>`;
 }
 
 // The Japanese sports and budo are shown together, after the groups, each emblem once.

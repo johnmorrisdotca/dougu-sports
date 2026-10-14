@@ -140,8 +140,8 @@ if (!cupText.includes("trophy:hockey-cup") || cupText.includes("ball:soccer") ||
   console.error("FAIL the bundle of the hockey cup alone holds the wrong emblems");
   process.exit(1);
 }
-if (cupGzip > 6.2 * 1024) {
-  console.error(`FAIL the hockey cup alone bundles to ${cupGzip} bytes gzipped, over 6.2 kB`);
+if (cupGzip > 7.1 * 1024) {
+  console.error(`FAIL the hockey cup alone bundles to ${cupGzip} bytes gzipped, over 7.1 kB`);
   process.exit(1);
 }
 console.log(`ok   one cup, bundled from the installed package: ${cupText.length} bytes, ${cupGzip} gzipped`);

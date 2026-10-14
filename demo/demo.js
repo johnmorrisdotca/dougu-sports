@@ -1,4 +1,4 @@
-// The playground: choose an emblem, a style, a look, a size and a tint, and turn it (drag it, use the sliders or the arrow keys, or press the auto-turn); the drawing and the call that makes it are redrawn.
+// The playground: choose an emblem, a style, a look, a size and a tint, engrave it, and turn it (drag it, use the sliders or the arrow keys, or press the auto-turn); the drawing and the call that makes it are redrawn.
 // The turning is `bindTurn`: the stage is the element it draws into, and the sliders and their readouts follow it both ways.
 import * as D from "./dist/index.js";
 
@@ -16,6 +16,7 @@ const state = {
   size: pick(params.get("size"), ["32", "64", "128", "256"], DEFAULTS.size),
   tint: pick(params.get("tint"), ["", "#c8102e", "#1f4e9c", "#0b6e4f"], DEFAULTS.tint),
   speed: pick(params.get("speed"), ["18", "36", "90"], DEFAULTS.speed),
+  engrave: (params.get("engrave") ?? "").slice(0, 24),
 };
 
 $("emblem").innerHTML = Object.entries(D.EMBLEM_GROUPS)
@@ -29,6 +30,7 @@ function turnOptions() {
   // A spin and a drag turn many times a second: they follow with a slow address. A choice is written at once.
   const options = { style: state.style, size: Number(state.size), theme: state.theme, speed: Number(state.speed), locale: locale(), onTurn: () => sync(false), onPlayChange: () => sync(true) };
   if (state.tint) options.tint = state.tint;
+  if (state.engrave.trim() !== "") options.engrave = state.engrave;
   return options;
 }
 
@@ -47,6 +49,7 @@ function writeAddress() {
   for (const key of ["style", "theme", "size", "tint", "speed"]) if (state[key] !== DEFAULTS[key]) next.set(key, state[key]);
   const a = turner.angles;
   for (const key of ["yaw", "pitch", "roll"]) if (a[key] !== 0) next.set(key, String(a[key]));
+  if (state.engrave.trim() !== "") next.set("engrave", state.engrave);
   try {
     history.replaceState(null, "", next.size === 0 ? location.pathname : `?${next}`);
   } catch {
@@ -72,6 +75,7 @@ function sync(settled = true) {
   const turned = a.yaw !== 0 || a.pitch !== 0 || a.roll !== 0;
   const options = { style: state.style, size: Number(state.size), theme: state.theme };
   if (state.tint) options.tint = state.tint;
+  if (state.engrave.trim() !== "") options.engrave = state.engrave;
   const shown = JSON.stringify(options).replace(/"(\w+)":/g, "$1: ").replace(/,/g, ", ").replace(/^\{/, "{ ").replace(/\}$/, " }");
   const angles = `yaw: ${Math.round(a.yaw)}, pitch: ${Math.round(a.pitch)}${ball && a.roll !== 0 ? `, roll: ${Math.round(a.roll)}` : ""}`;
   $("code").firstChild.textContent = turned && canTurn
@@ -98,6 +102,8 @@ $("emblem").addEventListener("change", () => { state.id = $("emblem").value; dra
 for (const group of ["style", "theme", "size", "tint", "speed"]) {
   $(group).addEventListener("click", (event) => { const b = event.target.closest("button"); if (b) { state[group] = b.dataset.value; draw(); } });
 }
+$("engrave").value = state.engrave;
+$("engrave").addEventListener("input", () => { state.engrave = $("engrave").value; draw(); });
 // A slider takes over from the auto-turn: setAngles pauses it.
 for (const name of ["yaw", "pitch", "roll"]) {
   $(name).addEventListener("input", () => { turner.setAngles({ [name]: Number($(name).value) }); sync(true); });

@@ -12,6 +12,7 @@
     "ball",
     "sports-equipment",
     "sports-icons",
+    "pennant",
     "icons",
     "svg",
     "3d",
@@ -91,6 +92,11 @@
       "types": "./dist/emblems/gear/*.d.ts",
       "import": "./dist/emblems/gear/*.js",
       "default": "./dist/emblems/gear/*.js"
+    },
+    "./pennant/*": {
+      "types": "./dist/emblems/pennant/*.d.ts",
+      "import": "./dist/emblems/pennant/*.js",
+      "default": "./dist/emblems/pennant/*.js"
     }
   },
   "files": [

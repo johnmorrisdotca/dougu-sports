@@ -28,6 +28,8 @@ import { TROPHY_LAUREL } from "./trophy/laurel.ts";
 import { TROPHY_ROSETTE } from "./trophy/rosette.ts";
 import { TROPHY_SUMO_CUP } from "./trophy/sumo-cup.ts";
 import { TROPHY_CHAMPIONSHIP_BANNER } from "./trophy/championship-banner.ts";
+import { TROPHY_RING } from "./trophy/ring.ts";
+import { TROPHY_BANNER } from "./trophy/banner.ts";
 import { MEDAL_GOLD } from "./medal/gold.ts";
 import { MEDAL_SILVER } from "./medal/silver.ts";
 import { MEDAL_BRONZE } from "./medal/bronze.ts";
@@ -38,6 +40,7 @@ import { CREST_SHIELD } from "./crest/shield.ts";
 import { CREST_ROUNDEL } from "./crest/roundel.ts";
 import { CREST_DIAMOND } from "./crest/diamond.ts";
 import { CREST_PENNANT } from "./crest/pennant.ts";
+import { PENNANT_CHAMPIONSHIP } from "./pennant/championship.ts";
 import { BALLS } from "./ball/ball.index.ts";
 import { GEARS } from "./gear/gear.index.ts";
 import { SPORT_NFL } from "./sport/nfl.ts";
@@ -111,6 +114,8 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `gear:${string}`
   "trophy:rosette": TROPHY_ROSETTE,
   "trophy:sumo-cup": TROPHY_SUMO_CUP,
   "trophy:championship-banner": TROPHY_CHAMPIONSHIP_BANNER,
+  "trophy:ring": TROPHY_RING,
+  "trophy:banner": TROPHY_BANNER,
   "medal:gold": MEDAL_GOLD,
   "medal:silver": MEDAL_SILVER,
   "medal:bronze": MEDAL_BRONZE,
@@ -121,6 +126,7 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `gear:${string}`
   "crest:roundel": CREST_ROUNDEL,
   "crest:diamond": CREST_DIAMOND,
   "crest:pennant": CREST_PENNANT,
+  "pennant:championship": PENNANT_CHAMPIONSHIP,
   "sport:nfl": SPORT_NFL,
   "sport:cfl": SPORT_CFL,
   "sport:ifaf": SPORT_IFAF,

@@ -18,4 +18,5 @@ export const TROPHY_LIDDED_CUP = /* @__PURE__ */ defineLathe("trophy:lidded-cup"
     { a: 90, w: 2, pts: [[11.4, 20], [16.4, 19], [17.6, 24], [12, 29]] },
     { a: -90, w: 2, pts: [[11.4, 20], [16.4, 19], [17.6, 24], [12, 29]] },
   ],
+  plate: { y0: 47.8, y1: 51.8 },
 });

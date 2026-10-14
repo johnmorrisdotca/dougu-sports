@@ -18,7 +18,8 @@ const one = (constant: string, path: string): Promise<{ text: string; bytes: num
 // Measured 2026-10-14 (esbuild 0.25, minified, gzipped). A limit has room for an edit and not for a regression: when art is added, an item may grow, and the limit is raised on purpose.
 // Each kind of emblem has a renderer, and the renderer is most of an item's weight: the ball's is small, the flat renderer (medals, crests, plaques) is about 3 kB, and the body of revolution that turns
 // (a cup) is about 5 kB, which is the price of its metal, its handles, its balls and its seams. A pictogram or an icon is a few hundred bytes of art on a small renderer.
-const LIMITS = { ball: 6.8 * 1024, flat: 3.6 * 1024, lathe: 6.2 * 1024, icon: 3.2 * 1024 };
+// Measured again 2026-10-14 with engraving and the coin-flip turn in: a medal or a plaque 4.5 kB (was 3.2), a cup 6.9 kB (was 5.6), a pictogram 2.7 to 3.6 kB (was 1.8 to 2.7), a pennant 3.4 kB.
+const LIMITS = { ball: 6.8 * 1024, flat: 4.6 * 1024, lathe: 7.1 * 1024, icon: 3.8 * 1024, pennant: 3.6 * 1024 };
 
 test("one named ball, bundled by itself, stays small and leaves the other emblems out", async () => {
   const b = await one("BALL_SOCCER", "ball/ball.soccer");
@@ -53,7 +54,20 @@ test("one icon and one pictogram, bundled by themselves, take only their own dra
   for (const b of [cup, nhl, stone, crown]) assert.ok(b.gzip < LIMITS.icon, `${b.gzip} bytes gzipped`);
   // A pictogram carries its own name and none of the other sports'.
   assert.ok(nhl.text.includes("sport:nhl") && !nhl.text.includes("sport:curling") && !nhl.text.includes("trophy:cup"), "the hockey pictogram took another drawing");
-  assert.ok(nhl.bytes < 6500, `${nhl.bytes} bytes`);
+  assert.ok(nhl.bytes < 8800, `${nhl.bytes} bytes`);
+});
+
+test("one pennant, bundled by itself, stays small and leaves the other emblems out", async () => {
+  const pennant = await one("PENNANT_CHAMPIONSHIP", "pennant/championship");
+  assert.ok(pennant.gzip < LIMITS.pennant, `pennant: ${pennant.gzip} bytes gzipped`);
+  for (const b of [pennant]) assert.ok(!b.text.includes("ball:soccer") && !b.text.includes("trophy:hockey-cup") && !b.text.includes("Gold medal"), "another emblem came along");
+});
+
+test("a medal with no engraving asked for still carries the engraving code, and an icon carries none of it", async () => {
+  const medal = await one("MEDAL_GOLD", "medal/gold");
+  const icon = await one("SPORT_NHL", "sport/nhl");
+  assert.ok(medal.text.includes("textLength"), "the medal engraves");
+  assert.ok(!icon.text.includes("textLength") && !icon.text.includes("Segoe"), "the icon took the engraving code");
 });
 
 test("an item imported from the main entry is still dropped when it is not used", async () => {

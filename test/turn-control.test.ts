@@ -3,7 +3,11 @@ import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
 
 import { bindTurn, wrapAngle, type TurnContainer, type TurnEvent } from "../src/turn-control.ts";
-import { emblemFrame, renderEmblem } from "../src/index.ts";
+import { type Emblem, emblemFrame, emblemOf, renderEmblem } from "../src/index.ts";
+
+// Every emblem of the package turns, so an emblem that cannot is one that says so itself (`turnable: false`) and draws the same at every angle.
+const nhl = emblemOf("sport:nhl").emblem;
+const STILL = { ...nhl, id: "sport:nhl", turnable: false, frame: nhl.svg } as Emblem;
 
 class Fake implements TurnContainer {
   innerHTML = "";
@@ -269,8 +273,8 @@ test("an emblem that cannot turn is drawn as it is, and drag, keys and play do n
   const el = new Fake();
   const turns: unknown[] = [];
   const plays: boolean[] = [];
-  const turner = bindTurn(el, "sport:nhl", { onTurn: (a) => turns.push(a), onPlayChange: (p) => plays.push(p) });
-  assert.equal(el.innerHTML, renderEmblem("sport:nhl"));
+  const turner = bindTurn(el, STILL, { onTurn: (a) => turns.push(a), onPlayChange: (p) => plays.push(p) });
+  assert.equal(el.innerHTML, renderEmblem(STILL));
   assert.equal(turner.turnable, false);
   assert.equal(el.count(), 0);
   assert.equal(el.attributes.size, 0);
@@ -284,23 +288,21 @@ test("an emblem that cannot turn is drawn as it is, and drag, keys and play do n
   assert.deepEqual(plays, []);
   // Even its angles can be set, and it still draws as it is.
   turner.setAngles({ yaw: 90 });
-  assert.equal(el.innerHTML, renderEmblem("sport:nhl"));
-  // Turnability is read from the registry's frames: each kind that turns does, and an icon does not.
-  for (const id of ["trophy:hockey-cup", "medal:gold", "crest:shield", "ball:rugby"]) {
+  assert.equal(el.innerHTML, renderEmblem(STILL));
+  // Turnability is read from the registry's frames: every kind turns, an icon and a piece of gear as a coin does, and only an emblem that says it does not turn is left alone.
+  for (const id of ["trophy:hockey-cup", "medal:gold", "crest:shield", "ball:rugby", "sport:soccer", "award:crown", "gear:hurley", "pennant:championship"]) {
     const e = new Fake();
     bindTurn(e, id);
     assert.ok(e.count() > 0, id);
   }
-  for (const id of ["sport:soccer", "award:crown"]) {
-    const e = new Fake();
-    bindTurn(e, id);
-    assert.equal(e.count(), 0, id);
-  }
+  const still = new Fake();
+  bindTurn(still, STILL);
+  assert.equal(still.count(), 0);
   // Updating to an emblem that turns binds it, and back to one that does not unbinds it.
   turner.update("trophy:tennis-cup");
   assert.equal(turner.turnable, true);
   assert.ok(el.count() > 0 && el.getAttribute("tabindex") === "0");
-  turner.update("sport:nhl");
+  turner.update(STILL);
   assert.equal(el.count(), 0);
   assert.equal(el.getAttribute("tabindex"), null);
 });
@@ -457,7 +459,7 @@ test("autoPlay starts at once, but under reduced motion only when forced", () =>
   g.matchMedia = () => ({ matches: false });
   assert.equal(bindTurn(new Fake(), "trophy:tennis-cup", { autoPlay: true }).playing, true);
   assert.equal(bindTurn(new Fake(), "trophy:tennis-cup", { autoPlay: false }).playing, false);
-  assert.equal(bindTurn(new Fake(), "sport:nhl", { autoPlay: "force" }).playing, false, "an emblem that cannot turn does not play");
+  assert.equal(bindTurn(new Fake(), STILL, { autoPlay: "force" }).playing, false, "an emblem that cannot turn does not play");
 });
 
 test("destroy stops the loop and cancels its frame, and update to an emblem that cannot turn stops it", () => {
@@ -472,7 +474,7 @@ test("destroy stops the loop and cancels its frame, and update to an emblem that
   assert.deepEqual(plays, [true, false]);
   const again = bindTurn(new Fake(), "trophy:tennis-cup");
   again.play();
-  again.update("sport:nhl");
+  again.update(STILL);
   assert.equal(again.playing, false);
   assert.equal(waiting(), 0);
   const kept = bindTurn(new Fake(), "trophy:tennis-cup");

@@ -19,4 +19,5 @@ export const TROPHY_HOCKEY_CUP = /* @__PURE__ */ defineLathe("trophy:hockey-cup"
       decor: [["mer", 4.5, 10, 14]],
     },
   ],
+  plate: { y0: 52.4, y1: 58, tone: "dark" },
 });

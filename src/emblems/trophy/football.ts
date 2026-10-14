@@ -8,4 +8,5 @@ export const TROPHY_FOOTBALL = /* @__PURE__ */ defineLathe("trophy:football", "F
     { sides: 3, p: [[28.6, 3.4, 1], [49, 10.2, 1], [49, 12.8, 1], [53.4, 12.8, 1], [53.4, 15, 1], [58.4, 15, 1]] },
   ],
   balls: [{ kind: "football", cx: 25.6, cy: 16.8, r: 9.4, ry: 13.6, rot: -28 }],
+  plate: { y0: 53.6, y1: 58.2, face: 2 },
 });

@@ -12,4 +12,5 @@ export const TROPHY_BASEBALL = /* @__PURE__ */ defineLathe("trophy:baseball", "B
   ],
   balls: [{ kind: "base", cy: 47.4, r: 5.6 }],
   poles: { n: 30, y0: 50, r0: 11, r1: 12, top1: 5, top2: 20, size: 3.4 },
+  plate: { y0: 51.2, y1: 56.8 },
 });

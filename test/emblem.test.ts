@@ -21,10 +21,10 @@ const COLOR_LIMIT = 3200;
 const BIG_LIMIT = { metal: 14000, line: 13000, color: 14000 } as const;
 const isPiece = (id: D.EmblemId): boolean => D.emblemInfo(id).kind === "ball" || D.emblemInfo(id).kind === "gear";
 
-test("the ids number 164 in their groups, with no id twice, and the groups hold what they say", () => {
+test("the ids number 167 in their groups, with no id twice, and the groups hold what they say", () => {
   assert.equal(new Set(D.EMBLEM_IDS).size, D.EMBLEM_IDS.length);
-  assert.equal(D.EMBLEM_IDS.length, 164);
-  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 5, trophy: 22, medal: 6, crest: 4, ball: 47, gear: 42, sport: 38 });
+  assert.equal(D.EMBLEM_IDS.length, 167);
+  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 5, trophy: 24, medal: 6, crest: 4, ball: 47, gear: 42, sport: 38, pennant: 1 });
 });
 
 test("no id, title or name is a real trophy, mark or competition", () => {
@@ -70,10 +70,10 @@ test("the three styles differ: metal has a gradient, line has no fill, color is 
     // A pictogram of a sport is drawn in the page's ink and a few flat colours, so it has no gradient. A ball and a piece of gear are shaded drawings in `metal` and in `color` alike (their gradients have ids of their own).
     if (!isPiece(id)) {
       if (D.emblemInfo(id).kind !== "icon") assert.match(metal, /Gradient id="dgs/, id);
-      assert.doesNotMatch(color, /Gradient|url\(#/, id);
+      assert.doesNotMatch(color.replace(/<clipPath[\s\S]*?<\/clipPath>|clip-path="url\(#[^)]*\)"/g, ""), /Gradient|url\(#/, id);
       if (D.emblemInfo(id).kind !== "icon") assert.notEqual(metal, color, id);
     }
-    assert.doesNotMatch(line, /Gradient|url\(#/, id);
+    assert.doesNotMatch(line.replace(/<clipPath[\s\S]*?<\/clipPath>|clip-path="url\(#[^)]*\)"/g, ""), /Gradient|url\(#/, id);
     assert.notEqual(line, color, id);
     assert.equal(D.renderEmblem(id), metal, "metal is the default");
     assert.equal(D.renderEmblem(`${id}/line`), line, "a style can ride on the id");

@@ -30,7 +30,7 @@ The ids and the drawings are generic: no federation's name or mark, no real trop
 
 ## Turning
 
-A flat item flips like a coin: it is squeezed by the cosine of the yaw and mirrored on its back. The cup is a body of revolution, which keeps its outline and moves its light and its handles. A pictogram is not turned.
+A flat item (a pictogram, a belt, a fan, a sword) flips like a coin through the one turn every flat drawing in the package shares (`src/emblems/emblem.flip.ts`): it is squeezed by the cosine of the yaw, shows its front mirrored and a little darker past a quarter turn, and has a thin dark rim that is widest edge on. The cup is a body of revolution, which keeps its outline and moves its light and its handles. Every id here turns.
 
 ```js
 import { emblemFrame, renderEmblem } from "@johnmorrisdotca/dougu-sports";
@@ -42,7 +42,7 @@ console.log(emblemFrame("trophy:sumo-cup", { yaw: 90 }) === renderEmblem("trophy
 
 ## The sumo cup
 
-`trophy:sumo-cup` is a tall silver cup on a tall stepped stand with a gilt rim, and on each side an ornate handle that sweeps up past the rim and curls over like a bird's head, in the manner of a phoenix. It is a generic cup, not any real one: it carries no name and no engraving.
+`trophy:sumo-cup` is a tall silver cup on a tall stepped stand with a gilt rim, and on each side an ornate handle that sweeps up past the rim and curls over like a bird's head, in the manner of a phoenix. It is a generic cup, not any real one: it carries no name and no engraving unless you give `engrave`, which is cut round its stand.
 
 ## The championship banner
 

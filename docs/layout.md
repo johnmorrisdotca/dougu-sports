@@ -24,11 +24,15 @@ src/
     emblem.sprite.ts         emblemSprite
     emblem.equipment.ts      sportEquipment
     emblem.display.ts        podium and awardCase
+    emblem.engrave.ts        engraving: the lines of a text fitted to a plate or set round a plinth, and the ink that reads on the metal
+    emblem.flip.ts           the one coin-flip turn of every flat drawing (gear, icons), with its mirrored back and its rim
+    emblem.pennant.ts        the renderer for the pennant
     award/                   five awards
-    trophy/                  twenty-two trophies
+    trophy/                  twenty-four trophies
     medal/                   gold, silver and bronze, and the badges for the first three places
     crest/                   the four generic crests
     sport/                   one pictogram for each of the thirty-eight sports
+    pennant/                 the championship pennant
     ball/                    the balls, drawn in 3D by their own engine (ball.engine.ts), one module per family
     gear/                    the gear, one module per piece or family
 ```
@@ -49,7 +53,7 @@ An item is one file named by the last part of its id, which exports one constant
 
 The balls and the gear are drawn in families by engines of their own, so a family is one module, named `ball.<family>.ts` or `gear.<family>.ts`, that exports a constant for each member: `ball:squash`, `ball:squash-yellow` and the other squash balls are in `ball/ball.squash.ts` (`BALL_SQUASH_DOUBLE_YELLOW`, `BALL_SQUASH_YELLOW`...), and `gear:hurley` is `GEAR_HURLEY` in `gear/gear.sticks.ts`. The folders also hold the engines (`ball.engine.ts`, `ball.math.ts`, `gear.core.ts`...) and an index of each (`ball.index.ts`, `gear.index.ts`), which the registry reads.
 
-The `exports` map in `package.json` has one wildcard for each folder (`./award/*`, `./trophy/*`, `./medal/*`, `./crest/*`, `./sport/*`, `./ball/*`, `./gear/*`), so a new file needs no change there. The constant is made with `/* @__PURE__ */ defineLathe(…)`, `defineFlat(…)`, `defineIcon(…)`, `defineMaterial(…)` or `defineBall(…)`, and the package says `"sideEffects": false`, so a bundler that imports one module takes that item and the renderer it uses, and nothing else. `test/size.test.ts` bundles one item of each kind with esbuild and holds it to a limit for its kind.
+The `exports` map in `package.json` has one wildcard for each folder (`./award/*`, `./trophy/*`, `./medal/*`, `./crest/*`, `./sport/*`, `./ball/*`, `./gear/*`, `./pennant/*`), so a new file needs no change there. The constant is made with `/* @__PURE__ */ defineLathe(…)`, `defineFlat(…)`, `defineIcon(…)`, `defineMaterial(…)` or `defineBall(…)`, and the package says `"sideEffects": false`, so a bundler that imports one module takes that item and the renderer it uses, and nothing else. `test/size.test.ts` bundles one item of each kind with esbuild and holds it to a limit for its kind.
 
 ## Adding an emblem
 

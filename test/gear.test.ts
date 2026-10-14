@@ -99,7 +99,7 @@ describe("the styles and the turn of the gear", () => {
       expect(g.frame({ yaw: 0, pitch: 0 }), g.id).toBe(g.svg());
       expect(g.frame({ yaw: 360 }), g.id).toBe(g.svg());
       expect(g.frame({ yaw: Number.NaN }), g.id).toBe(g.svg());
-      expect(g.frame({ yaw: 90 }), g.id).toMatch(/scale\(0\.03 1\)/);
+      expect(g.frame({ yaw: 90 }), g.id).toMatch(/scale\(0\.02 1\)/);
       expect(g.frame({ yaw: 180 }), g.id).toMatch(/scale\(-1 1\)/);
       expect(g.frame({ pitch: 60 }), g.id).toMatch(/scale\(1 0\.5\)/);
       for (const yaw of [-170, -45, 30, 135, 1000]) expect(g.frame({ yaw, pitch: 20, style: "line" }), `${g.id} ${yaw}`).not.toMatch(/NaN|undefined|Infinity/);

@@ -31,7 +31,7 @@ Trophies, medals, crests, the icon of every sport, and the ball and gear of the 
 </tr>
 </table>
 
-> **Status: preview.** 164 emblems: 22 trophies, 5 awards, 6 medals, 4 crests, a pictogram for each of the 38 sports, 47 balls and implements drawn in 3D, and 42 pieces of gear, among them the Japanese sports and budo ([docs/japanese-sports.md](./docs/japanese-sports.md)); [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
+> **Status: preview.** 167 emblems: 24 trophies, 5 awards, 6 medals, 4 crests, a pictogram for each of the 38 sports, 47 balls and implements drawn in 3D, 42 pieces of gear (among them the Japanese sports and budo, [docs/japanese-sports.md](./docs/japanese-sports.md)) and a championship pennant; [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
 
 ## In 30 seconds
 
@@ -55,18 +55,19 @@ Put the string in a page (`element.innerHTML = svg`), write it to a file, or sen
 - **Sports sites** that mark a champion, a result or a list with a trophy, a medal or a crest, without licensing a logo.
 - **Scoreboards and brackets** that want a generic emblem for a team that has no logo, tinted in the team's colour.
 - **Anyone building a game or a card** who needs a ball or a piece of gear for a sport, in one style that matches the rest.
-- **Pages that care about weight**: one emblem is one module, 2 to 6 kB gzipped with the renderer for its kind (a medal about 3, a turning cup about 5), and the package says `"sideEffects": false`.
+- **Pages that care about weight**: one emblem is one module, 2 to 7 kB gzipped with the renderer for its kind (a medal about 4.5, a turning cup about 7, an icon 2 to 3.6), and the package says `"sideEffects": false`.
 
 ## Features
 
 - **Three styles** for every emblem: `metal` (polished metal: a gradient, a highlight and a soft rim of reflected light, edged in a darker tone of its own metal, with no heavy outline), `line` (one clean outline in the page's text colour, made to read at 14 pixels) and `color` (flat fills); see [Theming](#theming).
 - **Size, tint, accent and theme** as options: a tint recolours the main part (a medal's metal, a crest's colour, a ball's patches), an accent the second colour (a ribbon, a crest's band, the pennants), a theme sets the ink for light, dark or either.
-- **Turning**: `emblemFrame` and `ballFrame` return the emblem at an angle, in plain SVG, and `bindTurn` lets a drag, the arrow keys or an auto-turn do the turning in a page; see [docs/turning.md](./docs/turning.md).
+- **Turning**: `emblemFrame` and `ballFrame` return the emblem at an angle, in plain SVG: every emblem turns, a ball rolls, a cup keeps its outline and moves its light, and everything flat (gear, a bat, a crown, a sport's icon) flips like a coin; `bindTurn` lets a drag, the arrow keys or an auto-turn do the turning in a page; see [docs/turning.md](./docs/turning.md).
+- **Engraving**: text cut into a medal, a plaque, the belt, a ring, a banner, a pennant and the plinth of a cup, from `label`, `year` and `rank` or one `engrave` string, in the ink that reads at 4.5 to 1 on the metal, and it turns with the emblem; see [Engrave an emblem](#engrave-an-emblem).
 - **Labels in two languages**: the `<title>` is English or Japanese (`locale`), your own words (`title: "…"`), or left out for an emblem that sits beside text that says the same (`title: false`).
 - **As an image, a sprite, a podium or a case**: `emblemDataUri` for an `<img>`, a CSS background or a canvas, `emblemSprite` to draw one emblem fifty times cheaply, `sportEquipment` for what a sport is played with, and `podium` and `awardCase` for results and trophy shelves; see [docs/compose.md](./docs/compose.md).
 - **One module per item**, so a bundler takes only what is imported; see [Use it in your project](#use-it-in-your-project).
-- **Short names and helpers**: `"cup"` is `"trophy:cup"`, `"trophy:cup/line"` is the line style, and `crest`, `medal` and `sportIcon` draw a team's crest, a medal and a sport's icon.
-- **Typed ids**: `EmblemId` is a union of `award:*`, `trophy:*`, `medal:*`, `crest:*`, `ball:*`, `gear:*` and `sport:*` ids.
+- **Short names and helpers**: `"cup"` is `"trophy:cup"`, `"trophy:cup/line"` is the line style, and `crest`, `medal`, `sportIcon` and `pennant` draw a team's crest, a medal, a sport's icon and a championship pennant.
+- **Typed ids**: `EmblemId` is a union of `award:*`, `trophy:*`, `medal:*`, `crest:*`, `ball:*`, `gear:*`, `sport:*` and `pennant:*` ids.
 - **Japanese sports and budō** (道具 is the name): a sumo cup, a championship banner, and the war fan, belt, bamboo sword, kendo helmet, judo and karate suits, rank belts, long bow and arrow, with Japanese names that are the governing bodies' words; see [docs/japanese-sports.md](./docs/japanese-sports.md).
 - **Generic by design**: no emblem carries a league's, a team's or a federation's name or mark.
 - **Accessible**: every drawing is `role="img"` with a `<title>`; see [Accessibility](#accessibility).
@@ -115,7 +116,7 @@ The alias is a name in your `package.json` only: the same package, the same code
 | `@johnmorrisdotca/dougu-sports` | The full registry: every emblem by id, the functions, and each emblem as a constant |
 | `@johnmorrisdotca/dougu-sports/emblems` | `renderEmblem`, the ids and the types, with no single drawing imported by name |
 | `@johnmorrisdotca/dougu-sports/turn` | `emblemFrame`, `ballFrame` and `bindTurn` |
-| `@johnmorrisdotca/dougu-sports/<group>/<name>` | One emblem, alone: `trophy/hockey-cup`, `medal/gold`, `crest/shield`, `sport/nhl`, `award/crown`, `ball/soccer`, `gear/<name>` |
+| `@johnmorrisdotca/dougu-sports/<group>/<name>` | One emblem, alone: `trophy/hockey-cup`, `medal/gold`, `crest/shield`, `sport/nhl`, `award/crown`, `ball/soccer`, `pennant/championship`, `gear/<name>` |
 
 ### One emblem and nothing else
 
@@ -126,7 +127,7 @@ console.log(TROPHY_HOCKEY_CUP.id); // trophy:hockey-cup
 console.log(TROPHY_HOCKEY_CUP.svg({ size: 24 }).includes('width="24"')); // true
 ```
 
-A bundler that imports this module takes the cup and the renderer for a body of revolution, and no other emblem: the package says `"sideEffects": false` and each constant is marked pure. `test/size.test.ts` bundles one item with esbuild and holds it to a limit for its kind (a ball 6.8 kB, a medal or a crest 3.6 kB, a cup 6.2 kB gzipped, most of that the renderer); `pnpm test:package` does the same from the packed tarball.
+A bundler that imports this module takes the cup and the renderer for a body of revolution, and no other emblem: the package says `"sideEffects": false` and each constant is marked pure. `test/size.test.ts` bundles one item with esbuild and holds it to a limit for its kind (a ball 6.8 kB, a medal or a crest 4.6 kB, a cup 7.1 kB gzipped, most of that the renderer); `pnpm test:package` does the same from the packed tarball.
 
 ### In a page
 
@@ -223,6 +224,43 @@ console.log(ballFrame("ball:soccer", { yaw: 90 }) === ballFrame("ball:soccer", {
 
 More in [docs/turning.md](./docs/turning.md).
 
+### Engrave an emblem
+
+```js
+import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
+
+const medal = renderEmblem("medal:gold", { engrave: "MVP 2026" });
+console.log(medal.includes(">MVP<") && medal.includes(">2026<")); // true
+const plaque = renderEmblem("trophy:plaque", { label: "Champions", year: 2026 });
+console.log(plaque.includes(">Champions<") && plaque.includes(">2026<")); // true
+const cup = renderEmblem("trophy:hockey-cup", { engrave: "優勝 2026" });
+console.log(cup.includes(">優<")); // true
+console.log(renderEmblem("medal:gold").includes("<text")); // false
+```
+
+A medal, a place badge, the plaque, the belt, a ring (the team up one shoulder and the year down the other), a banner and a pennant take an engraving, and so does the plinth of every cup that stands on one. Give one string (`engrave`, any text, Japanese included, up to three lines of 24 letters), or a `label`, a `year` and a `rank`: the rank is the biggest line, the year the smallest. The text is escaped, fitted to its face (a longer word is set smaller, and a space is a place to break the line when that makes bigger letters) and cut in the ink that reads at 4.5 to 1 on the metal, a tone of the metal, black or white, in the line style the page's ink.
+
+```js
+import { emblemFrame } from "@johnmorrisdotca/dougu-sports/turn";
+
+const at = (yaw) => emblemFrame("medal:gold", { engrave: "MVP", engraveBack: "2026", yaw });
+console.log(at(0).includes(">MVP<"), at(180).includes(">MVP<"), at(180).includes(">2026<")); // true false true
+```
+
+Turned, the engraving goes with its face: squeezed with a medal, hidden on its back (which has an engraving of its own when `engraveBack` is given), and on a cup set letter by letter round the plinth, so it foreshortens, slides behind the edge and comes round again. A drawn numeral or star that an engraving replaces is left out.
+
+### Draw a championship pennant
+
+```js
+import { pennant } from "@johnmorrisdotca/dougu-sports/emblems";
+
+const svg = pennant({ colors: ["#1f4e8c", "#f2c230"], text: "Champions", year: 2026 });
+console.log(svg.includes(">CHAMPIONS<") && svg.includes(">2026<")); // true
+console.log(pennant({ text: "Champions", view: "back" }).includes("CHAMPIONS")); // false
+```
+
+A long triangle of felt on a dowel with a stitched edge, lettered with its words and its year as large as the triangle lets them be. The colours are the felt, the stitching and the lettering (which takes the stitching's colour unless a third is given); the back is plain felt with the dowel on the other side.
+
 ### Read what an emblem is
 
 ```js
@@ -238,7 +276,7 @@ console.log(emblemName("medal:gold", "ja")); // 金メダル
 ```js
 import { EMBLEM_GROUPS, EMBLEM_IDS, SPORT_NAMES } from "@johnmorrisdotca/dougu-sports";
 
-console.log(Object.keys(EMBLEM_GROUPS).join(" ")); // award trophy medal crest ball gear sport
+console.log(Object.keys(EMBLEM_GROUPS).join(" ")); // award trophy medal crest ball gear sport pennant
 console.log(EMBLEM_IDS.includes("ball:soccer")); // true
 console.log(SPORT_NAMES.length); // 38
 ```
@@ -341,22 +379,23 @@ An emblem is a small object: `id`, `en` and `ja` names, a `source` (who drew it)
 | Kind | What it is | A turn |
 | --- | --- | --- |
 | `lathe` | A body of revolution: a cup, a bowl, an urn, a column with a ball or a globe on it, a stand with flat faces | Keeps its outline, and moves its light, its handles, its seams and its grooves |
-| `flat` | A front and a back drawn from shapes: a medal, a crest, a plaque, a rosette | Flips like a coin, thick at the rim as it goes edge on |
+| `flat` | A front and a back drawn from shapes: a medal, a crest, a plaque, a rosette, a ring, a banner, a pennant | Flips like a coin, thick at the rim as it goes edge on |
 | `ball` | A ball or an implement drawn in true 3D, with its panels, seams and marks on the surface | Rolls |
-| `icon` | One drawing: an award, a plain cup or a sport's pictogram | Is not turned |
-| `gear` | A piece of equipment, a flat drawing in layers | Flips like a coin |
+| `icon` | One drawing: an award, a plain cup or a sport's pictogram | Flips like a coin: its front, its back mirrored and a little darker, and a thin rim |
+| `gear` | A piece of equipment, a flat drawing in layers | Flips like a coin, as an icon does |
 
 ### The groups
 
 | Group | What it holds | Folder |
 | --- | --- | --- |
 | `award` | Five awards: a medal, a badge, a crown, a star, a shield | `src/emblems/award/` |
-| `trophy` | Twenty trophies: ten that stand for a league's cup in a generic form (a tall banded cup, a ring of pennants round a baseball, a football on a stand, a ball over a net, a wide two-handled bowl, a globe held up by spiral figures, a gilt dish, a lidded cup with a pineapple, an urn, a gilded cup), plain cups, bowls and dishes, a plaque, a belt, a wreath, a rosette | `src/emblems/trophy/` |
+| `trophy` | Twenty-four trophies: ten that stand for a league's cup in a generic form (a tall banded cup, a ring of pennants round a baseball, a football on a stand, a ball over a net, a wide two-handled bowl, a globe held up by spiral figures, a gilt dish, a lidded cup with a pineapple, an urn, a gilded cup), plain cups, bowls and dishes, a plaque, a belt, a wreath, a rosette, a championship ring, a rafter banner, a phoenix-handled sumo cup and a championship banner | `src/emblems/trophy/` |
 | `medal` | Gold, silver and bronze medals on a ribbon of five stripes, and a badge for each of the first three places | `src/emblems/medal/` |
 | `crest` | Four generic crests, tinted by a team's colours, with its letters | `src/emblems/crest/` |
 | `ball` | 47 balls and implements, in 3D, each with its official size: soccer, basketball, baseball, tennis, rugby, the footballs, golf, the puck, the curling stone and the rest | `src/emblems/ball/` |
 | `gear` | 42 pieces of equipment: sticks, rackets, skates, a glove, a helmet, nets and posts, a javelin, starting blocks, and for the Japanese sports a war fan, a sumo belt, a bamboo sword, a kendo helmet, a judo suit, a belt, a long bow, an arrow and a karate suit | `src/emblems/gear/` |
 | `sport` | One pictogram for each of the thirty-eight sports | `src/emblems/sport/` |
+| `pennant` | A felt championship pennant on a dowel, with a stitched edge, lettered with its words and its year | `src/emblems/pennant/` |
 
 The thirty-eight sports the ball, gear and sport emblems are made for are `SPORT_NAMES` (the five Japanese ones, sumo, kendo, judo, kyudo and karate, have a pictogram and their gear, and no ball): NFL, CFL, IFAF, NHL, NBA, MLB, soccer, curling, tennis, volleyball, badminton, pickleball, table tennis, padel, squash, racquetball, sepak takraw, teqball, roundnet, netball, swimming, water polo, diving, artistic swimming, lacrosse, rugby, Australian football, Gaelic games, cricket, field hockey, handball, athletics and skating. How the trophies are drawn, and what each stands for, is in [docs/emblems.md](./docs/emblems.md); the balls and the gear are described in [src/emblems/README.md](./src/emblems/README.md).
 
@@ -367,6 +406,7 @@ The thirty-eight sports the ball, gear and sport emblems are made for are `SPORT
 | `renderEmblem(ref, options?)` | An emblem as SVG. `ref` is an id, an id with a style (`"medal:gold/line"`), or an emblem |
 | `emblemSvg` | The same as `renderEmblem` |
 | `crest(options?)` | A crest by shape, colours and letters |
+| `pennant(options?)` | A championship pennant by colours, words and year |
 | `medal(kind, options?)` | A gold, silver or bronze medal on its ribbon |
 | `sportIcon(sport, options?)` | The pictogram of a sport, by the names of `SPORT_NAMES`; an unknown sport is an error |
 | `lineup(ids, options?)` | Several balls side by side, at their true relative sizes (or all as large as the largest) |
@@ -386,7 +426,7 @@ The thirty-eight sports the ball, gear and sport emblems are made for are `SPORT
 | `EMBLEM_TABLE` | Every emblem object, by id |
 | `TROPHY_HOCKEY_CUP`, `MEDAL_GOLD`, `CREST_SHIELD`, `SPORT_NHL`, `BALL_SOCCER`, `GEAR_HURLEY`... | Each emblem as a constant, named by its id in capitals (`trophy:hockey-cup`); [docs/gallery.md](./docs/gallery.md) lists every constant with its id and the module that takes it alone |
 | `EMBLEM_IDS`, `EMBLEM_GROUPS`, `EMBLEM_FOLDERS`, `EMBLEM_ALIASES` | Every id, the groups, the folder of each group's art, and the short names (`cup` for `trophy:cup`) |
-| `AWARD_IDS`, `TROPHY_IDS`, `MEDAL_IDS`, `CREST_IDS`, `BALL_IDS`, `GEAR_IDS`, `SPORT_IDS` | The ids of each group |
+| `AWARD_IDS`, `TROPHY_IDS`, `MEDAL_IDS`, `CREST_IDS`, `BALL_IDS`, `GEAR_IDS`, `SPORT_IDS`, `PENNANT_IDS` | The ids of each group |
 | `MEDAL_KINDS`, `CREST_SHAPES` | The kinds of medal, and the shapes of crest |
 | `SPORT_NAMES` | The thirty-eight sports |
 | `JAPANESE_IDS` | The ids of the Japanese sports and budo, together: sumo, kendo, judo, kyudo and karate, with their trophies and gear ([docs/japanese-sports.md](./docs/japanese-sports.md)) |
@@ -406,13 +446,18 @@ The thirty-eight sports the ball, gear and sport emblems are made for are `SPORT
 | `initials` | Up to three letters (a crest, or the championship banner) | none: the crest has a star, the banner a ring and a star |
 | `theme` | `"inherit"`, `"auto"`, `"light"`, `"dark"` | `"inherit"` |
 | `grain` | `true` or `false` (a ball only) | on for a ball of 48 pixels or more that is not turning |
+| `engrave` | Any text, up to three lines of 24 letters, Japanese included: cut into the face (see [Engrave an emblem](#engrave-an-emblem)) | none |
+| `label`, `year`, `rank` | The words, the year (smaller, under them) and the number (the biggest line) to engrave when `engrave` is not given | none (a place badge's rank is its place) |
+| `engraveBack` | The text of a medal's, ring's or banner's back, shown when it is turned over | a plain back |
+| `numberColor` | The colour of a pennant's lettering | the stitching's colour |
+| `view` | `"front"` or `"back"`: which side of a pennant is drawn at rest | `"front"` |
 | `locale` | `"en"`, `"ja"`: the language of the `<title>` | `"en"` |
 | `title` | A string (written, escaped, as the `<title>`) or `false` (no `<title>`, and `aria-hidden="true"`) | the emblem's name |
 | `yaw`, `pitch`, `roll` (turning only; `roll` for a ball) | Degrees from the resting view | `0` |
 
 `podium` and `awardCase` take their own options too (`width`, `style`, `theme`, `locale`, `title`, `desc`, and for the case `perRow`, `size` and `layout`), and `emblemDataUri`, `emblemSprite` and `bindTurn` theirs: see [docs/compose.md](./docs/compose.md) and [docs/turning.md](./docs/turning.md).
 
-The types are `EmblemId`, `EmblemRef`, `EmblemOptions`, `EmblemLocale`, `FrameOptions`, `DataUriOptions`, `Sprite`, `SpriteOptions`, `UseOptions`, `SportEquipment`, `PodiumPlace`, `PodiumOptions`, `AwardItem`, `AwardCaseOptions`, `DisplayOptions`, `TurnControlOptions`, `TurnController`, `TurnAngles`, `TurnContainer`, `TurnEvent`, `EmblemStyle`, `EmblemTheme`, `Emblem`, `EmblemInfo`, `EmblemKind`, `EmblemSource`, `EmblemGroup`, `CrestOptions`, `CrestShape`, `MedalKind`, `LineupOptions`, `PieceSize`, `EmblemDescription`, `ObiRank`, `SportName`, the id types of each group (and `JapaneseId`), and the types of the models the emblems are drawn from (`LatheModel`, `FlatModel` and their parts).
+The types are `EmblemId`, `EmblemRef`, `EmblemOptions`, `EmblemLocale`, `FrameOptions`, `DataUriOptions`, `Sprite`, `SpriteOptions`, `UseOptions`, `SportEquipment`, `PodiumPlace`, `PodiumOptions`, `AwardItem`, `AwardCaseOptions`, `DisplayOptions`, `TurnControlOptions`, `TurnController`, `TurnAngles`, `TurnContainer`, `TurnEvent`, `EmblemStyle`, `EmblemTheme`, `Emblem`, `EmblemInfo`, `EmblemKind`, `EmblemSource`, `EmblemGroup`, `CrestOptions`, `CrestShape`, `PennantOptions`, `PennantId`, `MedalKind`, `LineupOptions`, `PieceSize`, `EmblemDescription`, `ObiRank`, `SportName`, the id types of each group (and `JapaneseId`), and the types of the models the emblems are drawn from (`LatheModel`, `FlatModel` and their parts).
 
 ## Theming
 
@@ -429,7 +474,7 @@ The metals are `METALS` (gold `#d9a620`, silver `#aeb6c0`, bronze `#b8733a`); ea
 
 ## Limits
 
-- A turn is drawn in plain SVG, not in 3D: a cup keeps its silhouette and moves its light, handles and seams; a medal is squeezed; a ball is projected from its own geometry, panel by panel, and has no grain while it turns. Gear flips like a coin, and pictograms are not turned.
+- A turn is drawn in plain SVG, not in 3D: a cup keeps its silhouette and moves its light, handles and seams; a medal is squeezed; a ball is projected from its own geometry, panel by panel, and has no grain while it turns. Gear, icons and pictograms flip like a coin, with the back as a mirror of the front and a thin rim; a pennant's back is its own drawing; one turn (`src/emblems/emblem.flip.ts`) does it for all of them.
 - A tint is one colour, the main one, and an accent a second. The pieces of a trophy that are another metal (the gilt of a plate, the green bands of a globe, the black foot of a cup) keep their own colour.
 - The trophies are generic: each is drawn for this package in a simplified form that a reader knows at a glance, and none is traced from a photograph or carries a name, a mark or an engraving.
 - A trophy in the metal style is about 3 to 4.5 kB of markup, a medal or a crest about 1 to 2 kB, a line drawing about 1 to 2.5 kB; a ball in 3D is 5 to 13 kB, and a piece of gear is 1 to 4 kB, drawn in layers.
@@ -531,7 +576,7 @@ Bug reports and ideas go in the [issues](https://github.com/johnmorrisdotca/doug
 
 ## Changes
 
-See [CHANGELOG.md](./CHANGELOG.md). 0.1.0 brings the full set of 148 emblems; 0.0.1 was the first preview.
+See [CHANGELOG.md](./CHANGELOG.md). 0.1.0 brings the full set of 148 emblems; the next version engraves and turns everything; 0.0.1 was the first preview.
 
 ## Credits
 

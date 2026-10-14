@@ -26,4 +26,5 @@ export const TROPHY_SUMO_CUP = /* @__PURE__ */ defineLathe("trophy:sumo-cup", "P
     },
   ],
   handles: [side(90), side(-90)],
+  plate: { y0: 50.4, y1: 56.6, tone: "dark" },
 });

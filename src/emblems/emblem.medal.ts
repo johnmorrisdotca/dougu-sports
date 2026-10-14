@@ -30,11 +30,11 @@ export function defineMedal(id: string, en: string, ja: string, metal: Extract<M
   const front: readonly Shape[] = [
     ...ribbon(),
     ...disc,
-    ["m", starPath(32, 43, 9, 3.9)],
+    ["M", starPath(32, 43, 9, 3.9)],
     ["l", "M19.2 40a13.4 13.4 0 0 1 9.4-10.4 14 14 0 0 0-6.6 12.6z"],
   ];
-  const back: readonly Shape[] = [...disc, ["e", circlePath(32, 43, 8.4), "1.4"]];
-  return defineFlat(id, en, ja, "ours", { metal, front, back, rim: 3 });
+  const back: readonly Shape[] = [...disc, ["E", circlePath(32, 43, 8.4), "1.4"]];
+  return defineFlat(id, en, ja, "ours", { metal, front, back, rim: 3, engrave: { front: { x: 32, y: 43, w: 19, h: 15 }, back: { x: 32, y: 43, w: 20, h: 13 } } });
 }
 
 /** The numerals 1, 2 and 3 as strokes. */
@@ -43,5 +43,5 @@ const NUMERALS = { 1: "M26 28l7-5v20", 2: "M25 28c1-9 15-9 15 0 0 6-14 9-15 15h1
 /** A plain badge for a place: a bevelled disc with its numeral. */
 export function definePlace(id: string, en: string, ja: string, place: 1 | 2 | 3, metal: Extract<Metal, "gold" | "silver" | "bronze">): Emblem<FlatModel> {
   const base: Shape[] = [["o", circlePath(32, 32, 27.5)], ["e", circlePath(32, 32, 24.2), "2.2"]];
-  return defineFlat(id, en, ja, "ours", { metal, front: [...base, ["d", NUMERALS[place]], ["l", "M10.4 28a22 22 0 0 1 16.6-17 24 24 0 0 0-11 22z"]], back: [...base, ["e", circlePath(32, 32, 14), "1.6"]], rim: 3 });
+  return defineFlat(id, en, ja, "ours", { metal, front: [...base, ["D", NUMERALS[place]], ["l", "M10.4 28a22 22 0 0 1 16.6-17 24 24 0 0 0-11 22z"]], back: [...base, ["E", circlePath(32, 32, 14), "1.6"]], rim: 3, engrave: { front: { x: 32, y: 32, w: 30, h: 28 }, back: { x: 32, y: 32, w: 30, h: 20 }, rank: String(place) } });
 }

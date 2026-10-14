@@ -1,6 +1,6 @@
 # Gallery
 
-[Back to the README](../README.md). Every emblem in the package, by group: 164 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
+[Back to the README](../README.md). Every emblem in the package, by group: 167 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The folders the art lives in are in [layout.md](layout.md).
 
@@ -38,6 +38,8 @@ Ids are `<group>:<name>`. The folders the art lives in are in [layout.md](layout
 | `trophy:belt` | Championship belt | チャンピオンベルト | flat | ours | `TROPHY_BELT` | `@johnmorrisdotca/dougu-sports/trophy/belt` |  |
 | `trophy:laurel` | Laurel wreath | 月桂樹の冠 | flat | ours | `TROPHY_LAUREL` | `@johnmorrisdotca/dougu-sports/trophy/laurel` |  |
 | `trophy:rosette` | Rosette with ribbons | リボン付きのロゼット | flat | ours | `TROPHY_ROSETTE` | `@johnmorrisdotca/dougu-sports/trophy/rosette` |  |
+| `trophy:ring` | Championship ring | 優勝リング | flat | ours | `TROPHY_RING` | `@johnmorrisdotca/dougu-sports/trophy/ring` |  |
+| `trophy:banner` | Rafter banner | 優勝バナー | flat | ours | `TROPHY_BANNER` | `@johnmorrisdotca/dougu-sports/trophy/banner` |  |
 | `trophy:sumo-cup` | Phoenix-handle cup | 鳳凰飾りの銀杯 | lathe | ours | `TROPHY_SUMO_CUP` | `@johnmorrisdotca/dougu-sports/trophy/sumo-cup` | A tall silver cup on a tall stepped stand, with an ornate phoenix-crested handle on each side<br>段のある高い台に載った、背の高い銀の杯。両側の取っ手に鳳凰の飾りが付く |
 | `trophy:championship-banner` | Championship banner | 優勝旗 | flat | ours | `TROPHY_CHAMPIONSHIP_BANNER` | `@johnmorrisdotca/dougu-sports/trophy/championship-banner` | A fringed banner on a pole with a gilt finial and an embroidered border, with no lettering unless some is given<br>金の先端飾りの付いた竿に掛けた、刺繍の縁と房の付いた旗。文字は指定したときだけ入る |
 
@@ -202,3 +204,9 @@ Ids are `<group>:<name>`. The folders the art lives in are in [layout.md](layout
 | `sport:judo` | Judo | 柔道 | icon | ours | `SPORT_JUDO` | `@johnmorrisdotca/dougu-sports/sport/judo` | The judo suit and belt<br>柔道衣と帯 |
 | `sport:kyudo` | Kyudo | 弓道 | icon | ours | `SPORT_KYUDO` | `@johnmorrisdotca/dougu-sports/sport/kyudo` | A long bow, its string and an arrow<br>弦を張った長弓と矢 |
 | `sport:karate` | Karate | 空手 | icon | ours | `SPORT_KARATE` | `@johnmorrisdotca/dougu-sports/sport/karate` | A clenched fist<br>握りしめた拳 |
+
+## pennant
+
+| Id | English | 日本語 | Kind | Source | Constant | Import one | Description |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `pennant:championship` | Championship pennant | 優勝ペナント | flat | ours | `PENNANT_CHAMPIONSHIP` | `@johnmorrisdotca/dougu-sports/pennant/championship` |  |
