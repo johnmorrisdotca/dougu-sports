@@ -1,6 +1,6 @@
-// Gear: pieces of equipment drawn flat, in a colour style and a line style (`currentColor`), to match the trophies. A piece is either drawn by us from a list of parts (a path, a colour, how it
-// reads as a line) or copied from an open icon set (Noto Emoji, Wikimedia Commons, game-icons.net) with the source named in the module's header, the colour version from one artwork and the line
-// version from another (Pictogrammers MDI) or worked out from the colour one. Self-contained: it imports only the shared option and colour helpers of the ball folder.
+// Gear: pieces of equipment drawn flat from a list of parts (a path, a colour, how it reads as a line), in the same three styles as the trophies: `metal` (a fill shaded across and along, edged in a darker tone
+// of itself), `color` (flat fills with the same edges) and `line` (`currentColor`). A piece turns like a coin: squeezed by the cosine of the yaw, and mirrored past a quarter turn. Self-contained: it imports
+// only the shared option and colour helpers of the ball folder.
 import { type Piece, type PieceOptions, type PieceSize, type PieceSource, escape, hashOf, mix, num, readColour, resolveOptions, wrapPiece } from "../ball/ball.core.ts";
 
 /** One part of a drawn piece. */
@@ -17,8 +17,12 @@ export interface Part {
   line?: "stroke" | "ink" | "none";
   /** A transform for the part. */
   t?: string;
-  /** How much light and shade the part takes, 0 (flat) to 1 (the default). */
+  /** How much light and shade the part takes along a diagonal, 0 (flat) to 1 (the default). */
   shade?: number;
+  /** How much a part is shaded across its own width, as a round shaft is (a bright band, a dark side), 0 to 1. Drawn in the part's own frame, so it follows the part's transform. */
+  cyl?: number;
+  /** A highlight or a shadow laid on a part: drawn in the metal style only, never flat and never as a line. */
+  fx?: boolean;
   /** Opacity of the part in colour. */
   op?: number;
 }
@@ -40,44 +44,79 @@ export interface GearDef<Model = unknown> {
   source: PieceSource;
   size?: PieceSize;
   model: Model;
-  draw: (options: PieceOptions | undefined) => string;
+  draw: (options: PieceOptions | undefined, turn?: Turn) => string;
 }
 
-/** A piece of gear from its drawing function. Gear is not turned: `frame` draws it as it is. */
+/** How much a flat piece is squeezed across and down when it is turned: the cosine of the yaw (negative past a quarter turn, which mirrors it) and of the pitch. */
+export interface Turn {
+  sx: number;
+  sy: number;
+}
+
+const turnOf = (yaw: number | undefined, pitch: number | undefined): Turn | undefined => {
+  const cosine = (degrees: number | undefined): number => (typeof degrees === "number" && Number.isFinite(degrees) ? Math.cos(((degrees % 360) * Math.PI) / 180) : 1);
+  const sx = cosine(yaw);
+  const sy = Math.abs(cosine(pitch));
+  if (sx === 1 && sy === 1) return undefined;
+  return { sx: Math.abs(sx) < 0.03 ? (sx < 0 ? -0.03 : 0.03) : sx, sy: Math.max(sy, 0.03) };
+};
+
+/** A piece of gear from its drawing function. Turned, it flips like a coin: the drawing squeezed by the cosine of the turn, and mirrored on its back. */
 export function defineGear<Model>(def: GearDef<Model>): Piece<Model> {
-  return { id: def.id, en: def.en, ja: def.ja, source: def.source, kind: "gear", model: def.model, size: def.size, svg: (o) => def.draw(o), frame: (o) => def.draw(o) };
+  return { id: def.id, en: def.en, ja: def.ja, source: def.source, kind: "gear", model: def.model, size: def.size, svg: (o) => def.draw(o), frame: (o) => def.draw(o, turnOf(o?.yaw, o?.pitch)) };
 }
 
-/** A drawn piece: its parts become a document in either style. */
-export function drawGear(id: string, title: string, spec: GearSpec, options: PieceOptions | undefined): string {
+/** A drawn piece: its parts become a document in the metal, color or line style, whole or turned. */
+export function drawGear(id: string, title: string, spec: GearSpec, options: PieceOptions | undefined, turn?: Turn): string {
   const o = resolveOptions(options);
   const line = o.style === "line";
+  const flat = options?.style === "color";
   const main = o.tint ?? spec.main;
   const accent = o.accent ?? spec.accent ?? mix(main, -0.3);
   const gid = `g${hashOf(`${id}|${o.tint ?? ""}|${o.accent ?? ""}`)}`;
   const resolve = (c: string | undefined): string | undefined => (c === "$main" ? main : c === "$accent" ? accent : c);
   let body = "";
+  let across = false;
+  let along = false;
   for (const p of spec.parts) {
     const t = p.t === undefined ? "" : ` transform="${escape(p.t)}"`;
     const fill = resolve(p.fill);
     const hasFill = fill !== undefined && fill !== "none";
     if (line) {
       const mode = p.line ?? "stroke";
-      if (mode === "none") continue;
+      if (mode === "none" || p.fx === true) continue;
       if (mode === "ink" && hasFill) body += `<path d="${p.d}" fill="currentColor"${t}/>`;
       else if (!hasFill && p.stroke !== undefined) body += `<path d="${p.d}" fill="none" stroke="currentColor" stroke-width="${num(p.w ?? 2, 2)}"${t}/>`;
       else body += `<path d="${p.d}" fill="none" stroke="currentColor" stroke-width="${num(Math.max(p.w ?? 2, 1.6), 2)}"${t}/>`;
       continue;
     }
+    const op = p.op === undefined ? "" : ` opacity="${p.op}"`;
+    if (p.fx === true) {
+      if (!flat) body += `<path d="${p.d}" fill="${fill}"${op}${t}/>`;
+      continue;
+    }
     const stroke = resolve(p.stroke) ?? (hasFill ? mix(readColour(fill) === undefined ? "#888888" : fill, -0.45) : "none");
     const w = p.w ?? 0.9;
-    const op = p.op === undefined ? "" : ` opacity="${p.op}"`;
     body += `<path d="${p.d}" fill="${hasFill ? fill : "none"}" stroke="${stroke}" stroke-width="${num(w, 2)}"${hasFill || stroke === "none" ? ` stroke-linejoin="round"` : ` stroke-linecap="round"`}${op}${t}/>`;
-    if (hasFill && p.shade !== 0) body += `<path d="${p.d}" fill="url(#${gid})"${p.shade === undefined ? "" : ` opacity="${p.shade}"`}${t}/>`;
+    if (hasFill && !flat) {
+      if (p.shade !== 0) {
+        along = true;
+        body += `<path d="${p.d}" fill="url(#${gid})"${p.shade === undefined ? "" : ` opacity="${p.shade}"`}${t}/>`;
+      }
+      if (p.cyl !== undefined && p.cyl > 0) {
+        across = true;
+        body += `<path d="${p.d}" fill="url(#${gid}c)"${p.cyl === 1 ? "" : ` opacity="${p.cyl}"`}${t}/>`;
+      }
+    }
   }
-  const defs = line ? "" : `<linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></linearGradient>`;
-  const g = line ? `<g stroke-linecap="round" stroke-linejoin="round">${body}</g>` : `<g stroke-linecap="round">${body}</g>`;
-  return wrapPiece({ title: escape(title), size: o.size, theme: o.theme, defs, body: g, box: spec.box ?? "0 0 64 64" });
+  const defs =
+    (along ? `<linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></linearGradient>` : "") +
+    (across ? `<linearGradient id="${gid}c" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".34"/><stop offset=".26" stop-color="#fff" stop-opacity=".5"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset=".88" stop-color="#000" stop-opacity=".22"/><stop offset="1" stop-color="#000" stop-opacity=".4"/></linearGradient>` : "");
+  const box = spec.box ?? "0 0 64 64";
+  const [x0, y0, bw, bh] = box.split(" ").map(Number) as [number, number, number, number];
+  const inner = line ? `<g stroke-linecap="round" stroke-linejoin="round">${body}</g>` : `<g stroke-linecap="round">${body}</g>`;
+  const g = turn === undefined ? inner : `<g transform="translate(${num(x0 + bw / 2, 2)} ${num(y0 + bh / 2, 2)}) scale(${num(turn.sx, 3)} ${num(turn.sy, 3)}) translate(${num(-x0 - bw / 2, 2)} ${num(-y0 - bh / 2, 2)})">${inner}</g>`;
+  return wrapPiece({ title: escape(title), size: o.size, theme: o.theme, defs, body: g, box });
 }
 
 /** The pieces' drawing helpers: shapes written as path strings. */
@@ -98,27 +137,9 @@ export function capsule(x1: number, y1: number, x2: number, y2: number, w: numbe
   return `M${f(x1 + nx)} ${f(y1 + ny)}L${f(x2 + nx)} ${f(y2 + ny)}A${r} ${r} 0 0 0 ${f(x2 - nx)} ${f(y2 - ny)}L${f(x1 - nx)} ${f(y1 - ny)}A${r} ${r} 0 0 0 ${f(x1 + nx)} ${f(y1 + ny)}z`;
 }
 
-/** The ink of a copied colour drawing worked out as a line drawing: dark fills and strokes become `currentColor`, light ones are left out, the rest are a faint tint of it. Used where no other line artwork exists. */
-export function monoOf(markup: string): string {
-  const lum = (c: string): number => {
-    const rgb = readColour(c);
-    if (rgb === undefined) return 0.5;
-    const [r, g, b] = rgb.map((v) => v / 255);
-    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  };
-  return markup
-    .replace(/<(linearGradient|radialGradient)[\s\S]*?<\/\1>/g, "")
-    .replace(/(fill|stroke)="(#[0-9a-fA-F]{3,6})"/g, (_m, attr: string, c: string) => {
-      const l = lum(c);
-      if (attr === "stroke") return `stroke="currentColor"`;
-      return l < 0.5 ? `fill="currentColor"` : l > 0.86 ? `fill="none"` : `fill="currentColor" fill-opacity=".4"`;
-    })
-    .replace(/(fill|stroke)="url\(#[^)]*\)"/g, (_m, attr: string) => (attr === "fill" ? `fill="currentColor" fill-opacity=".25"` : `stroke="currentColor"`));
-}
-
 /** A piece we drew: the common case of `defineGear`. */
 export function drawn(id: string, en: string, ja: string, spec: GearSpec, size?: PieceSize): Piece<GearSpec> {
-  return defineGear({ id, en, ja, source: "drawn", size, model: spec, draw: (o) => drawGear(id, en, spec, o) });
+  return defineGear({ id, en, ja, source: "drawn", size, model: spec, draw: (o, turn) => drawGear(id, en, spec, o, turn) });
 }
 
 /** The strings of a racket's head: a grid of lines clipped to an ellipse. */
@@ -136,47 +157,29 @@ export function strings(cx: number, cy: number, rx: number, ry: number, step: nu
   return d;
 }
 
-/** A piece of gear copied, with changes, from an open icon set. */
-export interface CopiedSpec {
-  id: string;
-  en: string;
-  ja: string;
-  source: PieceSource;
-  /** The attribution the licence asks for: the author and the licence. */
-  credit: string;
-  /** The colour artwork's box and its (minified) markup. For a piece drawn in one colour (the glove) it is the path alone. */
-  box: string;
-  colour: string;
-  /** The line artwork: a one-path icon, or `derived` to work it out of the colour one. */
-  line: { box: string; d: string } | "derived";
-  /** A pale shape to lay under line artwork that is only ink (a mask's face), so that it reads as a solid thing in colour. */
-  underlay?: string;
-  /** The colour a one-path piece is filled with (a glove's leather). */
-  leather?: string;
-  /** The ink of one-colour artwork in the colour style. */
-  ink?: string;
-  size?: PieceSize;
-}
-
-/** Copied artwork as a piece: the colour version as it was drawn, the line version in `currentColor`. */
-export function copied(spec: CopiedSpec): Piece<CopiedSpec> {
-  const draw = (options: PieceOptions | undefined): string => {
-    const o = resolveOptions(options);
-    const desc = spec.credit;
-    if (o.style === "line") {
-      if (spec.line === "derived") return wrapPiece({ title: escape(spec.en), desc, size: o.size, theme: o.theme, box: spec.box, body: `<g fill="currentColor" stroke-width="${num(Number(spec.box.split(" ")[2]) / 40, 2)}" stroke-linejoin="round" stroke-linecap="round">${monoOf(spec.colour)}</g>` });
-      return wrapPiece({ title: escape(spec.en), desc, size: o.size, theme: o.theme, box: spec.line.box, body: `<path d="${spec.line.d}" fill="currentColor"/>` });
-    }
-    if (spec.leather !== undefined) {
-      const gid = `g${hashOf(spec.id)}`;
-      const leather = o.tint ?? spec.leather;
-      const defs = `<linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".4"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".35"/></linearGradient>`;
-      const body = `<path d="${spec.colour}" fill="${leather}" stroke="${mix(leather, -0.5)}" stroke-width="${num(Number(spec.box.split(" ")[2]) / 200, 2)}"/><path d="${spec.colour}" fill="url(#${gid})"/>`;
-      return wrapPiece({ title: escape(spec.en), desc, size: o.size, theme: o.theme, box: spec.box, defs, body });
-    }
-    const under = spec.underlay === undefined ? "" : `<path d="${spec.underlay}" fill="#f4f1ea" stroke="#9aa3ae" stroke-width="1.2"/>`;
-    const body = spec.ink === undefined ? spec.colour : `<g fill="${o.tint ?? spec.ink}">${spec.colour}</g>`;
-    return wrapPiece({ title: escape(spec.en), desc, size: o.size, theme: o.theme, box: spec.box, body: under + body });
+/**
+ * A shape of varying width along a curve, as a closed path: a cubic Bezier from `a` to `b` through the controls `c1` and `c2`, drawn `width(t)` wide at the fraction `t` of the way along. A bow, a blade or a feather
+ * is one of these. `steps` is how many segments each side has.
+ */
+export function swell(a: readonly [number, number], c1: readonly [number, number], c2: readonly [number, number], b: readonly [number, number], width: (t: number) => number, steps = 14): string {
+  const at = (t: number): [number, number] => {
+    const u = 1 - t;
+    return [u * u * u * a[0] + 3 * u * u * t * c1[0] + 3 * u * t * t * c2[0] + t * t * t * b[0], u * u * u * a[1] + 3 * u * u * t * c1[1] + 3 * u * t * t * c2[1] + t * t * t * b[1]];
   };
-  return { id: spec.id, en: spec.en, ja: spec.ja, source: spec.source, kind: "gear", model: spec, size: spec.size, svg: draw, frame: draw };
+  const f = (n: number): string => String(Math.round(n * 10) / 10);
+  const left: string[] = [];
+  const right: string[] = [];
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const p = at(t);
+    const q = at(Math.min(1, t + 0.01));
+    const r = at(Math.max(0, t - 0.01));
+    const dx = q[0] - r[0];
+    const dy = q[1] - r[1];
+    const l = Math.hypot(dx, dy) || 1;
+    const h = width(t) / 2;
+    left.push(`${f(p[0] - (dy / l) * h)} ${f(p[1] + (dx / l) * h)}`);
+    right.push(`${f(p[0] + (dy / l) * h)} ${f(p[1] - (dx / l) * h)}`);
+  }
+  return `M${left.join("L")}L${right.reverse().join("L")}z`;
 }

@@ -1,16 +1,18 @@
-// Gear: Field hockey stick and ball. Copied, with changes, from Noto Emoji `2D/svg/emoji_u1f3d1.svg` (googlefonts/noto-emoji at e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e), Apache-2.0, Copyright 2013 Google, Inc. All Rights Reserved..
-// SHA-256 of the file as published: 12fd8768e49db168f6f3d5db786ec02928ea03938895d859b883a25d885de5ed.
-// The line style is the one-path icon Wikimedia Commons https://commons.wikimedia.org/wiki/File:Field_hockey_stick_with_ball_Pinhead_icon.svg (revision 1252209397), CC0, Author: Quincy Morgan, Temaki contributors | Credit: https://github.com/waysidemapping/pinhead/blob/v12.0.0/icons/hand_tools/field_hockey_stick_with_ball.svg (SHA-256 aad932b96f4c0dc9a562bd4980135167af478faead92f143f91e679e0996238e).
-// Changes: editor wrappers, metadata and ids removed, coordinates written absolute and rounded. Modified files are marked as the Apache-2.0 licence asks. Do not edit by hand: scripts/dougu/build-gear.mjs writes this file.
-import { copied } from "./gear.core.ts";
+// A field hockey stick and ball, drawn for this package: a long taped shaft and a head that hooks round at the foot, with a flat face, beside a white ball.
+import { capsule, circle, drawn } from "./gear.core.ts";
 
-export const GEAR_FIELD_HOCKEY_STICK = /* @__PURE__ */ copied({
-  id: "gear:field-hockey-stick",
-  en: "Field hockey stick and ball",
-  ja: "フィールドホッケーのスティックとボール",
-  source: "noto",
-  credit: "Noto Emoji `2D/svg/emoji_u1f3d1.svg` (googlefonts/noto-emoji at e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e), Apache-2.0, Copyright 2013 Google, Inc. All Rights Reserved.. Line style: Wikimedia Commons https://commons.wikimedia.org/wiki/File:Field_hockey_stick_with_ball_Pinhead_icon.svg (revision 1252209397), CC0, Author: Quincy Morgan, Temaki contributors | Credit: https://github.com/waysidemapping/pinhead/blob/v12.0.0/icons/hand_tools/field_hockey_stick_with_ball.svg.",
-  box: "0 0 128 128",
-  colour: `<g><g><path fill="#D8CDC9" d="M88.6 88.4C80.2 88.1 70.5 94 70.5 106.6C70.5 117.1 78.9 123.8 88.4 123.7C97.5 123.6 105.7 117.1 106 106.9C106.3 95.5 97.9 88.7 88.6 88.4Z"/><path fill="#EAEAEA" d="M81 113C85.2 115 92.6 114.8 95.9 109C99.7 102.3 96.3 94.6 91.4 93C86.6 91.3 79.9 92 76.8 97.2C74.7 100.6 73.6 109.5 81 113Z"/><path fill="#FFFFFF" d="M77.9 109.3C75.5 110 72 100.7 77.6 95C83.6 88.8 91.3 91.2 91.4 93.7C91.8 98.2 85.6 94.7 82.2 98.9C78.5 103.3 81.8 108.2 77.9 109.3Z"/><path fill="none" stroke="#004FAD" stroke-miterlimit="10" d="M47.2 96.6"/><path fill="#5F6165" d="M79.4 48.3L108.8 12.5C108.8 12.5 108.1 10.4 108.2 9.5C108.3 8.5 111.1 3.9 113.4 3.6C116.7 3.2 123.3 8.1 123.6 11.4C123.8 13.4 120.5 17.4 119 17.6C118.2 17.8 116.3 17.5 116.3 17.5L87.1 54.8L79.4 48.3Z"/><path fill="none" stroke="#5F6165" stroke-miterlimit="10" d="M35.4 97.6"/><path fill="#EA8D37" d="M87.8 48L45.2 106.8L29.6 104.1C29.6 104.1 26.5 104.4 24.9 102.2C23.8 100.5 25.1 97 25 94.5C24.8 90.3 21 88.2 21 88.2L17.4 95L10.2 115.7C10.2 115.7 11.2 117.9 15.6 120.9C18.9 123.2 25 124.1 27.1 124.1C29.2 124.1 32.9 123.5 35.4 122.3C42.6 119 48.3 109.9 48.3 109.9L48.2 109.8C49.5 108 53.5 102.7 58.2 96.3C63.3 89.3 69.3 80.7 72.8 75.7C77 69.8 90.9 49.9 90.9 49.9L87.8 48Z"/><path fill="#FFA828" d="M89.5 48.7L83.2 43.6C83.2 43.6 31.7 101.5 30.2 103.2C29.5 103.9 27.5 104.8 26.3 104.8C25.2 104.8 23.8 104.2 22.9 102.8C20.9 99.7 23.8 96.8 23.2 92.1C22.5 87.4 18 86.4 15.4 86.6C13.1 86.8 5.6 88.1 5.1 100.7C4.7 109.4 9 115.1 11.9 117.6C13.6 119 17.3 120.9 22 121.2C25.1 121.5 28.7 121 32.4 119.3C38.6 116.4 43 110.6 45.3 107.5C47.6 104.4 89.5 48.7 89.5 48.7Z"/><path fill="#848582" d="M86.2 43.4C86.2 44.2 87.1 45.3 89.8 44.4C92.1 43.6 91.4 41.8 92.6 40.5C93.7 39.3 94.9 39.6 96.2 37.7C97.4 35.8 97.2 34.4 98.3 33C99.8 31.3 100.4 32.4 101.8 30.7C103 29.2 102.1 28.3 103.2 26.9C104.5 25.2 104.9 26.5 106.6 24.6C108.2 22.8 107.3 22.1 108.3 20.5C109.1 19.3 110.4 19.2 111.3 18.1C112.9 16.2 113.4 15.2 112.2 14.4C110.9 13.4 110.1 15.2 109.2 16.1C107.9 17.4 107.2 17.1 106.1 18.3C104.4 20 105.4 21 104.1 22.5C102.9 24.1 101.9 23.3 100.6 24.8C99.4 26.4 99.8 27.8 98.9 28.7C98 29.6 97.3 29.3 96 30.7C94.3 32.5 95.1 34.1 93.7 35.8C92.6 37.2 91.4 36.6 90.2 38C89 39.4 89.2 40.8 88.7 41.3C87.6 42.2 86.2 41.9 86.2 43.4Z"/><g><path fill="#CCC5C2" d="M45.4 107.4L48.3 109.9L51.8 105L49 102.6C47.1 105.1 45.8 106.9 45.4 107.4Z"/><path fill="#E2E0E4" d="M38.6 93.8L34.5 98.3L45.4 107.4C45.8 106.9 47.1 105.1 49 102.6L38.6 93.8Z"/><path fill="#CCC5C2" d="M51 99.9L53.8 102.3L57.4 97.3L54.7 95C53.4 96.8 52.1 98.4 51 99.9Z"/><path fill="#E2E0E4" d="M44.9 86.6L40.9 91.2L51 99.9C52.1 98.4 53.4 96.8 54.7 95L44.9 86.6Z"/><path fill="#CCC5C2" d="M80.1 61.2L81.9 62.7L85.4 57.8L83.7 56.3C82.6 57.8 81.4 59.4 80.1 61.2Z"/><path fill="#E2E0E4" d="M77 50.6L73 55.2L80.1 61.2C81.4 59.4 82.6 57.8 83.7 56.3L77 50.6Z"/><path fill="#CCC5C2" d="M90.9 49.9L83.3 43.5L83.3 43.6L89.5 48.7C89.5 48.7 88.1 50.6 85.8 53.6L87.3 55L90.9 49.9Z"/><path fill="#E2E0E4" d="M83.3 43.6L79.3 48L85.8 53.6C88.1 50.6 89.5 48.7 89.5 48.7L83.3 43.6Z"/></g></g></g>`,
-  line: { box: "0 0 15 15", d: `M13.9 9.69C13.56 9.24 12.94 9.15 12.5 9.5C12.09 9.8 11.99 10.35 12.23 10.79L12.3 10.9C12.63 11.34 12.54 11.96 12.1 12.3C11.66 12.63 11.03 12.54 10.71 12.1L9.21 10.1L7.61 11.31L9.11 13.3C10.11 14.63 11.98 14.89 13.31 13.89C14.63 12.9 14.89 11.02 13.9 9.69ZM0.9 0.7C0.45 1.03 0.37 1.66 0.7 2.1L7.31 10.91L8.91 9.7L2.3 0.9C1.96 0.46 1.34 0.37 0.9 0.7ZM3.02 14.02C4.12 14.02 5.01 13.12 5.01 12.02C5.01 10.92 4.12 10.02 3.02 10.02C1.92 10.02 1.02 10.92 1.02 12.02C1.02 13.12 1.92 14.02 3.02 14.02Z` },
+const T = "rotate(24 32 32)";
+
+export const GEAR_FIELD_HOCKEY_STICK = /* @__PURE__ */ drawn("gear:field-hockey-stick", "Field hockey stick", "フィールド用スティック", {
+  main: "#dcb06a",
+  accent: "#2a2f38",
+  parts: [
+    { d: capsule(32, 1.5, 32, 44, 3.6), fill: "$main", t: T, cyl: 1, shade: 0 },
+    { d: capsule(32, 1.5, 32, 16, 4.2), fill: "$accent", t: T, cyl: 0.7, shade: 0 },
+    { d: "M24.2 41.2L29.8 43.6Q29.4 50.4 33.2 52.2H43.6Q46.6 52.4 46.6 55.6Q46.6 58.8 43.6 58.8H32.4Q22.8 58 23.4 48.4Q23.6 44.6 24.2 41.2Z", fill: "$main", cyl: 0.9, shade: 0 },
+    { d: "M25.4 47.4Q25.6 55 33 56.6", fill: "none", stroke: "#fff", w: 1.1, op: 0.55, line: "none", fx: true },
+    { d: capsule(31.5, 22.4, 31.5, 27.4, 4.2).replace(/^/, ""), fill: "$accent", t: T, line: "none", shade: 0.3 },
+    { d: circle(54.5, 54.6, 4.8), fill: "#f4f2ee", stroke: "#8f98a3", shade: 0.9 },
+    { d: "M51.4 51.8a4.6 4.6 0 0 1 3-1", fill: "none", stroke: "#fff", w: 1, line: "none", fx: true },
+  ],
 });

@@ -2,7 +2,7 @@
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
 /** Round ball with seams. */
-export const SPORT_GAELIC = /* @__PURE__ */ defineIcon("sport:gaelic", "Round ball with seams", "ゲーリック・フットボールのボール", "ours", {
+export const SPORT_GAELIC = /* @__PURE__ */ defineIcon("sport:gaelic", "Round ball", "ゲーリックフットボール", "ours", {
   metal: "flat",
   ink: true,
   front: [

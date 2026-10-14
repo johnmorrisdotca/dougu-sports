@@ -2,7 +2,7 @@
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
 /** Pickleball paddle and ball. */
-export const SPORT_PICKLEBALL = /* @__PURE__ */ defineIcon("sport:pickleball", "Pickleball paddle and ball", "ピックルボールのパドルとボール", "ours", {
+export const SPORT_PICKLEBALL = /* @__PURE__ */ defineIcon("sport:pickleball", "Pickleball paddle", "ピックルボールのパドル", "ours", {
   metal: "flat",
   ink: true,
   front: [

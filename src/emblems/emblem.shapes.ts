@@ -163,3 +163,29 @@ export function starPath(cx: number, cy: number, outer: number, inner: number, p
   }
   return `${parts.join("")}Z`;
 }
+
+/** A regular polygon of `n` sides with a corner at `deg` degrees (0 is straight up), as a path. */
+export function polygon(cx: number, cy: number, r: number, n: number, deg = 0): string {
+  let d = "";
+  for (let i = 0; i < n; i++) {
+    const a = ((deg + (360 * i) / n - 90) * Math.PI) / 180;
+    d += `${i === 0 ? "M" : "L"}${n2(cx + r * Math.cos(a))} ${n2(cy + r * Math.sin(a))}`;
+  }
+  return `${d}Z`;
+}
+
+/** An ellipse turned `deg` degrees about its centre, as a path. */
+export function tiltedEllipse(cx: number, cy: number, rx: number, ry: number, deg: number): string {
+  const a = (deg * Math.PI) / 180;
+  const x = rx * Math.cos(a);
+  const y = rx * Math.sin(a);
+  return `M${n2(cx - x)} ${n2(cy - y)}A${n2(rx)} ${n2(ry)} ${deg} 1 1 ${n2(cx + x)} ${n2(cy + y)}A${n2(rx)} ${n2(ry)} ${deg} 1 1 ${n2(cx - x)} ${n2(cy - y)}Z`;
+}
+
+/** A bar with square ends from one point to another, `w` wide, as a path. */
+export function bar(x1: number, y1: number, x2: number, y2: number, w: number): string {
+  const l = Math.hypot(x2 - x1, y2 - y1) || 1;
+  const nx = (-(y2 - y1) / l) * (w / 2);
+  const ny = ((x2 - x1) / l) * (w / 2);
+  return `M${n2(x1 + nx)} ${n2(y1 + ny)}L${n2(x2 + nx)} ${n2(y2 + ny)}L${n2(x2 - nx)} ${n2(y2 - ny)}L${n2(x1 - nx)} ${n2(y1 - ny)}Z`;
+}

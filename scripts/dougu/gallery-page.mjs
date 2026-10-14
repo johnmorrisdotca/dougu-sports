@@ -104,7 +104,7 @@ export function galleryHtml({ BALLS, GEARS, lineup }, libBase = "./dist") {
 <div class="row">${row(sample, "same", 64)}</div>
 <h2>Gear <span lang="ja">道具</span></h2>
 <div class="grid">${GEARS.map(gearCard).join("")}</div>
-<p class="sources">Sizes are read from each sport's rulebook (see NOTICE.md); gear is drawn by us or copied, with changes, from Noto Emoji (Apache-2.0), Wikimedia Commons (CC0 or public domain) and game-icons.net (baseball glove, by Delapouite, CC BY 3.0).</p>
+<p class="sources">Sizes are read from each sport's rulebook (see NOTICE.md); every ball and every piece of gear is drawn for this package. A piece of gear flips like a coin when turned (<code>frame</code>).</p>
 </main>
 <script type="module">${SCRIPT(libBase)}</script>
 </body></html>

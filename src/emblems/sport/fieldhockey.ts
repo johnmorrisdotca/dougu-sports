@@ -2,7 +2,7 @@
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
 /** Hooked stick and ball. */
-export const SPORT_FIELDHOCKEY = /* @__PURE__ */ defineIcon("sport:fieldhockey", "Hooked stick and ball", "フィールドホッケーのスティックとボール", "ours", {
+export const SPORT_FIELDHOCKEY = /* @__PURE__ */ defineIcon("sport:fieldhockey", "Hooked stick", "フィールドホッケー", "ours", {
   metal: "flat",
   ink: true,
   front: [

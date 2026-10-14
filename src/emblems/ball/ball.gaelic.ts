@@ -6,7 +6,7 @@ import { strips18 } from "./ball.family.panelled.ts";
 export const BALL_GAELIC_FOOTBALL = /* @__PURE__ */ defineBall({
   id: "ball:gaelic-football",
   en: "Gaelic football",
-  ja: "ゲーリックフットボールのボール",
+  ja: "ゲーリックフットボール",
   size: { extentMm: 219.6, diameterMm: 219.6, circumferenceMm: 690.0, massG: [480, 500], rule: "GAA Official Guide Part 2, Rules of Specification, Rule 4.4(ii)", note: "Diameter worked out from the middle of the circumference range." },
   spec: {
     view: { yaw: 28, pitch: 22, roll: 0 },

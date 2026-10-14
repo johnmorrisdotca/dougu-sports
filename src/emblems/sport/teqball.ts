@@ -2,7 +2,7 @@
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
 /** Curved table and ball. */
-export const SPORT_TEQBALL = /* @__PURE__ */ defineIcon("sport:teqball", "Curved table and ball", "テックボールの湾曲した台とボール", "ours", {
+export const SPORT_TEQBALL = /* @__PURE__ */ defineIcon("sport:teqball", "Curved table", "テックボールの台", "ours", {
   metal: "flat",
   ink: true,
   front: [

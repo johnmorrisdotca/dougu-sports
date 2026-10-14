@@ -19,7 +19,8 @@ console.log(emblemFrame("medal:gold", { yaw: 180 }) === renderEmblem("medal:gold
 | `lathe` | Keeps the silhouette of a body of revolution and moves what is on it: the bright band of its metal slides, a handle goes round to the far side and is drawn behind the cup, the grooves of a column wind, the seams of a ball on a stand move, the net and the pennants go round; a stand with flat faces shows the faces that look toward the eye. A tilt shows more or less of the top of a dish. | `trophy:tennis-cup`, `trophy:baseball`, `trophy:football` |
 | `flat` | Squeezes the drawing by the cosine of the turn and shows the back past a quarter turn, as a coin turns, with the rim showing thick as it goes edge on. A tilt squeezes it from the top. | `medal:gold`, `crest:shield` |
 | `ball` | Rolls the ball in true 3D: panels, seams and marks are on the sphere and turn with it; `roll` turns it about the line of sight. A ball that is turning has no grain, so its resting turn is its still drawing without the grain. | `ball:soccer` |
-| `icon`, `gear` | Is not turned; it is drawn as it is. | `sport:nhl`, `trophy:cup`, `gear:hurley` |
+| `gear` | Flips like a coin, as a flat piece does: squeezed by the cosine of the yaw, mirrored on its back, squeezed from the top by a tilt. | `gear:hurley`, `gear:gunbai` |
+| `icon` | Is not turned; it is drawn as it is. | `sport:nhl`, `trophy:cup`, `award:crown` |
 
 ```js
 import { emblemFrame, renderEmblem } from "@johnmorrisdotca/dougu-sports";
@@ -27,6 +28,7 @@ import { emblemFrame, renderEmblem } from "@johnmorrisdotca/dougu-sports";
 console.log(emblemFrame("trophy:tennis-cup", { yaw: 0 }) === renderEmblem("trophy:tennis-cup")); // true
 console.log(emblemFrame("trophy:tennis-cup", { yaw: 120 }).includes("<path")); // true
 console.log(emblemFrame("sport:nhl", { yaw: 70 }) === renderEmblem("sport:nhl")); // true
+console.log(emblemFrame("gear:gunbai", { yaw: 180 }).includes("scale(-1 1)")); // true
 ```
 
 ## A loop

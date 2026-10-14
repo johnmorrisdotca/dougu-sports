@@ -21,10 +21,10 @@ const rows = Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => {
   const folder = D.EMBLEM_FOLDERS[group];
   const body = ids.length === 0
     ? "_No emblems yet._"
-    : ["| Id | English | 日本語 | Kind | Source | Constant | Import one |", "| --- | --- | --- | --- | --- | --- | --- |", ...ids.map((id) => {
+    : ["| Id | English | 日本語 | Kind | Source | Constant | Import one | Description |", "| --- | --- | --- | --- | --- | --- | --- | --- |", ...ids.map((id) => {
         const info = D.emblemInfo(id);
         const constant = constantOf(id);
-        return `| \`${id}\` | ${info.en} | ${info.ja} | ${info.kind} | ${info.source} | \`${constant}\` | \`${NAME}/${folder}/${moduleOf(folder, constant)}\` |`;
+        return `| \`${id}\` | ${info.en} | ${info.ja} | ${info.kind} | ${info.source} | \`${constant}\` | \`${NAME}/${folder}/${moduleOf(folder, constant)}\` | ${info.description === undefined ? "" : `${info.description.en}<br>${info.description.ja}`} |`;
       })].join("\n");
   return `## ${group}\n\n${body}\n`;
 });

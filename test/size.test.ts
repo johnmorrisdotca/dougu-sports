@@ -17,7 +17,7 @@ const one = (constant: string, path: string): Promise<{ text: string; bytes: num
 
 // Measured 2026-10-14 (esbuild 0.25, minified, gzipped). A limit has room for an edit and not for a regression: when art is added, an item may grow, and the limit is raised on purpose.
 // Each kind of emblem has a renderer, and the renderer is most of an item's weight: the ball's is small, the flat renderer (medals, crests, plaques) is about 3 kB, and the body of revolution that turns
-// (a cup) is about 5 kB, which is the price of its metal, its handles, its balls and its seams. The one pictogram and the one Material icon are a few hundred bytes of art on a small renderer.
+// (a cup) is about 5 kB, which is the price of its metal, its handles, its balls and its seams. A pictogram or an icon is a few hundred bytes of art on a small renderer.
 const LIMITS = { ball: 6.8 * 1024, flat: 3.6 * 1024, lathe: 6.2 * 1024, icon: 3.2 * 1024 };
 
 test("one named ball, bundled by itself, stays small and leaves the other emblems out", async () => {
@@ -39,21 +39,21 @@ test("one cup, bundled by itself, stays under the limit of a body of revolution 
   for (const [constant, path] of [["TROPHY_HOCKEY_CUP", "trophy/hockey-cup"], ["TROPHY_BASEBALL", "trophy/baseball"], ["TROPHY_TENNIS_CUP", "trophy/tennis-cup"]] as const) {
     const b = await one(constant, path);
     assert.ok(b.gzip < LIMITS.lathe, `${constant}: ${b.gzip} bytes gzipped`);
-    assert.ok(!b.text.includes("ball:soccer") && !b.text.includes("Gold medal") && !b.text.includes("Material"), `${constant}: another emblem came along`);
+    assert.ok(!b.text.includes("ball:soccer") && !b.text.includes("Gold medal"), `${constant}: another emblem came along`);
   }
   const hockey = await one("TROPHY_HOCKEY_CUP", "trophy/hockey-cup");
   assert.ok(!hockey.text.includes("trophy:baseball"), "another cup came along");
 });
 
-test("one Material icon and one pictogram, bundled by themselves, take only their own path", async () => {
+test("one icon and one pictogram, bundled by themselves, take only their own drawing", async () => {
   const cup = await one("TROPHY_CUP", "trophy/cup");
   const nhl = await one("SPORT_NHL", "sport/nhl");
   const stone = await one("SPORT_CURLING", "sport/curling");
-  for (const b of [cup, nhl, stone]) assert.ok(b.gzip < LIMITS.icon, `${b.gzip} bytes gzipped`);
-  // The data file holds sixteen paths; an icon takes its own and none of the rest.
-  assert.ok(cup.text.includes("M280-120v-80h160v-124"), "the cup holds its own path");
-  assert.ok(!nhl.text.includes("M280-120v-80h160v-124"), "the hockey icon took the cup's path");
-  assert.ok(nhl.bytes < 4500, `${nhl.bytes} bytes`);
+  const crown = await one("AWARD_CROWN", "award/crown");
+  for (const b of [cup, nhl, stone, crown]) assert.ok(b.gzip < LIMITS.icon, `${b.gzip} bytes gzipped`);
+  // A pictogram carries its own name and none of the other sports'.
+  assert.ok(nhl.text.includes("sport:nhl") && !nhl.text.includes("sport:curling") && !nhl.text.includes("trophy:cup"), "the hockey pictogram took another drawing");
+  assert.ok(nhl.bytes < 6500, `${nhl.bytes} bytes`);
 });
 
 test("an item imported from the main entry is still dropped when it is not used", async () => {
@@ -67,6 +67,6 @@ test("an item imported from the main entry is still dropped when it is not used"
 test("the full registry is bigger than one item, and the bundle of one item is a fraction of it", async () => {
   const all = await bundle(`import * as D from "./src/index.ts"; console.log(D.renderEmblem("medal:gold"), D.EMBLEMS);`);
   const single = await one("BALL_SOCCER", "ball/ball.soccer");
-  assert.ok(all.bytes > 10 * single.bytes);
+  assert.ok(all.bytes > 8 * single.bytes);
   assert.ok(all.text.includes("ball:soccer") && all.text.includes("medal:gold") && all.text.includes("trophy:hockey-cup"));
 });

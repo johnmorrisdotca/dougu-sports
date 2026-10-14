@@ -1,16 +1,17 @@
-// Gear: Hockey stick and puck. Copied, with changes, from Noto Emoji `2D/svg/emoji_u1f3d2.svg` (googlefonts/noto-emoji at e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e), Apache-2.0, Copyright 2013 Google, Inc. All Rights Reserved..
-// SHA-256 of the file as published: 600f467e5b4d3163ec59e3fbf01783a039cd0f019c119615bb1cb37dee191396.
-// The line style is the one-path icon Pictogrammers Material Design Icons `svg/hockey-sticks.svg` (Templarian/MaterialDesign-SVG at 9e04201d4557e729822fb57f62a316c3dea1d4a8), Apache-2.0, icon by Google (SHA-256 0e942527dcff02a9758548cee631948b9e52f6006f722ae1fc02ff454f1060bf).
-// Changes: editor wrappers, metadata and ids removed, coordinates written absolute and rounded. Modified files are marked as the Apache-2.0 licence asks. Do not edit by hand: scripts/dougu/build-gear.mjs writes this file.
-import { copied } from "./gear.core.ts";
+// An ice hockey stick and a puck, drawn for this package: a long shaft taped at the top, and a blade with a heel and a toe lying flat on the ice.
+import { capsule, drawn } from "./gear.core.ts";
 
-export const GEAR_HOCKEY_STICK = /* @__PURE__ */ copied({
-  id: "gear:hockey-stick",
-  en: "Hockey stick and puck",
-  ja: "アイスホッケーのスティックとパック",
-  source: "noto",
-  credit: "Noto Emoji `2D/svg/emoji_u1f3d2.svg` (googlefonts/noto-emoji at e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e), Apache-2.0, Copyright 2013 Google, Inc. All Rights Reserved.. Line style: Pictogrammers Material Design Icons `svg/hockey-sticks.svg` (Templarian/MaterialDesign-SVG at 9e04201d4557e729822fb57f62a316c3dea1d4a8), Apache-2.0, icon by Google.",
-  box: "0 0 128 128",
-  colour: `<path fill="#FFA828" d="M65.8 80.6C65.8 80.6 59.5 89 58.1 90.7C56.7 92.4 53.1 96.3 51.5 97.3C49.9 98.3 49.3 100.1 32 100.1C18.5 100.1 13.5 98.6 7.4 98.6C2.7 98.6 3.8 106.8 4.4 108.7C5 110.6 8.6 117 15.5 118.2C21.8 119.4 28.8 118.6 38.6 117C46.8 115.7 53.8 113.9 57 111.8C60.1 109.8 63.5 103.6 65.3 100.9C67.1 98.1 74.4 86.7 74.4 86.7L74.3 84.4L65.8 80.6Z"/><path fill="#F08A34" d="M68.7 80.8C68.6 81.2 56.5 96.8 55.4 98C54.4 99.2 52.6 100.9 52.9 103.3C53.2 105.7 55.4 106.3 57 105.7C59.8 104.7 60.6 102.4 62.1 100.5C63.1 99.1 74.2 83.1 74.2 83.1L68.7 80.8Z"/><polygon fill="#5D6365" points="65.5 81 75.7 66.6 83.8 72.3 73.9 87.4"/><polygon fill="#DFE0E0" points="72.1 71.7 80.2 77.8 76.7 83.2 68.3 77"/><polygon fill="#FC2929" points="75 67.7 82.9 73.7 115.3 25 108.4 20.3"/><path fill="#5E6367" d="M114.8 7.7C112.9 7.8 110.5 12.5 110.4 13.1C110.2 14.1 112.1 14.9 112.1 14.9L107.5 21.6L114.4 26.4L119 19.7C119 19.7 120.4 20.7 121.1 20.2C121.9 19.7 124.9 15.3 124.8 14.1C124.6 13.1 116.3 7.6 114.8 7.7Z"/><path fill="#9A9A9A" d="M94.1 103.7L81.1 105.9C81.1 105.9 80.7 107.8 80.8 111.7C80.9 115.6 81.4 117 81.4 117C81.4 117 84.2 123 97.8 123.2C112.6 123.5 115.7 117.1 115.7 117.1C115.7 117.1 116.3 113.8 116.3 111.4C116.3 109.8 116.2 106.2 115.9 105.7C114.9 104.5 94.1 103.7 94.1 103.7Z"/><path fill="#5E6367" d="M98 97.8C86 97.7 81 102.9 81.1 105.9C81.1 108.2 85.7 114.3 98.8 114.5C112.9 114.7 115.9 106.9 116 105.8C116 104.4 112.7 98 98 97.8Z"/>`,
-  line: { box: "0 0 24 24", d: `M17.68 4H14.3L12.56 8C12.53 8.04 12.45 8.22 12.31 8.5C12.17 8.78 12.06 9.04 12 9.19L9.7 4H6.32L10.41 12.84C10.5 13.06 10.73 13.59 11.11 14.43C11.5 15.28 11.78 15.91 12 16.35L13.41 19.44C13.6 19.78 13.89 19.95 14.3 19.95L19 20V16H15L13.6 12.84L17.68 4M20.03 16V20H22V17C22 16.73 21.91 16.5 21.72 16.28C21.53 16.08 21.3 16 21 16H20.03M5 16V20L9.7 19.95C10.11 19.95 10.4 19.78 10.59 19.44L11.44 17.5L9.84 14.06L9 16H5M2 20H3.97V16H3C2.7 16 2.47 16.08 2.28 16.28C2.09 16.5 2 16.73 2 17V20Z` },
+const T = "rotate(28 32 32)";
+
+export const GEAR_HOCKEY_STICK = /* @__PURE__ */ drawn("gear:hockey-stick", "Hockey stick and puck", "スティックとパック", {
+  main: "#c8202c",
+  accent: "#f2efe8",
+  parts: [
+    { d: capsule(32, 1.5, 32, 47, 4.2), fill: "$main", t: T, cyl: 1, shade: 0 },
+    { d: capsule(32, 1.5, 32, 11, 4.4), fill: "$accent", t: T, cyl: 0.8, shade: 0 },
+    { d: "M22.4 42.6L28.6 45.6Q29 50.6 33 51.4H42.4Q45 51.4 44.8 54.6Q44.6 57.8 41.6 57.8H20.8Q17.4 57.8 17.8 54.6Q18.2 49.4 22.4 42.6Z", fill: "#dcb97b", cyl: 0.7, shade: 0 },
+    { d: "M19.6 51.8L26 51.4L27 57.8H18.2ZM33 51.4H37.6L36.8 57.8H32Z", fill: "$accent", stroke: "none", op: 0.92, shade: 0, line: "none" },
+    { d: "M48.6 52.4v3.2a5.4 2.3 0 0 0 10.8 0v-3.2a5.4 2.3 0 0 0-10.8 0z", fill: "#3a414b", cyl: 0.8, shade: 0 },
+    { d: "M48.6 52.4a5.4 2.3 0 0 0 10.8 0a5.4 2.3 0 0 0-10.8 0z", fill: "#6b7480", shade: 0, line: "none" },
+  ],
 });

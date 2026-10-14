@@ -2,7 +2,7 @@
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
 /** Table tennis paddle and ball. */
-export const SPORT_TABLETENNIS = /* @__PURE__ */ defineIcon("sport:tabletennis", "Table tennis paddle and ball", "卓球のラケットとボール", "ours", {
+export const SPORT_TABLETENNIS = /* @__PURE__ */ defineIcon("sport:tabletennis", "Table tennis paddle", "卓球のラケット", "ours", {
   metal: "flat",
   ink: true, ribbon: "#c0392b",
   front: [

@@ -2,7 +2,7 @@
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
 /** Woven ball. */
-export const SPORT_SEPAKTAKRAW = /* @__PURE__ */ defineIcon("sport:sepaktakraw", "Woven ball", "セパタクローの編み目のボール", "ours", {
+export const SPORT_SEPAKTAKRAW = /* @__PURE__ */ defineIcon("sport:sepaktakraw", "Woven ball", "セパタクローのボール", "ours", {
   metal: "flat",
   ink: true,
   front: [
