@@ -162,3 +162,13 @@ test("a pennant shows its own back, not a mirror of the front", () => {
   assert.ok(!flag.includes("CHAMPIONS") && !flag.includes(">2026<"), "the back of a pennant is plain felt");
   assert.match(flag, /translate\(64 0\) scale\(-1 1\)/, "with the dowel on the other side");
 });
+
+test("two turned drawings in one page do not share a filter unless they would draw the same one", () => {
+  const id = (svg: string): string => /<filter id="([^"]+)"/.exec(svg)?.[1] as string;
+  // A box of 64 and a box of 960 at the same turn: one filter's region would cut the other to nothing.
+  assert.notEqual(id(D.emblemFrame("sport:nhl", { yaw: 180 })), id(D.emblemFrame("gear:hurley", { yaw: 180 })));
+  assert.equal(id(D.emblemFrame("gear:hurley", { yaw: 180 })), id(D.emblemFrame("gear:hurley", { yaw: 180, size: 20 })));
+  const page = [D.emblemFrame("sport:nhl", { yaw: 180 }), D.emblemFrame("award:crown", { yaw: 180 }), D.emblemFrame("gear:hurley", { yaw: 180 })].map(id);
+  const boxes = ["sport:nhl", "award:crown", "gear:hurley"].map((i) => (/viewBox="([^"]+)"/.exec(D.renderEmblem(i as D.EmblemId))?.[1] as string));
+  for (let a = 0; a < 3; a++) for (let b = a + 1; b < 3; b++) assert.equal(page[a] === page[b], boxes[a] === boxes[b], `${a} ${b}`);
+});

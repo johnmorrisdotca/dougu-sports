@@ -42,7 +42,8 @@ export function flipSvg(svg: string, o: FlipOptions): string {
   const cx = x0 + w / 2;
   const cy = y0 + h / 2;
   // The turned face, then the filter that adds the rim behind it (and dims a mirrored back).
-  const id = `dgf${o.line === true ? "l" : "c"}${mirror ? "b" : "f"}${Math.round(dx * 100)}_${Math.round(dy * 100)}`;
+  // The id names everything the definition depends on (its region comes from the box), so two drawings in one page that share an id share one filter.
+  const id = `dgf${o.line === true ? "l" : "c"}${mirror ? "b" : "f"}${Math.round(dx * 100)}_${Math.round(dy * 100)}_${[x0, y0, w, h].map((v) => Math.round(v)).join("_")}`;
   const flood = o.line === true ? '<feFlood flood-color="currentColor" flood-opacity=".5"/>' : '<feFlood flood-color="#000" flood-opacity=".42"/>';
   const steps = [1, 2, 3].map((k) => (Math.abs(dx) + Math.abs(dy) < 0.05 ? "" : `<feOffset in="s" dx="${n2((dx * k) / 3)}" dy="${n2((dy * k) / 3)}" result="o${k}"/>`)).join("");
   const nodes = Math.abs(dx) + Math.abs(dy) < 0.05 ? "" : '<feMergeNode in="o3"/><feMergeNode in="o2"/><feMergeNode in="o1"/>';

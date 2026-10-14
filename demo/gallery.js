@@ -12,7 +12,7 @@ function card(id) {
   // An emblem that takes an engraving shows one: the front, then turned a third of a turn, then its back.
   const takes = D.renderEmblem(id, { engrave: "MVP" }) !== D.renderEmblem(id) || D.renderEmblem(id, { year: 2026 }) !== D.renderEmblem(id);
   const cut = { engrave: "MVP 2026", engraveBack: "2026", size: 72 };
-  const engraved = takes ? `<div class="turns engraved" role="group" aria-label="${esc(info.en)} engraved">${[0, 50, 180].map((yaw) => D.emblemFrame(id, { ...cut, yaw })).join("")}<code>engrave: "MVP 2026"</code></div>` : "";
+  const engraved = takes ? `<div class="turns engraved" role="group" aria-label="${esc(info.en)} engraved">${[0, 50, 180].map((yaw) => D.emblemFrame(id, { ...cut, yaw })).join("")}<small>engrave: "MVP 2026"</small></div>` : "";
   const call = `renderEmblem("${id}")`;
   const text = `${id} ${info.en} ${info.ja} ${info.kind} ${info.source}`.toLowerCase();
   return `<li id="${esc(id.replace(":", "-"))}" data-text="${esc(text)}"><h3>${esc(info.en)} <span lang="ja">${esc(info.ja)}</span></h3><p><code>${esc(id)}</code> · ${info.kind} · ${info.source}</p><div class="styles">${styles}</div>${turns}${engraved}<p class="copies"><button type="button" class="fam-button copy" data-code="${esc(id)}" aria-label="Copy the id ${esc(id)}">Copy id</button> <button type="button" class="fam-button copy" data-code="${esc(call)}" aria-label="Copy the call for ${esc(id)}">Copy call</button></p></li>`;
