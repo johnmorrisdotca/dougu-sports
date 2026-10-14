@@ -1,7 +1,8 @@
 // Gear: pieces of equipment drawn flat, in a colour style and a line style (`currentColor`), to match the trophies. A piece is either drawn by us from a list of parts (a path, a colour, how it
 // reads as a line) or copied from an open icon set (Noto Emoji, Wikimedia Commons, game-icons.net) with the source named in the module's header, the colour version from one artwork and the line
-// version from another (Pictogrammers MDI) or worked out from the colour one. Self-contained: it imports only the shared option and colour helpers of the ball folder.
-import { type Piece, type PieceOptions, type PieceSize, type PieceSource, escape, hashOf, mix, num, readColour, resolveOptions, wrapPiece } from "../ball/ball.core.ts";
+// version from another (Pictogrammers MDI) or worked out from the colour one. Self-contained: it imports only the shared option and colour helpers of the ball folder and the coin-flip turn.
+import { flipSvg } from "../emblem.flip.ts";
+import { type BallFrameOptions, type Piece, type PieceOptions, type PieceSize, type PieceSource, escape, hashOf, mix, num, readColour, resolveOptions, wrapPiece } from "../ball/ball.core.ts";
 
 /** One part of a drawn piece. */
 export interface Part {
@@ -43,9 +44,15 @@ export interface GearDef<Model = unknown> {
   draw: (options: PieceOptions | undefined) => string;
 }
 
-/** A piece of gear from its drawing function. Gear is not turned: `frame` draws it as it is. */
+/** A turn in degrees, as a finite number (0 for anything else). */
+const turn = (value: number | undefined): number => (typeof value === "number" && Number.isFinite(value) ? value % 360 : 0);
+
+/** A piece of gear turned like a coin: a flat cut-out with a front, a mirrored back and a thin rim. */
+const flip = (draw: (options: PieceOptions | undefined) => string) => (o: BallFrameOptions | undefined): string => flipSvg(draw(o), { yaw: turn(o?.yaw), pitch: turn(o?.pitch), line: o?.style === "line", thick: 0.025 });
+
+/** A piece of gear from its drawing function. Turned, it flips like a coin (`flipSvg`): the front, then its mirrored back, with a thin rim. */
 export function defineGear<Model>(def: GearDef<Model>): Piece<Model> {
-  return { id: def.id, en: def.en, ja: def.ja, source: def.source, kind: "gear", model: def.model, size: def.size, svg: (o) => def.draw(o), frame: (o) => def.draw(o) };
+  return { id: def.id, en: def.en, ja: def.ja, source: def.source, kind: "gear", model: def.model, size: def.size, svg: (o) => def.draw(o), frame: flip(def.draw) };
 }
 
 /** A drawn piece: its parts become a document in either style. */
@@ -178,5 +185,5 @@ export function copied(spec: CopiedSpec): Piece<CopiedSpec> {
     const body = spec.ink === undefined ? spec.colour : `<g fill="${o.tint ?? spec.ink}">${spec.colour}</g>`;
     return wrapPiece({ title: escape(spec.en), desc, size: o.size, theme: o.theme, box: spec.box, body: under + body });
   };
-  return { id: spec.id, en: spec.en, ja: spec.ja, source: spec.source, kind: "gear", model: spec, size: spec.size, svg: draw, frame: draw };
+  return { id: spec.id, en: spec.en, ja: spec.ja, source: spec.source, kind: "gear", model: spec, size: spec.size, svg: draw, frame: flip(draw) };
 }

@@ -20,4 +20,5 @@ export const TROPHY_CRICKET_URN = /* @__PURE__ */ defineLathe("trophy:cricket-ur
     { a: 90, w: 1.6, pts: [[3.2, 11], [8.4, 11], [8.4, 16.4], [8, 20]] },
     { a: -90, w: 1.6, pts: [[3.2, 11], [8.4, 11], [8.4, 16.4], [8, 20]] },
   ],
+  plate: { y0: 49.4, y1: 54.6, tone: "wood" },
 });

@@ -20,4 +20,5 @@ export const TROPHY_CANADIAN_BOWL = /* @__PURE__ */ defineLathe("trophy:canadian
     { a: 90, w: 2.2, pts: [[8, 17], [13.4, 16], [17.4, 11.5], [15.8, 7.4], [12.8, 8.6]] },
     { a: -90, w: 2.2, pts: [[8, 17], [13.4, 16], [17.4, 11.5], [15.8, 7.4], [12.8, 8.6]] },
   ],
+  plate: { y0: 52.4, y1: 57.8, tone: "dark" },
 });

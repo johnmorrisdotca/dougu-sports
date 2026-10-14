@@ -10,8 +10,8 @@ test("there are thirty-three sports, named once, in lower case", () => {
   for (const name of D.SPORT_NAMES) assert.match(name, /^[a-z]+$/);
 });
 
-test("the groups are award, trophy, medal, crest, ball, gear and sport, and every id is <group>:<name> in its group", () => {
-  assert.deepEqual(Object.keys(D.EMBLEM_GROUPS), ["award", "trophy", "medal", "crest", "ball", "gear", "sport"]);
+test("the groups are award, trophy, medal, crest, ball, gear, sport, jersey and pennant, and every id is <group>:<name> in its group", () => {
+  assert.deepEqual(Object.keys(D.EMBLEM_GROUPS), ["award", "trophy", "medal", "crest", "ball", "gear", "sport", "jersey", "pennant"]);
   assert.deepEqual(Object.keys(D.EMBLEM_FOLDERS), Object.keys(D.EMBLEM_GROUPS));
   for (const [group, ids] of Object.entries(D.EMBLEM_GROUPS)) for (const id of ids) assert.match(id, new RegExp(`^${group}:[a-z0-9-]+$`), id);
   assert.equal(new Set(D.EMBLEM_IDS).size, D.EMBLEM_IDS.length, "an id is in one group, once");

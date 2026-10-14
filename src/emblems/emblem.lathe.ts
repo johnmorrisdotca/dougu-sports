@@ -6,6 +6,7 @@ import {
   type Emblem, type EmblemOptions, type EmblemSource, type FrameOptions, type Gradient, type Metal, type Resolved, type Rgb,
   cylinderGradient, defsOf, hexOf, mainOf, mix, orbGradient, readColour, resolve, wrap,
 } from "./emblem.core.ts";
+import { type Band, cylinderText, engravingInk, engravingOf, flatText, sideText } from "./emblem.engrave.ts";
 
 /** A point of the profile: the height `y` (0 at the top of the 64 unit box), the radius `r` from the axis (x = 32), 1 for a sharp corner (a smooth run of points ends at one), and the tone of the piece that starts here. */
 export type Pt = readonly [y: number, r: number, corner?: 0 | 1, tone?: string];
@@ -73,6 +74,8 @@ export interface LatheModel {
   handles?: readonly Handle[];
   balls?: readonly Ball[];
   poles?: Poles;
+  /** The plinth: the band of the body (heights, the tone it is cut into, and for a body with flat sides which side) that holds an engraving, which turns with the body. */
+  plate?: Band;
 }
 
 const CX = 32;
@@ -147,7 +150,7 @@ interface Tone {
 }
 
 /** The geometry and paint of one drawing of the model at a yaw and a pitch. */
-function draw(model: LatheModel, r: Resolved, yaw: number, pitch: number): { body: string; defs: string; edge: string } {
+function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw: number, pitch: number): { body: string; defs: string; edge: string } {
   const line = r.style === "line";
   const flat = r.style === "color";
   const elevation = Math.max(0, Math.min(75, (model.tilt ?? 12) + pitch));
@@ -441,6 +444,26 @@ function draw(model: LatheModel, r: Resolved, yaw: number, pitch: number): { bod
     mid.push(...parts);
   }
 
+  // The engraving on the plinth: letters set round the body (or along one flat side), foreshortened and hidden as they turn away.
+  const plate = model.plate;
+  const words = plate === undefined ? "" : flatText(engravingOf(o));
+  if (plate !== undefined && words !== "") {
+    const y = (plate.y0 + plate.y1) / 2;
+    const solid = model.solids.find((q) => (q.p[0] as Pt)[0] <= y && y <= (q.p[q.p.length - 1] as Pt)[0]) ?? (model.solids[0] as Solid);
+    const radius = radiusAt(solid.p, y);
+    const ink = engravingInk(r.style, tone(plate.tone ?? solid.tone).rgb);
+    if (solid.sides === undefined) mid.push(cylinderText(words, radius, plate.y1 - plate.y0, ink, yaw, plate.at ?? 0, (deg) => at(radius, y, deg)));
+    else {
+      const n = solid.sides;
+      const k = plate.face ?? 0;
+      const a0 = (360 * k) / n + yaw;
+      const a1 = (360 * (k + 1)) / n + yaw;
+      const [ax, ay] = at(radius, y, a0);
+      const [bx, by] = at(radius, y, a1);
+      mid.push(sideText(words, 2 * radius * Math.sin(Math.PI / n), plate.y1 - plate.y0, ink, [ax, ay], [bx, by], Math.cos(((a0 + a1) / 2) * RAD)));
+    }
+  }
+
   return { body: back.join("") + mid.join("") + front.join(""), defs: line || flat ? "" : defsOf(grads), edge: main.edge };
 }
 
@@ -456,7 +479,7 @@ export function defineLathe(id: string, en: string, ja: string, source: EmblemSo
     const r = resolve(o);
     const yaw = typeof o?.yaw === "number" && Number.isFinite(o.yaw) ? o.yaw % 360 : 0;
     const pitch = typeof o?.pitch === "number" && Number.isFinite(o.pitch) ? Math.max(-40, Math.min(60, o.pitch)) : 0;
-    const d = draw(model, r, yaw, pitch);
+    const d = draw(model, r, o, yaw, pitch);
     return wrap({ title: en, size: r.size, style: r.style, theme: r.theme, defs: d.defs, body: d.body, edge: d.edge, width: r.style === "line" ? 2.3 : 0.6 });
   };
   return { id, en, ja, source, kind: "lathe", model, svg: (o?: EmblemOptions) => frame(o), frame };

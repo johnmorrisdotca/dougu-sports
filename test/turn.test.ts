@@ -34,7 +34,7 @@ test("no turn is the still drawing for every emblem that turns, and a turn that 
   }
 });
 
-test("a body of revolution keeps its outline at every yaw and moves its light, and an icon does not turn", () => {
+test("a body of revolution keeps its outline at every yaw and moves its light", () => {
   assert.ok(lathe.length >= 12, "the trophies that are bodies of revolution");
   for (const id of lathe) {
     const still = pieces(D.renderEmblem(id));
@@ -47,9 +47,6 @@ test("a body of revolution keeps its outline at every yaw and moves its light, a
     }
     assert.equal(D.emblemFrame(id, { yaw: 360 }), D.renderEmblem(id), id);
   }
-  assert.equal(D.emblemFrame("sport:nhl", { yaw: 70 }), D.renderEmblem("sport:nhl"));
-  assert.equal(D.emblemFrame("sport:curling", { yaw: 70 }), D.renderEmblem("sport:curling"));
-  assert.equal(D.emblemFrame("trophy:cup", { yaw: 70 }), D.renderEmblem("trophy:cup"));
 });
 
 test("the light slides with the yaw: the gradient of a turned cup is another gradient", () => {
@@ -123,4 +120,50 @@ test("a rolling ball and a flipping medal are different kinds, and the kinds are
   assert.equal(D.emblemInfo("sport:nhl").kind, "icon");
   assert.equal(D.emblemInfo("trophy:cup").source, "material");
   assert.equal(D.emblemInfo("trophy:hockey-cup").source, "ours");
+});
+
+const flatTurned = D.EMBLEM_IDS.filter((id) => ["flat", "icon", "gear"].includes(D.emblemInfo(id).kind));
+
+test("every flat emblem, pictogram, award, piece of gear, jersey and pennant turns like a coin: squeezed, with a back, and a rim", () => {
+  assert.ok(flatTurned.length >= 90, `${flatTurned.length} ids turn as flat things`);
+  for (const id of flatTurned) {
+    const still = D.renderEmblem(id);
+    for (const style of D.EMBLEM_STYLES) {
+      const at = (yaw: number, pitch = 0): string => D.emblemFrame(id, { yaw, pitch, style });
+      assert.notEqual(at(60), D.renderEmblem(id, { style }), `${id} ${style} 60`);
+      assert.notEqual(at(180), D.renderEmblem(id, { style }), `${id} ${style} 180 is its back`);
+      assert.notEqual(at(60), at(-60), `${id} ${style}: the rim is on the side that turns away`);
+      assert.equal(at(360), D.renderEmblem(id, { style }), `${id} ${style} 360`);
+      assert.equal(at(400), at(40), `${id} ${style} 400 is 40`);
+      // Edge on, the face is a sliver and never zero wide, so it cannot divide by nothing.
+      assert.doesNotMatch(at(90), /scale\(0 |scale\(-0 /, `${id} ${style} 90`);
+      assert.notEqual(at(0, 50), D.renderEmblem(id, { style }), `${id} ${style}: a tilt squeezes it`);
+    }
+    assert.ok(still.length > 0);
+  }
+});
+
+test("a turned gear, icon or award squeezes by the cosine, mirrors its back, and has a thin dark rim that is widest edge on", () => {
+  for (const id of ["gear:hurley", "gear:tennis-racket", "sport:nhl", "award:crown", "trophy:cup"] as const) {
+    const scale = (svg: string): number => Number(/scale\((-?[\d.]+) /.exec(svg)?.[1]);
+    assert.equal(scale(D.emblemFrame(id, { yaw: 60 })), 0.5, id);
+    assert.equal(scale(D.emblemFrame(id, { yaw: 120 })), -0.5, `${id}: the back is mirrored`);
+    assert.equal(scale(D.emblemFrame(id, { yaw: 90 })), 0.02, id);
+    const rim = (svg: string): number => Math.abs(Number(/<feOffset in="s" dx="(-?[\d.]+)"[^>]*result="o3"/.exec(svg)?.[1]));
+    assert.ok(rim(D.emblemFrame(id, { yaw: 90 })) > rim(D.emblemFrame(id, { yaw: 30 })), `${id}: the rim is widest edge on`);
+    assert.match(D.emblemFrame(id, { yaw: 120 }), /<feColorMatrix/, `${id}: the back is a little darker`);
+    assert.doesNotMatch(D.emblemFrame(id, { yaw: 60 }), /<feColorMatrix/, `${id}: the front is not`);
+    assert.match(D.emblemFrame(id, { yaw: 60, style: "line" }), /flood-color="currentColor"/, `${id}: the rim of a line drawing is the page's ink`);
+  }
+});
+
+test("a jersey and a pennant show their own back, not a mirror of the front", () => {
+  const front = D.emblemFrame("jersey:soccer", { yaw: 20, number: 7, name: "Ono" });
+  const back = D.emblemFrame("jersey:soccer", { yaw: 160, number: 7, name: "Ono" });
+  assert.ok(front.includes(">7<") && !front.includes(">ONO<"), "the front has the number and no name");
+  assert.ok(back.includes(">7<") && back.includes(">ONO<"), "the back has the name and the number");
+  assert.match(back, /scale\(0\.94 /, "the back is not mirrored");
+  const flag = D.emblemFrame("pennant:championship", { yaw: 160, engrave: "Champions", year: 2026 });
+  assert.ok(!flag.includes("CHAMPIONS") && !flag.includes(">2026<"), "the back of a pennant is plain felt");
+  assert.match(flag, /translate\(64 0\) scale\(-1 1\)/, "with the dowel on the other side");
 });

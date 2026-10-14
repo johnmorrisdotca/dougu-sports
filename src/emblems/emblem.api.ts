@@ -2,7 +2,7 @@
 // and nothing else imports that drawing's own module (`dougu-sports/ball/soccer`) and calls its `svg`.
 import type { Emblem, EmblemOptions, EmblemStyle, EmblemTheme, FrameOptions } from "./emblem.core.ts";
 import { EMBLEM_STYLES } from "./emblem.core.ts";
-import { BALL_IDS, CREST_SHAPES, EMBLEM_ALIASES, EMBLEM_IDS, type BallId, type CrestShape, type EmblemId, type MedalKind, type SportName } from "./emblem.ids.ts";
+import { BALL_IDS, CREST_SHAPES, EMBLEM_ALIASES, EMBLEM_IDS, JERSEY_CUTS, type BallId, type CrestShape, type EmblemId, type JerseyCut, type MedalKind, type SportName } from "./emblem.ids.ts";
 import type { PieceSize } from "./ball/ball.core.ts";
 import { EMBLEM_TABLE } from "./emblem.registry.ts";
 
@@ -153,4 +153,84 @@ export function sportIcon(sport: SportName, options?: EmblemOptions): string {
   const e = Object.hasOwn(EMBLEM_TABLE, `sport:${sport}`) ? EMBLEM_TABLE[`sport:${sport}` as EmblemId] : undefined;
   if (e === undefined) throw new Error(`Unknown sport "${String(sport).slice(0, 40)}": the icons are for the names in SPORT_NAMES.`);
   return e.svg(options);
+}
+
+/** What `jersey` takes. */
+export interface JerseyOptions {
+  /** The cut: `hockey` (the default), `basketball`, `soccer`, `baseball` or `football`. Written as `"line"`, `"metal"` or `"color"` it is the finish instead, and the cut is hockey. */
+  style?: JerseyCut | EmblemStyle;
+  /** The cut, when `style` is a finish. */
+  cut?: JerseyCut;
+  /** The finish: `metal` (flat-shaded, the default), `line` or `color`. */
+  render?: EmblemStyle;
+  /** The team's main colour, its trim (collar, stripes, the number's outline) and its number's colour, as hex colours or `rgb()`. The trim is the number's colour unless a third is given. */
+  colors?: string | readonly [main?: string, trim?: string, number?: string];
+  /** The number, up to three characters: on the chest, and big on the back. */
+  number?: number | string;
+  /** The name above the number on the back. */
+  name?: string;
+  /** `"none"`, `"chest"`, `"hoops"`, `"sleeves"` or `"pin"`; `true` is the cut's own. Hockey, basketball and football carry sleeve stripes unless `false`. */
+  stripes?: EmblemOptions["stripes"];
+  /** `"front"` (the default) or `"back"`. */
+  view?: "front" | "back";
+  size?: number;
+  theme?: EmblemTheme;
+  /** A turn from the resting view, in degrees: the jersey flips like a coin and shows the other side. */
+  yaw?: number;
+  pitch?: number;
+}
+
+/**
+ * A generic jersey in a team's colours with a number, front or back, for hockey, basketball, soccer, baseball or football. No cut is a real team's design.
+ * @example
+ * ```ts
+ * import { jersey } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const svg = jersey({ style: "hockey", colors: ["#c8102e", "#f4f0e4", "#f4f0e4"], number: 23, name: "Morris" });
+ * console.log(svg.includes(">23<"), svg.includes("<title>Hockey jersey</title>"));
+ * // true true
+ * ```
+ */
+export function jersey(options: JerseyOptions = {}): string {
+  const finish = (EMBLEM_STYLES as readonly string[]).includes(options.style as string) ? (options.style as EmblemStyle) : options.render;
+  const named = (JERSEY_CUTS as readonly string[]).includes(options.style as string) ? options.style : options.cut;
+  const cut = (JERSEY_CUTS as readonly string[]).includes(named as string) ? (named as JerseyCut) : "hockey";
+  const colors = typeof options.colors === "string" ? [options.colors] : (options.colors ?? []);
+  const o: FrameOptions = { tint: colors[0], accent: colors[1], numberColor: colors[2], number: options.number, name: options.name, stripes: options.stripes, view: options.view, size: options.size, style: finish, theme: options.theme, yaw: options.yaw, pitch: options.pitch };
+  const e = EMBLEM_TABLE[`jersey:${cut}`];
+  return options.yaw === undefined && options.pitch === undefined ? e.svg(o) : e.frame(o);
+}
+
+/** What `pennant` takes. */
+export interface PennantOptions {
+  /** The felt, the stitching, and the lettering (the stitching's colour unless a third is given), as hex colours or `rgb()`. */
+  colors?: string | readonly [felt?: string, stitching?: string, lettering?: string];
+  /** The words, in capitals ("Champions", "優勝"). */
+  text?: string;
+  /** The year, in smaller letters under the words. */
+  year?: number | string;
+  /** `"front"` (the default) or `"back"`: plain felt, with the dowel on the other side. */
+  view?: "front" | "back";
+  size?: number;
+  style?: EmblemStyle;
+  theme?: EmblemTheme;
+  /** A turn from the resting view, in degrees. */
+  yaw?: number;
+  pitch?: number;
+}
+
+/**
+ * A felt championship pennant with a stitched edge, lettered with its words and its year.
+ * @example
+ * ```ts
+ * import { pennant } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const svg = pennant({ colors: ["#1f4e8c", "#f2c230"], text: "Champions", year: 2026 });
+ * console.log(svg.includes(">CHAMPIONS<"), svg.includes(">2026<"));
+ * // true true
+ * ```
+ */
+export function pennant(options: PennantOptions = {}): string {
+  const colors = typeof options.colors === "string" ? [options.colors] : (options.colors ?? []);
+  const o: FrameOptions = { tint: colors[0], accent: colors[1], numberColor: colors[2], engrave: options.text, year: options.year, view: options.view, size: options.size, style: options.style, theme: options.theme, yaw: options.yaw, pitch: options.pitch };
+  const e = EMBLEM_TABLE["pennant:championship"];
+  return options.yaw === undefined && options.pitch === undefined ? e.svg(o) : e.frame(o);
 }

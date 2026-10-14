@@ -13,4 +13,5 @@ export const TROPHY_TENNIS_PLATE = /* @__PURE__ */ defineLathe("trophy:tennis-pl
       decor: [["disc", 28, "gilt"], ["disc", 25.6, "main"], ["pills", 22.6, 10, 22, 3.6, "plain"], ["disc", 18.6, "gilt"], ["disc", 15.6, "main"], ["pills", 11, 4, 36, 3.6, "plain"], ["disc", 6.4, "gilt"], ["disc", 3.8, "main"]],
     },
   ],
+  plate: { y0: 50.2, y1: 53.8 },
 });

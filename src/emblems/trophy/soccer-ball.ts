@@ -6,4 +6,5 @@ export const TROPHY_SOCCER_BALL = /* @__PURE__ */ defineLathe("trophy:soccer-bal
   metal: "gold",
   solids: [{ p: [[27, 4.4, 1], [38, 3.4], [47, 5.4, 1], [47, 8, 1], [51, 8, 1], [51, 12.4, 1], [55, 12.4, 1], [55, 15, 1], [59, 15, 1]] }],
   balls: [{ kind: "soccer", cy: 16, r: 11.4 }],
+  plate: { y0: 55.2, y1: 58.8 },
 });

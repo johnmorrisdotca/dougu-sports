@@ -15,4 +15,5 @@ export const TROPHY_SOCCER_GLOBE = /* @__PURE__ */ defineLathe("trophy:soccer-gl
     },
   ],
   balls: [{ kind: "globe", cy: 11, r: 10 }],
+  plate: { y0: 52.4, y1: 56.8, tone: "green" },
 });

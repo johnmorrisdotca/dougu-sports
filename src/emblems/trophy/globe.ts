@@ -6,4 +6,5 @@ export const TROPHY_GLOBE = /* @__PURE__ */ defineLathe("trophy:globe", "Globe o
   metal: "gold",
   solids: [{ p: [[34, 3.4, 1], [48, 3.4, 1], [48, 8, 1], [51, 8, 1], [51, 13, 1], [55, 13, 1], [55, 15.2, 1], [59, 15.2, 1]] }],
   balls: [{ kind: "globe", cy: 21, r: 15 }],
+  plate: { y0: 55.2, y1: 58.8 },
 });

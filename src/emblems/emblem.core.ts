@@ -26,6 +26,29 @@ export interface EmblemOptions {
   initials?: string;
   /** A ball: force the grain of its surface on or off. By default it is on for a ball of 48 pixels or more that is not turning. */
   grain?: boolean;
+  /**
+   * Text cut into the face of a medal or place badge, the plaque, the belt, and the plinth of a cup: any text, Japanese included, up to three lines (a line break, or a space between a word and a year, makes lines).
+   * It wins over `label`, `year` and `rank`.
+   */
+  engrave?: string;
+  /** The words to engrave ("MVP"), with `year` and `rank` as lines of their own. Ignored when `engrave` is given. */
+  label?: string;
+  /** A year, engraved small under the label (on a plaque, on its nameplate). A number or a string. */
+  year?: number | string;
+  /** A place or a number, engraved large ("1"). On a place badge it is the badge's own place unless given. */
+  rank?: number | string;
+  /** The engraving of a medal's back, shown when it is turned over. Without it the back is plain. */
+  engraveBack?: string;
+  /** A jersey's number (up to three characters, "7", "23", "00"), on the chest and big on the back. */
+  number?: number | string;
+  /** The name on the back of a jersey. */
+  name?: string;
+  /** A jersey's stripes: `"none"`, `"chest"`, `"hoops"`, `"sleeves"` (the sleeves and hem, or a basketball's sides) or `"pin"`; `true` is the cut's own, `false` none. */
+  stripes?: boolean | "none" | "chest" | "hoops" | "sleeves" | "pin";
+  /** The colour of a jersey's number, and of a pennant's lettering when it is not the second colour. A hex colour or `rgb()`. */
+  numberColor?: string;
+  /** Which side of a jersey or a pennant is drawn at rest: `"front"` (the default) or `"back"`. */
+  view?: "front" | "back";
 }
 
 /** A turn, in degrees from the resting view (0 and 0 is the still drawing): `yaw` about the vertical axis, `pitch` the tilt toward the eye. */
@@ -99,6 +122,28 @@ export function resolve(o: EmblemOptions | undefined): Resolved {
   const initials = typeof o?.initials === "string" ? [...o.initials.trim()].slice(0, 3).join("").toUpperCase() : "";
   return { style, size, theme, tint: readColour(o?.tint), accent: accent === undefined ? undefined : hexOf(accent), initials };
 }
+
+/** What is to be cut into a face: the free text, or the label, year and rank, and the text of the back. A line is at most 24 letters and has no control character. */
+export interface Engraving {
+  free?: string;
+  label?: string;
+  year?: string;
+  rank?: string;
+  back?: string;
+}
+
+/** A text from outside made safe: control characters removed, at most 24 letters a line and `lines` lines, or `undefined` when nothing is left. */
+export const clean = (value: unknown, lines = 1): string | undefined => {
+  if (typeof value !== "string" && typeof value !== "number") return undefined;
+  const text = String(value)
+    .split(/\r?\n/)
+    .slice(0, lines)
+    .map((line) => [...line.replace(/\p{Cc}/gu, "").trim()].slice(0, 24).join(""))
+    .filter((line) => line !== "")
+    .join("\n");
+  return text === "" ? undefined : text;
+};
+
 
 /** The main colour of a metal, or the tint when there is one. */
 export const mainOf = (metal: Metal, tint: Rgb | undefined): Rgb => tint ?? (readColour(metal === "flat" ? "#8a949e" : METALS[metal]) as Rgb);
