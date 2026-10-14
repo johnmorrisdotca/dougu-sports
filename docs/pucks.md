@@ -43,14 +43,15 @@ Any puck takes `face`, which replaces any part of the print it starts with. `bal
 | `design` | The design to start from: `canada`, `canada-red`, `canada-white`, `usa`, `usa-navy`, `player` or `souvenir`. A puck has its own; this swaps it, so `puck:souvenir` can be any of them |
 | `image` | Any SVG (a logo, a crest): made safe first (below), fitted into the middle, and put in the place of the design's own picture |
 | `emblem` | The id of a dougu emblem (`"trophy:cup"`), drawn small in the middle. Resolved by `renderEmblem`, `emblemFrame` and `ballFrame`; a puck module imported alone takes `image` |
-| `flag` | A country code. `"ca"` and `"us"` are drawn by this package; any other needs `flags` |
-| `flags` | A renderer for the codes this package does not draw, in the shape hata exports: `(code, { shape, size, theme }) => svg`. It is asked for a `"4:3"` flag at 120 pixels, and its SVG is made safe like `image`. It wins over the built-in flags |
+| `flag` | A country code. `"ca"` and `"us"` are drawn by this package; any other needs the `flags` option of the call (below) |
 | `text` | The words under the picture (`"CANADA"`): one line, 24 characters |
 | `ringText` | The words round the edge: a string (the top), a pair `[top, bottom]`, or `false` for no ring. 32 characters a line |
 | `number` | A big number, like a jersey's: up to three letters or digits |
 | `name` | A surname, set on the ring: 14 characters |
 | `signature` | A seed for a made-up signature (a number or any text), or `false` for none |
 | `colors` | By name, `{ field, ring, ink, accent, signature }`, or an array in that order. A colour is `#rgb`, `#rrggbb` or `rgb()`; anything else is ignored |
+
+`flags` is not a field of `face` but an option of the call, beside `face`, `size` and the rest, and it is the renderer taisen-brackets takes too, so one adapter over hata serves every package: `flags(code, { shape: "round" | "square" | "rect", size, theme: "inherit" | "light" | "dark" }) => string | null | undefined`. It is synchronous (a drawing is a pure function of its options, and hata's `flag()` is asynchronous, so load the flags first and pass `(code) => loaded[code]`). The puck asks for a `"rect"` flag at 120 pixels, with the `theme` of the call (`light` and `dark` as given, `inherit` for `auto` and `inherit`); its SVG is made safe like `image`, and `null` or `undefined` for a code it has no flag for leaves the built-in flag (or none). It wins over the built-in `"ca"` and `"us"`.
 
 ```js
 import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
@@ -59,9 +60,9 @@ const logo = '<svg viewBox="0 0 100 100"><path d="M50 5L95 80H5Z" fill="#2a8a4a"
 const club = renderEmblem("puck:souvenir", { face: { image: logo, text: "WOLVES", ringText: ["NORTH DIVISION CLUB", ""], colors: ["#f4f1e8", "#1d3b2a"] } });
 console.log(club.includes("#2a8a4a")); // true
 
-// A country the package does not draw comes from the caller's own renderer.
+// A country the package does not draw comes from the caller's own renderer, the `flags` option of the call.
 const flags = () => '<svg viewBox="0 0 4 3"><rect width="4" height="3" fill="#fff"/><circle cx="2" cy="1.5" r=".9" fill="#bc002d"/></svg>';
-const japan = renderEmblem("puck:souvenir", { face: { flag: "jp", flags, text: "JAPAN", ringText: ["NIPPON · ICE HOCKEY", "SOUVENIR"], colors: { ring: "#bc002d" } } });
+const japan = renderEmblem("puck:souvenir", { flags, face: { flag: "jp", text: "JAPAN", ringText: ["NIPPON · ICE HOCKEY", "SOUVENIR"], colors: { ring: "#bc002d" } } });
 console.log(japan.includes("#bc002d")); // true
 
 // A player puck with a made-up name and number, and a signed one with a gold or black marker.

@@ -211,7 +211,7 @@ test("an image from outside is made safe: shapes, gradients and clip paths stay,
 });
 
 test("the face option: an image, an emblem id, a flag code with or without a renderer, text, ring text, a number, a name and colours", () => {
-  const puck = (face: D.PuckFace, id: D.PuckId = "puck:souvenir"): string => D.renderEmblem(id, { face });
+  const puck = (face: D.PuckFace, id: D.PuckId = "puck:souvenir", flags?: D.FlagRenderer): string => D.renderEmblem(id, { face, ...(flags === undefined ? {} : { flags }) });
   const logo = `<svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#7a1fa2"/></svg>`;
   assert.ok(puck({ image: logo }).includes("#7a1fa2"));
   // An image replaces the design's own picture.
@@ -225,27 +225,40 @@ test("the face option: an image, an emblem id, a flag code with or without a ren
   assert.equal(D.emblemFrame("puck:souvenir", { face: { emblem: "trophy:cup" } }), D.ballFrame("puck:souvenir", { face: { emblem: "trophy:cup" } }));
   assert.equal(sameIds(puck({ emblem: "nothing:here" })), sameIds(puck({})), "an unknown emblem is ignored");
   assert.equal(puck({ emblem: "puck:usa" }).includes("undefined"), false);
-  // Flags: ca and us are drawn here; another code goes through the caller's renderer, which is given the code, a shape, a size and a theme.
+  // Flags: ca and us are drawn here; another code goes through the caller's renderer, which is given the code and a request (a shape, a size and a theme).
   const calls: unknown[][] = [];
   const flags: D.FlagRenderer = (code, o) => {
     calls.push([code, o]);
     return `<svg viewBox="0 0 4 3"><rect width="4" height="3" fill="#ffffff"/><circle cx="2" cy="1.5" r="0.9" fill="#bc002d"/></svg>`;
   };
-  const jp = puck({ flag: "jp", flags, text: "JAPAN" });
+  const jp = puck({ flag: "jp", text: "JAPAN" }, "puck:souvenir", flags);
   assert.ok(jp.includes("#bc002d"));
   assert.deepEqual(calls[0]?.[0], "jp");
   assert.deepEqual(Object.keys(calls[0]?.[1] as object).sort(), ["shape", "size", "theme"]);
-  assert.ok(["4:3", "1:1", "round"].includes((calls[0]?.[1] as { shape: string }).shape));
+  // The request is the one taisen-brackets makes: a shape of round, square or rect, a size, and a theme of inherit, light or dark.
+  assert.ok(["round", "square", "rect"].includes((calls[0]?.[1] as { shape: string }).shape));
+  assert.equal(typeof (calls[0]?.[1] as { size: number }).size, "number");
+  assert.equal((calls[0]?.[1] as { theme: string }).theme, "inherit");
+  D.renderEmblem("puck:souvenir", { face: { flag: "jp" }, flags, theme: "dark" });
+  assert.equal((calls.at(-1)?.[1] as { theme: string }).theme, "dark");
+  D.renderEmblem("puck:souvenir", { face: { flag: "jp" }, flags, theme: "auto" });
+  assert.equal((calls.at(-1)?.[1] as { theme: string }).theme, "inherit");
+  // A renderer returns null or undefined for a code it has no flag for: the built-in flag, or none.
+  assert.ok(D.renderEmblem("puck:souvenir", { face: { flag: "ca" }, flags: () => null }).includes("#d52b1e"));
+  assert.ok(!D.renderEmblem("puck:souvenir", { face: { flag: "jp" }, flags: () => undefined }).includes("#bc002d"));
+  // It is a render option, on emblemFrame and ballFrame too, and a different renderer draws different ids.
+  assert.ok(D.emblemFrame("puck:souvenir", { face: { flag: "jp" }, flags, yaw: 20 }).includes("#bc002d"));
+  assert.ok(D.ballFrame("puck:souvenir", { face: { flag: "jp" }, flags }).includes("#bc002d"));
   assert.ok(puck({ flag: "ca" }).includes("#d52b1e"));
   assert.ok(puck({ flag: "us" }).includes("#b31942"));
   assert.ok(sameIds(puck({ flag: "CA" })) === sameIds(puck({ flag: "ca" })), "a code in capitals is the same");
   // No renderer and a code we do not draw: no picture and no error. A renderer that throws, or returns something unsafe, changes nothing worse.
   assert.ok(!puck({ flag: "jp" }).includes("#bc002d"));
-  assert.doesNotThrow(() => puck({ flag: "jp", flags: () => { throw new Error("no"); } }));
-  assert.doesNotThrow(() => puck({ flag: "jp", flags: (() => 5) as unknown as D.FlagRenderer }));
-  assert.ok(!puck({ flag: "jp", flags: () => `<svg><script>alert(1)</script><circle r="1" fill="#abcdef"/></svg>` }).includes("<script"));
+  assert.doesNotThrow(() => puck({ flag: "jp" }, "puck:souvenir", () => { throw new Error("no"); }));
+  assert.doesNotThrow(() => puck({ flag: "jp" }, "puck:souvenir", (() => 5) as unknown as D.FlagRenderer));
+  assert.ok(!puck({ flag: "jp" }, "puck:souvenir", () => `<svg><script>alert(1)</script><circle r="1" fill="#abcdef"/></svg>`).includes("<script"));
   // The renderer is used before the built-in flag for "ca" too, so a caller's own flags win everywhere.
-  assert.ok(puck({ flag: "ca", flags }).includes("#bc002d"));
+  assert.ok(puck({ flag: "ca" }, "puck:souvenir", flags).includes("#bc002d"));
   // Text, ring text (one string is the top, a pair is top and bottom, false is none), a number, a name.
   assert.notEqual(puck({ text: "HELLO" }), puck({ text: "WORLD" }));
   assert.notEqual(puck({ ringText: "ONE" }), puck({ ringText: ["ONE", "TWO"] }));

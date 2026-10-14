@@ -21,4 +21,4 @@ export { sportEquipment } from "./emblems/emblem.equipment.ts";
 export type { SportEquipment } from "./emblems/emblem.equipment.ts";
 export { awardCase, podium } from "./emblems/emblem.display.ts";
 export type { AwardCaseOptions, AwardItem, DisplayOptions, PodiumOptions, PodiumPlace } from "./emblems/emblem.display.ts";
-export type { FaceColors, FlagRenderer, PuckDesign, PuckFace } from "./emblems/ball/ball.face.ts";
+export type { FaceColors, FlagRenderer, FlagRequest, FlagShape, PuckDesign, PuckFace } from "./emblems/ball/ball.face.ts";

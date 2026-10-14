@@ -2,7 +2,7 @@
 // It imports nothing, so a ball stands alone: a bundler can take one ball module without the others. The shape of a piece (`id`, `en`, `ja`, `source`, `kind`, `model`, `svg`, `frame`)
 // is the shape of an emblem in the emblem registry, so a registry can take a ball or a piece of gear as it is.
 
-import type { PuckFace } from "./ball.face.ts";
+import type { FlagRenderer, PuckFace } from "./ball.face.ts";
 
 /** `metal` (also written `colour`): full colour, with shading. `line`: one outline in `currentColor`. */
 export type PieceStyle = "metal" | "colour" | "color" | "line";
@@ -27,6 +27,8 @@ export interface PieceOptions {
   title?: string | false;
   /** A puck: the print on its top face (see `PuckFace`). The printed pucks (`puck:*`) take it, and so does `ball:puck` through `renderEmblem`, `emblemFrame` and `ballFrame`. Anything else ignores it. */
   face?: PuckFace;
+  /** A puck: a renderer for the flag codes this package does not draw (`face.flag`), `(code, { shape, size, theme }) => svg`, the one taisen-brackets takes. Synchronous. */
+  flags?: FlagRenderer;
 }
 
 /** A turn: `yaw` degrees about the vertical axis (0 is the default view), `pitch` the tilt toward you, `roll` the turn about the line of sight. */
@@ -135,6 +137,7 @@ export interface ResolvedOptions {
   accent: string | undefined;
   grain: boolean | undefined;
   face: PuckFace | undefined;
+  flags: FlagRenderer | undefined;
   /** A string that tells two faces apart, for the ids of a drawing. */
   faceKey: string;
 }
@@ -154,7 +157,7 @@ export function resolveOptions(o: PieceOptions | undefined): ResolvedOptions {
   const theme = o?.theme === "auto" || o?.theme === "light" || o?.theme === "dark" ? o.theme : "inherit";
   const tint = readColour(o?.tint);
   const accent = readColour(o?.accent);
-  return { style: o?.style === "line" ? "line" : "colour", size, theme, tint: tint === undefined ? undefined : hexOf(tint), accent: accent === undefined ? undefined : hexOf(accent), grain: typeof o?.grain === "boolean" ? o.grain : undefined, face: typeof o?.face === "object" && o.face !== null ? o.face : undefined, faceKey: faceKeyOf(o?.face) };
+  return { style: o?.style === "line" ? "line" : "colour", size, theme, tint: tint === undefined ? undefined : hexOf(tint), accent: accent === undefined ? undefined : hexOf(accent), grain: typeof o?.grain === "boolean" ? o.grain : undefined, face: typeof o?.face === "object" && o.face !== null ? o.face : undefined, flags: typeof o?.flags === "function" ? o.flags : undefined, faceKey: faceKeyOf(o?.face) + (typeof o?.flags === "function" ? `|fn:${o.flags.name}` : "") };
 }
 
 /** The ink of a drawing when a theme sets it, and the page it is made to read on. */

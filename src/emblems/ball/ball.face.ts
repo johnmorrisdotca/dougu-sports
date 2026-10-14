@@ -10,8 +10,21 @@ import { signaturePath } from "./ball.signature.ts";
 /** The designs a face starts from. */
 export type PuckDesign = "canada" | "canada-red" | "canada-white" | "usa" | "usa-navy" | "player" | "souvenir";
 
-/** What the renderer a caller supplies for a flag is asked: the code, the shape (`"4:3"`, `"1:1"` or `"round"`, the shapes hata draws), a size in pixels and the theme. It returns an SVG document. */
-export type FlagRenderer = (code: string, options: { shape: "4:3" | "1:1" | "round"; size: number; theme: "light" | "dark" | "auto" | "inherit" }) => string;
+/** How a flag is framed: `round` in a circle, `square`, or `rect` in its own proportions (the puck asks for `rect`). */
+export type FlagShape = "round" | "square" | "rect";
+
+/** What a drawing asks a `flags` renderer for: the shape, a width and height in pixels, and the look (`inherit` for a page whose ink is its own). */
+export interface FlagRequest {
+  shape: FlagShape;
+  size: number;
+  theme: "inherit" | "light" | "dark";
+}
+
+/**
+ * A function from a country code and a request to an SVG string, or `null` or `undefined` for a code it has no flag for: the same renderer taisen-brackets and kyogijo take, so one adapter over hata serves them
+ * all. It must be synchronous (a drawing is a pure function of its options): hata's `flag()` is asynchronous, so load the flags first and pass `(code) => loaded[code]`. Pass it as the `flags` option of the call.
+ */
+export type FlagRenderer = (code: string, request: FlagRequest) => string | null | undefined;
 
 /** The colours of a face, by name. The array form is the same list in this order: field, ring, ink, accent, signature. */
 export interface FaceColors {
@@ -36,10 +49,8 @@ export interface PuckFace {
   design?: PuckDesign;
   /** Any SVG: a logo, a crest, a drawing. Made safe first (see `safeImage`): shapes, gradients and clip paths only. It is fitted into the middle of the face and replaces the design's own picture. */
   image?: string;
-  /** A country code (`"ca"` and `"us"` are drawn by this package; another needs `flags`). It replaces the design's own picture. */
+  /** A country code (`"ca"` and `"us"` are drawn by this package; another needs the `flags` option of the call). It replaces the design's own picture. */
   flag?: string;
-  /** A renderer for the flag codes this package does not draw: `(code, { shape, size, theme }) => svg`, the shape of the function hata exports. */
-  flags?: FlagRenderer;
   /** The id of a dougu emblem (`"trophy:cup"`, `"sport:nhl"`), drawn small in the middle. Resolved by `renderEmblem`, `emblemFrame` and `ballFrame`. */
   emblem?: string;
   /** The words under the picture (`"CANADA"`), one line. */
@@ -92,6 +103,7 @@ interface Resolved {
   image: string | undefined;
   flag: string | undefined;
   flags: FlagRenderer | undefined;
+  theme: FlagRequest["theme"];
   text: string | undefined;
   ring: readonly [string, string] | undefined;
   number: string | undefined;
@@ -114,7 +126,7 @@ const colourOf = (value: unknown): string | undefined => {
 const DESIGNS = Object.keys(LOOKS) as PuckDesign[];
 
 /** The face, ready to draw: the design's words and colours under the caller's. `base` is the design a puck's own id starts from. */
-function resolve(face: PuckFace | undefined, base: PuckDesign, own: PuckFace | undefined): Resolved {
+function resolve(face: PuckFace | undefined, base: PuckDesign, own: PuckFace | undefined, flags: FlagRenderer | undefined, theme: FlagRequest["theme"]): Resolved {
   const f = typeof face === "object" && face !== null ? face : {};
   const design = (typeof f.design === "string" && DESIGNS.includes(f.design) ? f.design : own?.design ?? base) as PuckDesign;
   const words = { ...WORDS[design], ...own, ...definedOnly(f) };
@@ -136,7 +148,8 @@ function resolve(face: PuckFace | undefined, base: PuckDesign, own: PuckFace | u
     look,
     image: typeof words.image === "string" ? words.image : undefined,
     flag: typeof words.flag === "string" ? words.flag.trim().toLowerCase().slice(0, 12) : undefined,
-    flags: typeof words.flags === "function" ? words.flags : undefined,
+    flags,
+    theme,
     text: cleanText(words.text),
     ring,
     number: number === "" ? undefined : number,
@@ -191,7 +204,7 @@ function picture(f: Resolved, prefix: string, cx: number, cy: number, w: number,
     if (f.flags !== undefined) {
       let svg: unknown;
       try {
-        svg = f.flags(code, { shape: "4:3", size: 120, theme: "light" });
+        svg = f.flags(code, { shape: "rect", size: 120, theme: f.theme });
       } catch {
         svg = undefined;
       }
@@ -260,8 +273,8 @@ function leaf(cx: number, cy: number, w: number, fill: string): string {
 }
 
 /** The face of a design, in the face's units (a disc of radius 1, up is up): its definitions and its drawing. `prefix` makes every id unique to this puck. */
-export function faceMarkup(face: PuckFace | undefined, design: PuckDesign, own: PuckFace | undefined, prefix: string): { defs: string; body: string } {
-  const f = resolve(face, design, own);
+export function faceMarkup(face: PuckFace | undefined, design: PuckDesign, own: PuckFace | undefined, prefix: string, flags?: FlagRenderer, theme: FlagRequest["theme"] = "inherit"): { defs: string; body: string } {
+  const f = resolve(face, design, own, typeof flags === "function" ? flags : undefined, theme);
   const look = f.look;
   const clip = `${prefix}clip`;
   let defs = `<clipPath id="${clip}"><circle r=".965"/></clipPath>`;

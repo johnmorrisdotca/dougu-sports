@@ -34,7 +34,7 @@ function definePuck(def: PuckDef): Piece<{ slices: number; design: PuckDesign; v
           // The top face's plane in the box: its centre, and where a step of 1 along the puck's x and z axes goes (the face's right, and its down).
           const o = cx.at([0, PUCK_H, 0]), ex = cx.at([1, PUCK_H, 0]), ez = cx.at([0, PUCK_H, 1]);
           const m = [ex[0] - o[0], ex[1] - o[1], ez[0] - o[0], ez[1] - o[1], o[0], o[1]].map((v) => num(v, 4)).join(" ");
-          const face = faceMarkup(cx.opts.face, def.design, def.own, `${cx.id}p`);
+          const face = faceMarkup(cx.opts.face, def.design, def.own, `${cx.id}p`, cx.opts.flags, cx.opts.theme === "light" || cx.opts.theme === "dark" ? cx.opts.theme : "inherit");
           // A light from the upper left and a falling-off at the far edge, over the print, in the box's own space so the light stays put while the puck turns.
           const gid = `${cx.id}fl`;
           const defs = `${face.defs}<radialGradient id="${gid}" cx=".36" cy=".3" r=".85"><stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".42"/></radialGradient>`;

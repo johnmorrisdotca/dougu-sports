@@ -1,7 +1,7 @@
 // What every emblem is made of: the options, the colours, the way a drawing is wrapped into a document, and the `Emblem` object each drawing is. It imports nothing from the rest of the
 // package, so a bundler can take one emblem and leave the others.
 
-import type { PuckFace } from "./ball/ball.face.ts";
+import type { FlagRenderer, PuckFace } from "./ball/ball.face.ts";
 
 /** `metal`: full colour with a gradient. `line`: one outline in `currentColor`. `color`: flat fills of the main colour, with no gradient. */
 export type EmblemStyle = "metal" | "line" | "color";
@@ -60,9 +60,11 @@ export interface EmblemOptions {
   turnBox?: boolean;
   /**
    * The print on the top face of a puck: the printed pucks (`puck:*`) start from a face of their own and this replaces any part of it, and `ball:puck` given a face is drawn as `puck:souvenir` with it. `image` takes any SVG
-   * (made safe first), `emblem` a dougu id, `flag` a country code (`ca` and `us` are drawn here; another needs `flags`, a renderer like hata's). See `PuckFace`. Anything that is not a puck ignores it.
+   * (made safe first), `emblem` a dougu id, `flag` a country code (`ca` and `us` are drawn here; another needs the `flags` option, a renderer like hata's). See `PuckFace`. Anything that is not a puck ignores it.
    */
   face?: PuckFace;
+  /** A puck: a renderer for the flag codes this package does not draw (`face.flag`): `(code, { shape: "round" | "square" | "rect", size, theme }) => svg`, synchronous, the same as taisen-brackets takes (hata's `flag()` is asynchronous, so load the flags first). */
+  flags?: FlagRenderer;
 }
 
 /** A turn, in degrees from the resting view (0 and 0 is the still drawing): `yaw` about the vertical axis, `pitch` the tilt toward the eye. */

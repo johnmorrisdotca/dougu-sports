@@ -32,14 +32,15 @@
 | `design` | 出発点にするデザイン：`canada`、`canada-red`、`canada-white`、`usa`、`usa-navy`、`player`、`souvenir`。パックにはそれぞれ自分のデザインがありますが、これで差し替えられるので、`puck:souvenir` でもどれにでもなります |
 | `image` | 任意の SVG（ロゴや紋章）。先に安全な形に直してから中央にはめ、デザインの絵の代わりに置きます |
 | `emblem` | dougu のエンブレムの id（`"trophy:cup"`）。中央に小さく描きます。`renderEmblem`、`emblemFrame`、`ballFrame` が解決します。パックのモジュールだけを読み込んだ場合は `image` を渡します |
-| `flag` | 国コード。`"ca"` と `"us"` はこのパッケージが描き、それ以外は `flags` が必要です |
-| `flags` | このパッケージが描かない国コードのための描画関数。hata が公開しているのと同じ形で、`(code, { shape, size, theme }) => svg` です。`"4:3"` の旗を 120 ピクセルで要求し、返された SVG は `image` と同じく安全な形に直します。組み込みの旗より優先されます |
+| `flag` | 国コード。`"ca"` と `"us"` はこのパッケージが描き、それ以外は呼び出しで渡す `flags` オプション（下記）が必要です |
 | `text` | 絵の下の文字（`"CANADA"`）。1 行、24 文字まで |
 | `ringText` | 縁に沿った文字。文字列（上側）、2 要素の配列 `[上, 下]`、または `false`（輪なし）。1 行 32 文字まで |
 | `number` | ジャージのような大きな数字。英数字で 3 文字まで |
 | `name` | 輪に沿って並べる姓。14 文字まで |
 | `signature` | 架空のサインのシード（数または任意の文字列）。`false` ならサインなし |
 | `colors` | 名前で指定する `{ field, ring, ink, accent, signature }`、またはこの順の配列。色は `#rgb`、`#rrggbb`、`rgb()` で、それ以外は無視します |
+
+`flags` は `face` のフィールドではなく、`face` や `size` などと並ぶ、呼び出しに渡すオプションです。taisen-brackets が受け取るのと同じ描画関数なので、hata をラップしたアダプターを 1 つ用意すれば、どのパッケージでも使えます。シグネチャは `flags(code, { shape: "round" | "square" | "rect", size, theme: "inherit" | "light" | "dark" }) => string | null | undefined` で、同期関数です（描画は渡されたオプションだけで決まる純粋関数で、hata の `flag()` は非同期のため、先に旗を読み込んでおき、`(code) => loaded[code]` を渡します）。パックは `"rect"` の旗を 120 ピクセルで要求し、`theme` には呼び出しの `theme` を渡します（`light` と `dark` はそのまま、`auto` と `inherit` は `inherit`）。返された SVG は `image` と同じく安全な形に直します。そのコードの旗がなく `null` または `undefined` を返したときは、組み込みの旗（なければ旗なし）になります。旗を返した場合は、組み込みの `"ca"` と `"us"` より優先されます。
 
 使い方の例は [英語版](pucks.md#the-face-option) にあります。
 
