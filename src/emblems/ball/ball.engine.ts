@@ -1,7 +1,7 @@
 // The ball renderer: one procedural engine for every sphere and every prolate ball. A ball is drawn in true 3D: a rotation, an orthographic projection, back faces dropped, panels cut at the limb
 // along the limb itself, then radial-gradient shading and a grain that stays where it is while the ball turns. A ball is a `BallSpec`: its shape (the semi-axes of an ellipsoid), its
 // view, its material and a `draw` function that lays panels, seams and dots on the unit sphere; the engine does the rest.
-import { type BallFrameOptions, type Piece, grainDef, type PieceOptions, type PieceSize, type ResolvedOptions, escape, hashOf, mix, num, radians, resolveOptions, wrapPiece } from "./ball.core.ts";
+import { type BallFrameOptions, type Piece, grainDef, type PieceOptions, type PieceSize, type ResolvedOptions, escape, hashOf, labelled, mix, num, radians, resolveOptions, wrapPiece } from "./ball.core.ts";
 import { type M3, type V3, add, apply, basis, cross, dot, ellipseOf, len, mul, norm, rotation, sampleRing, sub } from "./ball.math.ts";
 
 /** How a ball takes the light. */
@@ -443,7 +443,7 @@ export function defineBall(def: BallDef): Piece<BallSpec> {
     kind: "ball",
     model: def.spec,
     size: def.size,
-    svg: (o?: PieceOptions) => render(o, false),
-    frame: (o?: BallFrameOptions) => render(o, true),
+    svg: labelled(def.en, def.ja, (o?: PieceOptions) => render(o, false)),
+    frame: labelled(def.en, def.ja, (o?: BallFrameOptions) => render(o, true)),
   };
 }

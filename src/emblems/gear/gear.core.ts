@@ -1,7 +1,7 @@
 // Gear: pieces of equipment drawn flat, in a colour style and a line style (`currentColor`), to match the trophies. A piece is either drawn by us from a list of parts (a path, a colour, how it
 // reads as a line) or copied from an open icon set (Noto Emoji, Wikimedia Commons, game-icons.net) with the source named in the module's header, the colour version from one artwork and the line
 // version from another (Pictogrammers MDI) or worked out from the colour one. Self-contained: it imports only the shared option and colour helpers of the ball folder.
-import { type Piece, type PieceOptions, type PieceSize, type PieceSource, escape, hashOf, mix, num, readColour, resolveOptions, wrapPiece } from "../ball/ball.core.ts";
+import { type Piece, type PieceOptions, type PieceSize, type PieceSource, escape, hashOf, labelled, mix, num, readColour, resolveOptions, wrapPiece } from "../ball/ball.core.ts";
 
 /** One part of a drawn piece. */
 export interface Part {
@@ -45,7 +45,7 @@ export interface GearDef<Model = unknown> {
 
 /** A piece of gear from its drawing function. Gear is not turned: `frame` draws it as it is. */
 export function defineGear<Model>(def: GearDef<Model>): Piece<Model> {
-  return { id: def.id, en: def.en, ja: def.ja, source: def.source, kind: "gear", model: def.model, size: def.size, svg: (o) => def.draw(o), frame: (o) => def.draw(o) };
+  return { id: def.id, en: def.en, ja: def.ja, source: def.source, kind: "gear", model: def.model, size: def.size, svg: labelled(def.en, def.ja, (o?: PieceOptions) => def.draw(o)), frame: labelled(def.en, def.ja, (o?: PieceOptions) => def.draw(o)) };
 }
 
 /** A drawn piece: its parts become a document in either style. */
@@ -178,5 +178,5 @@ export function copied(spec: CopiedSpec): Piece<CopiedSpec> {
     const body = spec.ink === undefined ? spec.colour : `<g fill="${o.tint ?? spec.ink}">${spec.colour}</g>`;
     return wrapPiece({ title: escape(spec.en), desc, size: o.size, theme: o.theme, box: spec.box, body: under + body });
   };
-  return { id: spec.id, en: spec.en, ja: spec.ja, source: spec.source, kind: "gear", model: spec, size: spec.size, svg: draw, frame: draw };
+  return { id: spec.id, en: spec.en, ja: spec.ja, source: spec.source, kind: "gear", model: spec, size: spec.size, svg: labelled(spec.en, spec.ja, draw), frame: labelled(spec.en, spec.ja, draw) };
 }

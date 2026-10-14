@@ -11,6 +11,9 @@ export const EMBLEM_STYLES = ["metal", "line", "color"] as const satisfies reado
  */
 export type EmblemTheme = "inherit" | "auto" | "light" | "dark";
 
+/** The languages an emblem's `<title>` can be written in. */
+export type EmblemLocale = "en" | "ja";
+
 export interface EmblemOptions {
   /** `metal` (the default), `line` or `color`. */
   style?: EmblemStyle;
@@ -26,6 +29,10 @@ export interface EmblemOptions {
   initials?: string;
   /** A ball: force the grain of its surface on or off. By default it is on for a ball of 48 pixels or more that is not turning. */
   grain?: boolean;
+  /** The language of the `<title>`: `"en"` (the default) or `"ja"`, from the emblem's English or Japanese name. */
+  locale?: EmblemLocale;
+  /** The `<title>`: a string writes that title (escaped); `false` drops it and marks the drawing `aria-hidden="true"`, for an emblem that sits beside text that says the same. */
+  title?: string | false;
 }
 
 /** A turn, in degrees from the resting view (0 and 0 is the still drawing): `yaw` about the vertical axis, `pitch` the tilt toward the eye. */
@@ -77,6 +84,27 @@ export function mix(rgb: Rgb, amount: number): string {
 
 /** Text made safe to write between tags and inside a double-quoted attribute. */
 export const escape = (text: string): string => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/**
+ * The `<title>` of a finished drawing, as the options ask: a string is the title (escaped), `false` drops it and hides the drawing from a screen reader, and `locale: "ja"` writes the Japanese name. With none
+ * of the three the drawing is returned as it is.
+ */
+export function relabel(svg: string, en: string, ja: string, o: { locale?: unknown; title?: unknown } | undefined): string {
+  const title = o?.title;
+  const japanese = o?.locale === "ja";
+  if (title === false) return svg.replace(/<title>[^<]*<\/title>/, "").replace(' role="img"', ' aria-hidden="true"');
+  const custom = typeof title === "string" && title.trim() !== "";
+  if (!custom && !japanese) return svg;
+  const text = custom ? (title as string).trim().slice(0, 300) : ja;
+  const titled = svg.replace(/<title>[^<]*<\/title>/, () => `<title>${escape(text)}</title>`);
+  return custom ? titled : titled.replace(' role="img"', ' role="img" lang="ja"');
+}
+
+/** A drawing function whose result carries the title the options ask for. */
+export const labelled =
+  <O extends { locale?: unknown; title?: unknown }>(en: string, ja: string, draw: (options?: O) => string) =>
+  (options?: O): string =>
+    relabel(draw(options), en, ja, options);
 
 /** A number written for a path: two decimals at most, and never `-0`. */
 export const n2 = (value: number): string => String(Math.round(value * 100) / 100 + 0);
