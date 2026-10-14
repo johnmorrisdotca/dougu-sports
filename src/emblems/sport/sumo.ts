@@ -1,4 +1,4 @@
-// Sumo: a pictogram of two rikishi in the tachiai, the crouch they face each other in before the charge, on the edge of the ring, drawn for this package, in a 64 by 64 box. The metal style paints its main
+// Sumo: a pictogram of two rikishi in the shikiri, the crouch they face each other in before the charge, on the edge of the ring, drawn for this package, in a 64 by 64 box. The metal style paints its main
 // shapes with a grey sheet, the line style draws one outline.
 import { defineIcon } from "../emblem.shapes.ts";
 

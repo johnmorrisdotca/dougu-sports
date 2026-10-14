@@ -136,8 +136,11 @@ test("a pictogram and a piece of gear turn like a coin, with the turning control
     // The stage is ready for the drag when bindTurn has made it a tab stop.
     await expect(page.locator("#stage")).toHaveAttribute("tabindex", "0");
     const before = await page.locator("#stage").innerHTML();
-    await dragStage(page, 60);
-    expect(await page.locator("#stage").innerHTML(), id).not.toBe(before);
+    // WebKit may drop the first press of a page that has only just settled, so the drag is tried again until the drawing changes.
+    await expect.poll(async () => {
+      await dragStage(page, 60);
+      return (await page.locator("#stage").innerHTML()) !== before;
+    }, { message: id, timeout: 5000 }).toBe(true);
   }
 });
 

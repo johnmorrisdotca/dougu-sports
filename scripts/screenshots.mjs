@@ -1,5 +1,5 @@
 // Takes the README's pictures of the demo into docs/images: every emblem in each style (desk, light and dark), the stage on a phone, and an emblem turned.
-// It serves the demo on port 7202 (this package's own block, tests and tools from 7201 up; the tests use 7201) and stops the server it started.
+// It serves the demo on port 7202, or TEST_PORT (this package's own block, tests and tools from 7201 up; the tests use 7201) and stops the server it started.
 import { spawn } from "node:child_process";
 import { mkdirSync } from "node:fs";
 import process from "node:process";
@@ -9,7 +9,7 @@ import { chromium } from "@playwright/test";
 const root = fileURLToPath(new URL("..", import.meta.url));
 const out = `${root}docs/images`;
 mkdirSync(out, { recursive: true });
-const port = 7202;
+const port = Number(process.env.TEST_PORT ?? 7202);
 const server = spawn(process.execPath, ["scripts/dev.mjs"], { cwd: root, env: { ...process.env, PORT: String(port) }, stdio: "ignore" });
 try {
   await new Promise((resolve, reject) => {

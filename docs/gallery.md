@@ -196,10 +196,10 @@ Ids are `<group>:<name>`. The folders the art lives in are in [layout.md](layout
 | `sport:gaelic` | Round ball | ゲーリックフットボール | icon | ours | `SPORT_GAELIC` | `@johnmorrisdotca/dougu-sports/sport/gaelic` | Round ball with seams<br>ゲーリックフットボールのボール |
 | `sport:cricket` | Cricket | クリケット | icon | ours | `SPORT_CRICKET` | `@johnmorrisdotca/dougu-sports/sport/cricket` |  |
 | `sport:fieldhockey` | Hooked stick | フィールドホッケー | icon | ours | `SPORT_FIELDHOCKEY` | `@johnmorrisdotca/dougu-sports/sport/fieldhockey` | Hooked stick and ball<br>フィールドホッケーのスティックとボール |
-| `sport:handball` | Handball | ハンドボール | icon | ours | `SPORT_HANDBALL` | `@johnmorrisdotca/dougu-sports/sport/handball` |  |
+| `sport:handball` | Handball | ハンドボール | icon | ours | `SPORT_HANDBALL` | `@johnmorrisdotca/dougu-sports/sport/handball` | A hand throwing the ball, with lines of speed<br>ボールを投げる手と、速さを表す線 |
 | `sport:athletics` | Running track | 陸上競技のトラック | icon | ours | `SPORT_ATHLETICS` | `@johnmorrisdotca/dougu-sports/sport/athletics` |  |
 | `sport:skating` | Ice skate | スケート靴 | icon | ours | `SPORT_SKATING` | `@johnmorrisdotca/dougu-sports/sport/skating` |  |
-| `sport:sumo` | Sumo | 相撲 | icon | ours | `SPORT_SUMO` | `@johnmorrisdotca/dougu-sports/sport/sumo` | The referee's war fan<br>行司の軍配 |
+| `sport:sumo` | Sumo | 相撲 | icon | ours | `SPORT_SUMO` | `@johnmorrisdotca/dougu-sports/sport/sumo` | Two wrestlers in the crouch they face each other in at the start of a bout, with their belts<br>仕切りの姿勢で向かい合う、廻しを締めた二人の力士 |
 | `sport:kendo` | Kendo | 剣道 | icon | ours | `SPORT_KENDO` | `@johnmorrisdotca/dougu-sports/sport/kendo` | The kendo helmet<br>剣道の面 |
 | `sport:judo` | Judo | 柔道 | icon | ours | `SPORT_JUDO` | `@johnmorrisdotca/dougu-sports/sport/judo` | The judo suit and belt<br>柔道衣と帯 |
 | `sport:kyudo` | Kyudo | 弓道 | icon | ours | `SPORT_KYUDO` | `@johnmorrisdotca/dougu-sports/sport/kyudo` | A long bow, its string and an arrow<br>弦を張った長弓と矢 |
