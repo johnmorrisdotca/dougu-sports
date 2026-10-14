@@ -3,12 +3,13 @@
 // text foreshortens, goes behind the edge and comes round as the body turns. Imports only the core.
 import { type EmblemOptions, type Engraving, type Rgb, clean, escape, lum, mix, n2, readColour } from "./emblem.core.ts";
 
-/** A box on a flat face: its centre and its size. */
+/** A box on a flat face: its centre and its size (`w` along the text), and for a plate that runs up or down a side, the turn of the text in degrees about the centre. */
 export interface Plate {
   x: number;
   y: number;
   w: number;
   h: number;
+  rot?: number;
 }
 
 /** A line of text and how big it is next to the others (1 is the biggest). */
@@ -34,12 +35,14 @@ export function advance(ch: string): number {
 /** The width of a text in em. */
 export const widthOf = (text: string): number => [...text].reduce((sum, ch) => sum + advance(ch), 0);
 
+/** The contrast ratio of two colours, 1 to 21. */
+export const contrastOf = (a: Rgb, b: Rgb): number => (Math.max(lum(a), lum(b)) + 0.05) / (Math.min(lum(a), lum(b)) + 0.05);
+
 /** Black or white, or a deep or pale tone of the colour itself, whichever reads at 4.5 to 1 on the colour (the best of them when none does). */
 export function inkFor(main: Rgb): string {
-  const ratio = (a: Rgb, b: Rgb): number => (Math.max(lum(a), lum(b)) + 0.05) / (Math.min(lum(a), lum(b)) + 0.05);
   const dark = lum(main) > 0.18;
   const list = dark ? [mix(main, -0.72), "#000000", mix(main, 0.9), "#ffffff"] : [mix(main, 0.9), "#ffffff", mix(main, -0.72), "#000000"];
-  const scored = list.map((c) => [c, ratio(readColour(c) as Rgb, main)] as const);
+  const scored = list.map((c) => [c, contrastOf(readColour(c) as Rgb, main)] as const);
   return (scored.find((s) => s[1] >= 4.5) ?? scored.reduce((a, b) => (b[1] > a[1] ? b : a)))[0];
 }
 
@@ -93,7 +96,8 @@ export function plateMarkup(candidates: readonly (readonly Line[])[], plate: Pla
       .join("");
   const head = `font-family="${FONT}" font-weight="800" text-anchor="middle" stroke="none"`;
   const glint = style === "metal" ? `<g ${head} fill="${mix(main, 0.7)}" fill-opacity=".7">${text(0.3)}</g>` : "";
-  return `${glint}<g ${head} fill="${engravingInk(style, main)}">${text(0)}</g>`;
+  const marks = `${glint}<g ${head} fill="${engravingInk(style, main)}">${text(0)}</g>`;
+  return plate.rot === undefined ? marks : `<g transform="rotate(${plate.rot} ${n2(plate.x)} ${n2(plate.y)})">${marks}</g>`;
 }
 
 /** A band round a body of revolution that holds text: the heights it spans, the tone it is cut into, the angle it is centred on and, for a body with flat sides, the side. */

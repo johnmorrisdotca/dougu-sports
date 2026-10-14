@@ -15,7 +15,7 @@ const contrast = (a: string, b: string): number => {
 const texts = (svg: string): string[] => [...new Set([...svg.matchAll(/<text[^>]*>([^<]*)<\/text>/g)].map((m) => m[1] as string))];
 /** The ink of the engraving: the fill of the last group of text. */
 const ink = (svg: string): string => [...svg.matchAll(/<g font-family="[^"]*"[^>]*fill="(#[0-9a-f]{6})"[^>]*>(?:<text)/g)].at(-1)?.[1] as string;
-const ENGRAVED = ["medal:gold", "medal:silver", "medal:bronze", "medal:place-1", "medal:place-2", "medal:place-3", "trophy:plaque", "trophy:belt"] as const;
+const ENGRAVED = ["medal:gold", "medal:silver", "medal:bronze", "medal:place-1", "medal:place-2", "medal:place-3", "trophy:plaque", "trophy:belt", "trophy:ring", "trophy:banner"] as const;
 const CUPS = D.TROPHY_IDS.filter((id) => D.emblemInfo(id).kind === "lathe");
 
 test("engraving is asked for by label, year and rank, or by one free string, and nothing is engraved when none is asked for", () => {
@@ -53,7 +53,7 @@ test("the year of a plaque goes on its nameplate, and the words on its face", ()
 });
 
 test("the text is fitted to the face: no line is wider than its plate, however long", () => {
-  const plates = { "medal:gold": 19, "medal:place-1": 30, "trophy:plaque": 30, "trophy:belt": 20 } as const;
+  const plates = { "medal:gold": 19, "medal:place-1": 30, "trophy:plaque": 30, "trophy:belt": 20, "trophy:ring": 19, "trophy:banner": 27 } as const;
   for (const [id, wide] of Object.entries(plates)) {
     for (const text of ["MVP 2026", "A", "ABCDEFGHIJKLMNOPQRSTUVWX", "優勝 二〇二六年度", "WWWWWWWWWWWWWWWWWWWWWWWW"]) {
       const svg = D.renderEmblem(id as D.EmblemId, { engrave: text });
@@ -154,4 +154,23 @@ test("the lines of an engraving are chosen for the biggest letters, and a rank i
   assert.equal(linesOf({ free: "MVP" }).main.length, 1);
   assert.equal(linesOf({ year: "2026" }, { yearApart: true }).year, "2026");
   assert.deepEqual(linesOf({}).main, []);
+});
+
+test("a ring is engraved on its two shoulders, the team up one side and the year up the other, and a banner on its face with the year under the words", () => {
+  const ring = D.renderEmblem("trophy:ring", { label: "Hawks", year: 2026 });
+  assert.deepEqual(texts(ring), ["Hawks", "2026"]);
+  assert.ok(ring.includes('transform="rotate(-90 12.4 20)"') && ring.includes('transform="rotate(90 51.6 20)"'), "the text runs up the left shoulder and down the right");
+  assert.deepEqual(texts(D.renderEmblem("trophy:ring", { engrave: "MVP 2026" })).length > 0, true);
+  assert.ok(!D.renderEmblem("trophy:ring").includes("<text"));
+  assert.deepEqual(texts(D.emblemFrame("trophy:ring", { label: "Hawks", year: 2026, yaw: 180 })), [], "the back of the head is plain");
+  assert.deepEqual(texts(D.emblemFrame("trophy:ring", { label: "Hawks", yaw: 180, engraveBack: "2026" })), ["2026"]);
+  const banner = D.renderEmblem("trophy:banner", { label: "Champions", year: 2026 });
+  const [words, year] = ["Champions", "2026"].map((t) => Number(new RegExp(`y="([\\d.]+)"[^>]*>${t}<`).exec(banner)?.[1]));
+  assert.ok(Number(words) < Number(year), "the year is under the words");
+  assert.ok(D.emblemInfo("trophy:ring").kind === "flat" && D.emblemInfo("trophy:banner").kind === "flat");
+  assert.equal(D.renderEmblem("ring"), D.renderEmblem("trophy:ring"), "short names");
+  assert.equal(D.renderEmblem("banner"), D.renderEmblem("trophy:banner"));
+  // The gem takes the accent, the metal the tint.
+  assert.ok(D.renderEmblem("trophy:ring", { style: "color", tint: "#aeb6c0", accent: "#1f5fa8" }).includes("#1f5fa8"));
+  assert.ok(D.renderEmblem("trophy:banner", { style: "color", tint: "#c8102e", accent: "#f2c230" }).includes('fill="#f2c230"'));
 });

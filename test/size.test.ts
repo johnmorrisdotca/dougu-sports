@@ -18,8 +18,8 @@ const one = (constant: string, path: string): Promise<{ text: string; bytes: num
 // Measured 2026-10-14 (esbuild 0.25, minified, gzipped). A limit has room for an edit and not for a regression: when art is added, an item may grow, and the limit is raised on purpose.
 // Each kind of emblem has a renderer, and the renderer is most of an item's weight: the ball's is small, the flat renderer (medals, crests, plaques) is about 3 kB, and the body of revolution that turns
 // (a cup) is about 5 kB, which is the price of its metal, its handles, its balls and its seams. The one pictogram and the one Material icon are a few hundred bytes of art on a small renderer.
-// Measured again 2026-10-14 with engraving and the coin-flip turn in: a medal or a plaque 4.5 kB (was 3.2), a cup 6.9 kB (was 5.6), a pictogram 2.7 to 3.6 kB (was 1.8 to 2.7), a jersey 4.0 kB, a pennant 3.3 kB.
-const LIMITS = { ball: 6.8 * 1024, flat: 4.6 * 1024, lathe: 7.1 * 1024, icon: 3.8 * 1024, jersey: 4.2 * 1024, pennant: 3.6 * 1024 };
+// Measured again 2026-10-14 with engraving and the coin-flip turn in: a medal or a plaque 4.5 kB (was 3.2), a cup 6.9 kB (was 5.6), a pictogram 2.7 to 3.6 kB (was 1.8 to 2.7), a jersey 4.3 kB, a pennant 3.4 kB (a jersey's gzip is mostly its renderer: a cut's data is a few hundred bytes).
+const LIMITS = { ball: 6.8 * 1024, flat: 4.6 * 1024, lathe: 7.1 * 1024, icon: 3.8 * 1024, jersey: 4.8 * 1024, pennant: 3.6 * 1024 };
 
 test("one named ball, bundled by itself, stays small and leaves the other emblems out", async () => {
   const b = await one("BALL_SOCCER", "ball/ball.soccer");

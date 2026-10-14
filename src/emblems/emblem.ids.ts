@@ -17,7 +17,7 @@ export const TROPHY_IDS = [
   "trophy:cup", "trophy:lidded-cup", "trophy:bowl", "trophy:salver", "trophy:globe",
   "trophy:hockey-cup", "trophy:basketball", "trophy:baseball", "trophy:football", "trophy:canadian-bowl", "trophy:soccer-ball", "trophy:soccer-globe",
   "trophy:tennis-plate", "trophy:tennis-cup", "trophy:cricket-urn", "trophy:rugby-cup",
-  "trophy:plaque", "trophy:belt", "trophy:laurel", "trophy:rosette",
+  "trophy:plaque", "trophy:belt", "trophy:laurel", "trophy:rosette", "trophy:ring", "trophy:banner",
 ] as const;
 export type TrophyId = (typeof TROPHY_IDS)[number];
 

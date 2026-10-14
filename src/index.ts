@@ -28,6 +28,8 @@ export { TROPHY_PLAQUE } from "./emblems/trophy/plaque.ts";
 export { TROPHY_BELT } from "./emblems/trophy/belt.ts";
 export { TROPHY_LAUREL } from "./emblems/trophy/laurel.ts";
 export { TROPHY_ROSETTE } from "./emblems/trophy/rosette.ts";
+export { TROPHY_RING } from "./emblems/trophy/ring.ts";
+export { TROPHY_BANNER } from "./emblems/trophy/banner.ts";
 export { MEDAL_GOLD } from "./emblems/medal/gold.ts";
 export { MEDAL_SILVER } from "./emblems/medal/silver.ts";
 export { MEDAL_BRONZE } from "./emblems/medal/bronze.ts";

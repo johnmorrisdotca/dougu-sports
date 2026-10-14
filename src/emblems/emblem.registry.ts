@@ -26,6 +26,8 @@ import { TROPHY_PLAQUE } from "./trophy/plaque.ts";
 import { TROPHY_BELT } from "./trophy/belt.ts";
 import { TROPHY_LAUREL } from "./trophy/laurel.ts";
 import { TROPHY_ROSETTE } from "./trophy/rosette.ts";
+import { TROPHY_RING } from "./trophy/ring.ts";
+import { TROPHY_BANNER } from "./trophy/banner.ts";
 import { MEDAL_GOLD } from "./medal/gold.ts";
 import { MEDAL_SILVER } from "./medal/silver.ts";
 import { MEDAL_BRONZE } from "./medal/bronze.ts";
@@ -108,6 +110,8 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `gear:${string}`
   "trophy:belt": TROPHY_BELT,
   "trophy:laurel": TROPHY_LAUREL,
   "trophy:rosette": TROPHY_ROSETTE,
+  "trophy:ring": TROPHY_RING,
+  "trophy:banner": TROPHY_BANNER,
   "medal:gold": MEDAL_GOLD,
   "medal:silver": MEDAL_SILVER,
   "medal:bronze": MEDAL_BRONZE,

@@ -1,8 +1,8 @@
 // A championship pennant: a long triangle of felt on a dowel, with an edge sewn in a second colour and the words and the year in felt letters. Drawn felt-flat in `metal` and `color` (the fibres are a
 // faint speckle, the `metal` style adds a soft light), and as one outline in `line`. Turned, it flips like a coin and shows its back, which is plain felt and the stitching, with the dowel on the other
 // side. Imports the core, the text widths of the engraving helpers and the coin-flip turn.
-import { type Emblem, type EmblemOptions, type FrameOptions, type Rgb, clean, degrees, escape, hexOf, mix, n2, readColour, resolve, wrap } from "./emblem.core.ts";
-import { widthOf } from "./emblem.engrave.ts";
+import { type Emblem, type EmblemOptions, type FrameOptions, type Rgb, degrees, escape, hexOf, mix, n2, readColour, resolve, wrap } from "./emblem.core.ts";
+import { engravingOf, widthOf } from "./emblem.engrave.ts";
 import { flipSvg } from "./emblem.flip.ts";
 
 const FELT = "#8f1d2c";
@@ -17,11 +17,10 @@ const ROD = "M4.6 11.5h3.4v41h-3.4z";
 const half = (x: number): number => 17 - ((x - 8) * 17) / 52;
 
 /** The lines of lettering, each as large as fits inside the triangle from the left edge: the main words, then the year. */
-function lettering(text: string, year: string | undefined): { text: string; x: number; y: number; size: number; width: number }[] {
-  const rows = [text, ...(year === undefined ? [] : [year])].filter((t) => t !== "");
+function lettering(rows: readonly string[]): { text: string; x: number; y: number; size: number; width: number }[] {
   if (rows.length === 0) return [];
   const x0 = 12.5;
-  for (let f = 11; f >= 2.2; f -= 0.2) {
+  for (let f = 11; f >= 0.8; f -= 0.2) {
     const sizes = rows.map((_, i) => (i === 0 ? f : f * 0.55));
     const total = sizes.reduce((sum, s) => sum + s * 1.12, 0);
     let top = 32 - total / 2;
@@ -33,7 +32,7 @@ function lettering(text: string, year: string | undefined): { text: string; x: n
     });
     const fits = placed.every((p) => {
       const end = p.x + p.width;
-      const reach = half(end) - 4.2;
+      const reach = half(end) - 3;
       return end <= 56 && p.y - p.size * 0.8 >= 32 - reach && p.y + p.size * 0.04 <= 32 + reach;
     });
     if (fits) return placed;
@@ -48,8 +47,9 @@ function draw(title: string, o: EmblemOptions | undefined, back: boolean): strin
   const felt = r.tint ?? (readColour(FELT) as Rgb);
   const trim = r.accent ?? CREAM;
   const ink = hexOf(readColour(o?.numberColor) ?? (readColour(trim) as Rgb));
-  const words = clean(o?.engrave ?? o?.label)?.toUpperCase();
-  const year = clean(o?.year);
+  // The lettering is the engraving of the options: the free text (one line a row) or the rank and label, then the year, in capitals.
+  const e = engravingOf(o);
+  const rows = [...(e.free !== undefined ? e.free.split("\n") : [[e.rank, e.label].filter((part) => part !== undefined).join(" ")]), e.year ?? ""].map((t) => t.toUpperCase()).filter((t) => t !== "");
   const flatFelt = hexOf(felt);
   const pid = `dgpf${flatFelt.slice(1)}`;
   let body = `<g${back ? ' transform="translate(64 0) scale(-1 1)"' : ""}>`;
@@ -57,7 +57,7 @@ function draw(title: string, o: EmblemOptions | undefined, back: boolean): strin
   body += `<path d="${SHAPE}" fill="${line ? "none" : r.style === "metal" ? `url(#${pid})` : flatFelt}"/>`;
   if (!line && r.style === "metal") body += `<path d="${SHAPE}" fill="url(#dgsp)" stroke="none"/>`;
   body += `<path d="${STITCH}" fill="none" stroke="${line ? "currentColor" : trim}" stroke-width="${line ? 1.2 : 0.7}" stroke-dasharray="1.9 1.5" stroke-linecap="butt"/>`;
-  const text = back ? [] : lettering(words ?? "", year);
+  const text = back ? [] : lettering(rows);
   if (text.length > 0) {
     body += `<g font-family="${FONT}" font-weight="800" fill="${line ? "currentColor" : ink}" stroke="none">${text
       .map((t) => `<text x="${n2(t.x)}" y="${n2(t.y)}" font-size="${n2(t.size)}" textLength="${n2(t.width)}" lengthAdjust="spacingAndGlyphs">${escape(t.text)}</text>`)

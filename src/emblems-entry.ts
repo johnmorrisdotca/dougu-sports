@@ -12,3 +12,5 @@ export type { PieceSize } from "./emblems/ball/ball.core.ts";
 export type { Ball, BallKind, Decor, Handle, LatheModel, Poles, Pt, Solid } from "./emblems/emblem.lathe.ts";
 export type { MaterialModel } from "./emblems/emblem.material.ts";
 export type { FlatModel, Role, Shape } from "./emblems/emblem.shapes.ts";
+export { JERSEY_PATTERNS } from "./emblems/emblem.jersey.ts";
+export type { JerseyPattern } from "./emblems/emblem.jersey.ts";

@@ -39,12 +39,14 @@ export interface EmblemOptions {
   rank?: number | string;
   /** The engraving of a medal's back, shown when it is turned over. Without it the back is plain. */
   engraveBack?: string;
-  /** A jersey's number (up to three characters, "7", "23", "00"), on the chest and big on the back. */
+  /** A jersey's number (up to two digits: "7", "23", "00"), on the chest and big on the back. */
   number?: number | string;
   /** The name on the back of a jersey. */
   name?: string;
-  /** A jersey's stripes: `"none"`, `"chest"`, `"hoops"`, `"sleeves"` (the sleeves and hem, or a basketball's sides) or `"pin"`; `true` is the cut's own, `false` none. */
-  stripes?: boolean | "none" | "chest" | "hoops" | "sleeves" | "pin";
+  /** A jersey's pattern, in its second colour: `"solid"` (the default), `"stripes"`, `"hoops"`, `"halves"`, `"sash"`, `"yoke"` or `"pinstripes"`; `true` is `"stripes"` and `false` is solid. */
+  stripes?: boolean | "solid" | "stripes" | "hoops" | "halves" | "sash" | "yoke" | "pinstripes";
+  /** A jersey's trim in its second colour: the bands of the sleeves and hem (the sides of a basketball's). On by default for the cuts that have it. */
+  trim?: boolean;
   /** The colour of a jersey's number, and of a pennant's lettering when it is not the second colour. A hex colour or `rgb()`. */
   numberColor?: string;
   /** Which side of a jersey or a pennant is drawn at rest: `"front"` (the default) or `"back"`. */

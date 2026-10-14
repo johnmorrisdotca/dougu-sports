@@ -165,12 +165,14 @@ export interface JerseyOptions {
   render?: EmblemStyle;
   /** The team's main colour, its trim (collar, stripes, the number's outline) and its number's colour, as hex colours or `rgb()`. The trim is the number's colour unless a third is given. */
   colors?: string | readonly [main?: string, trim?: string, number?: string];
-  /** The number, up to three characters: on the chest, and big on the back. */
+  /** The number, up to two digits: on the chest, and big on the back. Its colour reads at 4.5 to 1 on the shirt: a colour that would not is replaced by black, white or a tone of the shirt. */
   number?: number | string;
   /** The name above the number on the back. */
   name?: string;
-  /** `"none"`, `"chest"`, `"hoops"`, `"sleeves"` or `"pin"`; `true` is the cut's own. Hockey, basketball and football carry sleeve stripes unless `false`. */
+  /** The pattern in the second colour: `"solid"` (the default), `"stripes"`, `"hoops"`, `"halves"`, `"sash"`, `"yoke"` or `"pinstripes"`; `true` is `"stripes"`. */
   stripes?: EmblemOptions["stripes"];
+  /** The trim in the second colour (cuffs and hem; a basketball's sides): on for hockey, basketball, baseball and football unless `false`, off for soccer unless `true`. */
+  trim?: boolean;
   /** `"front"` (the default) or `"back"`. */
   view?: "front" | "back";
   size?: number;
@@ -195,7 +197,7 @@ export function jersey(options: JerseyOptions = {}): string {
   const named = (JERSEY_CUTS as readonly string[]).includes(options.style as string) ? options.style : options.cut;
   const cut = (JERSEY_CUTS as readonly string[]).includes(named as string) ? (named as JerseyCut) : "hockey";
   const colors = typeof options.colors === "string" ? [options.colors] : (options.colors ?? []);
-  const o: FrameOptions = { tint: colors[0], accent: colors[1], numberColor: colors[2], number: options.number, name: options.name, stripes: options.stripes, view: options.view, size: options.size, style: finish, theme: options.theme, yaw: options.yaw, pitch: options.pitch };
+  const o: FrameOptions = { tint: colors[0], accent: colors[1], numberColor: colors[2], number: options.number, name: options.name, stripes: options.stripes, trim: options.trim, view: options.view, size: options.size, style: finish, theme: options.theme, yaw: options.yaw, pitch: options.pitch };
   const e = EMBLEM_TABLE[`jersey:${cut}`];
   return options.yaw === undefined && options.pitch === undefined ? e.svg(o) : e.frame(o);
 }
@@ -204,8 +206,11 @@ export function jersey(options: JerseyOptions = {}): string {
 export interface PennantOptions {
   /** The felt, the stitching, and the lettering (the stitching's colour unless a third is given), as hex colours or `rgb()`. */
   colors?: string | readonly [felt?: string, stitching?: string, lettering?: string];
-  /** The words, in capitals ("Champions", "優勝"). */
+  /** The words, in capitals ("Champions", "優勝"); more than one line with line breaks. The engraving options `label`, `rank` and `year` work too. */
   text?: string;
+  /** The label and rank, as for any engraving: ignored when `text` is given. */
+  label?: string;
+  rank?: number | string;
   /** The year, in smaller letters under the words. */
   year?: number | string;
   /** `"front"` (the default) or `"back"`: plain felt, with the dowel on the other side. */
@@ -230,7 +235,7 @@ export interface PennantOptions {
  */
 export function pennant(options: PennantOptions = {}): string {
   const colors = typeof options.colors === "string" ? [options.colors] : (options.colors ?? []);
-  const o: FrameOptions = { tint: colors[0], accent: colors[1], numberColor: colors[2], engrave: options.text, year: options.year, view: options.view, size: options.size, style: options.style, theme: options.theme, yaw: options.yaw, pitch: options.pitch };
+  const o: FrameOptions = { tint: colors[0], accent: colors[1], numberColor: colors[2], engrave: options.text, label: options.label, rank: options.rank, year: options.year, view: options.view, size: options.size, style: options.style, theme: options.theme, yaw: options.yaw, pitch: options.pitch };
   const e = EMBLEM_TABLE["pennant:championship"];
   return options.yaw === undefined && options.pitch === undefined ? e.svg(o) : e.frame(o);
 }
