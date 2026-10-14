@@ -5,27 +5,33 @@
 //   node scripts/make-gallery.mjs --check   exit 1, and say so, when docs/gallery.md is not what the package makes
 //
 // The pictures are on the demo's gallery page (`pnpm dev`, then /gallery.html): GitHub does not draw inline SVG, so this page is the text of it.
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import process from "node:process";
 import { URL } from "node:url";
 
 const D = await import(new URL("../dist/index.js", import.meta.url).href);
 const NAME = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).name;
 
+const DIST = new URL("../dist/emblems/", import.meta.url);
+/** The constant that is the emblem with an id (`TROPHY_HOCKEY_CUP`), and the module of its folder that exports it. */
+const constantOf = (id) => Object.entries(D).find(([, value]) => value !== null && typeof value === "object" && value.id === id)?.[0];
+const moduleOf = (folder, constant) => readdirSync(new URL(`${folder}/`, DIST)).find((file) => file.endsWith(".js") && new RegExp(`export const ${constant} =`).test(readFileSync(new URL(`${folder}/${file}`, DIST), "utf8")))?.slice(0, -3);
+
 const rows = Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => {
   const folder = D.EMBLEM_FOLDERS[group];
   const body = ids.length === 0
     ? "_No emblems yet._"
-    : ["| Id | English | 日本語 | Kind | Source | Import one |", "| --- | --- | --- | --- | --- | --- |", ...ids.map((id) => {
+    : ["| Id | English | 日本語 | Kind | Source | Constant | Import one |", "| --- | --- | --- | --- | --- | --- | --- |", ...ids.map((id) => {
         const info = D.emblemInfo(id);
-        return `| \`${id}\` | ${info.en} | ${info.ja} | ${info.kind} | ${info.source} | \`${NAME}/${folder}/${id.split(":")[1]}\` |`;
+        const constant = constantOf(id);
+        return `| \`${id}\` | ${info.en} | ${info.ja} | ${info.kind} | ${info.source} | \`${constant}\` | \`${NAME}/${folder}/${moduleOf(folder, constant)}\` |`;
       })].join("\n");
   return `## ${group}\n\n${body}\n`;
 });
 
 const text = `# Gallery
 
-[Back to the README](../README.md). Every emblem in the package, by group: ${D.EMBLEM_IDS.length} so far. The pictures are on the demo's gallery page; this list is the text of it, made by \`scripts/make-gallery.mjs\` from the built package (\`pnpm gallery\`).
+[Back to the README](../README.md). Every emblem in the package, by group: ${D.EMBLEM_IDS.length} of them. The pictures are on the demo's gallery page; this list is the text of it, made by \`scripts/make-gallery.mjs\` from the built package (\`pnpm gallery\`).
 
 Ids are \`<group>:<name>\`. The folders the art lives in are in [layout.md](layout.md).
 

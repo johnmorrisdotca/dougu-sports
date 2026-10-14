@@ -39,12 +39,22 @@ try {
     await (await page.$("#sheet")).screenshot({ path: `${out}/${name}.png` });
     await context.close();
   };
-  const everyStyle = (D) => D.EMBLEM_IDS.map((id) => `<figure style="margin:0;text-align:center">${D.EMBLEM_STYLES.map((style) => D.renderEmblem(id, { style, size: 120 })).join("")}<figcaption>${D.emblemName(id)}</figcaption></figure>`).join("");
-  const turned = (D) => ["ball:soccer", "award:medal"].map((id) => `<div style="display:flex;gap:10px">${[-120, -60, 0, 60, 120].map((yaw) => D.emblemFrame(id, { yaw, pitch: id === "ball:soccer" ? 0 : 0, size: 96 })).join("")}</div>`).join("");
+  // The ten trophies that stand for a league's cup, then a medal of each metal and a crest, then the same cup in the three styles.
+  // (Each function is sent to the page as text, so each carries what it uses.)
+  const everyStyle = (D) => {
+    const figure = (id, o, caption) => `<figure style="margin:0;text-align:center">${D.renderEmblem(id, o)}<figcaption>${caption ?? D.emblemName(id)}</figcaption></figure>`;
+    const FAMOUS = ["trophy:hockey-cup", "trophy:baseball", "trophy:football", "trophy:basketball", "trophy:canadian-bowl", "trophy:soccer-globe", "trophy:tennis-plate", "trophy:tennis-cup", "trophy:cricket-urn", "trophy:rugby-cup"];
+    const trophies = FAMOUS.map((id) => figure(id, { size: 150 })).join("");
+    const rest = ["medal:gold", "medal:silver", "medal:bronze", "medal:place-1", "crest:shield", "crest:roundel", "trophy:rosette", "trophy:laurel", "trophy:belt"].map((id) => figure(id, { size: 96 })).join("");
+    const styles = D.EMBLEM_STYLES.map((style) => figure("trophy:hockey-cup", { style, size: 120 }, style)).join("");
+    return `${trophies}<div style="flex-basis:100%"></div>${rest}<div style="flex-basis:100%"></div>${styles}`;
+  };
+  const phone = (D) => ["trophy:hockey-cup", "trophy:baseball", "trophy:football", "trophy:soccer-globe", "trophy:tennis-cup", "medal:gold"].map((id) => `<figure style="margin:0;text-align:center">${D.renderEmblem(id, { size: 96 })}<figcaption>${D.emblemName(id)}</figcaption></figure>`).join("");
+  const turned = (D) => ["trophy:tennis-cup", "trophy:hockey-cup", "medal:gold", "ball:soccer"].map((id) => `<div style="display:flex;gap:10px">${[-120, -60, 0, 60, 120].map((yaw) => D.emblemFrame(id, { yaw, size: 110 })).join("")}</div>`).join("");
   await sheet("hero-desk-light", { width: 1280 }, everyStyle);
   await sheet("hero-desk-dark", { width: 1280, scheme: "dark" }, everyStyle);
-  await sheet("phone-light", { width: 390, height: 844, phone: true }, everyStyle);
-  await sheet("phone-dark", { width: 390, height: 844, phone: true, scheme: "dark" }, everyStyle);
+  await sheet("phone-light", { width: 390, height: 844, phone: true }, phone);
+  await sheet("phone-dark", { width: 390, height: 844, phone: true, scheme: "dark" }, phone);
   await sheet("turn-desk-light", { width: 1280 }, turned);
   await browser.close();
   console.log(`pictures written to ${out}`);

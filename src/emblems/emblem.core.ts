@@ -20,12 +20,20 @@ export interface EmblemOptions {
   tint?: string;
   /** `inherit` (the default), `auto`, `light` or `dark`. */
   theme?: EmblemTheme;
+  /** A second colour: a medal's ribbon, a crest's band, the flags of a trophy. A hex colour or `rgb()`; anything else is ignored. */
+  accent?: string;
+  /** The letters of a crest, up to three. */
+  initials?: string;
+  /** A ball: force the grain of its surface on or off. By default it is on for a ball of 48 pixels or more that is not turning. */
+  grain?: boolean;
 }
 
 /** A turn, in degrees from the resting view (0 and 0 is the still drawing): `yaw` about the vertical axis, `pitch` the tilt toward the eye. */
 export interface FrameOptions extends EmblemOptions {
   yaw?: number;
   pitch?: number;
+  /** A ball: the turn about the line of sight. */
+  roll?: number;
 }
 
 /** The ink of a drawing when a theme sets it, and the page it is made to read on. */
@@ -34,12 +42,13 @@ export const EMBLEM_PAGE = { light: "#ffffff", dark: "#14181c" } as const;
 
 /** The metals. */
 export const METALS = { gold: "#d9a620", silver: "#aeb6c0", bronze: "#b8733a" } as const;
-export type Metal = keyof typeof METALS;
+/** A metal by name, or `flat` for a colour that is no metal (a crest's blue, a sport's plain ink). */
+export type Metal = keyof typeof METALS | "flat";
 
 /** Where an emblem's art comes from: drawn for this package (`ours`) or taken from a source listed in NOTICE.md. */
-export type EmblemSource = "ours" | "material" | "noto" | "mdi" | "game-icons";
-/** What an emblem is: a flat object (a front and a back, to flip), a ball (marks on a sphere, to roll), a body of revolution (`lathe`) or an icon (one path, not turned). */
-export type EmblemKind = "flat" | "ball" | "lathe" | "icon";
+export type EmblemSource = "ours" | "material" | "generated" | "drawn" | "noto" | "mdi" | "commons" | "gameicons";
+/** What an emblem is: a flat object (a front and a back, to flip), a ball (a sphere or a solid, turned in 3D), a body of revolution (`lathe`), an icon (one drawing, not turned) or a piece of gear (a flat drawing, not turned). */
+export type EmblemKind = "flat" | "ball" | "lathe" | "icon" | "gear";
 
 export type Rgb = readonly [number, number, number];
 
@@ -78,17 +87,33 @@ export interface Resolved {
   size: number;
   theme: EmblemTheme;
   tint: Rgb | undefined;
+  accent: string | undefined;
+  initials: string;
 }
 
 export function resolve(o: EmblemOptions | undefined): Resolved {
   const size = typeof o?.size === "number" && Number.isFinite(o.size) && o.size > 0 ? Math.min(Math.round(o.size * 100) / 100, 4096) : 64;
   const theme = o?.theme === "auto" || o?.theme === "light" || o?.theme === "dark" ? o.theme : "inherit";
   const style = o?.style === "line" || o?.style === "color" ? o.style : "metal";
-  return { style, size, theme, tint: readColour(o?.tint) };
+  const accent = readColour(o?.accent);
+  const initials = typeof o?.initials === "string" ? [...o.initials.trim()].slice(0, 3).join("").toUpperCase() : "";
+  return { style, size, theme, tint: readColour(o?.tint), accent: accent === undefined ? undefined : hexOf(accent), initials };
 }
 
 /** The main colour of a metal, or the tint when there is one. */
-export const mainOf = (metal: Metal, tint: Rgb | undefined): Rgb => tint ?? (readColour(METALS[metal]) as Rgb);
+export const mainOf = (metal: Metal, tint: Rgb | undefined): Rgb => tint ?? (readColour(metal === "flat" ? "#8a949e" : METALS[metal]) as Rgb);
+
+/** The relative luminance of a colour, 0 to 1. */
+export function lum(rgb: Rgb): number {
+  const [r, g, b] = rgb.map((c) => {
+    const k = c / 255;
+    return k <= 0.03928 ? k / 12.92 : ((k + 0.055) / 1.055) ** 2.4;
+  }) as [number, number, number];
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+/** Black or white, whichever reads better on a colour. */
+export const onColour = (rgb: Rgb): string => ((lum(rgb) + 0.05) / 0.05 > 1.05 / (lum(rgb) + 0.05) ? "#000000" : "#ffffff");
 
 /** A turn in degrees, as a finite number (0 for anything else). */
 export const degrees = (value: number | undefined): number => (typeof value === "number" && Number.isFinite(value) ? value % 360 : 0);
@@ -105,30 +130,73 @@ export interface Paint {
   defs: string;
 }
 
-/** The paint for a main colour in a style. The gradient's id names the colour, so two of one colour in a page agree. */
-export function paintFor(style: EmblemStyle, main: Rgb, kind: "linear" | "radial" = "linear"): Paint {
+/** The paint of a ball: a radial gradient in the metal style. The gradient's id names the colour, so two of one colour in a page agree. */
+export function paintFor(style: EmblemStyle, main: Rgb): Paint {
   if (style === "line") return { main: "none", shade: "none", light: "none", ribbon: "none", defs: "" };
   const shade = mix(main, -0.28);
   const light = mix(main, 0.55);
   const ribbon = "#b3362b";
   if (style === "color") return { main: hexOf(main), shade, light, ribbon, defs: "" };
-  const id = `dgs${kind === "radial" ? "r" : "l"}${hexOf(main).slice(1)}`;
-  const stops = `<stop offset="0" stop-color="${mix(main, -0.3)}"/><stop offset="0.3" stop-color="${light}"/><stop offset="0.55" stop-color="${hexOf(main)}"/><stop offset="1" stop-color="${mix(main, -0.38)}"/>`;
-  const defs =
-    kind === "linear"
-      ? `<defs><linearGradient id="${id}" x2="1" y2="0.2">${stops}</linearGradient></defs>`
-      : `<defs><radialGradient id="${id}" cx="0.36" cy="0.3" r="0.8"><stop offset="0" stop-color="${light}"/><stop offset="0.55" stop-color="${hexOf(main)}"/><stop offset="1" stop-color="${mix(main, -0.38)}"/></radialGradient></defs>`;
+  const id = `dgsr${hexOf(main).slice(1)}`;
+  const defs = `<defs><radialGradient id="${id}" cx="0.36" cy="0.3" r="0.8"><stop offset="0" stop-color="${light}"/><stop offset="0.55" stop-color="${hexOf(main)}"/><stop offset="1" stop-color="${mix(main, -0.38)}"/></radialGradient></defs>`;
   return { main: `url(#${id})`, shade, light, ribbon, defs };
 }
 
+/** A gradient: its id, its definition (a fragment for a `<defs>`) and the fill that names it. */
+export interface Gradient {
+  id: string;
+  def: string;
+  fill: string;
+}
+const stops = (list: readonly (readonly [number, string])[]): string => list.map(([at, colour]) => `<stop offset="${n2(at).replace(/^0\./, ".")}" stop-color="${colour}"/>`).join("");
+
+/**
+ * The shading of a round metal body: a dark edge, a bright band left of the middle, the metal, a darker side, and a faint light from the rim on the far edge, as polished metal throws it. `shift` slides the bright
+ * band (a turn). The id names the colour and the shift, so two bodies of one colour in a page share one definition.
+ */
+export function cylinderGradient(main: Rgb, shift = 0): Gradient {
+  const h = Math.max(0.14, Math.min(0.5, 0.3 + shift));
+  const id = `dgsc${hexOf(main).slice(1)}${shift === 0 ? "" : `s${Math.round(shift * 100) + 100}`}`;
+  const list: [number, string][] = [[0, mix(main, -0.5)], [0.1, mix(main, -0.16)], [h, mix(main, 0.62)], [h + 0.26, mix(main, 0.08)], [0.84, mix(main, -0.36)], [0.95, mix(main, -0.1)], [1, mix(main, -0.52)]];
+  return { id, def: `<linearGradient id="${id}">${stops(list)}</linearGradient>`, fill: `url(#${id})` };
+}
+
+/** The shading of a round flat or a ball: light from the top left, the metal, then dark at the far edge. */
+export function orbGradient(main: Rgb): Gradient {
+  const id = `dgso${hexOf(main).slice(1)}`;
+  return { id, def: `<radialGradient id="${id}" cx="0.36" cy="0.3" r="0.82">${stops([[0, mix(main, 0.7)], [0.3, mix(main, 0.2)], [0.62, hexOf(main)], [1, mix(main, -0.42)]])}</radialGradient>`, fill: `url(#${id})` };
+}
+
+/** The shading of a flat sheet of metal, from a bright corner to a dark one. */
+export function sheetGradient(main: Rgb): Gradient {
+  const id = `dgsd${hexOf(main).slice(1)}`;
+  return { id, def: `<linearGradient id="${id}" x2="1" y2="1">${stops([[0, mix(main, 0.55)], [0.35, mix(main, 0.12)], [0.6, hexOf(main)], [1, mix(main, -0.4)]])}</linearGradient>`, fill: `url(#${id})` };
+}
+
+/** The shading of a raised rim: bright on the top left, dark on the bottom right, as a bevel catches the light (or the other way round, for a groove). */
+export function bevelGradient(main: Rgb, groove = false): Gradient {
+  const id = `dgse${hexOf(main).slice(1)}${groove ? "g" : ""}`;
+  const [a, b] = groove ? [mix(main, -0.45), mix(main, 0.6)] : [mix(main, 0.65), mix(main, -0.5)];
+  return { id, def: `<linearGradient id="${id}" x2="1" y2="1">${stops([[0, a], [0.5, hexOf(main)], [1, b]])}</linearGradient>`, fill: `url(#${id})` };
+}
+
+/** The gradients' definitions as one `<defs>`, with none twice. */
+export const defsOf = (gradients: readonly Gradient[]): string => {
+  const seen = new Set<string>();
+  const list = gradients.filter((g) => !seen.has(g.id) && seen.add(g.id));
+  return list.length === 0 ? "" : `<defs>${list.map((g) => g.def).join("")}</defs>`;
+};
+
 /** A drawing wrapped into a document: the title, the outline's colour for the theme, and the group that strokes it. */
-export function wrap(o: { title: string; size: number; style: EmblemStyle; theme: EmblemTheme; defs?: string; body: string; box?: string }): string {
+export function wrap(o: { title: string; size: number; style: EmblemStyle; theme: EmblemTheme; defs?: string; body: string; box?: string; edge?: string; width?: number }): string {
   const colour = o.theme === "dark" ? EMBLEM_INK.dark : o.theme === "inherit" ? "" : EMBLEM_INK.light;
   const auto = o.theme === "auto" ? `<style>@media(prefers-color-scheme:dark){svg{color:${EMBLEM_INK.dark}}}</style>` : "";
-  const stroke = o.style === "line" ? 2.6 : 2.2;
+  // `edge` is a colour of the drawing's own for the outline (a metal's darker tone); without it the outline is the page's ink. The `line` style is always the page's ink.
+  const ink = o.edge !== undefined && o.style !== "line" ? o.edge : "currentColor";
+  const stroke = o.width ?? (o.style === "line" ? 2.6 : 2.2);
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${o.box ?? "0 0 64 64"}" width="${o.size}" height="${o.size}" role="img"${colour === "" ? "" : ` color="${colour}"`}>` +
-    `<title>${escape(o.title)}</title>${auto}${o.defs ?? ""}<g fill="none" stroke="currentColor" stroke-width="${stroke}" stroke-linejoin="round" stroke-linecap="round">${o.body}</g></svg>`
+    `<title>${escape(o.title)}</title>${auto}${o.defs ?? ""}<g fill="none" stroke="${ink}" stroke-width="${n2(stroke)}" stroke-linejoin="round" stroke-linecap="round">${o.body}</g></svg>`
   );
 }
 

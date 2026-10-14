@@ -13,9 +13,14 @@ Bug reports and ideas go in the
   same string, and a test holds it. A gradient's id comes from the colour it paints.
 - **Anything from outside is made safe.** A colour is read as `#rgb`, `#rrggbb` or `rgb()` and anything else is ignored; text is
   escaped. A new option that reaches the markup has a test with a hostile value.
-- **One module per item.** An emblem is one file, `src/emblems/<folder>/<name>.ts`, made with `/* @__PURE__ */` and exported by
-  its id in capitals, so that one import takes one emblem. [docs/layout.md](docs/layout.md) says where each group goes and how to
-  add one; `test/size.test.ts` holds a single item under 3 kB gzipped.
+- **One module per item.** An emblem is one file, `src/emblems/<group>/<name>.ts`, made with `/* @__PURE__ */` and exported by
+  its id in capitals, so that one import takes one emblem (the balls and the gear are one module per family). [docs/layout.md](docs/layout.md)
+  says where each group goes and how to add one; `test/size.test.ts` holds a single item to a limit for its kind (a medal 3.6 kB,
+  a cup 6.2 kB or a ball 6.8 kB gzipped, most of it the renderer).
+- **Trophies are generic and drawn, never traced.** A trophy is drawn in simplified SVG from what the object is known to look like, and is
+  named for what it is (`trophy:hockey-cup`: a tall banded silver cup); no id, title, doc or drawing carries a real trophy's name, mark,
+  logo or engraving. Look at a contact sheet (`node scripts/emblem-sheet.mjs sheet.png trophy/<name>`) at 256, 64 and 16 pixels, light and dark.
+- **Japanese names are read** by someone who reads Japanese before they ship.
 - **Test what you change.** Tests sit in `test/`. A rule you change has a test that would have caught it.
 - **Art is shipped only when its licence lets it be**, with the notice kept in `NOTICE.md` and the licence text in `LICENSES/`.
   Allowed: art drawn for this package, Apache-2.0 (Material Symbols, Noto, Pictogrammers MDI), CC BY 3.0 (game-icons.net, with

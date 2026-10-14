@@ -75,9 +75,11 @@ console.log("ok   npm install of the tarball");
 
 // What the built package in this checkout makes: the installed one must make the same.
 const local = await import(new URL("../dist/index.js", import.meta.url).href);
-const medal = local.renderEmblem("award:medal", { style: "line", size: 40 });
+const medal = local.renderEmblem("medal:gold", { style: "line", size: 40 });
+const cup = local.emblemFrame("trophy:hockey-cup", { yaw: 40, pitch: 10, tint: "#1f4e9c" });
 const ball = local.renderEmblem("ball:soccer", { style: "color", tint: "#0b6e4f" });
 const rolled = local.ballFrame("ball:soccer", { yaw: 70, pitch: -20 });
+const hurley = local.renderEmblem("gear:hurley", { style: "line" });
 
 // 4. Every entry in `exports`, by ESM and by require; a wildcard entry once for each module in its folder.
 const entries = [];
@@ -90,7 +92,7 @@ for (const key of Object.keys(pkg.exports)) {
   const names = [...inTarball].filter((path) => path.startsWith(folder) && path.endsWith(".js")).map((path) => path.slice(folder.length, -3));
   for (const name of names) entries.push(`${pkg.name}/${key.slice(2).replace("*", name)}`);
 }
-if (!entries.includes(`${pkg.name}/ball/soccer`) || !entries.includes(`${pkg.name}/award/medal`)) {
+if (!entries.includes(`${pkg.name}/ball/ball.soccer`) || !entries.includes(`${pkg.name}/gear/gear.sticks`) || !entries.includes(`${pkg.name}/medal/gold`) || !entries.includes(`${pkg.name}/trophy/hockey-cup`) || !entries.includes(`${pkg.name}/sport/nhl`) || !entries.includes(`${pkg.name}/crest/shield`) || !entries.includes(`${pkg.name}/award/medal`)) {
   console.error(`FAIL the sample items are not in the exports: ${entries.join(" ")}`);
   process.exit(1);
 }
@@ -100,15 +102,17 @@ writeFileSync(
 const all = [${entries.map((_, i) => `m${i}`).join(", ")}];
 const names = ${JSON.stringify(entries)};
 all.forEach((m, i) => { if (Object.keys(m).length === 0) throw new Error(names[i] + " exports nothing"); });
-const { renderEmblem, ballFrame, VERSION, AWARD_MEDAL } = m0;
-if (renderEmblem("award:medal", { style: "line", size: 40 }) !== ${JSON.stringify(medal)}) throw new Error("the installed package drew another medal");
+const { renderEmblem, emblemFrame, ballFrame, VERSION, MEDAL_GOLD } = m0;
+if (renderEmblem("medal:gold", { style: "line", size: 40 }) !== ${JSON.stringify(medal)}) throw new Error("the installed package drew another medal");
+if (emblemFrame("trophy:hockey-cup", { yaw: 40, pitch: 10, tint: "#1f4e9c" }) !== ${JSON.stringify(cup)}) throw new Error("the installed package turned the cup another way");
 if (renderEmblem("ball:soccer", { style: "color", tint: "#0b6e4f" }) !== ${JSON.stringify(ball)}) throw new Error("the installed package drew another ball");
+if (renderEmblem("gear:hurley", { style: "line" }) !== ${JSON.stringify(hurley)}) throw new Error("the installed package drew another hurley");
 if (ballFrame("ball:soccer", { yaw: 70, pitch: -20 }) !== ${JSON.stringify(rolled)}) throw new Error("the installed package rolled the ball another way");
 if (VERSION !== ${JSON.stringify(pkg.version)}) throw new Error("VERSION is " + VERSION);
 const byName = Object.fromEntries(names.map((name, i) => [name, all[i]]));
 if (byName[${JSON.stringify(`${pkg.name}/emblems`)}].renderEmblem !== renderEmblem) throw new Error("the emblems entry is another copy");
 if (byName[${JSON.stringify(`${pkg.name}/turn`)}].ballFrame !== ballFrame) throw new Error("the turn entry is another copy");
-if (byName[${JSON.stringify(`${pkg.name}/award/medal`)}].AWARD_MEDAL !== AWARD_MEDAL) throw new Error("the medal module is another copy");
+if (byName[${JSON.stringify(`${pkg.name}/medal/gold`)}].MEDAL_GOLD !== MEDAL_GOLD) throw new Error("the medal module is another copy");
 console.log(names.length + " entries");
 `,
 );
@@ -116,16 +120,29 @@ console.log(`ok   import:  ${run(process.execPath, ["esm.mjs"], project).trim()}
 
 // 5. A page that wants one ball: esbuild bundles the installed package's one module, and the other emblems stay out.
 const { build } = await import("esbuild");
-const one = await build({ stdin: { contents: `import { BALL_SOCCER } from ${JSON.stringify(`${pkg.name}/ball/soccer`)}; console.log(BALL_SOCCER.svg());`, resolveDir: project, loader: "js" }, bundle: true, minify: true, format: "esm", write: false, logLevel: "silent" });
+const one = await build({ stdin: { contents: `import { BALL_SOCCER } from ${JSON.stringify(`${pkg.name}/ball/ball.soccer`)}; console.log(BALL_SOCCER.svg());`, resolveDir: project, loader: "js" }, bundle: true, minify: true, format: "esm", write: false, logLevel: "silent" });
 const text = one.outputFiles[0].text;
 const gzip = gzipSync(text).length;
-if (!text.includes("ball:soccer") || text.includes("award:medal")) {
+if (!text.includes("ball:soccer") || text.includes("medal:gold") || text.includes("trophy:hockey-cup")) {
   console.error("FAIL the bundle of the soccer ball alone holds the wrong emblems");
   process.exit(1);
 }
-if (gzip > 3 * 1024) {
-  console.error(`FAIL the soccer ball alone bundles to ${gzip} bytes gzipped, over 3 kB`);
+if (gzip > 6.8 * 1024) {
+  console.error(`FAIL the soccer ball alone bundles to ${gzip} bytes gzipped, over 6.8 kB`);
   process.exit(1);
 }
 console.log(`ok   one ball, bundled from the installed package: ${text.length} bytes, ${gzip} gzipped`);
+// ... and a page that wants one cup: the body of revolution takes its renderer, which weighs more, and still nothing else.
+const trophy = await build({ stdin: { contents: `import { TROPHY_HOCKEY_CUP } from ${JSON.stringify(`${pkg.name}/trophy/hockey-cup`)}; console.log(TROPHY_HOCKEY_CUP.svg());`, resolveDir: project, loader: "js" }, bundle: true, minify: true, format: "esm", write: false, logLevel: "silent" });
+const cupText = trophy.outputFiles[0].text;
+const cupGzip = gzipSync(cupText).length;
+if (!cupText.includes("trophy:hockey-cup") || cupText.includes("ball:soccer") || cupText.includes("medal:gold") || cupText.includes("trophy:baseball")) {
+  console.error("FAIL the bundle of the hockey cup alone holds the wrong emblems");
+  process.exit(1);
+}
+if (cupGzip > 6.2 * 1024) {
+  console.error(`FAIL the hockey cup alone bundles to ${cupGzip} bytes gzipped, over 6.2 kB`);
+  process.exit(1);
+}
+console.log(`ok   one cup, bundled from the installed package: ${cupText.length} bytes, ${cupGzip} gzipped`);
 console.log(`ok   ${packed[0].files.length} files, ${(packed[0].size / 1024).toFixed(0)} kB packed, ${(packed[0].unpackedSize / 1024).toFixed(0)} kB unpacked`);

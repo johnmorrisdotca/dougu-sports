@@ -1,7 +1,7 @@
 {
   "name": "@johnmorrisdotca/dougu-sports",
   "version": "0.0.1",
-  "description": "Dougu Sports 道具, sports emblems as SVG strings: trophies, medals, crests, and the ball and gear of every sport, in metal, line or flat colour, with optional 3D turning. Light and dark, accessible, tree-shakeable. Zero dependencies.",
+  "description": "Dougu Sports 道具, sports emblems as SVG strings: trophies, medals, crests, sport icons, and the ball and gear of every sport, in metal, line or flat colour, with optional 3D turning. Light and dark, accessible, tree-shakeable. Zero dependencies.",
   "keywords": [
     "sports",
     "emblem",
@@ -57,6 +57,31 @@
       "import": "./dist/turn-entry.js",
       "default": "./dist/turn-entry.js"
     },
+    "./award/*": {
+      "types": "./dist/emblems/award/*.d.ts",
+      "import": "./dist/emblems/award/*.js",
+      "default": "./dist/emblems/award/*.js"
+    },
+    "./trophy/*": {
+      "types": "./dist/emblems/trophy/*.d.ts",
+      "import": "./dist/emblems/trophy/*.js",
+      "default": "./dist/emblems/trophy/*.js"
+    },
+    "./medal/*": {
+      "types": "./dist/emblems/medal/*.d.ts",
+      "import": "./dist/emblems/medal/*.js",
+      "default": "./dist/emblems/medal/*.js"
+    },
+    "./crest/*": {
+      "types": "./dist/emblems/crest/*.d.ts",
+      "import": "./dist/emblems/crest/*.js",
+      "default": "./dist/emblems/crest/*.js"
+    },
+    "./sport/*": {
+      "types": "./dist/emblems/sport/*.d.ts",
+      "import": "./dist/emblems/sport/*.js",
+      "default": "./dist/emblems/sport/*.js"
+    },
     "./ball/*": {
       "types": "./dist/emblems/ball/*.d.ts",
       "import": "./dist/emblems/ball/*.js",
@@ -66,11 +91,6 @@
       "types": "./dist/emblems/gear/*.d.ts",
       "import": "./dist/emblems/gear/*.js",
       "default": "./dist/emblems/gear/*.js"
-    },
-    "./award/*": {
-      "types": "./dist/emblems/award/*.d.ts",
-      "import": "./dist/emblems/award/*.js",
-      "default": "./dist/emblems/award/*.js"
     }
   },
   "files": [
@@ -88,7 +108,7 @@
     "build": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\" && tsc -p tsconfig.json",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.check.json",
-    "test": "node --test test/*.test.ts",
+    "test": "node --test test/*.test.ts test/*.test.js",
     "test:package": "pnpm build && node scripts/check-package.mjs",
     "test:readme": "pnpm build && node scripts/make-gallery.mjs --check && node scripts/check-readme-examples.mjs",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build && node scripts/check-package.mjs",

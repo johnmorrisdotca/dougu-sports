@@ -6,8 +6,9 @@ Art taken from another project keeps its own licence, and that licence's text is
 
 | File | Licence | Covers |
 | --- | --- | --- |
-| [MIT.txt](MIT.txt) | MIT | The code of the package, and the art drawn for it (`source: "ours"`) |
-| [Apache-2.0.txt](Apache-2.0.txt) | Apache License 2.0 | Material Symbols (Google), the Noto emoji and Noto fonts' shapes (Google), Pictogrammers Material Design Icons, where an emblem is taken from them |
-| [CC-BY-3.0.md](CC-BY-3.0.md) | Creative Commons Attribution 3.0 | game-icons.net icons, each credited to its author in NOTICE.md |
+| [MIT.txt](MIT.txt) | MIT | The code of the package, and the art drawn for it (`source` `ours`, `generated` or `drawn`) |
+| [Apache-2.0.txt](Apache-2.0.txt) | Apache License 2.0 | Material Symbols (Google: sixteen icons), the Noto emoji shapes (Google) and Pictogrammers Material Design Icons (the line versions of some gear), where an emblem is taken from them |
+| [CC-BY-3.0.txt](CC-BY-3.0.txt) | Creative Commons Attribution 3.0 | game-icons.net icons (the baseball glove), each credited to its author in NOTICE.md |
+| [upstream/](upstream/) | Each upstream's own licence file, as found in its repository | Noto Emoji `2D/svg`, Pictogrammers MDI, game-icons.net |
 
 A source that is not in the table is not used: a new one is added here and to NOTICE.md in the same change as the emblem that needs it.

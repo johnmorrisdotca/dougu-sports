@@ -3,12 +3,13 @@ import * as D from "./dist/index.js";
 
 const $ = (id) => document.getElementById(id);
 const params = new URLSearchParams(location.search);
+const FIRST = "trophy:hockey-cup";
 const DEFAULTS = { style: "metal", theme: "inherit", size: "128", tint: "", yaw: 0, pitch: 0 };
 const pick = (value, allowed, fallback) => (allowed.includes(value) ? value : fallback);
 const number = (value, low, high) => { const n = Number(value); return Number.isFinite(n) ? Math.max(low, Math.min(high, n)) : 0; };
 
 const state = {
-  id: D.isEmblemId(params.get("id")) ? params.get("id") : D.EMBLEM_IDS[0],
+  id: D.isEmblemId(params.get("id")) ? params.get("id") : FIRST,
   style: pick(params.get("style"), D.EMBLEM_STYLES, DEFAULTS.style),
   theme: pick(params.get("theme"), ["inherit", "light", "dark", "auto"], DEFAULTS.theme),
   size: pick(params.get("size"), ["32", "64", "128", "256"], DEFAULTS.size),
@@ -34,7 +35,7 @@ function draw() {
   $("note").textContent = `${info.en} · ${info.ja} · ${info.kind}, from ${info.source}.`;
   $("emblem").value = state.id;
   for (const group of ["style", "theme", "size", "tint"]) for (const b of $(group).querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state[group]));
-  const canTurn = info.kind !== "icon";
+  const canTurn = info.kind !== "icon" && info.kind !== "gear";
   $("turn-row").hidden = !canTurn;
   $("tilt-row").hidden = !canTurn;
   $("yaw").value = String(state.yaw);
@@ -46,10 +47,15 @@ function draw() {
     ? `import { emblemFrame } from "@johnmorrisdotca/dougu-sports/turn";\n\nconst svg = emblemFrame("${state.id}", { ${shown.slice(2, -2)}, yaw: ${state.yaw}, pitch: ${state.pitch} });\n`
     : `import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";\n\nconst svg = renderEmblem("${state.id}", ${shown});\n`;
   const next = new URLSearchParams();
-  if (state.id !== D.EMBLEM_IDS[0]) next.set("id", state.id);
+  if (state.id !== FIRST) next.set("id", state.id);
   for (const key of ["style", "theme", "size", "tint"]) if (state[key] !== DEFAULTS[key]) next.set(key, state[key]);
   for (const key of ["yaw", "pitch"]) if (state[key] !== 0) next.set(key, String(state[key]));
-  history.replaceState(null, "", next.size === 0 ? location.pathname : `?${next}`);
+  // Safari refuses more than a hundred of these in thirty seconds; the address is a convenience, so a refusal must not stop the drawing.
+  try {
+    history.replaceState(null, "", next.size === 0 ? location.pathname : `?${next}`);
+  } catch {
+    /* the address stays where it was */
+  }
 }
 
 $("emblem").addEventListener("change", () => { state.id = $("emblem").value; state.yaw = 0; state.pitch = 0; draw(); });

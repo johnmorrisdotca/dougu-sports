@@ -1,14 +1,15 @@
 // The emblem library's functions: draw one by id, turn one, read a string that may be an emblem's id. This file imports every drawing through the registry; a consumer that wants one drawing
 // and nothing else imports that drawing's own module (`dougu-sports/ball/soccer`) and calls its `svg`.
-import type { Emblem, EmblemOptions, EmblemStyle, FrameOptions } from "./emblem.core.ts";
+import type { Emblem, EmblemOptions, EmblemStyle, EmblemTheme, FrameOptions } from "./emblem.core.ts";
 import { EMBLEM_STYLES } from "./emblem.core.ts";
-import { BALL_IDS, EMBLEM_IDS, type BallId, type EmblemId } from "./emblem.ids.ts";
+import { BALL_IDS, CREST_SHAPES, EMBLEM_ALIASES, EMBLEM_IDS, type BallId, type CrestShape, type EmblemId, type MedalKind, type SportName } from "./emblem.ids.ts";
+import type { PieceSize } from "./ball/ball.core.ts";
 import { EMBLEM_TABLE } from "./emblem.registry.ts";
 
-/** What can name an emblem: an id, or an id with a style (`"award:medal/line"`), or the emblem itself. */
+/** What can name an emblem: an id, a short name (`"cup"` for `"trophy:cup"`), either with a style (`"trophy:cup/line"`), or the emblem itself. */
 export type EmblemRef = EmblemId | `${EmblemId}/${EmblemStyle}` | (string & {}) | Emblem;
 
-/** The id and style a string names, or `undefined` when it is not an emblem. An id may end in `/metal`, `/line` or `/color`. */
+/** The id and style a string names, or `undefined` when it is not an emblem. An id may end in `/metal`, `/line` or `/color`, and a trophy or an award may be written without its group (`cup`, `crown`). */
 export function parseEmblem(value: unknown): { id: EmblemId; style: EmblemStyle | undefined } | undefined {
   if (typeof value !== "string") return undefined;
   let text = value.trim();
@@ -21,10 +22,11 @@ export function parseEmblem(value: unknown): { id: EmblemId; style: EmblemStyle 
     style = tail;
     text = text.slice(0, slash);
   }
-  return Object.hasOwn(EMBLEM_TABLE, text) ? { id: text as EmblemId, style } : undefined;
+  const id = Object.hasOwn(EMBLEM_ALIASES, text) ? EMBLEM_ALIASES[text] : text;
+  return Object.hasOwn(EMBLEM_TABLE, id) ? { id: id as EmblemId, style } : undefined;
 }
 
-/** True when the value is the id of an emblem (with no style). */
+/** True when the value is the id of an emblem (not a short name, and with no style). */
 export function isEmblemId(value: unknown): value is EmblemId {
   return typeof value === "string" && Object.hasOwn(EMBLEM_TABLE, value);
 }
@@ -33,7 +35,7 @@ export function isEmblemId(value: unknown): value is EmblemId {
 export function emblemOf(ref: EmblemRef): { emblem: Emblem; style: EmblemStyle | undefined } {
   if (typeof ref !== "string") return { emblem: ref, style: undefined };
   const parsed = parseEmblem(ref);
-  if (parsed === undefined) throw new Error(`Unknown emblem "${ref.slice(0, 60)}". Ids look like "award:medal" or "ball:soccer"; see EMBLEM_IDS.`);
+  if (parsed === undefined) throw new Error(`Unknown emblem "${ref.slice(0, 60)}". Ids look like "trophy:cup", "medal:gold", "sport:nhl" or "crest:shield"; see EMBLEM_IDS.`);
   return { emblem: EMBLEM_TABLE[parsed.id], style: parsed.style };
 }
 
@@ -45,8 +47,8 @@ const withStyle = <T extends EmblemOptions>(style: EmblemStyle | undefined, opti
  * @example
  * ```ts
  * import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
- * const svg = renderEmblem("award:medal", { style: "line", size: 32 });
- * console.log(svg.startsWith("<svg"), svg.includes("<title>Medal</title>"));
+ * const svg = renderEmblem("trophy:cup", { style: "line", size: 32 });
+ * console.log(svg.startsWith("<svg"), svg.includes("<title>Cup</title>"));
  * // true true
  * ```
  */
@@ -59,11 +61,11 @@ export function renderEmblem(ref: EmblemRef, options?: EmblemOptions): string {
 export const emblemSvg: typeof renderEmblem = renderEmblem;
 
 /**
- * An emblem turned: `yaw` degrees about its vertical axis and `pitch` degrees of tilt, from its resting view, in plain SVG. A flat emblem (a medal) flips like a coin and shows its back; a ball rolls.
+ * An emblem turned: `yaw` degrees about its vertical axis and `pitch` degrees of tilt, from its resting view, in plain SVG. A cup, bowl or urn keeps its outline and moves its light, handles and seams; a medal flips like a coin and shows its back; a ball rolls; an icon is not turned.
  * @example
  * ```ts
  * import { emblemFrame, renderEmblem } from "@johnmorrisdotca/dougu-sports/turn";
- * console.log(emblemFrame("award:medal", { yaw: 0 }) === renderEmblem("award:medal"));
+ * console.log(emblemFrame("medal:gold", { yaw: 0 }) === renderEmblem("medal:gold"));
  * // true
  * ```
  */
@@ -91,12 +93,15 @@ export interface EmblemInfo {
   ja: string;
   source: Emblem["source"];
   kind: Emblem["kind"];
+  /** A ball's or an implement's official size, with the rule it is from, where the rulebook gives one. */
+  size?: PieceSize;
 }
 
 /** The names, source and kind of an emblem. */
 export function emblemInfo(id: EmblemId): EmblemInfo {
   const e = EMBLEM_TABLE[id];
-  return { id, en: e.en, ja: e.ja, source: e.source, kind: e.kind };
+  const size = (e as { size?: PieceSize }).size;
+  return size === undefined ? { id, en: e.en, ja: e.ja, source: e.source, kind: e.kind } : { id, en: e.en, ja: e.ja, source: e.source, kind: e.kind, size };
 }
 
 /** An emblem's name in a language. */
@@ -107,4 +112,45 @@ export function emblemName(id: EmblemId, language: "en" | "ja" = "en"): string {
 /** The data an emblem is drawn from: a flat emblem's shapes or a ball's marks, for a view that turns it itself. */
 export function emblemModel(id: EmblemId): unknown {
   return EMBLEM_TABLE[id].model;
+}
+
+/** What `crest` takes. */
+export interface CrestOptions {
+  /** `shield` (the default), `roundel`, `diamond` or `pennant`. */
+  shape?: CrestShape;
+  /** The team's colour, or its colour and a second colour for the band and the ring. Hex colours or `rgb()`. */
+  colors?: string | readonly [string, string?];
+  /** Up to three letters. A crest with none has a star. */
+  initials?: string;
+  size?: number;
+  style?: EmblemStyle;
+  theme?: EmblemTheme;
+}
+
+/**
+ * A generic crest tinted by a team's colours, with its letters if it has any: what a team with no logo gets. The letters are in the ink that reads on the colour.
+ * @example
+ * ```ts
+ * import { crest } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const svg = crest({ shape: "shield", colors: ["#c8102e", "#f4f0e4"], initials: "NO" });
+ * console.log(svg.includes(">NO<"));
+ * // true
+ * ```
+ */
+export function crest(options: CrestOptions = {}): string {
+  const colors = typeof options.colors === "string" ? [options.colors] : (options.colors ?? []);
+  const shape = (CREST_SHAPES as readonly string[]).includes(options.shape as string) ? (options.shape as CrestShape) : "shield";
+  return EMBLEM_TABLE[`crest:${shape}`].svg({ tint: colors[0], accent: colors[1], initials: options.initials, size: options.size, style: options.style, theme: options.theme });
+}
+
+/** A medal on a ribbon: `medal("gold")`, `"silver"` or `"bronze"`; any other kind is the gold one. */
+export function medal(kind: MedalKind, options?: EmblemOptions): string {
+  return (EMBLEM_TABLE[`medal:${kind}` as EmblemId] ?? EMBLEM_TABLE["medal:gold"]).svg(options);
+}
+
+/** The icon of a sport, by the names of `SPORT_NAMES`: `sportIcon("nhl")`. An unknown sport is an error. */
+export function sportIcon(sport: SportName, options?: EmblemOptions): string {
+  const e = Object.hasOwn(EMBLEM_TABLE, `sport:${sport}`) ? EMBLEM_TABLE[`sport:${sport}` as EmblemId] : undefined;
+  if (e === undefined) throw new Error(`Unknown sport "${String(sport).slice(0, 40)}": the icons are for the names in SPORT_NAMES.`);
+  return e.svg(options);
 }

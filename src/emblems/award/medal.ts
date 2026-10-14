@@ -1,20 +1,6 @@
-// The medal on a ribbon: a gold disc with a star on its face and a plain back, on two crossed straps. Drawn for this package. A sample of the award area (see docs/layout.md).
-import { circlePath, defineFlat, starPath } from "../emblem.shapes.ts";
+// Medal: the Material Symbols icon `military_tech` (Google, Apache License 2.0; see NOTICE.md), in metal, line and flat colour.
+import { M_MILITARY_TECH } from "../emblem.material.data.ts";
+import { defineMaterial } from "../emblem.material.ts";
 
-/** A medal on a ribbon. Turned, it flips like a coin and shows its plain back. */
-export const AWARD_MEDAL = /* @__PURE__ */ defineFlat("award:medal", "Medal", "メダル", "ours", {
-  metal: "gold",
-  front: [
-    { part: "ribbon", d: "M17 3H29L39 31H28Z" },
-    { part: "ribbon", d: "M47 3H35L25 31H36Z" },
-    { part: "main", d: circlePath(32, 42, 17) },
-    { part: "detail", d: circlePath(32, 42, 12.5) },
-    { part: "main", d: starPath(32, 42, 8.6, 3.6) },
-  ],
-  back: [
-    { part: "ribbon", d: "M17 3H29L39 31H28Z" },
-    { part: "ribbon", d: "M47 3H35L25 31H36Z" },
-    { part: "main", d: circlePath(32, 42, 17) },
-    { part: "detail", d: circlePath(32, 42, 12.5) },
-  ],
-});
+/** Medal. */
+export const AWARD_MEDAL = /* @__PURE__ */ defineMaterial("award:medal", "Medal", "メダル", M_MILITARY_TECH, "gold");

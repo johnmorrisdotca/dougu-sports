@@ -66,9 +66,11 @@ console.log(`${ran} examples run, ${failed} failed`);
 // Every export of the package is in the README.
 const readme = pages[0][1];
 const lib = await import(new URL("../dist/index.js", import.meta.url).href);
-const missing = Object.keys(lib).filter((name) => !readme.includes(`\`${name}`) && !new RegExp(`\\b${name}\\b`).test(readme));
+// An emblem's constant (`TROPHY_HOCKEY_CUP`) is named in docs/gallery.md, which is made from the package and lists every one with its id; the rest of the exports are named in the README.
+const gallery = readFileSync(join(root, "docs", "gallery.md"), "utf8");
+const missing = Object.keys(lib).filter((name) => !readme.includes(`\`${name}`) && !new RegExp(`\\b${name}\\b`).test(readme) && !gallery.includes(`\`${name}\``));
 if (missing.length > 0) {
   failed++;
-  console.error(`FAIL the README does not name these exports: ${missing.join(", ")}`);
-} else console.log(`ok   the README names every export (${Object.keys(lib).length})`);
+  console.error(`FAIL neither the README nor docs/gallery.md names these exports: ${missing.join(", ")}`);
+} else console.log(`ok   the README, or the gallery list for an emblem's constant, names every export (${Object.keys(lib).length})`);
 process.exit(failed > 0 ? 1 : 0);

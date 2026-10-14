@@ -24,8 +24,6 @@ const WORDS = {
   },
 };
 
-const escape = (text) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-
 /** A page's text with the family's blocks put in where its comments say. */
 function withFamily(html, { title, description }) {
   return html
@@ -44,24 +42,30 @@ export function renderIndex() {
   return withFamily(readFileSync(new URL("../demo/index.html", import.meta.url), "utf8"), { title: TITLE, description: DESCRIPTION });
 }
 
-/** The gallery: every emblem in every style, and the turning ones in five views. Made from the built package, so it needs `pnpm build` first. */
+/**
+ * The gallery: every emblem with its id, in each style, turned, with buttons that copy its id and the call that draws it. The page is a shell: demo/gallery.js draws the cards from the built package in the
+ * browser, so the page stays light and cannot fall behind the package. A reader without script has docs/gallery.md, the same list as text. Needs `pnpm build` first, as the page imports ./dist.
+ */
 export async function renderGallery() {
   const D = await import(new URL("../dist/index.js", import.meta.url).href);
-  const sections = Object.entries(D.EMBLEM_GROUPS)
+  const nav = Object.entries(D.EMBLEM_GROUPS)
     .filter(([, ids]) => ids.length > 0)
-    .map(([group, ids]) => {
-      const cards = ids
-        .map((emblem) => {
-          const info = D.emblemInfo(emblem);
-          const styles = D.EMBLEM_STYLES.map((style) => `<figure>${D.renderEmblem(emblem, { style, size: 72 })}<figcaption>${style}</figcaption></figure>`).join("");
-          const turning = info.kind === "icon" ? "" : `<div class="turns" aria-label="${escape(info.en)} turned">${[-120, -60, 0, 60, 120].map((yaw) => D.emblemFrame(emblem, { yaw, size: 48 })).join("")}</div>`;
-          return `<li id="${escape(emblem.replace(":", "-"))}"><h3>${escape(info.en)} <span lang="ja">${escape(info.ja)}</span></h3><p><code>${escape(emblem)}</code> · ${info.kind} · ${info.source}</p><div class="styles">${styles}</div>${turning}</li>`;
-        })
-        .join("");
-      return `<section class="more" aria-labelledby="g-${group}"><h2 id="g-${group}">${group}</h2><ul class="cards">${cards}</ul></section>`;
-    })
-    .join("\n");
-  const body = `<main>\n<!--family:header-->\n<p class="note"><a href="./">Back to the playground</a>. Every emblem in the package, in each style, and turned. This page is made by <code>scripts/make-gallery.mjs</code> from the built package.</p>\n${sections}\n<!--family:unreviewed-->\n<!--family:footer-->\n</main>\n<!--family:scripts none-->`;
+    .map(([group, ids]) => `<a href="#g-${group}">${group} <span>${ids.length}</span></a>`)
+    .join(" ");
+  const body = `<main>
+<!--family:header-->
+<p class="note"><a href="./">Back to the playground</a>. Every emblem in the package, in each style and turned, with its id and a button that copies it. The pictures are drawn in your browser from <code>dist/index.js</code>; the same list as text is <a href="https://github.com/johnmorrisdotca/dougu-sports/blob/main/docs/gallery.md">docs/gallery.md</a>.</p>
+<div class="finder">
+  <label class="fam-label" for="find">Find</label>
+  <input class="fam-field" id="find" type="search" placeholder="hockey, medal, crest:shield" autocomplete="off" data-testid="find" />
+  <p class="count" id="count" role="status" aria-live="polite"></p>
+</div>
+<nav class="chips" aria-label="Groups">${nav}</nav>
+<div id="sections"><noscript><p>The gallery is drawn by a script. The list of every id, as text, is <a href="https://github.com/johnmorrisdotca/dougu-sports/blob/main/docs/gallery.md">docs/gallery.md</a>.</p></noscript></div>
+<!--family:unreviewed-->
+<!--family:footer-->
+</main>
+<!--family:scripts gallery.js-->`;
   const html = `<!doctype html>\n<html lang="en">\n<head>\n  <!--family:head-->\n  <link rel="stylesheet" href="family.css" />\n  <link rel="stylesheet" href="demo.css" />\n</head>\n<body>\n${body}\n</body>\n</html>\n`;
-  return withFamily(html, { title: "Gallery · Dougu Sports 道具", description: "Every emblem of Dougu Sports in each style, and turned." });
+  return withFamily(html, { title: "Gallery · Dougu Sports 道具", description: "Every emblem of Dougu Sports in each style, and turned, with its id and a button that copies it." });
 }

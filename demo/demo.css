@@ -26,3 +26,12 @@ details > pre { margin: 0; padding: 0 14px 14px; overflow-x: auto; font-family: 
 .cards figure { margin: 0; text-align: center; font-size: .75rem; color: var(--muted); }
 .cards svg { display: block; margin: 0 auto 2px; }
 .credits { margin-top: 12px; }
+.finder { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 12px 0; }
+.finder .fam-field { flex: 1 1 14rem; min-height: 44px; }
+.finder .count { margin: 0; color: var(--muted); font-size: .85rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.chips a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid var(--rule); border-radius: 22px; color: var(--ink); text-decoration: none; background: var(--surface); }
+.chips a span { color: var(--muted); margin-left: 6px; font-size: .8rem; }
+.cards .copies { display: flex; gap: 8px; margin: 10px 0 0; }
+.cards .copies button { min-height: 44px; }
+.cards li[hidden], #sections section[hidden] { display: none; }

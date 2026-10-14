@@ -7,3 +7,4 @@ playwright-report/
 .cache/
 .readme-examples/
 .DS_Store
+scripts/dougu/.cache/

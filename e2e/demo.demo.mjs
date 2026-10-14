@@ -12,10 +12,23 @@ test("the playground draws an emblem and does not scroll sideways", async ({ pag
 });
 
 test("every emblem draws, in every style, and the address says which", async ({ page }) => {
+  test.slow();
   await page.goto("/");
   const ids = await page.locator("#emblem option").evaluateAll((options) => options.map((o) => o.value));
-  expect(ids.length).toBeGreaterThanOrEqual(2);
-  for (const id of ids) {
+  expect(ids.length).toBeGreaterThanOrEqual(140);
+  // Choosing in the page is the same call as the address, and cheaper than a page load for each of a hundred and forty emblems.
+  for (const [index, id] of ids.entries()) {
+    await page.locator("#emblem").selectOption(id);
+    for (const style of ["metal", "line", "color"]) {
+      await page.locator(`#style button[data-value="${style}"]`).click();
+      await expect(page.locator("#stage > svg")).toBeVisible();
+      // The address follows (it is left out for the first emblem, the default; Safari allows a hundred changes of it in thirty seconds, so it is read for some of the emblems only).
+      if ([1, 12, 24].includes(index) && style === "color") await expect(page).toHaveURL(new RegExp(`[?&]id=${encodeURIComponent(id)}(&|$)`));
+    }
+  }
+  expect(await noSideways(page)).toBe(true);
+  // The address itself, for one of each kind of emblem.
+  for (const id of ["trophy:hockey-cup", "medal:gold", "ball:rugby", "gear:hurley", "sport:nhl", "crest:shield"]) {
     for (const style of ["metal", "line", "color"]) {
       await page.goto(`/?id=${id}&style=${style}`);
       await expect(page.locator("#stage > svg")).toBeVisible();
@@ -31,7 +44,7 @@ test("every emblem draws, in every style, and the address says which", async ({ 
 });
 
 test("the controls change the drawing: size, look and tint", async ({ page }) => {
-  await page.goto("/?id=award:medal");
+  await page.goto("/?id=medal:gold");
   await page.getByRole("button", { name: "256", exact: true }).click();
   await expect(page.locator("#stage > svg")).toHaveAttribute("width", "256");
   await page.getByRole("button", { name: "Dark", exact: true }).click();
@@ -39,7 +52,7 @@ test("the controls change the drawing: size, look and tint", async ({ page }) =>
   await expect(page.locator("#stage > svg")).toHaveAttribute("color", "#eef1f3");
   await page.getByRole("button", { name: "Color", exact: true }).click();
   await page.getByRole("button", { name: "Red", exact: true }).click();
-  await expect(page.locator("#stage > svg")).toContainText("Medal");
+  await expect(page.locator("#stage > svg")).toContainText("Gold medal");
   expect(await page.locator("#stage").innerHTML()).toContain("#c8102e");
 });
 
@@ -54,10 +67,43 @@ test("the turn slider turns the emblem, and the call says how", async ({ page })
   expect(await page.locator("#stage").innerHTML()).toBe(before);
 });
 
-test("the gallery lists every emblem, and 44 pixels is the least a control gives a finger", async ({ page }) => {
+test("a cup turns with the slider: its handles move, and the call says how", async ({ page }) => {
+  await page.goto("/?id=trophy:tennis-cup");
+  const before = await page.locator("#stage").innerHTML();
+  await page.locator("#yaw").fill("100");
+  expect(await page.locator("#stage").innerHTML()).not.toBe(before);
+  await page.locator("#yaw").fill("0");
+  expect(await page.locator("#stage").innerHTML()).toBe(before);
+});
+
+test("the gallery lists every emblem with its id, finds one by a word, and copies its id", async ({ page }) => {
+  const errors = [];
+  page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/gallery.html");
   await expect(page.locator(".cards li").first()).toBeVisible();
   expect(await noSideways(page)).toBe(true);
+  const total = await page.locator(".cards li").count();
+  expect(total).toBeGreaterThanOrEqual(60);
+  await expect(page.locator("#count")).toHaveText(`${total} of ${total} emblems`);
+  // Every card shows its id and its three styles.
+  const first = page.locator(".cards li").first();
+  await expect(first.locator("code")).toContainText(":");
+  await expect(first.locator(".styles svg")).toHaveCount(3);
+  await page.locator("#find").fill("hockey");
+  await expect(page.locator(".cards li:not([hidden])").first().locator("code")).toContainText("trophy:hockey-cup");
+  expect(await page.locator(".cards li:not([hidden])").count()).toBeLessThan(total);
+  const card = page.locator("#trophy-hockey-cup");
+  await card.getByRole("button", { name: /Copy the id/ }).click();
+  await expect(card.getByRole("button", { name: /Copy the id/ })).toHaveText("Copied");
+  expect(errors).toEqual([]);
+  await page.locator("#find").fill("");
+  await expect(page.locator("#count")).toHaveText(`${total} of ${total} emblems`);
+});
+
+test("44 pixels is the least a control gives a finger", async ({ page }) => {
+  await page.goto("/gallery.html");
+  await expect(page.locator(".cards li").first()).toBeVisible();
+  for (const control of await page.locator(".copy").all().then((all) => all.slice(0, 4))) expect((await control.boundingBox()).height).toBeGreaterThanOrEqual(43.5);
   await page.goto("/");
   for (const control of await page.locator("#style button, #theme button, #size button, #tint button, #emblem, #yaw, #pitch").all()) {
     const box = await control.boundingBox();
