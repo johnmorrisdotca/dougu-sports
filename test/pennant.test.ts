@@ -39,7 +39,7 @@ test("a pennant is lettered with the engraving options too: text, label and rank
 });
 
 test("the lettering is fitted inside the triangle, however long the words, and gets smaller as they grow", () => {
-  for (const text of ["MVP", "Champions", "State Champions", "WWWWWWWWWWWW", "優勝記念大会", "a", "ABCDEFGHIJKLMNOPQRSTUVWX"]) {
+  for (const text of ["MVP", "Champions", "State Champions", "WWWWWWWWWWWW", "全国優勝", "a", "ABCDEFGHIJKLMNOPQRSTUVWX"]) {
     for (const year of [undefined, 2026]) {
       const rows = lines(D.pennant({ text, year }));
       assert.ok(rows.length > 0, text);

@@ -25,7 +25,7 @@ const front: readonly Shape[] = [
 const back: readonly Shape[] = [["o", annulus(32, 44, 19, 11)], ["o", HEAD], ["e", BEZEL, "1.6"]];
 
 /** A championship ring. */
-export const TROPHY_RING = /* @__PURE__ */ defineFlat("trophy:ring", "Championship ring", "優勝記念リング", "ours", {
+export const TROPHY_RING = /* @__PURE__ */ defineFlat("trophy:ring", "Championship ring", "優勝リング", "ours", {
   metal: "gold",
   ribbon: "#b3262e",
   front,

@@ -99,7 +99,7 @@ test("an engraving is escaped, cleaned and kept to a length, and Japanese is kep
   assert.ok(texts(D.renderEmblem("medal:gold", { engrave: "a\u0000b\u0007c\u001bd" }))[0]?.includes("abcd"), "control characters are dropped");
   assert.ok(texts(D.renderEmblem("medal:gold", { engrave: "Z".repeat(80) }))[0]?.length === 24, "a line is 24 letters at most");
   assert.deepEqual(texts(D.renderEmblem("medal:gold", { engrave: "優勝" })), ["優勝"]);
-  assert.deepEqual(texts(D.renderEmblem("trophy:plaque", { label: "ホッケー日本一", year: "令和八年" })), ["ホッケー日本一", "令和八年"]);
+  assert.deepEqual(texts(D.renderEmblem("trophy:plaque", { label: "アイスホッケー日本一", year: "令和八年" })), ["アイスホッケー日本一", "令和八年"]);
   assert.equal(D.renderEmblem("medal:gold", { engrave: 12 as never, rank: {} as never, year: null as never }).includes(">12<"), true);
   assert.equal(D.renderEmblem("medal:gold", { engrave: {} as never }), D.renderEmblem("medal:gold"));
   assert.ok(widthOf("優勝") >= 2 && advance("優") >= 1, "a Japanese character is a full em");

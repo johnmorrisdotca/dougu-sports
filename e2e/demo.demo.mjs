@@ -76,6 +76,21 @@ test("a cup turns with the slider: its handles move, and the call says how", asy
   expect(await page.locator("#stage").innerHTML()).toBe(before);
 });
 
+test("the engrave field engraves a medal, and the address and the call say so, and a gear piece turns too", async ({ page }) => {
+  await page.goto("/?id=medal:gold");
+  await page.locator("#engrave").fill("MVP 2026");
+  await expect(page.locator("#stage")).toContainText("MVP");
+  expect(page.url()).toContain("engrave=MVP");
+  await expect(page.locator("#code")).toContainText('engrave: "MVP 2026"');
+  await page.locator("#yaw").fill("180");
+  expect(await page.locator("#stage").innerHTML()).not.toContain("<text");
+  await page.goto("/?id=gear:hurley&yaw=60");
+  await expect(page.locator("#turn-row")).toBeVisible();
+  expect(await page.locator("#stage").innerHTML()).toContain("scale(0.5 1)");
+  await page.goto("/?id=pennant:championship&engrave=Champions");
+  await expect(page.locator("#stage")).toContainText("CHAMPIONS");
+});
+
 test("the gallery lists every emblem with its id, finds one by a word, and copies its id", async ({ page }) => {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
@@ -105,7 +120,7 @@ test("44 pixels is the least a control gives a finger", async ({ page }) => {
   await expect(page.locator(".cards li").first()).toBeVisible();
   for (const control of await page.locator(".copy").all().then((all) => all.slice(0, 4))) expect((await control.boundingBox()).height).toBeGreaterThanOrEqual(43.5);
   await page.goto("/");
-  for (const control of await page.locator("#style button, #theme button, #size button, #tint button, #emblem, #yaw, #pitch").all()) {
+  for (const control of await page.locator("#style button, #theme button, #size button, #tint button, #emblem, #engrave, #yaw, #pitch").all()) {
     const box = await control.boundingBox();
     expect(box.height).toBeGreaterThanOrEqual(43.5);
   }

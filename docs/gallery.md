@@ -1,6 +1,6 @@
 # Gallery
 
-[Back to the README](../README.md). Every emblem in the package, by group: 148 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
+[Back to the README](../README.md). Every emblem in the package, by group: 151 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The folders the art lives in are in [layout.md](layout.md).
 
@@ -38,6 +38,8 @@ Ids are `<group>:<name>`. The folders the art lives in are in [layout.md](layout
 | `trophy:belt` | Championship belt | チャンピオンベルト | flat | ours | `TROPHY_BELT` | `@johnmorrisdotca/dougu-sports/trophy/belt` |
 | `trophy:laurel` | Laurel wreath | 月桂樹の冠 | flat | ours | `TROPHY_LAUREL` | `@johnmorrisdotca/dougu-sports/trophy/laurel` |
 | `trophy:rosette` | Rosette with ribbons | リボン付きのロゼット | flat | ours | `TROPHY_ROSETTE` | `@johnmorrisdotca/dougu-sports/trophy/rosette` |
+| `trophy:ring` | Championship ring | 優勝リング | flat | ours | `TROPHY_RING` | `@johnmorrisdotca/dougu-sports/trophy/ring` |
+| `trophy:banner` | Rafter banner | 優勝バナー | flat | ours | `TROPHY_BANNER` | `@johnmorrisdotca/dougu-sports/trophy/banner` |
 
 ## medal
 
@@ -186,3 +188,9 @@ Ids are `<group>:<name>`. The folders the art lives in are in [layout.md](layout
 | `sport:handball` | Handball | ハンドボール | icon | material | `SPORT_HANDBALL` | `@johnmorrisdotca/dougu-sports/sport/handball` |
 | `sport:athletics` | Running track | 陸上競技のトラック | icon | ours | `SPORT_ATHLETICS` | `@johnmorrisdotca/dougu-sports/sport/athletics` |
 | `sport:skating` | Ice skate | スケート靴 | icon | ours | `SPORT_SKATING` | `@johnmorrisdotca/dougu-sports/sport/skating` |
+
+## pennant
+
+| Id | English | 日本語 | Kind | Source | Constant | Import one |
+| --- | --- | --- | --- | --- | --- | --- |
+| `pennant:championship` | Championship pennant | 優勝ペナント | flat | ours | `PENNANT_CHAMPIONSHIP` | `@johnmorrisdotca/dougu-sports/pennant/championship` |

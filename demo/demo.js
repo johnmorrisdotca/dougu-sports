@@ -1,4 +1,4 @@
-// The playground: choose an emblem, a style, a look, a size and a tint, and turn it; the drawing and the call that makes it are redrawn.
+// The playground: choose an emblem, a style, a look, a size and a tint, engrave it, and turn it; the drawing and the call that makes it are redrawn.
 import * as D from "./dist/index.js";
 
 const $ = (id) => document.getElementById(id);
@@ -16,6 +16,7 @@ const state = {
   tint: pick(params.get("tint"), ["", "#c8102e", "#1f4e9c", "#0b6e4f"], DEFAULTS.tint),
   yaw: number(params.get("yaw"), -180, 180),
   pitch: number(params.get("pitch"), -80, 80),
+  engrave: (params.get("engrave") ?? "").slice(0, 24),
 };
 
 $("emblem").innerHTML = Object.entries(D.EMBLEM_GROUPS)
@@ -26,6 +27,7 @@ $("emblem").innerHTML = Object.entries(D.EMBLEM_GROUPS)
 function draw() {
   const options = { style: state.style, size: Number(state.size), theme: state.theme };
   if (state.tint) options.tint = state.tint;
+  if (state.engrave.trim() !== "") options.engrave = state.engrave;
   const turned = state.yaw !== 0 || state.pitch !== 0;
   const info = D.emblemInfo(state.id);
   const svg = turned ? D.emblemFrame(state.id, { ...options, yaw: state.yaw, pitch: state.pitch }) : D.renderEmblem(state.id, options);
@@ -35,9 +37,6 @@ function draw() {
   $("note").textContent = `${info.en} · ${info.ja} · ${info.kind}, from ${info.source}.`;
   $("emblem").value = state.id;
   for (const group of ["style", "theme", "size", "tint"]) for (const b of $(group).querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state[group]));
-  const canTurn = info.kind !== "icon" && info.kind !== "gear";
-  $("turn-row").hidden = !canTurn;
-  $("tilt-row").hidden = !canTurn;
   $("yaw").value = String(state.yaw);
   $("pitch").value = String(state.pitch);
   $("yaw-out").textContent = `${state.yaw}°`;
@@ -50,6 +49,7 @@ function draw() {
   if (state.id !== FIRST) next.set("id", state.id);
   for (const key of ["style", "theme", "size", "tint"]) if (state[key] !== DEFAULTS[key]) next.set(key, state[key]);
   for (const key of ["yaw", "pitch"]) if (state[key] !== 0) next.set(key, String(state[key]));
+  if (state.engrave.trim() !== "") next.set("engrave", state.engrave);
   // Safari refuses more than a hundred of these in thirty seconds; the address is a convenience, so a refusal must not stop the drawing.
   try {
     history.replaceState(null, "", next.size === 0 ? location.pathname : `?${next}`);
@@ -62,6 +62,8 @@ $("emblem").addEventListener("change", () => { state.id = $("emblem").value; sta
 for (const group of ["style", "theme", "size", "tint"]) {
   $(group).addEventListener("click", (event) => { const b = event.target.closest("button"); if (b) { state[group] = b.dataset.value; draw(); } });
 }
+$("engrave").value = state.engrave;
+$("engrave").addEventListener("input", () => { state.engrave = $("engrave").value; draw(); });
 $("yaw").addEventListener("input", () => { state.yaw = Number($("yaw").value); draw(); });
 $("pitch").addEventListener("input", () => { state.pitch = Number($("pitch").value); draw(); });
 

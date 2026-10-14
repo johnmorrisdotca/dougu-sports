@@ -82,6 +82,33 @@ console.log(emblemInfo("ball:puck").size.diameterMm); // 76
 console.log(lineup(["ball:golf", "ball:tennis", "ball:soccer"], { height: 80 }).includes("<title>")); // true
 ```
 
+## Engraving
+
+Text cut into a face is an option of any emblem that has a face for it: `engrave` (one string, up to three lines of 24 letters), or `label`, `year` and `rank`. Each such emblem names its plates in its model (`engrave: { front, year, back }`), and a body of revolution its plinth (`plate`).
+
+| Emblem | Where the text goes | What it replaces |
+| --- | --- | --- |
+| `medal:gold`, `silver`, `bronze` | The face, inside the bevel; `engraveBack` on the back | The star |
+| `medal:place-1` to `place-3` | The face (the badge's own place is the first line when a `label` or a `year` is given); `engraveBack` on the back | The drawn numeral |
+| `trophy:plaque` | The words on the plate, the year on the nameplate | The ruled lines |
+| `trophy:belt` | The centre plate | The star |
+| `trophy:ring` | The label up the left shoulder of the head, the year down the right; `engraveBack` on the back of the head | |
+| `trophy:banner` | The words on the face, the year under them; `engraveBack` on the back | |
+| `pennant:championship` | The felt, from the dowel toward the point | |
+| Each of the 15 cups and stands that are bodies of revolution (`trophy:cup` is a Material icon and has none) | One line round the plinth, a letter at a time | |
+
+The lines are fitted to the plate: each is as large as the plate's width lets it be, the stack of lines as tall as its height lets it be, and a free line with a space may be broken in two when that gives bigger letters. Widths are estimated per character (a Japanese character is a full em), and `textLength` pins the width so that the line fits whatever font draws it. The ink is the one of black, white, or a deep or pale tone of the metal that reads at 4.5 to 1 on it (the same rule as a crest's letters); in the line style it is the page's ink. In the metal style a faint light is cut under each line. Text is escaped, control characters are dropped, and a line is 24 letters at most.
+
+On a plinth each letter is placed at its angle round the body (`deg = turn + position`), at the height the body is wide there, scaled by the cosine of its angle, and left out when it faces away; on a body with flat sides the text runs along one side and is foreshortened with it.
+
+## Pennant, ring and banner
+
+`pennant:championship` is a long triangle of felt on a dowel: a speckle of fibres under a soft light in the metal style, flat in colour, an outline in line, always stitched round the edge with a dashed line, and lettered with its words and its year. `pennant(options)` takes the colours (felt, stitching, lettering), the `text`, the `year` and the `view`. Its back is plain felt with the dowel on the other side. `trophy:ring` is a championship ring seen face on (a band, a wide faceted head and a gem in a bezel, the metal the tint and the gem the accent) and `trophy:banner` a rafter banner hung from a rod (the tint is the cloth, the accent its stripes); both are generic and flip as flat items.
+
+## Every emblem turns
+
+Everything that is not a ball or a body of revolution is a flat thing, and turns like a coin (`src/emblems/emblem.flip.ts`): a medal, a crest or a ring from its own front and back, and an icon or a piece of gear (a bat, a racket, a crown, a sport's pictogram) by squeezing its finished drawing by the cosine of the yaw, showing it mirrored and a little darker past a quarter turn, and adding a rim as a filter: the drawing's silhouette in a dark tone, offset a few steps toward the side that turns away. The rim is widest edge on, and in the line style it is the page's ink.
+
 ## Light and dark
 
 `theme` says where the ink comes from: `inherit` (the default) is the page's text colour, which is right for markup put in a page; `auto` is dark ink on a light device and pale ink on a dark one, for an image that cannot inherit; `light` and `dark` force one. The metals are the same on both pages. The tests hold every ink to 4.5 to 1 on its page, and the letters of a crest to 4.5 to 1 on the crest's colour.

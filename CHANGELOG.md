@@ -6,6 +6,19 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- **Engraving.** Text cut into a face, from `engrave` (one string, up to three lines of 24 letters, Japanese included) or `label`, `year` and `rank`, with `engraveBack` for a back: on the medals and place badges (replacing the star or the numeral), `trophy:plaque` (the words on the plate, the year on the nameplate), `trophy:belt`, `trophy:ring`, `trophy:banner`, `pennant:championship`, and the plinth of each of the 15 cups and stands that are bodies of revolution. The lines are fitted to the plate (the biggest size that fits, a space may break a line), escaped, and cut in the ink that reads at 4.5 to 1 on the metal (a tone of it, black or white; the page's ink in the line style). Turned, the text goes with its face: squeezed on a medal, hidden on its back or another text there, and set letter by letter round a plinth so that it foreshortens and goes behind the edge.
+- **`pennant()` and `pennant:championship`**: a felt championship pennant on a dowel with a stitched edge, lettered with its words and its year, in metal (felt fibres), color and line; its back is plain felt with the dowel on the other side. The new group `pennant`, and the `./pennant/*` export.
+- **`trophy:ring`** (a championship ring: a band, a wide faceted head with a gem, the team and the year on its shoulders) and **`trophy:banner`** (a rafter banner on a rod, in the tint and accent, with its words and year). The `trophy` group has 22 emblems.
+- **Every emblem turns.** Gear, the Material awards and the sport pictograms flip like a coin (`src/emblems/emblem.flip.ts`): squeezed by the cosine, mirrored and a little darker on the back, with a thin rim that is widest edge on. `test/turn.test.ts` holds every id to a finite, well-formed frame at every yaw and pitch, and every flat one to a turn that differs, repeats at 360 and has a back.
+- Options `engrave`, `label`, `year`, `rank`, `engraveBack`, `numberColor` (a pennant's lettering) and `view`; the playground has an Engrave field, and the gallery shows an engraved example, turned and from behind, for each emblem that takes one.
+
+### Changed
+
+- The playground and the gallery turn every emblem (the gear and the icons had no turn controls).
+- Item sizes grew with the new code (gzipped, one item bundled by itself): a medal 3.2 to 4.5 kB, a flat emblem 3.0 to 4.3 kB, a cup 5.6 to 6.9 kB, a pictogram or Material icon 1.8 to 3.6 kB, a piece of gear 2.6 to 3.5 kB, the pennant 3.4 kB; the limits in `test/size.test.ts` are 4.6, 7.1 and 3.8 kB for a flat emblem, a cup and an icon. The engraving code is left out of a bundle that does not draw a medal, a plaque or a cup, and the turn code is the only addition to an icon's.
+
 ## [0.1.0] - 2026-10-14
 
 The art arrives: 148 emblems (the trophies, awards, medals, crests, the pictogram of each of the 33 sports, the balls and the gear), moved here from Kyogijo Stadiums and, for the trophies, medals and crests, redrawn.

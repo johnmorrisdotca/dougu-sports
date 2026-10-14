@@ -11,7 +11,7 @@ const cloth: readonly Shape[] = [
 ];
 
 /** A rafter banner. */
-export const TROPHY_BANNER = /* @__PURE__ */ defineFlat("trophy:banner", "Rafter banner", "垂れ幕", "ours", {
+export const TROPHY_BANNER = /* @__PURE__ */ defineFlat("trophy:banner", "Rafter banner", "優勝バナー", "ours", {
   metal: "flat",
   color: "#1f4e8c",
   ribbon: "#f4f0e4",

@@ -15,8 +15,8 @@ Bug reports and ideas go in the
   escaped. A new option that reaches the markup has a test with a hostile value.
 - **One module per item.** An emblem is one file, `src/emblems/<group>/<name>.ts`, made with `/* @__PURE__ */` and exported by
   its id in capitals, so that one import takes one emblem (the balls and the gear are one module per family). [docs/layout.md](docs/layout.md)
-  says where each group goes and how to add one; `test/size.test.ts` holds a single item to a limit for its kind (a medal 3.6 kB,
-  a cup 6.2 kB or a ball 6.8 kB gzipped, most of it the renderer).
+  says where each group goes and how to add one; `test/size.test.ts` holds a single item to a limit for its kind (a medal 4.6 kB,
+  a cup 7.1 kB or a ball 6.8 kB gzipped, most of it the renderer).
 - **Trophies are generic and drawn, never traced.** A trophy is drawn in simplified SVG from what the object is known to look like, and is
   named for what it is (`trophy:hockey-cup`: a tall banded silver cup); no id, title, doc or drawing carries a real trophy's name, mark,
   logo or engraving. Look at a contact sheet (`node scripts/emblem-sheet.mjs sheet.png trophy/<name>`) at 256, 64 and 16 pixels, light and dark.
