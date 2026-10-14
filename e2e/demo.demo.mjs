@@ -153,3 +153,29 @@ test("44 pixels is the least a control gives a finger", async ({ page }) => {
     expect(box.height).toBeGreaterThanOrEqual(43.5);
   }
 });
+
+test("the background is off by default, and a chosen one is a picture behind the stage that leaves the emblem as it was", async ({ page }) => {
+  const errors = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/?id=trophy:hockey-cup");
+  const background = () => page.locator("#stage").evaluate((stage) => stage.style.backgroundImage);
+  expect(await background()).toBe("");
+  const plain = await page.locator("#stage > svg").evaluate((svg) => svg.outerHTML);
+  await page.locator("#background").selectOption("ice");
+  await expect.poll(background).toContain("data:image/svg+xml");
+  expect(page.url()).toContain("background=ice");
+  expect(await page.locator("#stage > svg").evaluate((svg) => svg.outerHTML)).toBe(plain);
+  await page.getByRole("button", { name: "Dark", exact: true }).click();
+  await expect.poll(background).toContain("data:image/svg+xml");
+  // The address says which, and None takes it away again.
+  await page.goto("/?id=ball:soccer&background=floodlights&theme=dark");
+  await expect(page.locator("#background")).toHaveValue("floodlights");
+  await expect.poll(background).toContain("data:image/svg+xml");
+  await page.locator("#background").selectOption("");
+  await expect.poll(background).toBe("");
+  expect(page.url()).not.toContain("background");
+  await page.goto("/?background=nope");
+  await expect(page.locator("#background")).toHaveValue("");
+  expect(await noSideways(page)).toBe(true);
+  expect(errors).toEqual([]);
+});

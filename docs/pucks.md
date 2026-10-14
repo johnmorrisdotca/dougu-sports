@@ -2,7 +2,10 @@
 
 [Back to the README](../README.md) · [日本語](pucks.ja.md) · English
 
-![The eight printed pucks: a Canadian-pattern flag with CANADA under it, a red face with a white leaf, a white face with red bands, a stars-and-stripes disc, a navy face with a red ring, a player's number, a signed puck and a souvenir puck.](images/pucks-light.webp)
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="images/pucks-dark.webp">
+<img alt="The eight printed pucks: a Canadian-pattern flag with CANADA under it, a red face with a white leaf, a white face with red bands, a stars-and-stripes disc, a navy face with a red ring, a player's number, a signed puck and a souvenir puck." src="images/pucks-light.webp">
+</picture>
 
 A hockey puck is black vulcanised rubber with a printed top face, and the souvenir ones are the most printed objects in the sport: a flag, a name, a number, a signature. The package draws eight of them, all in true 3D, all turning with `emblemFrame` and `ballFrame`. Each is the same puck as `ball:puck` (76.2 mm across, 25.4 mm thick, one to three, the ridged grip on its edge) with a print laid on its top face by the puck's own rotation: the print foreshortens as the top tips toward you, turns with the puck, and is gone when the top is turned away (the bottom is plain rubber). The grip shows on the rim as it turns.
 

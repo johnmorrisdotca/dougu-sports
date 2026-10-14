@@ -16,7 +16,14 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 <p align="center">
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-dark.webp">
-<img alt="Forty-five balls and pucks drawn in 3D, in five rows of nine: soccer balls of several constructions and colours, then basketball, the 3x3 ball, baseball, softball, a football, a rugby ball, an Australian football and two volleyballs, then tennis, padel, pickleball with its holes, squash with its two dots, racquetball, golf, red and pink cricket and water polo, then sepak takraw, a shuttlecock, a puck, a curling stone, lacrosse, handball, table tennis, a sliotar and a roundnet ball, and last a row of vintage leather balls (hand-stitched, laced, 18 strips, 12 panels, 32 panels), a lemon-peel baseball and an aged baseball, and soccer balls in the style of the late 1970s and the early 2020s." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-light.webp" width="760">
+<img alt="Thirty-six balls and pucks drawn in 3D under floodlights, in four rows of nine: soccer balls of several constructions and colours, then basketball, the 3x3 ball, baseball, softball, a football, a rugby ball, an Australian football and two volleyballs, then tennis, padel, pickleball with its holes, squash with its two dots, racquetball, golf, red and pink cricket and water polo, and last sepak takraw, a shuttlecock, a puck, a curling stone, lacrosse, handball, table tennis, a sliotar and a roundnet ball." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-light.webp" width="760">
+</picture>
+</p>
+
+<p align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/vintage-desk-dark.webp">
+<img alt="Eighteen more balls on a warm sunburst, in two rows of nine: five vintage leather soccer balls (hand-stitched, laced, 18 strips, 12 panels, 32 panels), a lemon-peel baseball, two baseballs stitched in two colours and an aged baseball, then nine soccer balls in the style of an era, from the late 1970s to the early 2020s." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/vintage-desk-light.webp" width="760">
 </picture>
 </p>
 
@@ -37,7 +44,7 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 <table align="center">
 <tr>
 <td align="center" valign="top">
-<img alt="A two-handled cup, a medal, a soccer ball and a championship banner each turned through seven angles: the cup keeps its outline and moves its light and handles, the medal and the banner flip like a coin to show their plain backs, and the ball rolls." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/turn-desk-light.webp" width="470"><br><em>Turned: a ball rolls, a medal flips</em>
+<img alt="A two-handled cup, a medal, a soccer ball and a championship banner each turned through seven angles: the cup keeps its outline and moves its light and handles, the medal and the banner flip like a coin to show their plain backs, and the ball rolls." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/turn-desk.webp" width="470"><br><em>Turned: a ball rolls, a medal flips</em>
 </td>
 <td align="center" valign="top">
 <img alt="Cups, a medal, balls and gear on a phone, three to a row." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/phone-light.webp" width="200"><br><em>On a phone</em>
@@ -94,7 +101,7 @@ Put the string in a page (`element.innerHTML = svg`), write it to a file, or sen
 <table>
 <tr>
 <td align="center" valign="top"><img alt="Balls and pucks in four rows of nine." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-light.webp" width="360"><br><em>Balls and pucks, trophies, medals and gear</em></td>
-<td align="center" valign="top"><img alt="A cup, a medal, a ball and a banner turned through seven angles." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/turn-desk-light.webp" width="360"><br><em>Turned through seven angles</em></td>
+<td align="center" valign="top"><img alt="A cup, a medal, a ball and a banner turned through seven angles." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/turn-desk.webp" width="360"><br><em>Turned through seven angles</em></td>
 </tr>
 </table>
 

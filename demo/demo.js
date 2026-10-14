@@ -5,7 +5,8 @@ import * as D from "./dist/index.js";
 const $ = (id) => document.getElementById(id);
 const params = new URLSearchParams(location.search);
 const FIRST = "trophy:hockey-cup";
-const DEFAULTS = { style: "metal", theme: "inherit", size: "128", tint: "", speed: "36" };
+const DEFAULTS = { style: "metal", theme: "inherit", size: "128", tint: "", speed: "36", background: "" };
+const BACKGROUNDS = [...document.querySelectorAll("#background option")].map((o) => o.value);
 const pick = (value, allowed, fallback) => (allowed.includes(value) ? value : fallback);
 const number = (value, low, high) => { const n = Number(value); return Number.isFinite(n) ? Math.max(low, Math.min(high, n)) : 0; };
 
@@ -16,6 +17,7 @@ const state = {
   size: pick(params.get("size"), ["32", "64", "128", "256"], DEFAULTS.size),
   tint: pick(params.get("tint"), ["", "#c8102e", "#1f4e9c", "#0b6e4f"], DEFAULTS.tint),
   speed: pick(params.get("speed"), ["18", "36", "90"], DEFAULTS.speed),
+  background: pick(params.get("background"), BACKGROUNDS, DEFAULTS.background),
   engrave: (params.get("engrave") ?? "").slice(0, 24),
 };
 
@@ -46,7 +48,7 @@ let urlTimer;
 function writeAddress() {
   const next = new URLSearchParams();
   if (state.id !== FIRST) next.set("id", state.id);
-  for (const key of ["style", "theme", "size", "tint", "speed"]) if (state[key] !== DEFAULTS[key]) next.set(key, state[key]);
+  for (const key of ["style", "theme", "size", "tint", "speed", "background"]) if (state[key] !== DEFAULTS[key]) next.set(key, state[key]);
   const a = turner.angles;
   for (const key of ["yaw", "pitch", "roll"]) if (a[key] !== 0) next.set(key, String(a[key]));
   if (state.engrave.trim() !== "") next.set("engrave", state.engrave);
@@ -86,14 +88,41 @@ function sync(settled = true) {
   else urlTimer = setTimeout(writeAddress, 250);
 }
 
+let backgrounds;
+const dark = matchMedia("(prefers-color-scheme: dark)");
+/**
+ * The optional background behind the stage: one of the family's twenty-five, drawn in code (scripts/family-backgrounds.ts, loaded only when one is chosen), in the variant of the look, and the stage's
+ * text takes the ink it returns. It is a picture behind the stage and nothing more: the emblem the package draws is the same with or without it.
+ */
+async function paintBackground() {
+  const stage = $("stage");
+  if (state.background === "") {
+    stage.style.backgroundImage = "";
+    stage.style.color = "";
+    return;
+  }
+  backgrounds ??= await import("./family-backgrounds.js");
+  if (state.background === "") return;
+  const theme = state.theme === "dark" || (state.theme !== "light" && dark.matches) ? "dark" : "light";
+  const { defs, body, ink } = backgrounds.backgroundSvg(state.background, { width: 1200, height: 675, theme, id: "stage-bg" });
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid slice"><defs>${defs}</defs><rect width="1200" height="675" fill="${ink.base}"/>${body}</svg>`;
+  stage.style.backgroundImage = `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+  stage.style.backgroundSize = "cover";
+  stage.style.backgroundPosition = "center";
+  stage.style.color = ink.text;
+}
+dark.addEventListener("change", () => { if (state.background !== "") paintBackground(); });
+
 /** The emblem or its look changed: the stage draws again at the same angles. */
 function draw() {
   turner.update(state.id, turnOptions());
   const info = D.emblemInfo(state.id);
   const stage = $("stage");
-  stage.dataset.look = state.theme === "light" || state.theme === "dark" ? state.theme : "page";
+  stage.dataset.look = state.background !== "" ? "background" : state.theme === "light" || state.theme === "dark" ? state.theme : "page";
+  paintBackground();
   $("note").textContent = `${info.en} · ${info.ja} · ${info.kind}, from ${info.source}.`;
   $("emblem").value = state.id;
+  $("background").value = state.background;
   for (const group of ["style", "theme", "size", "tint", "speed"]) for (const b of $(group).querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state[group]));
   sync();
 }
@@ -102,6 +131,7 @@ $("emblem").addEventListener("change", () => { state.id = $("emblem").value; dra
 for (const group of ["style", "theme", "size", "tint", "speed"]) {
   $(group).addEventListener("click", (event) => { const b = event.target.closest("button"); if (b) { state[group] = b.dataset.value; draw(); } });
 }
+$("background").addEventListener("change", () => { state.background = $("background").value; draw(); });
 $("engrave").value = state.engrave;
 $("engrave").addEventListener("input", () => { state.engrave = $("engrave").value; draw(); });
 // A slider takes over from the auto-turn: setAngles pauses it.

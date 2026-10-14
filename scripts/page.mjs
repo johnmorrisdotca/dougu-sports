@@ -2,6 +2,8 @@
 // (site.mjs) writes them into site/, and the dev server (dev.mjs) serves the same text, so the tests play the page that is published.
 import { readFileSync } from "node:fs";
 
+import { transformSync } from "esbuild";
+
 import { FAMILY_SCRIPT, familyFooter, familyHead, familyHeader, familyUnreviewed } from "./family-template.mjs";
 
 const id = "dougu-sports";
@@ -107,4 +109,9 @@ export function renderCompose() {
 <!--family:scripts compose.js-->`;
   const html = `<!doctype html>\n<html lang="en">\n<head>\n  <!--family:head-->\n  <link rel="stylesheet" href="family.css" />\n  <link rel="stylesheet" href="demo.css" />\n</head>\n<body>\n${body}\n</body>\n</html>\n`;
   return withFamily(html, { title: "Podium, award case and sprites · Dougu Sports 道具", description: "A podium, an award case, sprite sheets, data addresses and a sport's equipment, drawn from Dougu Sports." });
+}
+
+/** The family's background module as the plain JavaScript the demo's preview imports when a background is chosen (the module is TypeScript, copied from taisen-brackets into scripts/; the demo is the only thing that loads it). */
+export function backgroundsModule() {
+  return transformSync(readFileSync(new URL("family-backgrounds.ts", import.meta.url), "utf8"), { loader: "ts", format: "esm" }).code;
 }
