@@ -2,7 +2,7 @@
 // and nothing else imports that drawing's own module (`dougu-sports/ball/soccer`) and calls its `svg`.
 import type { Emblem, EmblemLocale, EmblemOptions, EmblemStyle, EmblemTheme, FrameOptions } from "./emblem.core.ts";
 import { EMBLEM_STYLES } from "./emblem.core.ts";
-import { BALL_IDS, CREST_SHAPES, EMBLEM_ALIASES, EMBLEM_IDS, type BallId, type CrestShape, type EmblemId, type MedalKind, type SportName } from "./emblem.ids.ts";
+import { BALL_IDS, CREST_SHAPES, EMBLEM_ALIASES, EMBLEM_IDS, PUCK_IDS, type BallId, type PuckId, type CrestShape, type EmblemId, type MedalKind, type SportName } from "./emblem.ids.ts";
 import type { PieceSize } from "./ball/ball.core.ts";
 import { EMBLEM_DESCRIPTIONS, type EmblemDescription } from "./emblem.descriptions.ts";
 import { EMBLEM_TABLE } from "./emblem.registry.ts";
@@ -43,6 +43,21 @@ export function emblemOf(ref: EmblemRef): { emblem: Emblem; style: EmblemStyle |
 const withStyle = <T extends EmblemOptions>(style: EmblemStyle | undefined, options: T | undefined): T | undefined => (style === undefined || options?.style !== undefined ? options : ({ ...options, style } as T));
 
 /**
+ * The print a puck is asked for, with an emblem id turned into the drawing it names (a puck module cannot see the registry, so it is done here) and a plain `ball:puck` that was given a face drawn as the souvenir puck,
+ * which is the generic one. Anything else is as it came.
+ */
+function printed(emblem: Emblem, options: FrameOptions | undefined): { emblem: Emblem; options: FrameOptions | undefined } {
+  const face = options?.face;
+  if (typeof face !== "object" || face === null) return { emblem, options };
+  const target = emblem.id === "ball:puck" ? EMBLEM_TABLE["puck:souvenir"] : emblem;
+  if (!target.id.startsWith("puck:")) return { emblem, options };
+  const id = typeof face.emblem === "string" ? parseEmblem(face.emblem)?.id : undefined;
+  // The emblem is drawn flat in colour at a size that is plenty for the middle of a puck; a puck inside a puck is left plain (no face passed on).
+  const inner = id === undefined || face.image !== undefined ? undefined : EMBLEM_TABLE[id].svg({ title: false, style: "metal", grain: false, size: 160 });
+  return { emblem: target, options: inner === undefined ? options : { ...options, face: { ...face, image: inner } } };
+}
+
+/**
  * An emblem as a document of SVG: `renderEmblem("award:medal")`, `renderEmblem("ball:soccer/line", { size: 20 })`. `style` is `metal` (full colour with gradients, the default), `line` (one outline in the
  * page's text colour) or `color` (flat fills); `tint` replaces the main colour; `theme` is `inherit` (the default), `auto`, `light` or `dark`. A pure function: the same arguments give the same string.
  * @example
@@ -55,7 +70,8 @@ const withStyle = <T extends EmblemOptions>(style: EmblemStyle | undefined, opti
  */
 export function renderEmblem(ref: EmblemRef, options?: EmblemOptions): string {
   const { emblem, style } = emblemOf(ref);
-  return emblem.svg(withStyle(style, options));
+  const p = printed(emblem, withStyle(style, options));
+  return p.emblem.svg(p.options);
 }
 
 /** The same as `renderEmblem`. */
@@ -72,16 +88,18 @@ export const emblemSvg: typeof renderEmblem = renderEmblem;
  */
 export function emblemFrame(ref: EmblemRef, options?: FrameOptions): string {
   const { emblem, style } = emblemOf(ref);
-  return emblem.frame(withStyle(style, options));
+  const p = printed(emblem, withStyle(style, options));
+  return p.emblem.frame(p.options);
 }
 
-/** Whether a value is the id of a ball. */
-export const isBallId = (value: unknown): value is BallId => typeof value === "string" && (BALL_IDS as readonly string[]).includes(value);
+/** Whether a value is the id of a ball (a printed puck, `puck:canada`, is a ball too). */
+export const isBallId = (value: unknown): value is BallId | PuckId => typeof value === "string" && ((BALL_IDS as readonly string[]).includes(value) || (PUCK_IDS as readonly string[]).includes(value));
 
-/** A ball rolled: the same as `emblemFrame`, for a ball's id only. A value that is not a ball is an error. */
-export function ballFrame(id: BallId, options?: FrameOptions): string {
-  if (!isBallId(id)) throw new Error(`"${String(id).slice(0, 60)}" is not a ball: ids look like "ball:soccer"; see BALL_IDS.`);
-  return EMBLEM_TABLE[id].frame(options);
+/** A ball rolled: the same as `emblemFrame`, for a ball's id only (a printed puck's too). A value that is not a ball is an error. */
+export function ballFrame(id: BallId | PuckId, options?: FrameOptions): string {
+  if (!isBallId(id)) throw new Error(`"${String(id).slice(0, 60)}" is not a ball: ids look like "ball:soccer" or "puck:canada"; see BALL_IDS and PUCK_IDS.`);
+  const p = printed(EMBLEM_TABLE[id], options);
+  return p.emblem.frame(p.options);
 }
 
 /** Every emblem as markup in the metal style at 64 pixels, by id. Use `renderEmblem` for another style or size. */

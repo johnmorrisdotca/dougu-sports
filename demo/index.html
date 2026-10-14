@@ -50,6 +50,25 @@
     <ul class="case" id="case" data-testid="case"></ul>
   </section>
 
+  <section class="more" aria-labelledby="puck-h">
+    <h2 id="puck-h">Print a puck</h2>
+    <p class="fam-fine">A puck with a print on its top face: pick a design, change the words, the name and number, or sign it. The print turns with the puck, and is gone when the top turns away. Drag the puck to turn it.</p>
+    <div class="fam-panels">
+      <div class="fam-panel controls">
+        <div class="fam-row"><label class="fam-label" for="puck-design">Puck</label><select class="fam-field" id="puck-design" data-testid="puck-design"></select></div>
+        <div class="fam-row"><label class="fam-label" for="puck-ring">Ring</label><input class="fam-field" id="puck-ring" type="text" maxlength="32" placeholder="words round the edge" autocomplete="off" aria-label="Words round the edge of the puck" data-testid="puck-ring" /></div>
+        <div class="fam-row"><label class="fam-label" for="puck-text">Words</label><input class="fam-field" id="puck-text" type="text" maxlength="24" placeholder="under the picture" autocomplete="off" aria-label="Words under the picture" data-testid="puck-text" /></div>
+        <div class="fam-row"><label class="fam-label" for="puck-name">Name</label><input class="fam-field" id="puck-name" type="text" maxlength="14" placeholder="MORRIS" autocomplete="off" aria-label="Surname on the ring" data-testid="puck-name" /></div>
+        <div class="fam-row"><label class="fam-label" for="puck-number">Number</label><input class="fam-field" id="puck-number" type="text" maxlength="3" placeholder="23" autocomplete="off" aria-label="Number" data-testid="puck-number" /></div>
+        <div class="fam-row"><span class="fam-label">Signature</span>
+          <div class="fam-seg" role="group" aria-label="Signature" id="puck-sign" data-testid="puck-sign"><button type="button" data-value="" aria-pressed="true">None</button><button type="button" data-value="gold" aria-pressed="false">Gold</button><button type="button" data-value="black" aria-pressed="false">Black</button></div></div>
+        <div class="fam-row"><label class="fam-label" for="puck-seed">Seed</label><input class="range" type="range" id="puck-seed" min="1" max="40" step="1" value="7" aria-label="Seed of the made-up signature" data-testid="puck-seed" /><output id="puck-seed-out" for="puck-seed">7</output></div>
+      </div>
+      <div class="stage" id="puck-stage" data-testid="puck-stage" role="region" aria-label="The printed puck"></div>
+    </div>
+    <details open><summary>The call that draws it</summary><pre id="puck-code"><code></code></pre></details>
+  </section>
+
   <section class="more" aria-labelledby="code-h">
     <h2 id="code-h">The call</h2>
     <details id="code-box" open><summary>The call that draws it</summary><pre id="code"><code></code></pre></details>

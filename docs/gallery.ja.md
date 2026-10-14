@@ -2,13 +2,15 @@
 
 [README に戻る](../README.md) · 日本語 · [English](gallery.md)
 
-パッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 186 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから `scripts/make-gallery.mjs` が生成します（`pnpm gallery`）。
+パッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 194 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから `scripts/make-gallery.mjs` が生成します（`pnpm gallery`）。
 
 id は `<グループ>:<名前>` の形です。定数とインポートパスは id から決まるので、行ごとには書いていません。
 
 - 定数は、id を大文字にし、`:` と `-` を `_` に置き換えたものです。`trophy:lidded-cup` → `TROPHY_LIDDED_CUP`。例外は 1 つだけで、`ball:squash` は `BALL_SQUASH_DOUBLE_YELLOW`（黄色い点が 2 つ付いたボール）です。
 - 1 つだけインポートするときは、`@johnmorrisdotca/dougu-sports/<グループ>/<名前>` を指定します。`trophy:lidded-cup` → `@johnmorrisdotca/dougu-sports/trophy/lidded-cup`。award、trophy、medal、crest、sport、pennant は、すべてこの形でインポートできます。
 - ball と gear は、ファミリーごとのモジュールにまとめてあり、1 つのファイルに複数のエンブレムが入っています。そのため、インポートのパスは `@johnmorrisdotca/dougu-sports/ball/ball.<ファイル>`（gear は `gear/gear.<ファイル>`）になります。ファミリーの名前は [layout.md](layout.md)（英語）に載っています（スカッシュのボールは `ball/ball.squash`）。上の定数は、パッケージのメインエントリからもインポートできます。
+
+印刷パック（`puck:*`）は 1 つのファミリーモジュール `@johnmorrisdotca/dougu-sports/ball/ball.puck.print` にまとめてあり、`face` オプションを受け取ります（[pucks.ja.md](pucks.ja.md)）。
 
 エンブレムのソース（元の画像）が入っているフォルダーは、[layout.md](layout.md)（英語）にまとめてあります。
 
@@ -141,6 +143,19 @@ id は `<グループ>:<名前>` の形です。定数とインポートパス�
 | `ball:roundnet` | ラウンドネットボール | ball | generated |  |
 | `ball:shuttlecock-feather` | 水鳥シャトル | ball | generated | シャトルコック（水鳥の羽根） |
 | `ball:shuttlecock-nylon` | ナイロンシャトル | ball | generated | シャトルコック（ナイロン） |
+
+## puck
+
+| Id | 日本語 | 種類 | 出どころ | 説明 |
+| --- | --- | --- | --- | --- |
+| `puck:canada` | カナダ国旗のパック | ball | generated | 黒いパックの天面に、独自に描いたカナダ風の旗とその下の CANADA の文字、縁には文字の入った赤い輪を印刷したもの |
+| `puck:canada-red` | カナダ赤地のパック | ball | generated | 黒いパックの天面に、赤地に白い大きなメープルの葉（独自の絵）、その下の CANADA の文字、縁には文字の入った暗い輪を印刷したもの |
+| `puck:canada-white` | カナダ白地のパック | ball | generated | 黒いパックの天面に、白地に左右の赤い帯、大きな赤いメープルの葉とその下の CANADA の文字を印刷したもの |
+| `puck:usa` | アメリカ星条旗のパック | ball | generated | 黒いパックの天面に、星と縞模様の円盤、その上に大きく書いた USA の文字、縁には文字の入った紺の輪を印刷したもの |
+| `puck:usa-navy` | アメリカ紺地のパック | ball | generated | 黒いパックの天面に、紺地に白い細線にはさまれた赤い輪、5 つの星、大きな白い USA の文字を印刷したもの |
+| `puck:player` | 選手名と背番号のパック | ball | generated | ジャージのように、縁の上側に沿った架空の姓、大きな背番号、金色の輪を印刷した黒いパック |
+| `puck:signed` | サイン入りパック | ball | generated | 紺地のパックの天面に、金色のマーカーで書いたような架空のサインを重ねたもの（シード値から描くので、実在の人物の筆跡ではない） |
+| `puck:souvenir` | 記念パック | ball | generated | 汎用の記念パック。クリーム色の地に、好きな文字を入れた紺の輪と星（または自分で用意した絵） |
 
 ## gear
 

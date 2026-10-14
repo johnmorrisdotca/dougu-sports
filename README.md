@@ -45,7 +45,7 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 </tr>
 </table>
 
-> **Status: preview.** 186 emblems: 24 trophies, 5 awards, 6 medals, 4 crests, a pictogram for each of the 38 sports, 66 balls and implements drawn in 3D, 42 pieces of gear (among them the Japanese sports and budo, [docs/japanese-sports.md](./docs/japanese-sports.md)) and a championship pennant; [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
+> **Status: preview.** 194 emblems: 24 trophies, 5 awards, 6 medals, 4 crests, a pictogram for each of the 38 sports, 66 balls and implements drawn in 3D, 8 printed pucks ([docs/pucks.md](./docs/pucks.md)), 42 pieces of gear (among them the Japanese sports and budo, [docs/japanese-sports.md](./docs/japanese-sports.md)) and a championship pennant; [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
 
 ## In 30 seconds
 
@@ -73,7 +73,7 @@ Put the string in a page (`element.innerHTML = svg`), write it to a file, or sen
 
 ## Features
 
-- **Equipment first (道具 is the word for it)**: 66 balls and implements drawn in 3D, from the 32-panel soccer ball to the 26, 18, 14, 12 and 6 panel constructions, futsal, beach soccer and the pucks and stones, each with its official size, and 42 pieces of gear (sticks, rackets, helmets, skates, nets, and the Japanese budo kit) drawn to match; see [docs/gallery.md](./docs/gallery.md).
+- **Equipment first (道具 is the word for it)**: 66 balls and implements drawn in 3D, from the 32-panel soccer ball to the 26, 18, 14, 12 and 6 panel constructions, futsal, beach soccer and the pucks and stones, each with its official size, 8 printed pucks (a flag, a leaf, stars and stripes, a player's number, a made-up signature, your own picture: [docs/pucks.md](./docs/pucks.md)), and 42 pieces of gear (sticks, rackets, helmets, skates, nets, and the Japanese budo kit) drawn to match; see [docs/gallery.md](./docs/gallery.md).
 - **Three styles** for every emblem: `metal` (polished metal: a gradient, a highlight and a soft rim of reflected light, edged in a darker tone of its own metal, with no heavy outline), `line` (one clean outline in the page's text colour, made to read at 14 pixels) and `color` (flat fills); see [Theming](#theming).
 - **Size, tint, accent and theme** as options: a tint recolours the main part (a medal's metal, a crest's colour, a ball's patches), an accent the second colour (a ribbon, a crest's band, the pennants), a theme sets the ink for light, dark or either.
 - **Turning**: `emblemFrame` and `ballFrame` return the emblem at an angle, in plain SVG: every emblem turns, a ball rolls, a cup keeps its outline and moves its light, and everything flat (gear, a bat, a crown, a sport's icon) flips like a coin; `bindTurn` lets a drag, the arrow keys or an auto-turn do the turning in a page; see [docs/turning.md](./docs/turning.md).
@@ -291,7 +291,7 @@ console.log(emblemName("medal:gold", "ja")); // 金メダル
 ```js
 import { EMBLEM_GROUPS, EMBLEM_IDS, SPORT_NAMES } from "@johnmorrisdotca/dougu-sports";
 
-console.log(Object.keys(EMBLEM_GROUPS).join(" ")); // award trophy medal crest ball gear sport pennant
+console.log(Object.keys(EMBLEM_GROUPS).join(" ")); // award trophy medal crest ball puck gear sport pennant
 console.log(EMBLEM_IDS.includes("ball:soccer")); // true
 console.log(SPORT_NAMES.length); // 38
 ```
@@ -408,6 +408,7 @@ An emblem is a small object: `id`, `en` and `ja` names, a `source` (who drew it)
 | `medal` | Gold, silver and bronze medals on a ribbon of five stripes, and a badge for each of the first three places | `src/emblems/medal/` |
 | `crest` | Four generic crests, tinted by a team's colours, with its letters | `src/emblems/crest/` |
 | `ball` | 66 balls and implements, in 3D, each with its official size: soccer (in 32, 26, 18, 14, 12 and 6 panels, in three colourways, with futsal and beach soccer; [docs/soccer-balls.md](./docs/soccer-balls.md)), basketball, baseball, tennis, rugby, the footballs, golf, the puck, the curling stone and the rest | `src/emblems/ball/` |
+| `puck` | 8 printed pucks: the same puck with a print on its top face that turns with it (a flag and CANADA, a red leaf, stars and stripes, a player's name and number, a made-up signature, a souvenir), and a `face` option for any picture, emblem or flag code; [docs/pucks.md](./docs/pucks.md) | `src/emblems/ball/ball.puck.print.ts` |
 | `gear` | 42 pieces of equipment: sticks, rackets, skates, a glove, a helmet, nets and posts, a javelin, starting blocks, and for the Japanese sports a war fan, a sumo belt, a bamboo sword, a kendo helmet, a judo suit, a belt, a long bow, an arrow and a karate suit | `src/emblems/gear/` |
 | `sport` | One pictogram for each of the thirty-eight sports | `src/emblems/sport/` |
 | `pennant` | A felt championship pennant on a dowel, with a stitched edge, lettered with its words and its year | `src/emblems/pennant/` |
@@ -441,7 +442,7 @@ The thirty-eight sports the ball, gear and sport emblems are made for are `SPORT
 | `EMBLEM_TABLE` | Every emblem object, by id |
 | `TROPHY_HOCKEY_CUP`, `MEDAL_GOLD`, `CREST_SHIELD`, `SPORT_NHL`, `BALL_SOCCER`, `GEAR_HURLEY`... | Each emblem as a constant, named by its id in capitals (`trophy:hockey-cup`); [docs/gallery.md](./docs/gallery.md) ([日本語](./docs/gallery.ja.md)) lists every emblem and states the rule for its constant and the module that takes it alone |
 | `EMBLEM_IDS`, `EMBLEM_GROUPS`, `EMBLEM_FOLDERS`, `EMBLEM_ALIASES` | Every id, the groups, the folder of each group's art, and the short names (`cup` for `trophy:cup`) |
-| `AWARD_IDS`, `TROPHY_IDS`, `MEDAL_IDS`, `CREST_IDS`, `BALL_IDS`, `GEAR_IDS`, `SPORT_IDS`, `PENNANT_IDS` | The ids of each group |
+| `AWARD_IDS`, `TROPHY_IDS`, `MEDAL_IDS`, `CREST_IDS`, `BALL_IDS`, `PUCK_IDS`, `GEAR_IDS`, `SPORT_IDS`, `PENNANT_IDS` | The ids of each group |
 | `MEDAL_KINDS`, `CREST_SHAPES` | The kinds of medal, and the shapes of crest |
 | `SPORT_NAMES` | The thirty-eight sports |
 | `JAPANESE_IDS` | The ids of the Japanese sports and budo, together: sumo, kendo, judo, kyudo and karate, with their trophies and gear ([docs/japanese-sports.md](./docs/japanese-sports.md)) |
@@ -592,7 +593,7 @@ Bug reports and ideas go in the [issues](https://github.com/johnmorrisdotca/doug
 
 ## Changes
 
-See [CHANGELOG.md](./CHANGELOG.md). 0.3.0 adds nineteen soccer balls (26, 18, 14, 12 and 6 panels, winter orange and high-visibility yellow, futsal and beach soccer: 186 emblems); 0.2.1 draws every ball and implement to the rulebook's proportions; 0.2.0 is 167 emblems, every one drawn here, with the Japanese sports, engraving, a turn for every emblem and the compose helpers; 0.1.0 brought the first full set of 148; 0.0.1 was the first preview.
+See [CHANGELOG.md](./CHANGELOG.md). 0.4.0 adds eight printed pucks and a `face` option (194 emblems: [docs/pucks.md](./docs/pucks.md)); 0.3.0 adds nineteen soccer balls (26, 18, 14, 12 and 6 panels, winter orange and high-visibility yellow, futsal and beach soccer: 186 emblems); 0.2.1 draws every ball and implement to the rulebook's proportions; 0.2.0 is 167 emblems, every one drawn here, with the Japanese sports, engraving, a turn for every emblem and the compose helpers; 0.1.0 brought the first full set of 148; 0.0.1 was the first preview.
 
 ## Credits
 

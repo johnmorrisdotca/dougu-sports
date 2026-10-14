@@ -19,13 +19,23 @@ const one = (constant: string, path: string): Promise<{ text: string; bytes: num
 // Each kind of emblem has a renderer, and the renderer is most of an item's weight: the ball's is small, the flat renderer (medals, crests, plaques) is about 3 kB, and the body of revolution that turns
 // (a cup) is about 5 kB, which is the price of its metal, its handles, its balls and its seams. A pictogram or an icon is a few hundred bytes of art on a small renderer.
 // Measured again 2026-10-14 with engraving and the one coin-flip turn in: a medal or a plaque 4.5 kB (was 3.2), a cup 6.9 kB (was 5.6), a pictogram 3.7 to 4.1 kB (was 1.8 to 2.7; the sumo and the handball hand are outlines of many points), a pennant 3.3 kB.
-const LIMITS = { ball: 6.8 * 1024, flat: 4.6 * 1024, lathe: 7.1 * 1024, icon: 4.3 * 1024, pennant: 3.6 * 1024 };
+const LIMITS = { puck: 12.5 * 1024, ball: 6.8 * 1024, flat: 4.6 * 1024, lathe: 7.1 * 1024, icon: 4.3 * 1024, pennant: 3.6 * 1024 };
 
 test("one named ball, bundled by itself, stays small and leaves the other emblems out", async () => {
   const b = await one("BALL_SOCCER", "ball/ball.soccer");
   assert.ok(b.gzip < LIMITS.ball, `${b.gzip} bytes gzipped`);
   assert.ok(b.text.includes("ball:soccer"));
   assert.ok(!b.text.includes("medal:gold") && !b.text.includes("Gold medal"), "the medal came along");
+});
+
+test("one printed puck, bundled by itself, carries its lettering and face and no other emblem, and the plain puck carries none of it", async () => {
+  const printed = await one("PUCK_CANADA", "ball/ball.puck.print");
+  assert.ok(printed.gzip < LIMITS.puck, `${printed.gzip} bytes gzipped`);
+  assert.ok(printed.text.includes("puck:canada"));
+  assert.ok(!printed.text.includes("ball:soccer") && !printed.text.includes("medal:gold") && !printed.text.includes("Gold medal"), "another emblem came along");
+  const plain = await one("BALL_PUCK", "ball/ball.puck");
+  assert.ok(plain.gzip < LIMITS.ball, `${plain.gzip} bytes gzipped`);
+  assert.ok(!plain.text.includes("clipPath") && !plain.text.includes("puck:canada"), "the plain puck took the print");
 });
 
 test("one medal, one crest and one plaque, each bundled by itself, stay small and leave the ball and the cups out", async () => {

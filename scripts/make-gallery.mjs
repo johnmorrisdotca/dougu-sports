@@ -33,6 +33,8 @@ const PAGES = {
 - Import one alone from \`${NAME}/<group>/<name>\`: \`trophy:lidded-cup\` → \`${NAME}/trophy/lidded-cup\`. This holds for award, trophy, medal, crest, sport and pennant.
 - Balls and gear are made in family modules, several to a file, so their import is \`${NAME}/ball/ball.<file>\` (or \`gear/gear.<file>\`), with the family named in [layout.md](layout.md) (the squash balls are in \`ball/ball.squash\`); the constant above is also exported from the main entry.
 
+The printed pucks (\`puck:*\`) are made in one family module, \`${NAME}/ball/ball.puck.print\`, and take a \`face\` option ([pucks.md](pucks.md)).
+
 The folders the art lives in are in [layout.md](layout.md).`,
     none: "_No emblems yet._",
     name: (info) => info.en,
@@ -47,6 +49,8 @@ The folders the art lives in are in [layout.md](layout.md).`,
 - 定数は、id を大文字にし、\`:\` と \`-\` を \`_\` に置き換えたものです。\`trophy:lidded-cup\` → \`TROPHY_LIDDED_CUP\`。例外は 1 つだけで、\`ball:squash\` は \`BALL_SQUASH_DOUBLE_YELLOW\`（黄色い点が 2 つ付いたボール）です。
 - 1 つだけインポートするときは、\`${NAME}/<グループ>/<名前>\` を指定します。\`trophy:lidded-cup\` → \`${NAME}/trophy/lidded-cup\`。award、trophy、medal、crest、sport、pennant は、すべてこの形でインポートできます。
 - ball と gear は、ファミリーごとのモジュールにまとめてあり、1 つのファイルに複数のエンブレムが入っています。そのため、インポートのパスは \`${NAME}/ball/ball.<ファイル>\`（gear は \`gear/gear.<ファイル>\`）になります。ファミリーの名前は [layout.md](layout.md)（英語）に載っています（スカッシュのボールは \`ball/ball.squash\`）。上の定数は、パッケージのメインエントリからもインポートできます。
+
+印刷パック（\`puck:*\`）は 1 つのファミリーモジュール \`${NAME}/ball/ball.puck.print\` にまとめてあり、\`face\` オプションを受け取ります（[pucks.ja.md](pucks.ja.md)）。
 
 エンブレムのソース（元の画像）が入っているフォルダーは、[layout.md](layout.md)（英語）にまとめてあります。`,
     none: "_まだエンブレムはありません。_",

@@ -44,7 +44,7 @@ export function defineObject<Model extends object>(def: ObjectDef<Model>): Piece
   const render = (o: BallFrameOptions | undefined, turning: boolean): string => {
     const opts = resolveOptions(o);
     const rot = rotation(radians(def.view.yaw + finite(o?.yaw), 0), radians(def.view.pitch + finite(o?.pitch), 0), radians(def.view.roll + finite(o?.roll), 0));
-    const id = `k${hashOf(`${def.id}|${opts.style}|${opts.tint ?? ""}|${opts.accent ?? ""}|${rot.map((r) => r.map((x) => x.toFixed(2)).join()).join()}`)}`;
+    const id = `k${hashOf(`${def.id}|${opts.style}|${opts.tint ?? ""}|${opts.accent ?? ""}${opts.faceKey === "" ? "" : `|f${opts.faceKey}`}|${rot.map((r) => r.map((x) => x.toFixed(2)).join()).join()}`)}`;
     const at = (p: V3): [number, number, number] => {
       const sh = def.shift ?? [0, 0, 0];
       const k = def.scale ?? 1;

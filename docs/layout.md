@@ -33,7 +33,7 @@ src/
     crest/                   the four generic crests
     sport/                   one pictogram for each of the thirty-eight sports
     pennant/                 the championship pennant
-    ball/                    the balls, drawn in 3D by their own engine (ball.engine.ts), one module per family
+    ball/                    the balls, drawn in 3D by their own engine (ball.engine.ts), one module per family; also the printed pucks (ball.puck.print.ts, their face in ball.face.ts, the lettering in ball.letters.ts)
     gear/                    the gear, one module per piece or family
 ```
 

@@ -2,6 +2,8 @@
 // It imports nothing, so a ball stands alone: a bundler can take one ball module without the others. The shape of a piece (`id`, `en`, `ja`, `source`, `kind`, `model`, `svg`, `frame`)
 // is the shape of an emblem in the emblem registry, so a registry can take a ball or a piece of gear as it is.
 
+import type { PuckFace } from "./ball.face.ts";
+
 /** `metal` (also written `colour`): full colour, with shading. `line`: one outline in `currentColor`. */
 export type PieceStyle = "metal" | "colour" | "color" | "line";
 /** `inherit` (the default): the page's text colour. `auto`: dark ink on a light device and pale ink on a dark one. `light` and `dark` force one. */
@@ -23,6 +25,8 @@ export interface PieceOptions {
   locale?: "en" | "ja";
   /** A string is the `<title>` (escaped); `false` drops it and marks the drawing `aria-hidden="true"`. */
   title?: string | false;
+  /** A puck: the print on its top face (see `PuckFace`). The printed pucks (`puck:*`) take it, and so does `ball:puck` through `renderEmblem`, `emblemFrame` and `ballFrame`. Anything else ignores it. */
+  face?: PuckFace;
 }
 
 /** A turn: `yaw` degrees about the vertical axis (0 is the default view), `pitch` the tilt toward you, `roll` the turn about the line of sight. */
@@ -130,6 +134,19 @@ export interface ResolvedOptions {
   tint: string | undefined;
   accent: string | undefined;
   grain: boolean | undefined;
+  face: PuckFace | undefined;
+  /** A string that tells two faces apart, for the ids of a drawing. */
+  faceKey: string;
+}
+
+/** What tells one face from another: its plain data (a renderer is a function, and only its name goes in). */
+function faceKeyOf(face: unknown): string {
+  if (typeof face !== "object" || face === null) return "";
+  try {
+    return JSON.stringify(face, (k, v: unknown) => (typeof v === "function" ? `fn:${v.name}` : v)) ?? "";
+  } catch {
+    return "?";
+  }
 }
 
 export function resolveOptions(o: PieceOptions | undefined): ResolvedOptions {
@@ -137,7 +154,7 @@ export function resolveOptions(o: PieceOptions | undefined): ResolvedOptions {
   const theme = o?.theme === "auto" || o?.theme === "light" || o?.theme === "dark" ? o.theme : "inherit";
   const tint = readColour(o?.tint);
   const accent = readColour(o?.accent);
-  return { style: o?.style === "line" ? "line" : "colour", size, theme, tint: tint === undefined ? undefined : hexOf(tint), accent: accent === undefined ? undefined : hexOf(accent), grain: typeof o?.grain === "boolean" ? o.grain : undefined };
+  return { style: o?.style === "line" ? "line" : "colour", size, theme, tint: tint === undefined ? undefined : hexOf(tint), accent: accent === undefined ? undefined : hexOf(accent), grain: typeof o?.grain === "boolean" ? o.grain : undefined, face: typeof o?.face === "object" && o.face !== null ? o.face : undefined, faceKey: faceKeyOf(o?.face) };
 }
 
 /** The ink of a drawing when a theme sets it, and the page it is made to read on. */

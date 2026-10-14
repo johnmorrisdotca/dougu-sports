@@ -29,6 +29,8 @@ export interface StackSpec {
   dish?: { r: number; colour: string };
   /** Drawn on top of the stack, in the stack's own space (a handle). `up` is the screen position of the top face's centre. */
   extra?: (c: ObjectContext, top: { cx: number; cy: number; nz: number }) => string;
+  /** Drawn over everything, grain included, when the top face is toward you (a print): its definitions and its body, given the top face's ellipse as a path of radius `r` (a fraction of the top's). */
+  overlay?: (c: ObjectContext, top: { cx: number; cy: number; nz: number; ellipse: (r: number) => string }) => { defs: string; body: string };
 }
 
 const LIGHT: V3 = [-0.55, -0.72, 0];
@@ -147,5 +149,12 @@ export function drawStack(c: ObjectContext, spec: StackSpec): { defs: string; bo
   const grain = !line && gr && spec.grain !== undefined;
   if (grain) defs += grainDef(c.id, spec.grain!.f, spec.grain!.a);
   if (line) return { defs: "", body: `<g fill="none" stroke="currentColor" stroke-width="${num(Math.max(2.4, c.minWidth * 1.4), 2)}" stroke-linejoin="round" stroke-linecap="round">${body}</g>` };
-  return { defs, body: grain ? `<g filter="url(#${c.id}n)">${body}</g>` : body };
+  let printed = "";
+  if (spec.overlay !== undefined && topVisible) {
+    const top = slices.at(-1)!;
+    const over = spec.overlay(c, { cx: tx, cy: ty, nz, ellipse: (r) => ellipsePath(tx, ty, 46 * radius(top, 1) * r, 46 * radius(top, 1) * r * Math.abs(nz), perpDeg) });
+    defs += over.defs;
+    printed = over.body;
+  }
+  return { defs, body: (grain ? `<g filter="url(#${c.id}n)">${body}</g>` : body) + printed };
 }

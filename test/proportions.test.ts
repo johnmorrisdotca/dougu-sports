@@ -3,17 +3,17 @@
 // feathers of a shuttlecock. It is held to the rulebook's figures in `size`, so a drawing cannot drift from the rule the way a constant that only agreed with itself could (the puck was drawn one sixth as
 // thick as it is wide, not one third, while its metadata was right).
 import { describe, expect, it } from "./vitest-shim.ts";
-import { BALLS, lineup } from "../src/emblems/ball/ball.index.ts";
+import { BALLS, PUCKS, lineup } from "../src/emblems/ball/ball.index.ts";
 import { EMBLEM_IDS, emblemInfo } from "../src/index.ts";
 import { expected, measure } from "./measure.ts";
 
 const TOLERANCE = 0.02;
 const within = (drawn: number, rule: number): boolean => Math.abs(drawn / rule - 1) <= TOLERANCE;
-const sized = BALLS.filter((b) => b.size !== undefined);
+const sized = [...BALLS, ...PUCKS].filter((b) => b.size !== undefined);
 
 describe("the proportions of the balls and implements", () => {
   it("measures every ball and implement", () => {
-    expect(sized.length).toBe(BALLS.length);
+    expect(sized.length).toBe(BALLS.length + PUCKS.length);
     expect(BALLS.length).toBeGreaterThan(65);
   });
 
@@ -58,6 +58,17 @@ describe("the proportions of the balls and implements", () => {
     expect(Math.abs(m.heightMm / m.widthMm - 25.4 / 76.2) < 0.01 * (25.4 / 76.2)).toBe(true);
   });
 
+  it("draws every printed puck as the same puck: one third as thick as it is wide, and as wide as the plain one", () => {
+    expect(PUCKS.length).toBe(8);
+    const plain = measure(BALLS.find((b) => b.id === "ball:puck")!);
+    for (const p of PUCKS) {
+      const m = measure(p);
+      expect(within(m.heightMm / m.widthMm, 25.4 / 76.2), `${p.id} ratio`).toBe(true);
+      expect(within(m.widthMm, plain.widthMm), `${p.id} width`).toBe(true);
+      expect(within(m.heightMm, plain.heightMm), `${p.id} height`).toBe(true);
+    }
+  });
+
   it("draws the curling stone's body at 114 mm over 291 mm (the handle is not part of its height)", () => {
     const m = measure(BALLS.find((b) => b.id === "ball:curling-stone")!);
     expect(within(m.heightMm / m.widthMm, 114 / (914 / Math.PI))).toBe(true);
@@ -78,8 +89,9 @@ describe("the proportions of the balls and implements", () => {
 describe("what claims no real size", () => {
   it("gives a size to a ball or an implement only: not to a medal, a crest, a trophy, a pictogram, a pennant or a piece of gear", () => {
     const withSize = EMBLEM_IDS.filter((id) => emblemInfo(id).size !== undefined);
-    expect(withSize.every((id) => id.startsWith("ball:")), `with a size: ${withSize.filter((id) => !id.startsWith("ball:")).join(", ")}`).toBe(true);
-    expect(withSize.length).toBe(BALLS.length);
-    for (const id of EMBLEM_IDS) if (!id.startsWith("ball:")) expect(emblemInfo(id).size, id).toBeUndefined();
+    const isBall = (id: string): boolean => id.startsWith("ball:") || id.startsWith("puck:");
+    expect(withSize.every(isBall), `with a size: ${withSize.filter((id) => !isBall(id)).join(", ")}`).toBe(true);
+    expect(withSize.length).toBe(BALLS.length + PUCKS.length);
+    for (const id of EMBLEM_IDS) if (!isBall(id)) expect(emblemInfo(id).size, id).toBeUndefined();
   });
 });

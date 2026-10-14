@@ -91,6 +91,34 @@ test("the engrave field engraves a medal, and the address and the call say so, a
   await expect(page.locator("#stage")).toContainText("CHAMPIONS");
 });
 
+test("the puck workshop prints the words, the name and number and a signature, and turns", async ({ page }) => {
+  const errors = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/");
+  const stage = page.locator("#puck-stage");
+  await expect(stage.locator("svg")).toBeVisible();
+  await expect(stage.locator("svg title")).toHaveText("Canada flag puck");
+  const before = await stage.innerHTML();
+  await page.locator("#puck-design").selectOption("puck:player");
+  await expect(stage.locator("svg title")).toHaveText("Player number puck");
+  await page.locator("#puck-number").fill("99");
+  await page.locator("#puck-name").fill("Tanaka");
+  await expect(page.locator("#puck-code")).toContainText('number: "99"');
+  await expect(page.locator("#puck-code")).toContainText('name: "Tanaka"');
+  const printed = await stage.innerHTML();
+  expect(printed).not.toBe(before);
+  // The signature is drawn only when asked for, and the seed changes it.
+  await page.locator('#puck-sign button[data-value="gold"]').click();
+  const gold = await stage.innerHTML();
+  expect(gold).toContain("#e8b923");
+  await page.locator("#puck-seed").fill("21");
+  expect(await stage.innerHTML()).not.toBe(gold);
+  await page.locator('#puck-sign button[data-value="black"]').click();
+  expect(await stage.innerHTML()).toContain("#16171a");
+  expect(await noSideways(page)).toBe(true);
+  expect(errors).toEqual([]);
+});
+
 test("the gallery lists every emblem with its id, finds one by a word, and copies its id", async ({ page }) => {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
@@ -120,7 +148,7 @@ test("44 pixels is the least a control gives a finger", async ({ page }) => {
   await expect(page.locator(".cards li").first()).toBeVisible();
   for (const control of await page.locator(".copy").all().then((all) => all.slice(0, 4))) expect((await control.boundingBox()).height).toBeGreaterThanOrEqual(43.5);
   await page.goto("/");
-  for (const control of await page.locator("#style button, #theme button, #size button, #tint button, #emblem, #engrave, #yaw, #pitch").all()) {
+  for (const control of await page.locator("#style button, #theme button, #size button, #tint button, #emblem, #engrave, #yaw, #pitch, #puck-design, #puck-ring, #puck-text, #puck-name, #puck-number, #puck-sign button, #puck-seed").all()) {
     const box = await control.boundingBox();
     expect(box.height).toBeGreaterThanOrEqual(43.5);
   }

@@ -19,6 +19,7 @@ import { BALL_HANDBALL } from "./ball.handball.ts";
 import { BALL_PADEL } from "./ball.padel.ts";
 import { BALL_PICKLEBALL_OUTDOOR, BALL_PICKLEBALL_INDOOR } from "./ball.pickleball.ts";
 import { BALL_PUCK } from "./ball.puck.ts";
+import { PUCKS } from "./ball.puck.print.ts";
 import { BALL_ROUNDNET } from "./ball.roundnet.ts";
 import { BALL_RUGBY } from "./ball.rugby.ts";
 import { BALL_SEPAK_TAKRAW } from "./ball.sepaktakraw.ts";
@@ -41,17 +42,17 @@ export const BALLS: readonly Piece[] = [BALL_SOCCER, BALL_SOCCER_COLOUR, BALL_SO
 /** The id of every ball: `"ball:soccer"`, `"ball:cricket-red"`. */
 export const BALL_IDS: readonly string[] = BALLS.map((b) => b.id);
 
-const TABLE: ReadonlyMap<string, Piece> = new Map(BALLS.map((b) => [b.id, b]));
+const TABLE: ReadonlyMap<string, Piece> = new Map([...BALLS, ...PUCKS].map((b) => [b.id, b]));
 
-/** A ball by its id, or by its name without the `ball:` (`"soccer"`). An unknown name is an error that lists the ids. */
+/** A ball by its id, or by its name without the `ball:` (`"soccer"`); a printed puck by its id (`"puck:canada"`). An unknown name is an error that lists the ids. */
 export function ballOf(name: string): Piece {
-  const found = TABLE.get(name.startsWith("ball:") ? name : `ball:${name}`);
-  if (found === undefined) throw new Error(`Unknown ball "${name}". The ids are ${BALL_IDS.join(", ")}.`);
+  const found = TABLE.get(/^(ball|puck):/.test(name) ? name : `ball:${name}`);
+  if (found === undefined) throw new Error(`Unknown ball "${name}". The ids are ${BALL_IDS.join(", ")}, and the printed pucks ${PUCKS.map((p) => p.id).join(", ")}.`);
   return found;
 }
 
 /** True when the text is the id of a ball (or a ball's name without `ball:`). */
-export const isBallId = (name: unknown): name is string => typeof name === "string" && TABLE.has(name.startsWith("ball:") ? name : `ball:${name}`);
+export const isBallId = (name: unknown): name is string => typeof name === "string" && TABLE.has(/^(ball|puck):/.test(name) ? name : `ball:${name}`);
 
 /** A ball as a document of SVG: `renderBall("soccer", { size: 64 })`, or in the line style `renderBall("ball:puck", { style: "line" })`. The same arguments give the same string. */
 export function renderBall(name: string, options?: PieceOptions): string {
@@ -125,5 +126,7 @@ export function lineup(names: readonly string[], options?: LineupOptions): strin
   const title = `Balls at ${trueScale ? "their true relative sizes" : "one size"}: ${pieces.map((p) => p.en).join(", ")}`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${num(width, 2)} ${num(height, 2)}" width="${num(width, 2)}" height="${num(height, 2)}" role="img"${colour === "" ? "" : ` color="${colour}"`}><title>${escape(title)}</title>${auto}${parts.join("")}</svg>`;
 }
+
+export { PUCKS };
 
 export type { BallFrameOptions, Piece, PieceOptions, PieceSize, PieceStyle, PieceTheme } from "./ball.core.ts";

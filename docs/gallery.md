@@ -2,13 +2,15 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 186 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 194 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.mjs` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
 - The constant is the id in capitals with `:` and `-` made `_`: `trophy:lidded-cup` → `TROPHY_LIDDED_CUP`. One id breaks it: `ball:squash` is `BALL_SQUASH_DOUBLE_YELLOW`, the double-yellow-dot ball.
 - Import one alone from `@johnmorrisdotca/dougu-sports/<group>/<name>`: `trophy:lidded-cup` → `@johnmorrisdotca/dougu-sports/trophy/lidded-cup`. This holds for award, trophy, medal, crest, sport and pennant.
 - Balls and gear are made in family modules, several to a file, so their import is `@johnmorrisdotca/dougu-sports/ball/ball.<file>` (or `gear/gear.<file>`), with the family named in [layout.md](layout.md) (the squash balls are in `ball/ball.squash`); the constant above is also exported from the main entry.
+
+The printed pucks (`puck:*`) are made in one family module, `@johnmorrisdotca/dougu-sports/ball/ball.puck.print`, and take a `face` option ([pucks.md](pucks.md)).
 
 The folders the art lives in are in [layout.md](layout.md).
 
@@ -141,6 +143,19 @@ The folders the art lives in are in [layout.md](layout.md).
 | `ball:roundnet` | Roundnet ball | ball | generated |  |
 | `ball:shuttlecock-feather` | Shuttlecock, feather | ball | generated | Shuttlecock, feather |
 | `ball:shuttlecock-nylon` | Shuttlecock, nylon | ball | generated | Shuttlecock, nylon |
+
+## puck
+
+| Id | English | Kind | Source | Description |
+| --- | --- | --- | --- | --- |
+| `puck:canada` | Canada flag puck | ball | generated | Black puck printed with our own flag of the Canadian pattern, CANADA under it and a red ring of words |
+| `puck:canada-red` | Canada red puck | ball | generated | Black puck printed with a red face, a big white maple leaf of our own drawing, CANADA under it and a dark ring of words |
+| `puck:canada-white` | Canada white puck | ball | generated | Black puck printed with a white face, red bands left and right, a big red maple leaf and CANADA under it |
+| `puck:usa` | USA stripes puck | ball | generated | Black puck printed with a disc of stars and stripes, USA lettered across it and a navy ring of words |
+| `puck:usa-navy` | USA navy puck | ball | generated | Black puck printed with a navy face, a red ring with a white rim, five stars and USA in big white letters |
+| `puck:player` | Player number puck | ball | generated | Black puck printed like a jersey: a made-up surname round the top, a big number and a gold ring |
+| `puck:signed` | Signed puck | ball | generated | The navy puck with a made-up gold marker signature across the face, drawn by a seeded pen and never a real person's hand |
+| `puck:souvenir` | Souvenir puck | ball | generated | A generic souvenir puck: a cream face, a navy ring of words you choose and a star, or your own picture |
 
 ## gear
 

@@ -126,3 +126,35 @@ for (const id of CASE) {
 }
 // The words of the buttons just added, in the page's language.
 window.familyPage?.say();
+
+// The puck workshop: a printed puck whose face is made from the fields beside it, turned by dragging it.
+const PUCK_IDS = D.PUCK_IDS;
+$("puck-design").innerHTML = PUCK_IDS.map((id) => `<option value="${id}">${D.emblemName(id)} (${id})</option>`).join("");
+const puck = { id: PUCK_IDS[0], ring: "", text: "", name: "", number: "", sign: "", seed: 7 };
+const puckTurner = D.bindTurn($("puck-stage"), puck.id, { size: 256, speed: 36 });
+/** What the fields ask for: only what was typed, so the puck's own words show through until they are replaced. */
+function puckFace() {
+  const face = {};
+  if (puck.ring.trim() !== "") face.ringText = puck.ring.trim();
+  if (puck.text.trim() !== "") face.text = puck.text.trim();
+  if (puck.name.trim() !== "") face.name = puck.name.trim();
+  if (puck.number.trim() !== "") face.number = puck.number.trim();
+  if (puck.sign !== "") {
+    face.signature = puck.seed;
+    face.colors = { signature: puck.sign === "black" ? "#16171a" : "#e8b923" };
+  }
+  return face;
+}
+function drawPuck() {
+  const face = puckFace();
+  puckTurner.update(puck.id, { size: 256, face });
+  $("puck-design").value = puck.id;
+  for (const b of $("puck-sign").querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.value === puck.sign));
+  $("puck-seed-out").textContent = String(puck.seed);
+  $("puck-code").firstChild.textContent = `import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";\n\nconst svg = renderEmblem("${puck.id}", { size: 256, face: ${JSON.stringify(face).replace(/"(\w+)":/g, "$1: ").replace(/,/g, ", ")} });\n`;
+}
+$("puck-design").addEventListener("change", () => { puck.id = $("puck-design").value; drawPuck(); });
+for (const key of ["ring", "text", "name", "number"]) $(`puck-${key}`).addEventListener("input", () => { puck[key] = $(`puck-${key}`).value; drawPuck(); });
+$("puck-sign").addEventListener("click", (event) => { const b = event.target.closest("button"); if (b) { puck.sign = b.dataset.value; drawPuck(); } });
+$("puck-seed").addEventListener("input", () => { puck.seed = Number($("puck-seed").value); drawPuck(); });
+drawPuck();

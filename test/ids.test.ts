@@ -10,8 +10,8 @@ test("there are thirty-eight sports, named once, in lower case", () => {
   for (const name of D.SPORT_NAMES) assert.match(name, /^[a-z]+$/);
 });
 
-test("the groups are award, trophy, medal, crest, ball, gear, sport, and pennant, and every id is <group>:<name> in its group", () => {
-  assert.deepEqual(Object.keys(D.EMBLEM_GROUPS), ["award", "trophy", "medal", "crest", "ball", "gear", "sport", "pennant"]);
+test("the groups are award, trophy, medal, crest, ball, puck, gear, sport, and pennant, and every id is <group>:<name> in its group", () => {
+  assert.deepEqual(Object.keys(D.EMBLEM_GROUPS), ["award", "trophy", "medal", "crest", "ball", "puck", "gear", "sport", "pennant"]);
   assert.deepEqual(Object.keys(D.EMBLEM_FOLDERS), Object.keys(D.EMBLEM_GROUPS));
   for (const [group, ids] of Object.entries(D.EMBLEM_GROUPS)) for (const id of ids) assert.match(id, new RegExp(`^${group}:[a-z0-9-]+$`), id);
   assert.equal(new Set(D.EMBLEM_IDS).size, D.EMBLEM_IDS.length, "an id is in one group, once");
@@ -28,7 +28,7 @@ test("each emblem has a module in its group's folder that exports its constant, 
     const folder = new URL(`../src/emblems/${D.EMBLEM_FOLDERS[group]}/`, import.meta.url);
     const own = new URL(`${name}.ts`, folder);
     const sources = existsSync(own) ? [readFileSync(own, "utf8")] : readdirSync(folder).filter((f) => f.endsWith(".ts")).map((f) => readFileSync(new URL(f, folder), "utf8"));
-    if (group === "ball" || group === "gear") {
+    if (group === "ball" || group === "puck" || group === "gear") {
       // A ball or a piece of gear is named by its family (`ball:squash` is `BALL_SQUASH_DOUBLE_YELLOW` in ball.squash.ts): what is held is that some constant of the main entry is the emblem with the id.
       assert.ok(Object.values(D).some((value) => (value as { id?: string } | null)?.id === id), `${id} is not exported from the main entry`);
       continue;
@@ -47,9 +47,9 @@ test("a module in a group's folder is an emblem of that group, so the folder is 
       const text = readFileSync(new URL(`../src/emblems/${folderName}/${file}`, import.meta.url), "utf8");
       const made = [...text.matchAll(/export const ([A-Z0-9_]+) =/g)].map((m) => m[1]);
       // The ball and gear folders also hold the engines their families are drawn with, which export no emblem.
-      if (made.length === 0 && (group === "ball" || group === "gear")) continue;
+      if (made.length === 0 && (group === "ball" || group === "puck" || group === "gear")) continue;
       assert.ok(made.length > 0, `${folderName}/${file} exports no emblem`);
-      if (group === "ball" || group === "gear") continue;
+      if (group === "ball" || group === "puck" || group === "gear") continue;
       for (const constant of made) assert.ok(constant?.startsWith(`${group.toUpperCase()}_`), `${folderName}/${file}: ${constant}`);
     }
   }

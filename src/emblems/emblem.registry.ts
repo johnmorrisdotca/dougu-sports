@@ -41,7 +41,7 @@ import { CREST_ROUNDEL } from "./crest/roundel.ts";
 import { CREST_DIAMOND } from "./crest/diamond.ts";
 import { CREST_PENNANT } from "./crest/pennant.ts";
 import { PENNANT_CHAMPIONSHIP } from "./pennant/championship.ts";
-import { BALLS } from "./ball/ball.index.ts";
+import { BALLS, PUCKS } from "./ball/ball.index.ts";
 import { GEARS } from "./gear/gear.index.ts";
 import { SPORT_NFL } from "./sport/nfl.ts";
 import { SPORT_CFL } from "./sport/cfl.ts";
@@ -83,10 +83,10 @@ import { SPORT_KYUDO } from "./sport/kyudo.ts";
 import { SPORT_KARATE } from "./sport/karate.ts";
 
 /** The balls and the gear are drawn by families, each family in a module of its own, and listed in order by their own indexes. */
-const PIECES: Readonly<Record<string, Emblem>> = Object.fromEntries([...BALLS, ...GEARS].map((piece) => [piece.id, piece]));
+const PIECES: Readonly<Record<string, Emblem>> = Object.fromEntries([...BALLS, ...PUCKS, ...GEARS].map((piece) => [piece.id, piece]));
 
 /** The emblems drawn one to a module: every id but the balls and the gear. A missing or extra entry is a type error. */
-const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `gear:${string}`>, Emblem>> = {
+const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}` | `gear:${string}`>, Emblem>> = {
   "award:medal": AWARD_MEDAL,
   "award:badge": AWARD_BADGE,
   "award:crown": AWARD_CROWN,

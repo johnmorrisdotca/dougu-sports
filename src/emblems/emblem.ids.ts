@@ -45,6 +45,10 @@ export const BALL_IDS = [
 ] as const;
 export type BallId = (typeof BALL_IDS)[number];
 
+/** The printed pucks: the same puck as `ball:puck` with a print on its top face (a flag, a leaf, stars and stripes, a player's name and number, a made-up signature, a souvenir's ring of words). All drawn here, none a team's or a league's own. */
+export const PUCK_IDS = ["puck:canada", "puck:canada-red", "puck:canada-white", "puck:usa", "puck:usa-navy", "puck:player", "puck:signed", "puck:souvenir"] as const;
+export type PuckId = (typeof PUCK_IDS)[number];
+
 /** The pieces of gear: a piece of equipment for each sport, flat, drawn for this package, turning like a coin. */
 export const GEAR_IDS = [
   "gear:hockey-stick", "gear:goalie-stick", "gear:hockey-skate", "gear:goalie-mask", "gear:goal-net", "gear:field-hockey-stick", "gear:lacrosse-stick", "gear:cricket-bat", "gear:wicket",
@@ -75,7 +79,7 @@ export type SportEmblemId = `sport:${SportName}`;
 export const SPORT_IDS: readonly SportEmblemId[] = SPORT_NAMES.map((name) => `sport:${name}` as const);
 
 /** Every emblem id. */
-export type EmblemId = AwardId | TrophyId | MedalId | CrestId | BallId | GearId | SportEmblemId | PennantId;
+export type EmblemId = AwardId | TrophyId | MedalId | CrestId | BallId | PuckId | GearId | SportEmblemId | PennantId;
 
 /** The groups of ids, in the order a gallery shows them. */
 export const EMBLEM_GROUPS = {
@@ -84,6 +88,7 @@ export const EMBLEM_GROUPS = {
   medal: MEDAL_IDS,
   crest: CREST_IDS,
   ball: BALL_IDS,
+  puck: PUCK_IDS,
   gear: GEAR_IDS,
   sport: SPORT_IDS,
   pennant: PENNANT_IDS,
@@ -94,7 +99,7 @@ export type EmblemGroup = keyof typeof EMBLEM_GROUPS;
 export const EMBLEM_IDS: readonly EmblemId[] = Object.values(EMBLEM_GROUPS).flat();
 
 /** The folder under `src/emblems/` that holds a group's art, one module per item named by the id's last part: `trophy:hockey-cup` is `trophy/hockey-cup.ts`, `ball:soccer` is `ball/soccer.ts`. Each group has a folder of its own, so no two ids share a file name. */
-export const EMBLEM_FOLDERS = { award: "award", trophy: "trophy", medal: "medal", crest: "crest", ball: "ball", gear: "gear", sport: "sport", pennant: "pennant" } as const satisfies Record<EmblemGroup, string>;
+export const EMBLEM_FOLDERS = { award: "award", trophy: "trophy", medal: "medal", crest: "crest", ball: "ball", puck: "ball", gear: "gear", sport: "sport", pennant: "pennant" } as const satisfies Record<EmblemGroup, string>;
 
 /** The short names of the trophies and awards that stand for a full id: `"cup"` is `"trophy:cup"` and `"crown"` is `"award:crown"`. */
 export const EMBLEM_ALIASES: Readonly<Record<string, EmblemId>> = Object.fromEntries([...TROPHY_IDS, ...AWARD_IDS].map((id) => [id.slice(id.indexOf(":") + 1), id]));

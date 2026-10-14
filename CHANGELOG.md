@@ -6,6 +6,20 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+Printed pucks: eight souvenir pucks with a print on the top face that turns with the puck, and a `face` option that takes any picture, emblem or flag code. 194 emblems.
+
+### Added
+
+- **Eight printed pucks** ([docs/pucks.md](docs/pucks.md), [日本語](docs/pucks.ja.md)), a new group `puck:*`: `puck:canada` (our own flag of the Canadian pattern with CANADA under it in wide letters, in a ring of words), `puck:canada-red` (a red face with a big white leaf), `puck:canada-white` (a white face with red bands and a red leaf), `puck:usa` (a disc of stars and stripes with USA lettered across it), `puck:usa-navy` (a navy face, a red ring between white hairlines, stars and USA), `puck:player` (a made-up surname and a big number, like a jersey), `puck:signed` (the navy puck with a made-up gold signature) and `puck:souvenir` (a generic one with ring text from the caller). Each is the same puck as `ball:puck` (76.2 by 25.4 mm), in true 3D: the print sits on the top face and turns with the puck, foreshortens as it tips, and is gone when the top is turned away; the grip shows on the rim. `ball:puck` itself stays plain.
+- **A `face` option** on every puck (`renderEmblem`, `emblemFrame`, `ballFrame`): `design`, `image` (any SVG, made safe first), `emblem` (a dougu id), `flag` (`"ca"` and `"us"` are drawn here; any other code goes through the caller's `flags(code, { shape, size, theme })`, the shape of the renderer hata exports), `text`, `ringText`, `number`, `name`, `signature` (a seed, or `false`) and `colors`. `ball:puck` given a face is drawn as `puck:souvenir` with it. New exports: `PUCK_IDS`, the `PUCK_*` constants and the types `PuckFace`, `PuckDesign`, `FaceColors`, `FlagRenderer` and `PuckId`; `isBallId`, `ballFrame` and `lineup` take the puck ids.
+- **Our own lettering**: a stroke alphabet (adapted from senshu-jerseys, no font file), wide, heavy and leaning a little, set on a line or on an arc for the ring, with a made-up signature drawn by a seeded pen (the same seed, the same stroke, never a real hand) and our own eleven-point maple leaf, flags and stars.
+- **A safe image path**: an outside SVG is taken apart and put back through a strict allow-list (shapes, gradients and clip paths; no script, style, text, image, use, foreignObject, filter, link or event handler), with its ids renamed under the puck's own prefix.
+- A "Print a puck" section in the demo, both gallery pages list the eight, and tests for the face, escaping, the signature, the safe image, the turn box and the proportions (the printed pucks are measured against the rule like the plain one).
+
+### Changed
+
+- The stack renderer has an `overlay` that is drawn over the grain when the top face is toward you, and the puck's drawing is shared (`puckSpec`), so the plain puck's output is unchanged.
+
 ## [0.3.2] - 2026-10-14
 
 The README pictures fill their frames: balls first, then trophies, then gear, each a full grid.
