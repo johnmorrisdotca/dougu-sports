@@ -6,6 +6,25 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-14
+
+A judogi has no short sleeves, and every judoka at an IJF event wears an official back number: the judo and karate drawings get their sleeves, and the judogi is drawn from behind with the back number sewn on. 263 emblems.
+
+### Fixed
+
+- **`sport:judo` drew elbow-length sleeves, and the flat `gear:judogi` sleeves stopped short of the hip.** The IJF's rule (C1.10) is that the sleeves cover the wrist bone completely, with room for the forearm all the way. The pictogram and the suit now hang their sleeves out and down to the hip, where the wrist is with the arms down, with a loose cuff and a stitched cuff hem, at every size (`sport:judo` still reads at 16 pixels). `test/judo.test.ts` measures it from the drawn paths: the cuff is at the hem or below, the outer edge as long as the jacket, the cuff at least a fifth as wide as the jacket is long.
+- **`sport:karate` and `gear:karate-gi` drew elbow-length sleeves.** The WKF's rule (2.2.1 j) is half the forearm at least and the bend of the wrist at most, so they are now three-quarter length (longer than the elbow, a little shorter than a judogi's), with a wide cuff.
+
+### Added
+
+- **`gear:judogi-back` and `gear:judogi-blue-back`**: the white and the blue judogi laid flat and seen from behind, with the back number sewn on (large size, 38 by 39 cm, its top 3 cm under the collar): a white patch with the family name in white capitals on a band across the top, the three-letter country code under it, the rest blank for the sponsor, and a stitched edge. The belt is crossed behind the waist. They turn like the other suits.
+- **The `backnumber` option**, `{ name, code, band }`, taken by `renderEmblem` and `emblemFrame` for the two back views (the type is `Backnumber`): the family name (capitals, 16 characters, accents are the plain letter), the country code (three letters) and the band (`blue`, `gold` for an Olympic champion, `red` for a world champion).
+- The page [docs/judogi-back.md](docs/judogi-back.md) (and [in Japanese](docs/judogi-back.ja.md)), and the sources and what could not be confirmed in [docs/references.md](docs/references.md#the-ijf-back-number). No flag is drawn (the IJF's patch has none), and no logo of the IJF, of its supplier or of a sponsor.
+
+### Changed
+
+- The pictures of the gear and of the judo suits are redrawn, with a new picture of the suits from the front and the back (`judogi-light.webp`, `judogi-dark.webp`).
+
 ## [0.5.2] - 2026-10-14
 
 The README's pictures are redone, because npm shows only the README that was published: every picture now stands on one of the family's shared backgrounds, and the demo can put one behind an emblem.
