@@ -6,6 +6,15 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.7.1] - 2026-10-14
+
+Real countries in the examples instead of made-up teams. No change to the package's code or its pictures.
+
+### Changed
+
+- **The crest examples are Canada and Japan.** The README's crest example is a red-and-white roundel lettered CAN (it was a roundel lettered NO), and the one in docs/emblems.md is a shield in Japan's red and white lettered JPN (it was HC).
+- **The "bring your own picture" puck example is our own red maple leaf with CANADA** (it was a green triangle and WOLVES, "NORTH DIVISION CLUB"). The JAPAN example, with our own red sun disc drawn through the `flags` option, stays.
+
 ## [0.7.0] - 2026-10-14
 
 Ten national volleyballs that can be told apart, a 2010-style grooved ball that reads, and six pictures of how a judo belt is tied. 269 emblems.

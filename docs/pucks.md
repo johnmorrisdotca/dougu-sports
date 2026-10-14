@@ -59,9 +59,10 @@ Any puck takes `face`, which replaces any part of the print it starts with. `bal
 ```js
 import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
 
-const logo = '<svg viewBox="0 0 100 100"><path d="M50 5L95 80H5Z" fill="#2a8a4a"/><circle cx="50" cy="55" r="18" fill="#fff"/></svg>';
-const club = renderEmblem("puck:souvenir", { face: { image: logo, text: "WOLVES", ringText: ["NORTH DIVISION CLUB", ""], colors: ["#f4f1e8", "#1d3b2a"] } });
-console.log(club.includes("#2a8a4a")); // true
+// Your own picture: here a red maple leaf drawn for the example, in a box of 100 by 100.
+const logo = '<svg viewBox="0 0 100 100"><path d="M50 5L56.8 23L66.2 18.5L64.8 33.8L80.2 27.5L74.8 41L95 44.6L83.3 55.4L88.7 66.2L68 63.5L68.9 75.2L52.7 68.9L52.7 91.4L47.3 91.4L47.3 68.9L31.1 75.2L32 63.5L11.3 66.2L16.7 55.4L5 44.6L25.2 41L19.8 27.5L35.1 33.8L33.8 18.5L43.2 23Z" fill="#d52b1e"/></svg>';
+const own = renderEmblem("puck:souvenir", { face: { image: logo, text: "CANADA", ringText: ["CANADA · ICE HOCKEY", "SOUVENIR"], colors: ["#f4f1e8", "#7a1f18"] } });
+console.log(own.includes("#d52b1e")); // true
 
 // A country the package does not draw comes from the caller's own renderer, the `flags` option of the call.
 const flags = () => '<svg viewBox="0 0 4 3"><rect width="4" height="3" fill="#fff"/><circle cx="2" cy="1.5" r=".9" fill="#bc002d"/></svg>';

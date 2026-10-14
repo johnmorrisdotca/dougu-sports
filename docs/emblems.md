@@ -57,10 +57,10 @@ The rest are the plain `trophy:lidded-cup`, `trophy:bowl`, `trophy:salver`, `tro
 ```js
 import { crest, medal, sportIcon } from "@johnmorrisdotca/dougu-sports/emblems";
 
-const shield = crest({ shape: "shield", colors: ["#c8102e", "#f4f0e4"], initials: "HC" });
+const shield = crest({ shape: "shield", colors: ["#bc002d", "#ffffff"], initials: "JPN" });
 const gold = medal("gold");
 const stick = sportIcon("nhl", { style: "line", size: 20 });
-console.log(shield.includes(">HC<"), gold.includes("<title>Gold medal</title>"), stick.includes("<title>Ice hockey</title>"));
+console.log(shield.includes(">JPN<"), gold.includes("<title>Gold medal</title>"), stick.includes("<title>Ice hockey</title>"));
 // true true true
 ```
 

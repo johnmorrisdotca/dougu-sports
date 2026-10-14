@@ -199,17 +199,17 @@ console.log(renderEmblem("ball:soccer", { tint: "not a colour" }) === renderEmbl
 
 A tint is `#rgb`, `#rrggbb` or `rgb(r, g, b)`; anything else is ignored, so a colour that comes from outside cannot reach the markup. The `accent` option is a second colour in the same form: a medal's ribbon, a crest's band, a rosette's tails.
 
-### Draw a crest for a team with no logo
+### Draw a crest for a country or a team with no logo
 
 ```js
 import { crest } from "@johnmorrisdotca/dougu-sports/emblems";
 
-const svg = crest({ shape: "roundel", colors: ["#c8102e", "#f4f0e4"], initials: "no" });
-console.log(svg.includes(">NO<")); // true
-console.log(svg.includes("#c8102e") && svg.includes("#f4f0e4")); // true
+const svg = crest({ shape: "roundel", colors: ["#d52b1e", "#ffffff"], initials: "can" });
+console.log(svg.includes(">CAN<")); // true
+console.log(svg.includes("#d52b1e") && svg.includes("#ffffff")); // true
 ```
 
-A crest takes the team's colour and a second colour, and up to three letters, in the ink that reads on the colour; with no letters it has a star. `medal("gold")` and `sportIcon("nhl")` are the same kind of shortcut.
+A crest takes the country's or team's colour and a second colour, and up to three letters, in the ink that reads on the colour; with no letters it has a star. `medal("gold")` and `sportIcon("nhl")` are the same kind of shortcut.
 
 ### Draw balls at their true sizes
 
@@ -604,7 +604,7 @@ Bug reports and ideas go in the [issues](https://github.com/johnmorrisdotca/doug
 
 ## Changes
 
-See [CHANGELOG.md](./CHANGELOG.md). 0.7.0 gives the national volleyballs layouts that tell them apart (Japan a crimson band, Poland white above and red below, the USA a navy field), strengthens the 2010-style grooved soccer ball, and adds six pictures of how the judo belt is tied, `gear:obi-step-1` to `gear:obi-step-6` (269 emblems: [docs/obi-steps.md](./docs/obi-steps.md)); 0.6.0 gives the judo suit and the karate suit their sleeves (a judogi has no short ones: they reach the wrist) and adds the judogi seen from behind with the IJF-style back number, a family name and a country code on a patch, with a `backnumber` option (269 emblems: [docs/judogi-back.md](./docs/judogi-back.md)); 0.5.1 redraws the judo suit, the belt and the football pictograms and adds the blue and folded suits and the belts of every grade (261 emblems: [docs/japanese-sports.md](./docs/japanese-sports.md)); 0.5.0 adds fifty balls: vintage leather soccer balls, era-style and shop-wall soccer balls, baseballs of other threads and volleyballs in national colours, with a `colors` option (244 emblems: [docs/vintage-balls.md](./docs/vintage-balls.md)); 0.4.0 adds eight printed pucks and a `face` option (194 emblems: [docs/pucks.md](./docs/pucks.md)); 0.3.0 adds nineteen soccer balls (26, 18, 14, 12 and 6 panels, winter orange and high-visibility yellow, futsal and beach soccer: 186 emblems); 0.2.1 draws every ball and implement to the rulebook's proportions; 0.2.0 is 167 emblems, every one drawn here, with the Japanese sports, engraving, a turn for every emblem and the compose helpers; 0.1.0 brought the first full set of 148; 0.0.1 was the first preview.
+See [CHANGELOG.md](./CHANGELOG.md). 0.7.1 puts real countries (Canada, Japan) in the crest and puck examples in place of made-up teams, with no change to the code; 0.7.0 gives the national volleyballs layouts that tell them apart (Japan a crimson band, Poland white above and red below, the USA a navy field), strengthens the 2010-style grooved soccer ball, and adds six pictures of how the judo belt is tied, `gear:obi-step-1` to `gear:obi-step-6` (269 emblems: [docs/obi-steps.md](./docs/obi-steps.md)); 0.6.0 gives the judo suit and the karate suit their sleeves (a judogi has no short ones: they reach the wrist) and adds the judogi seen from behind with the IJF-style back number, a family name and a country code on a patch, with a `backnumber` option (269 emblems: [docs/judogi-back.md](./docs/judogi-back.md)); 0.5.1 redraws the judo suit, the belt and the football pictograms and adds the blue and folded suits and the belts of every grade (261 emblems: [docs/japanese-sports.md](./docs/japanese-sports.md)); 0.5.0 adds fifty balls: vintage leather soccer balls, era-style and shop-wall soccer balls, baseballs of other threads and volleyballs in national colours, with a `colors` option (244 emblems: [docs/vintage-balls.md](./docs/vintage-balls.md)); 0.4.0 adds eight printed pucks and a `face` option (194 emblems: [docs/pucks.md](./docs/pucks.md)); 0.3.0 adds nineteen soccer balls (26, 18, 14, 12 and 6 panels, winter orange and high-visibility yellow, futsal and beach soccer: 186 emblems); 0.2.1 draws every ball and implement to the rulebook's proportions; 0.2.0 is 167 emblems, every one drawn here, with the Japanese sports, engraving, a turn for every emblem and the compose helpers; 0.1.0 brought the first full set of 148; 0.0.1 was the first preview.
 
 ## Credits
 
