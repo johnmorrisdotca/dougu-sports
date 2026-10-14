@@ -42,6 +42,8 @@ export interface TurnController {
   readonly angles: TurnAngles;
   /** Whether the auto-turn is running. */
   readonly playing: boolean;
+  /** Whether the emblem now drawn can be turned at all (read from the registry, so an emblem that gains a turn is turnable here without a change). */
+  readonly turnable: boolean;
   /** Sets some of the angles (wrapped or clamped as a drag would) and draws. Pauses the auto-turn when `pauseOnInteract` is on. */
   setAngles(angles: Partial<TurnAngles>): void;
   /** Draws another emblem, or the same one with other options, and keeps the angles (unless the options carry some). */
@@ -86,7 +88,7 @@ export interface TurnContainer {
 
 const WORDS = {
   en: { role: "turnable emblem", hint: "Drag, or use the arrow keys, to turn it. Space starts and stops the turning." },
-  ja: { role: "回せるエンブレム", hint: "ドラッグするか矢印キーで回せます。スペースキーで回転の開始と停止ができます。" },
+  ja: { role: "回せるエンブレム", hint: "ドラッグするか矢印キーで回せます。スペースキーで自動回転を始めたり止めたりできます。" },
 } as const;
 
 /** An angle wrapped into -180 (excluded) to 180, as the demo's slider is. */
@@ -382,6 +384,9 @@ export function bindTurn(container: TurnContainer, ref: EmblemRef, options: Turn
     },
     get playing() {
       return playing;
+    },
+    get turnable() {
+      return turnable;
     },
     setAngles(partial) {
       if (destroyed) return;

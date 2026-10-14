@@ -61,7 +61,9 @@ Put the string in a page (`element.innerHTML = svg`), write it to a file, or sen
 
 - **Three styles** for every emblem: `metal` (polished metal: a gradient, a highlight and a soft rim of reflected light, edged in a darker tone of its own metal, with no heavy outline), `line` (one clean outline in the page's text colour, made to read at 14 pixels) and `color` (flat fills); see [Theming](#theming).
 - **Size, tint, accent and theme** as options: a tint recolours the main part (a medal's metal, a crest's colour, a ball's patches), an accent the second colour (a ribbon, a crest's band, the pennants), a theme sets the ink for light, dark or either.
-- **Turning**: `emblemFrame` and `ballFrame` return the emblem at an angle, in plain SVG; see [docs/turning.md](./docs/turning.md).
+- **Turning**: `emblemFrame` and `ballFrame` return the emblem at an angle, in plain SVG, and `bindTurn` lets a drag, the arrow keys or an auto-turn do the turning in a page; see [docs/turning.md](./docs/turning.md).
+- **Labels in two languages**: the `<title>` is English or Japanese (`locale`), your own words (`title: "…"`), or left out for an emblem that sits beside text that says the same (`title: false`).
+- **As an image, a sprite, a podium or a case**: `emblemDataUri` for an `<img>`, a CSS background or a canvas, `emblemSprite` to draw one emblem fifty times cheaply, `sportEquipment` for what a sport is played with, and `podium` and `awardCase` for results and trophy shelves; see [docs/compose.md](./docs/compose.md).
 - **One module per item**, so a bundler takes only what is imported; see [Use it in your project](#use-it-in-your-project).
 - **Short names and helpers**: `"cup"` is `"trophy:cup"`, `"trophy:cup/line"` is the line style, and `crest`, `medal` and `sportIcon` draw a team's crest, a medal and a sport's icon.
 - **Typed ids**: `EmblemId` is a union of `award:*`, `trophy:*`, `medal:*`, `crest:*`, `ball:*`, `gear:*` and `sport:*` ids.
@@ -111,7 +113,7 @@ The alias is a name in your `package.json` only: the same package, the same code
 | --- | --- |
 | `@johnmorrisdotca/dougu-sports` | The full registry: every emblem by id, the functions, and each emblem as a constant |
 | `@johnmorrisdotca/dougu-sports/emblems` | `renderEmblem`, the ids and the types, with no single drawing imported by name |
-| `@johnmorrisdotca/dougu-sports/turn` | `emblemFrame` and `ballFrame` |
+| `@johnmorrisdotca/dougu-sports/turn` | `emblemFrame`, `ballFrame` and `bindTurn` |
 | `@johnmorrisdotca/dougu-sports/<group>/<name>` | One emblem, alone: `trophy/hockey-cup`, `medal/gold`, `crest/shield`, `sport/nhl`, `award/crown`, `ball/soccer`, `gear/<name>` |
 
 ### One emblem and nothing else
@@ -250,6 +252,79 @@ console.log(parseEmblem("ball:soccer/line")?.style); // line
 console.log(parseEmblem("ball:nonesuch")); // undefined
 ```
 
+### Write the title in Japanese, in your own words, or not at all
+
+```js
+import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
+
+console.log(renderEmblem("medal:gold", { locale: "ja" }).includes("<title>金メダル</title>")); // true
+console.log(renderEmblem("medal:gold", { title: "Champions <2026>" }).includes("<title>Champions &lt;2026&gt;</title>")); // true
+console.log(renderEmblem("medal:gold", { title: false }).includes('aria-hidden="true"')); // true
+```
+
+`locale` is `"en"` (the default) or `"ja"`. A `title` string is escaped and wins over the locale; `false` drops the `<title>` and marks the drawing `aria-hidden="true"`, for an emblem beside text that says the same.
+
+### Use an emblem as an image
+
+```js
+import { emblemDataUri } from "@johnmorrisdotca/dougu-sports/emblems";
+
+const src = emblemDataUri("sport:nhl", { size: 48, color: "#c8102e" });
+console.log(src.startsWith("data:image/svg+xml;utf8,%3Csvg")); // true
+console.log(decodeURIComponent(src).includes("currentColor")); // false
+```
+
+`currentColor` does not cross an `<img>` boundary, so the ink is made a colour for you: `color` for the line, otherwise the theme's (`"dark"` is pale ink; `"light"` and the default are dark ink). Every character that could end an attribute or a CSS `url()` is percent-encoded, so the string goes in `img.src`, `background-image: url("…")` and `new Image()` for a canvas. More in [docs/compose.md](./docs/compose.md).
+
+### Draw one emblem many times
+
+```js
+import { emblemSprite } from "@johnmorrisdotca/dougu-sports/emblems";
+
+const sprite = emblemSprite(["ball:soccer", "medal:gold"]);
+const cell = sprite.use("ball:soccer", { size: 24, title: false });
+console.log(cell.startsWith('<svg width="24" height="24" aria-hidden="true"><use href="#')); // true
+console.log(sprite.sheet.includes("<symbol")); // true
+```
+
+Put `sprite.sheet` in the page once, then `sprite.use(id, { size, class, title })` for each cell. Sixty-four soccer balls are 2,304 nodes and 530 kB drawn inline and 228 nodes and 15 kB from a sheet; see [docs/compose.md](./docs/compose.md).
+
+### What a sport is played with
+
+```js
+import { sportEquipment } from "@johnmorrisdotca/dougu-sports/emblems";
+
+const nhl = sportEquipment("nhl");
+console.log(nhl.ball, nhl.trophy); // ball:puck trophy:hockey-cup
+console.log(nhl.gear.join(" ")); // gear:hockey-stick gear:hockey-skate gear:goalie-mask gear:goal-net
+```
+
+Each of the 33 sports has a trophy, most have a ball and gear, and a sport in the Games has a medal; every id is one `renderEmblem` draws.
+
+### A podium and an award case
+
+```js
+import { awardCase, podium } from "@johnmorrisdotca/dougu-sports/emblems";
+
+const svg = podium([{ name: "Aoki", label: "9.80 s" }, { name: "Dupont" }, { name: "Rossi" }]);
+console.log(svg.includes("<desc>1st: Aoki (9.80 s); 2nd: Dupont; 3rd: Rossi</desc>")); // true
+const shelf = awardCase([{ emblem: "trophy:hockey-cup", count: 3 }, { emblem: "medal:gold" }]);
+console.log(shelf.includes("×3")); // true
+```
+
+Both are one SVG string in the page's text colour, with a title and a description. A podium takes a flag as SVG markup or a URL, drawn as an image so that it cannot run anything; see [docs/compose.md](./docs/compose.md).
+
+### Let a drag, the keys or a clock turn it
+
+```js no-run
+import { bindTurn } from "@johnmorrisdotca/dougu-sports/turn";
+
+const turner = bindTurn(document.getElementById("cup"), "trophy:tennis-cup", { size: 160, speed: 36 });
+document.getElementById("spin").onclick = () => turner.togglePlay();
+```
+
+A drag turns it, the arrow keys turn it, Space starts and stops an auto-turn, and nothing moves until you ask; see [docs/turning.md](./docs/turning.md).
+
 ### In React, Vue and the rest
 
 The functions return strings, so a framework puts them where it puts any markup: `dangerouslySetInnerHTML={{ __html: renderEmblem("medal:gold") }}` in React, `v-html` in Vue, `{@html …}` in Svelte. The string holds no script and no external reference.
@@ -295,6 +370,12 @@ The thirty-three sports the ball, gear and sport emblems are made for are `SPORT
 | `sportIcon(sport, options?)` | The pictogram of a sport, by the names of `SPORT_NAMES`; an unknown sport is an error |
 | `lineup(ids, options?)` | Several balls side by side, at their true relative sizes (or all as large as the largest) |
 | `emblemFrame(ref, options?)` | An emblem turned by `yaw` and `pitch` degrees (and `roll` for a ball) |
+| `bindTurn(element, ref, options?)` | Draws an emblem into an element and lets a drag, the arrow keys, Space or a clock turn it; returns a controller with `angles`, `playing`, `turnable`, `setAngles`, `update`, `play`, `pause`, `togglePlay` and `destroy` |
+| `emblemDataUri(ref, options?)` | An emblem as a `data:image/svg+xml;utf8,…` address for an `<img>`, a CSS background or a canvas, with the ink made a colour (`color`, or the theme's) |
+| `emblemSprite(ids, options?)` | A hidden sheet of `<symbol>`s with unique ids, and `use(id, { size, class, title })` for the markup of each use |
+| `sportEquipment(sport)` | The ball, gear, trophy and medal of a sport, as ids of the registry |
+| `podium(places, options?)` | First, second and third on tiered steps, with medals or trophies, names, flags and lines of text, as one SVG |
+| `awardCase(items, options?)` | A team's trophies on a shelf or in a row, with `×N` count badges, wrapping into rows, as one SVG |
 | `ballFrame(id, options?)` | A ball rolled; an id that is not a ball is an error |
 | `parseEmblem(value)` | The id and style a string names, or `undefined` |
 | `isEmblemId(value)`, `isBallId(value)` | Whether a value is the id of an emblem, or of a ball |
@@ -321,9 +402,13 @@ The thirty-three sports the ball, gear and sport emblems are made for are `SPORT
 | `initials` | Up to three letters (a crest only) | none: the crest has a star |
 | `theme` | `"inherit"`, `"auto"`, `"light"`, `"dark"` | `"inherit"` |
 | `grain` | `true` or `false` (a ball only) | on for a ball of 48 pixels or more that is not turning |
+| `locale` | `"en"`, `"ja"`: the language of the `<title>` | `"en"` |
+| `title` | A string (written, escaped, as the `<title>`) or `false` (no `<title>`, and `aria-hidden="true"`) | the emblem's name |
 | `yaw`, `pitch`, `roll` (turning only; `roll` for a ball) | Degrees from the resting view | `0` |
 
-The types are `EmblemId`, `EmblemRef`, `EmblemOptions`, `FrameOptions`, `EmblemStyle`, `EmblemTheme`, `Emblem`, `EmblemInfo`, `EmblemKind`, `EmblemSource`, `EmblemGroup`, `CrestOptions`, `CrestShape`, `MedalKind`, `LineupOptions`, `PieceSize`, `SportName`, the id types of each group, and the types of the models the emblems are drawn from (`LatheModel`, `FlatModel`, `MaterialModel` and their parts).
+`podium` and `awardCase` take their own options too (`width`, `style`, `theme`, `locale`, `title`, `desc`, and for the case `perRow`, `size` and `layout`), and `emblemDataUri`, `emblemSprite` and `bindTurn` theirs: see [docs/compose.md](./docs/compose.md) and [docs/turning.md](./docs/turning.md).
+
+The types are `EmblemId`, `EmblemRef`, `EmblemOptions`, `EmblemLocale`, `FrameOptions`, `DataUriOptions`, `Sprite`, `SpriteOptions`, `UseOptions`, `SportEquipment`, `PodiumPlace`, `PodiumOptions`, `AwardItem`, `AwardCaseOptions`, `DisplayOptions`, `TurnControlOptions`, `TurnController`, `TurnAngles`, `TurnContainer`, `TurnEvent`, `EmblemStyle`, `EmblemTheme`, `Emblem`, `EmblemInfo`, `EmblemKind`, `EmblemSource`, `EmblemGroup`, `CrestOptions`, `CrestShape`, `MedalKind`, `LineupOptions`, `PieceSize`, `SportName`, the id types of each group, and the types of the models the emblems are drawn from (`LatheModel`, `FlatModel`, `MaterialModel` and their parts).
 
 ## Theming
 
@@ -350,7 +435,9 @@ The metals are `METALS` (gold `#d9a620`, silver `#aeb6c0`, bronze `#b8733a`); ea
 ## Accessibility
 
 - Every emblem is `role="img"` with a `<title>` that names it in English ("Gold medal", "Soccer ball"). `emblemName(id, "ja")` gives the Japanese name for a caller that writes its own label.
-- Where an emblem is only decoration next to text that says the same, hide it from a screen reader with `aria-hidden="true"` on the element that holds it.
+- Where an emblem is only decoration next to text that says the same, pass `title: false`: the drawing has no `<title>` and is `aria-hidden="true"`. `locale: "ja"` writes the Japanese name, with `lang="ja"` on the drawing.
+- A podium and an award case are `role="img"` with a `<title>` and a `<desc>` that says who stands where, or what is in the case, with the counts; the emblems inside carry no titles of their own, so nothing is read twice.
+- `bindTurn` gives its element a tab stop, a role description and a description that names the arrow keys and Space, and `touch-action: none` so that a drag turns the emblem instead of scrolling. Nothing turns until the reader asks, and under `prefers-reduced-motion` an auto-turn only starts when the caller forces it.
 - Colour is never the only carrier of meaning: the `line` style has no colour at all.
 - The ink reads at 4.5 to 1 against the page the `light` and `dark` themes name, and a crest's letters read at 4.5 to 1 on the crest's colour, whatever the colour; the tests hold both.
 - Nothing moves by itself: turning happens when the caller asks for a frame, and the demo's sliders are 44 pixels tall.
@@ -361,7 +448,7 @@ Any current browser, and Node 22 or later. The package is plain strings, so it a
 
 ## Languages
 
-The package's own words are the emblems' names, in English (`en`) and Japanese (`ja`), read with `emblemName(id, language)`. The `<title>` inside a drawing is English. The demo's header and footer come in English and Japanese.
+The package's own words are the emblems' names, in English (`en`) and Japanese (`ja`), read with `emblemName(id, language)`. The `<title>` inside a drawing is English unless you pass `locale: "ja"` or a `title` of your own; a podium's and an award case's default title and description, and `bindTurn`'s description for a screen reader, come in both languages the same way. The demo's header and footer come in English and Japanese.
 
 ## Roadmap
 

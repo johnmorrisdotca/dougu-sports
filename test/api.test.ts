@@ -185,7 +185,7 @@ test("a podium has three steps, titled and described, in every style, theme and 
   assert.ok(D.podium(places, { theme: "dark" }).includes(`color="${D.EMBLEM_INK.dark}"`));
   assert.ok(D.podium(places, { theme: "auto" }).includes("prefers-color-scheme:dark"));
   const ja = D.podium(places, { locale: "ja" });
-  assert.ok(ja.includes("<title>表彰台</title>") && ja.includes("1位: Aoki") && ja.includes(' lang="ja"'));
+  assert.ok(ja.includes("<title>表彰台</title>") && ja.includes("1位：Aoki") && ja.includes(' lang="ja"'));
   assert.ok(D.podium(places, { title: false }).includes('aria-hidden="true"') && !D.podium(places, { title: false }).includes("<title>"));
   assert.ok(D.podium(places, { title: "Final", desc: "Men's final" }).includes("<desc>Men's final</desc>"));
   assert.ok(D.podium(places, { width: 640 }).includes('width="640"'));
@@ -199,7 +199,7 @@ test("a podium with places left out still has three steps, and a place without a
   const two = D.podium([{ emblem: "medal:gold" }, null]);
   assert.ok(two.includes("<desc>1st: Gold medal</desc>"));
   assert.equal(wellFormed(two), null);
-  assert.ok(D.podium([{ emblem: "medal:gold" }], { locale: "ja" }).includes("1位: 金メダル"));
+  assert.ok(D.podium([{ emblem: "medal:gold" }], { locale: "ja" }).includes("1位：金メダル"));
 });
 
 test("a podium's text is escaped and cut, and a hostile name or label cannot reach the markup", () => {
@@ -270,6 +270,7 @@ test("an award case draws each trophy once with a count badge, wraps into rows, 
   assert.equal(D.awardCase(items, { layout: "row" }).match(/height="6" rx="2"/g), null);
   assert.ok(D.awardCase(items, { locale: "ja" }).includes("<title>トロフィーケース</title>") && D.awardCase(items, { locale: "ja" }).includes("金メダル"));
   assert.ok(D.awardCase(items, { width: 300 }).includes('width="300"'));
+  assert.ok(D.awardCase(items, { locale: "ja" }).includes("<desc>帯を何段も重ねた背の高い銀のカップ 3回（2001, 2004, 2011）、金メダル、"));
   // The same trophy twice shares its definitions.
   const twice = D.awardCase([{ emblem: "trophy:hockey-cup" }, { emblem: "trophy:hockey-cup", count: 2 }]);
   const gradients = [...twice.matchAll(/<linearGradient id="([^"]+)"/g)].map((m) => m[1]);

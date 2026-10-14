@@ -40,3 +40,88 @@ console.log(frames.length); // 12
 ```
 
 Twelve frames are twelve strings; show them one after another with `requestAnimationFrame`, and stop when the page asks for reduced motion (`matchMedia("(prefers-reduced-motion: reduce)")`).
+
+## Let the reader turn it: `bindTurn`
+
+`bindTurn(element, ref, options?)` draws an emblem into an element with `emblemFrame` and turns it as the reader drags it, presses the arrow keys or starts an auto-turn. It is in the `./turn` entry (and the full registry) and in a module of its own, so importing an emblem never pulls it in.
+
+```js no-run
+import { bindTurn } from "@johnmorrisdotca/dougu-sports/turn";
+
+const turner = bindTurn(document.getElementById("cup"), "trophy:tennis-cup", {
+  size: 160,
+  onTurn: ({ yaw, pitch, roll }) => console.log(yaw, pitch, roll),
+});
+document.getElementById("spin").onclick = () => turner.togglePlay();
+// later: another emblem at the same angles, and then let go of the element
+turner.update("trophy:hockey-cup", { size: 160 });
+turner.destroy();
+```
+
+### What the reader can do
+
+| Input | Does |
+| --- | --- |
+| Drag (the primary button, a finger or a pen) | Left and right turn the yaw, up and down tilt the pitch; Shift on a ball turns the roll. The element is `touch-action: none` and `user-select: none`, with a grab cursor, and holds the pointer while it is down. |
+| Left and Right | Turn the yaw by `keyStep` degrees (5), or three times as much with Shift (15). |
+| Up and Down | Tilt the pitch the same way, within `pitchRange`. |
+| Home or 0 | Back to the resting view. |
+| Space | Start or stop the auto-turn. |
+
+The element gets `tabindex="0"` (unless the page set one), a role (`group`, unless it has one), an `aria-roledescription` and an `aria-description` that names the arrow keys and Space, in English or in Japanese (`locale`). `preventDefault()` is called only for the keys it handles. Yaw wraps into -180 (excluded) to 180, as the demo's slider does; pitch is clamped. Each change is drawn once on the next animation frame, however many pointer moves there were. An emblem that cannot turn (a pictogram, today) is drawn as it is and nothing is listened to; turnability is read from the registry's own frames, so an emblem that gains a turn turns here without a change to `bindTurn`.
+
+### The auto-turn
+
+Nothing moves by itself. `autoPlay` is off by default, `play()`, `pause()` and `togglePlay()` start and stop it, and `speed` is degrees of yaw a second (36, negative to turn the other way, at most 720 either way).
+
+- It runs on `requestAnimationFrame` with the elapsed time, clamped to 0.1 s so that a slow frame is not a jump, stops asking for frames while the page is hidden, and calls `onTurn` on every frame so that a slider follows.
+- With `pauseOnInteract` (on by default) a drag holds it while the pointer is down and it goes on from the new angle with no jump; an arrow key, Home or `setAngles` (a slider) pauses it. With it off only `pause()` stops it.
+- Under `prefers-reduced-motion: reduce`, `autoPlay: true` starts paused: only a reader's own action, such as pressing a Play button, starts it, unless the caller passes `autoPlay: "force"`.
+- `onPlayChange(playing)` is told of each start and stop, whatever caused it. `play()` and `togglePlay()` on an emblem that cannot turn do nothing and give `false`.
+
+### Options and controller
+
+| Option | Default |
+| --- | --- |
+| The options of `emblemFrame` (`style`, `size`, `tint`, `accent`, `theme`, `locale`, `title`) and the first `yaw`, `pitch` and `roll` | resting view |
+| `sensitivity`: degrees of turn for each pixel | `1.5` |
+| `pitchRange`: `[least, most]` degrees | `[-60, 60]` |
+| `keyStep`: degrees for an arrow key (three times as much with Shift) | `5` |
+| `onTurn(angles)`: after each turn by the pointer, a key or the clock; not for `setAngles` or `update` | none |
+| `autoPlay`: `false`, `true` or `"force"` (only read by `bindTurn`) | `false` |
+| `speed`, `pauseOnInteract`, `onPlayChange(playing)` | `36`, `true`, none |
+
+| Controller | |
+| --- | --- |
+| `angles` | A copy of `{ yaw, pitch, roll }` |
+| `playing`, `turnable` | Whether the auto-turn runs, and whether the emblem can turn |
+| `setAngles(partial)` | Sets some angles (wrapped or clamped), draws at once, pauses the auto-turn |
+| `update(ref, options?)` | Draws another emblem or the same one with other options, and keeps the angles (unless the options carry some) |
+| `play()`, `pause()`, `togglePlay()` | The auto-turn; `togglePlay()` gives the new state |
+| `destroy()` | Removes the listeners and every attribute and style `bindTurn` added, puts back what the page had, cancels the frame; the last drawing stays |
+
+`bindTurn` needs only a few members of its element (`innerHTML`, `style`, `addEventListener`, `removeEventListener`, the attribute methods, and optionally the pointer capture ones), so any object that has them will do; that is how `test/turn-control.test.ts` runs it with no DOM and no dependency:
+
+```js
+import { bindTurn } from "@johnmorrisdotca/dougu-sports/turn";
+
+const listeners = {};
+const element = {
+  innerHTML: "",
+  style: {},
+  attributes: {},
+  addEventListener(type, listener) { listeners[type] = listener; },
+  removeEventListener() {},
+  getAttribute(name) { return this.attributes[name] ?? null; },
+  setAttribute(name, value) { this.attributes[name] = value; },
+  removeAttribute(name) { delete this.attributes[name]; },
+};
+const turner = bindTurn(element, "trophy:tennis-cup", { size: 96 });
+listeners.keydown({ key: "ArrowRight", preventDefault() {} });
+listeners.keydown({ key: "ArrowRight", shiftKey: true, preventDefault() {} });
+console.log(turner.angles.yaw); // 20
+console.log(element.innerHTML.startsWith('<svg xmlns="http://www.w3.org/2000/svg"')); // true
+console.log(turner.togglePlay()); // true
+turner.destroy();
+console.log(Object.keys(element.attributes).length); // 0
+```

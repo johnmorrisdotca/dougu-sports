@@ -187,10 +187,12 @@ export function podium(places: readonly (PodiumPlace | null | undefined)[], opti
     }
     top = Math.min(top, cursor);
     const who = name !== "" ? (typeof entry.name === "string" ? entry.name.replace(/\s+/g, " ").trim() : name) : NAME_OF(ref, locale);
-    said[place] = `${WORDS[locale].places[place]}: ${who}${label !== "" ? ` (${typeof entry.label === "string" ? entry.label.replace(/\s+/g, " ").trim() : label})` : ""}`;
+    const line = typeof entry.label === "string" ? entry.label.replace(/\s+/g, " ").trim() : "";
+    // Japanese writes its description with full-width punctuation and 、 between the places.
+    said[place] = locale === "ja" ? `${WORDS.ja.places[place]}：${who}${line !== "" ? `（${line}）` : ""}` : `${WORDS.en.places[place]}: ${who}${line !== "" ? ` (${line})` : ""}`;
   }
   top = Math.max(0, Math.min(top, base - 100 - 62) - 6);
-  const desc = said.filter(Boolean).join("; ");
+  const desc = said.filter(Boolean).join(locale === "ja" ? "、" : "; ");
   return document(options, "podium", [0, top, 320, base + 6 - top], [...space.defs, ...stepDefs], body, desc, 320);
 }
 
@@ -225,7 +227,7 @@ export function awardCase(items: readonly AwardItem[], options: AwardCaseOptions
   const rows = Math.max(1, Math.ceil(list.length / perRow));
   const pad = 8;
   const width = columns * cell + 2 * pad;
-  const wide = Math.max(4, Math.floor((cell - 2) / 6));
+  const wide = Math.max(4, Math.floor(cell / 5.4));
   let body = "";
   const said: string[] = [];
   for (let r = 0; r < rows; r++) {
@@ -248,9 +250,11 @@ export function awardCase(items: readonly AwardItem[], options: AwardCaseOptions
         body += `<rect x="${n2(right - w)}" y="${n2(emblemY - 4)}" width="${n2(w)}" height="16" rx="8" fill="${EMBLEM_INK.light}" stroke="${EMBLEM_INK.dark}" stroke-width="1"/><text x="${n2(right - w / 2)}" y="${n2(emblemY + 7.5)}" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">${text}</text>`;
       }
       const name = NAME_OF(entry.item.emblem, locale);
-      const extra = typeof entry.item.label === "string" && entry.item.label.trim() !== "" ? ` (${entry.item.label.replace(/\s+/g, " ").trim()})` : "";
-      said.push(`${name}${entry.count > 1 ? ` ×${entry.count}` : ""}${extra}`);
+      const note = typeof entry.item.label === "string" ? entry.item.label.replace(/\s+/g, " ").trim() : "";
+      // The badge is drawn ×N; spoken in Japanese the count is N回, because a screen reader reads × unevenly.
+      if (locale === "ja") said.push(`${name}${entry.count > 1 ? ` ${entry.count}回` : ""}${note === "" ? "" : `（${note}）`}`);
+      else said.push(`${name}${entry.count > 1 ? ` ×${entry.count}` : ""}${note === "" ? "" : ` (${note})`}`);
     }
   }
-  return document(options, "case", [0, 0, width, pad * 2 + rows * rowHeight - 8], space.defs, body, said.join(", "), width);
+  return document(options, "case", [0, 0, width, pad * 2 + rows * rowHeight - 8], space.defs, body, said.join(locale === "ja" ? "、" : ", "), width);
 }

@@ -6,6 +6,22 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- **Labels.** `EmblemOptions` takes `locale` (`"en"` or `"ja"`: the `<title>` is the emblem's Japanese name, with `lang="ja"` on the drawing) and `title` (a string is written, escaped; `false` drops the `<title>` and marks the drawing `aria-hidden="true"`). Both work for every emblem in every style, still and turned, and in `crest()` and `medal()`.
+- **`emblemDataUri(ref, options)`**: a percent-encoded `data:image/svg+xml;utf8,…` address for an `<img>`, a CSS background or a canvas, with `currentColor` made a concrete colour (`color` for the line, else the theme's ink; the default is dark ink), and a browser test that loads it in an `<img>` and on a canvas.
+- **`emblemSprite(ids, options)`**: one hidden `<svg>` of `<symbol>`s with the definitions shared and every id unique across the sheet, and `use(id, { size, class, title })` for the markup of each use. Sixty-four soccer balls are 2,304 nodes and 530 kB inline and 228 nodes and 15 kB from a sheet; sixty-four medals 1,792 nodes and 115 kB against 220 and 8.7 kB.
+- **`sportEquipment(sport)`**: `{ sport, ball?, gear[], trophy, medal? }` for each of the 33 sports, typed, with every id an id of the registry, and a test that every id exists and every sport is covered.
+- **`podium(places, options)`** and **`awardCase(items, options)`**: a podium of first, second and third on tiered steps, with medals or trophies, names, flags (SVG markup or a URL, drawn as an inert image) and lines of text; and a team's trophies on a shelf or in a row with `×N` badges, wrapping into rows. Both are one SVG string in the page's text colour, light and dark, with `role="img"`, a title and a description, in English and Japanese.
+- **`bindTurn(element, ref, options)`** in the `./turn` entry, in a module of its own: a drag, the arrow keys, Home and Space turn an emblem drawn with `emblemFrame`, with `sensitivity`, `pitchRange`, `keyStep` and `onTurn`; a controller with `angles`, `setAngles`, `update` and `destroy`. An emblem that cannot turn (read from the registry's frames) is drawn as it is. An auto-turn (`autoPlay`, `speed`, `pauseOnInteract`, `onPlayChange`, `play`, `pause`, `togglePlay`, `playing`) runs on `requestAnimationFrame` with a clamped time step, stops while the page is hidden, and only starts when asked: under `prefers-reduced-motion` `autoPlay: true` starts paused unless it is `"force"`.
+- The demo's playground turns its emblem with `bindTurn`, synced with the yaw, tilt and roll sliders, with an auto-turn button and speed choice and a hint in English and Japanese, and has a trophy case of turnable emblems; a new compose page draws the podium, the award case, a sprite sheet, a data address and a sport's equipment, each with a copy button.
+- `docs/compose.md`, a `bindTurn` section in `docs/turning.md`, README examples, and tests (`test/api.test.ts`, `test/turn-control.test.ts`, `e2e/turn.demo.mjs`, `e2e/compose.demo.mjs`).
+
+### Changed
+
+- The demo's playground keeps the turn when the emblem, style, tint or look changes, instead of putting the emblem back at rest.
+- The test server's port can be set with `TEST_PORT` (7201 by default), so a worktree does not meet another's.
+
 ## [0.1.0] - 2026-10-14
 
 The art arrives: 148 emblems (the trophies, awards, medals, crests, the pictogram of each of the 33 sports, the balls and the gear), moved here from Kyogijo Stadiums and, for the trophies, medals and crests, redrawn.

@@ -271,6 +271,7 @@ test("an emblem that cannot turn is drawn as it is, and drag, keys and play do n
   const plays: boolean[] = [];
   const turner = bindTurn(el, "sport:nhl", { onTurn: (a) => turns.push(a), onPlayChange: (p) => plays.push(p) });
   assert.equal(el.innerHTML, renderEmblem("sport:nhl"));
+  assert.equal(turner.turnable, false);
   assert.equal(el.count(), 0);
   assert.equal(el.attributes.size, 0);
   assert.deepEqual([el.style.touchAction, el.style.cursor], ["", ""]);
@@ -297,6 +298,7 @@ test("an emblem that cannot turn is drawn as it is, and drag, keys and play do n
   }
   // Updating to an emblem that turns binds it, and back to one that does not unbinds it.
   turner.update("trophy:tennis-cup");
+  assert.equal(turner.turnable, true);
   assert.ok(el.count() > 0 && el.getAttribute("tabindex") === "0");
   turner.update("sport:nhl");
   assert.equal(el.count(), 0);
