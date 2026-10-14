@@ -31,7 +31,7 @@ Trophies, medals, crests, the icon of every sport, and the ball and gear of the 
 </tr>
 </table>
 
-> **Status: preview.** 148 emblems: 20 trophies, 5 awards, 6 medals, 4 crests, a pictogram for each of the 33 sports, 47 balls and implements drawn in 3D, and 33 pieces of gear ([docs/layout.md](./docs/layout.md) says where each goes). Not on npm yet.
+> **Status: preview.** 148 emblems: 20 trophies, 5 awards, 6 medals, 4 crests, a pictogram for each of the 33 sports, 47 balls and implements drawn in 3D, and 33 pieces of gear ([docs/layout.md](./docs/layout.md) says where each goes).
 
 ## In 30 seconds
 
@@ -416,7 +416,7 @@ Dougu Sports is one of twenty-seven packages, each made for the same site, each 
 - [Houseki](https://github.com/johnmorrisdotca/houseki) (宝石): gem and stone matching puzzles: falling triplets, stone collapse, colour chains and gem swap. [Demo](https://johnmorrisdotca.github.io/houseki/).
 - [Kyogijo Stadiums](https://github.com/johnmorrisdotca/kyogijo-stadiums) (競技場): sports fields, rinks, courts and ballparks drawn to scale as SVG, with each team and the score on them. [Demo](https://johnmorrisdotca.github.io/kyogijo-stadiums/).
 - [Taisen Brackets](https://github.com/johnmorrisdotca/taisen-brackets) (対戦): a sport-agnostic tournament bracket, drawn as SVG, from a list of ties. [Demo](https://johnmorrisdotca.github.io/taisen-brackets/).
-- [Dougu Sports](https://github.com/johnmorrisdotca/dougu-sports) (道具): sports emblems as SVG: trophies, medals, crests, and the ball and gear of every sport, with optional 3D turning. [Demo](https://johnmorrisdotca.github.io/dougu-sports/). Not on npm yet.
+- [Dougu Sports](https://github.com/johnmorrisdotca/dougu-sports) (道具): sports emblems as SVG: trophies, medals, crests, and the ball and gear of every sport, with optional 3D turning. [Demo](https://johnmorrisdotca.github.io/dougu-sports/).
 
 **This package is Dougu Sports.** The demos of all twenty-seven share one header and footer, so each links the rest.
 <!-- family:end -->
@@ -440,7 +440,7 @@ Bug reports and ideas go in the [issues](https://github.com/johnmorrisdotca/doug
 
 ## Changes
 
-See [CHANGELOG.md](./CHANGELOG.md). 0.0.1 is the first preview: the name, the API and two sample emblems; the full set of 148 is in Unreleased.
+See [CHANGELOG.md](./CHANGELOG.md). 0.1.0 brings the full set of 148 emblems; 0.0.1 was the first preview.
 
 ## Credits
 

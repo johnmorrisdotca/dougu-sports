@@ -6,6 +6,8 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-14
+
 The art arrives: 148 emblems (the trophies, awards, medals, crests, the pictogram of each of the 33 sports, the balls and the gear), moved here from Kyogijo Stadiums and, for the trophies, medals and crests, redrawn.
 
 ### Added
@@ -37,5 +39,6 @@ First preview: the name, the API and two sample emblems. The full set of trophie
 - Tests for the drawing, the ids, the turns and the bundle size of one item; a package check that installs the packed tarball and bundles one item from it.
 - The demo (a playground with a turn slider, and a gallery page), `docs/layout.md`, `docs/turning.md`, `docs/gallery.md`, the family header and footer, the CI, Pages and Release workflows, and `LICENSES/` and `NOTICE.md` ready for third-party art.
 
-[Unreleased]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.0.1...HEAD
+[Unreleased]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/johnmorrisdotca/dougu-sports/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/johnmorrisdotca/dougu-sports/releases/tag/v0.0.1

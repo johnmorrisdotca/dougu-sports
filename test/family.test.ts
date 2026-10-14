@@ -34,7 +34,7 @@ const id = pkg.name.replace(/^@[^/]+\//, "");
 
 // The template of 2026-10-15b, with Dougu Sports added, lists twenty-seven packages. The family's list is swept again, in every repository at once, when
 // a package is added to it, and this hash is then the new one.
-const TEMPLATE = { version: "2026-10-15b", sha256: "656330b159771aaf7ae5a992af820d635e7665682ba1b1572a576b907ddcff59" };
+const TEMPLATE = { version: "2026-10-15b", sha256: "e3225436d845b80ae0c04677086cb693dba4ede02266910239a95307daa0e118" };
 const WRITER_SHA256 = "6752eaa287a9007af87d9019e4cee4c36fe1d79b60bf24478e7851ebe75138c4";
 
 test("the family template is the one file, byte for byte, in every package", () => {
@@ -61,12 +61,11 @@ test("it lists every package of the family, in order, each with its Japanese nam
   assert.ok(template.FAMILY.some((one) => one.id === id));
 });
 
-// Until the first publish this package is on the list of those not on npm. The day it is published, its id comes out of FAMILY_NOT_ON_NPM in every
-// repository's template, and this test is the one with the npm pill and the install line (see taisen-brackets' family.test.ts).
-test("this package is not on npm yet: the header has no npm pill and the footer says so", () => {
-  assert.deepEqual(template.FAMILY_NOT_ON_NPM, [id]);
-  assert.ok(!template.familyHeader({ id }).includes("npmjs.com/package"));
-  assert.ok(template.familyFooter({ id }).includes("Not on npm yet"));
+test("this package is on npm: the header has the npm pill and the footer the install line", () => {
+  assert.ok(!template.FAMILY_NOT_ON_NPM.includes(id));
+  assert.ok(template.familyHeader({ id }).includes(`https://www.npmjs.com/package/@johnmorrisdotca/${id}`));
+  assert.ok(template.familyFooter({ id }).includes(`npm install @johnmorrisdotca/${id}`));
+  assert.ok(!template.familyFooter({ id }).includes("Not on npm yet"));
 });
 
 test("the demo page is made with the family's header and footer", () => {
