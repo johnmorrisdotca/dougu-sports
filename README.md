@@ -137,7 +137,7 @@ The alias is a name in your `package.json` only: the same package, the same code
 | --- | --- |
 | `@johnmorrisdotca/dougu-sports` | The full registry: every emblem by id, the functions, and each emblem as a constant |
 | `@johnmorrisdotca/dougu-sports/emblems` | `renderEmblem`, the ids and the types, with no single drawing imported by name |
-| `@johnmorrisdotca/dougu-sports/turn` | `emblemFrame`, `ballFrame` and `bindTurn` |
+| `@johnmorrisdotca/dougu-sports/turn` | `emblemFrame`, `ballFrame` and `bindTurn`; `bindTurn` with an emblem object takes nothing else with it |
 | `@johnmorrisdotca/dougu-sports/<group>/<name>` | One emblem, alone: `trophy/hockey-cup`, `medal/gold`, `crest/shield`, `sport/nhl`, `award/crown`, `ball/soccer`, `pennant/championship`, `gear/<name>` |
 
 ### One emblem and nothing else
@@ -379,12 +379,13 @@ Both are one SVG string in the page's text colour, with a title and a descriptio
 
 ```js no-run
 import { bindTurn } from "@johnmorrisdotca/dougu-sports/turn";
+import { TROPHY_TENNIS_CUP } from "@johnmorrisdotca/dougu-sports/trophy/tennis-cup";
 
-const turner = bindTurn(document.getElementById("cup"), "trophy:tennis-cup", { size: 160, speed: 36 });
+const turner = bindTurn(document.getElementById("cup"), TROPHY_TENNIS_CUP, { size: 160, speed: 36 });
 document.getElementById("spin").onclick = () => turner.togglePlay();
 ```
 
-A drag turns it, the arrow keys turn it, Space starts and stops an auto-turn, and nothing moves until you ask; see [docs/turning.md](./docs/turning.md).
+A drag turns it, the arrow keys turn it, Space starts and stops an auto-turn, and nothing moves until you ask. Pass the emblem itself and the page carries the turning and that one emblem and nothing else (a cup and the turning are about 9 kB gzipped); pass an id, `"trophy:tennis-cup"`, and the registry is loaded when it is needed. See [docs/turning.md](./docs/turning.md).
 
 ### In React, Vue and the rest
 
@@ -434,7 +435,7 @@ The thirty-eight sports the ball, gear and sport emblems are made for are `SPORT
 | `sportIcon(sport, options?)` | The pictogram of a sport, by the names of `SPORT_NAMES`; an unknown sport is an error |
 | `lineup(ids, options?)` | Several balls side by side, at their true relative sizes (or all as large as the largest) |
 | `emblemFrame(ref, options?)` | An emblem turned by `yaw` and `pitch` degrees (and `roll` for a ball) |
-| `bindTurn(element, ref, options?)` | Draws an emblem into an element and lets a drag, the arrow keys, Space or a clock turn it; returns a controller with `angles`, `playing`, `turnable`, `setAngles`, `update`, `play`, `pause`, `togglePlay` and `destroy` |
+| `bindTurn(element, ref, options?)` | Draws an emblem (the emblem itself, or its id) into an element and lets a drag, the arrow keys, Space or a clock turn it; returns a controller with `angles`, `playing`, `turnable`, `ready`, `setAngles`, `update`, `play`, `pause`, `togglePlay` and `destroy` |
 | `emblemDataUri(ref, options?)` | An emblem as a `data:image/svg+xml;utf8,…` address for an `<img>`, a CSS background or a canvas, with the ink made a colour (`color`, or the theme's) |
 | `emblemSprite(ids, options?)` | A hidden sheet of `<symbol>`s with unique ids, and `use(id, { size, class, title })` for the markup of each use |
 | `sportEquipment(sport)` | The ball, gear, trophy and medal of a sport, as ids of the registry |
@@ -604,7 +605,7 @@ Bug reports and ideas go in the [issues](https://github.com/johnmorrisdotca/doug
 
 ## Changes
 
-See [CHANGELOG.md](./CHANGELOG.md). 0.7.3 turns the build, docs and picture scripts, the browser tests and the demo's source from JavaScript into TypeScript, with no change to the package; 0.7.2 makes every docs page single-language (a page in Japanese beside each page that had Japanese words in it, and a test that holds them apart), with no change to the pictures; 0.7.1 puts real countries (Canada, Japan) in the crest and puck examples in place of made-up teams, with no change to the code; 0.7.0 gives the national volleyballs layouts that tell them apart (Japan a crimson band, Poland white above and red below, the USA a navy field), strengthens the 2010-style grooved soccer ball, and adds six pictures of how the judo belt is tied, `gear:obi-step-1` to `gear:obi-step-6` (269 emblems: [docs/obi-steps.md](./docs/obi-steps.md)); 0.6.0 gives the judo suit and the karate suit their sleeves (a judogi has no short ones: they reach the wrist) and adds the judogi seen from behind with the IJF-style back number, a family name and a country code on a patch, with a `backnumber` option (269 emblems: [docs/judogi-back.md](./docs/judogi-back.md)); 0.5.1 redraws the judo suit, the belt and the football pictograms and adds the blue and folded suits and the belts of every grade (261 emblems: [docs/japanese-sports.md](./docs/japanese-sports.md)); 0.5.0 adds fifty balls: vintage leather soccer balls, era-style and shop-wall soccer balls, baseballs of other threads and volleyballs in national colours, with a `colors` option (244 emblems: [docs/vintage-balls.md](./docs/vintage-balls.md)); 0.4.0 adds eight printed pucks and a `face` option (194 emblems: [docs/pucks.md](./docs/pucks.md)); 0.3.0 adds nineteen soccer balls (26, 18, 14, 12 and 6 panels, winter orange and high-visibility yellow, futsal and beach soccer: 186 emblems); 0.2.1 draws every ball and implement to the rulebook's proportions; 0.2.0 is 167 emblems, every one drawn here, with the Japanese sports, engraving, a turn for every emblem and the compose helpers; 0.1.0 brought the first full set of 148; 0.0.1 was the first preview.
+See [CHANGELOG.md](./CHANGELOG.md). 0.8.0 makes `bindTurn` light: it takes an emblem object and then needs no registry, so a turnable cup is about 9.4 kB gzipped instead of about 81 kB, and an id loads the registry on demand; 0.7.3 turns the build, docs and picture scripts, the browser tests and the demo's source from JavaScript into TypeScript, with no change to the package; 0.7.2 makes every docs page single-language (a page in Japanese beside each page that had Japanese words in it, and a test that holds them apart), with no change to the pictures; 0.7.1 puts real countries (Canada, Japan) in the crest and puck examples in place of made-up teams, with no change to the code; 0.7.0 gives the national volleyballs layouts that tell them apart (Japan a crimson band, Poland white above and red below, the USA a navy field), strengthens the 2010-style grooved soccer ball, and adds six pictures of how the judo belt is tied, `gear:obi-step-1` to `gear:obi-step-6` (269 emblems: [docs/obi-steps.md](./docs/obi-steps.md)); 0.6.0 gives the judo suit and the karate suit their sleeves (a judogi has no short ones: they reach the wrist) and adds the judogi seen from behind with the IJF-style back number, a family name and a country code on a patch, with a `backnumber` option (269 emblems: [docs/judogi-back.md](./docs/judogi-back.md)); 0.5.1 redraws the judo suit, the belt and the football pictograms and adds the blue and folded suits and the belts of every grade (261 emblems: [docs/japanese-sports.md](./docs/japanese-sports.md)); 0.5.0 adds fifty balls: vintage leather soccer balls, era-style and shop-wall soccer balls, baseballs of other threads and volleyballs in national colours, with a `colors` option (244 emblems: [docs/vintage-balls.md](./docs/vintage-balls.md)); 0.4.0 adds eight printed pucks and a `face` option (194 emblems: [docs/pucks.md](./docs/pucks.md)); 0.3.0 adds nineteen soccer balls (26, 18, 14, 12 and 6 panels, winter orange and high-visibility yellow, futsal and beach soccer: 186 emblems); 0.2.1 draws every ball and implement to the rulebook's proportions; 0.2.0 is 167 emblems, every one drawn here, with the Japanese sports, engraving, a turn for every emblem and the compose helpers; 0.1.0 brought the first full set of 148; 0.0.1 was the first preview.
 
 ## Credits
 

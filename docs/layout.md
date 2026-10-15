@@ -9,7 +9,9 @@ src/
   index.ts                   the full registry (every emblem, the functions, each emblem as a constant)
   emblems-entry.ts           ./emblems: renderEmblem, the helpers and the ids, with no single drawing imported by name
   turn-entry.ts              ./turn: emblemFrame, ballFrame and bindTurn
-  turn-control.ts            bindTurn (a module of its own, so importing an emblem never pulls it in)
+  turn-control.ts            bindTurn, which takes an emblem object and imports no drawing and not the registry (a module of its own, so importing an emblem never pulls it in)
+  turn-registry.ts           what bindTurn loads, with a dynamic import, when it is given an id
+  turn-full.ts               the main entry's bindTurn: the same, with the registry in hand, so an id is drawn at once
   emblems/
     emblem.core.ts           options, colours, gradients, the wrapper, the Emblem type (imports nothing)
     emblem.ids.ts            the ids, the groups, the sports, the short names, and the folder of each group

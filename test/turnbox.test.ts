@@ -5,7 +5,8 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 
 import * as D from "../src/index.ts";
-import { bindTurn, type TurnContainer } from "../src/turn-control.ts";
+import { type TurnContainer } from "../src/turn-control.ts";
+import { bindTurn } from "../src/turn-full.ts";
 import { type Box, inkBox, pathPoints, viewBoxOf } from "./svgbox.ts";
 
 /** How far the ink may go past the box, as a fraction of the box's side: half a percent, which is the antialiasing of a stroke on the edge. */

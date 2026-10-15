@@ -2,7 +2,8 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
 
-import { bindTurn, wrapAngle, type TurnContainer, type TurnEvent } from "../src/turn-control.ts";
+import { wrapAngle, type TurnContainer, type TurnEvent } from "../src/turn-control.ts";
+import { bindTurn } from "../src/turn-full.ts";
 import { type Emblem, emblemFrame, emblemOf, renderEmblem } from "../src/index.ts";
 
 // Every emblem of the package turns, so an emblem that cannot is one that says so itself (`turnable: false`) and draws the same at every angle.

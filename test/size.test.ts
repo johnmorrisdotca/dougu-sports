@@ -8,8 +8,8 @@ import { build } from "esbuild";
 
 const root = new URL("..", import.meta.url).pathname;
 
-async function bundle(contents: string): Promise<{ text: string; bytes: number; gzip: number }> {
-  const result = await build({ stdin: { contents, resolveDir: root, loader: "ts" }, bundle: true, minify: true, format: "esm", write: false, treeShaking: true, logLevel: "silent" });
+async function bundle(contents: string, external: string[] = []): Promise<{ text: string; bytes: number; gzip: number }> {
+  const result = await build({ stdin: { contents, resolveDir: root, loader: "ts" }, bundle: true, minify: true, format: "esm", write: false, treeShaking: true, logLevel: "silent", external });
   const text = result.outputFiles[0]?.text ?? "";
   return { text, bytes: Buffer.byteLength(text), gzip: gzipSync(text).length };
 }
@@ -19,7 +19,8 @@ const one = (constant: string, path: string): Promise<{ text: string; bytes: num
 // Each kind of emblem has a renderer, and the renderer is most of an item's weight: the ball's is small, the flat renderer (medals, crests, plaques) is about 3 kB, and the body of revolution that turns
 // (a cup) is about 5 kB, which is the price of its metal, its handles, its balls and its seams. A pictogram or an icon is a few hundred bytes of art on a small renderer.
 // Measured again 2026-10-14 with engraving and the one coin-flip turn in: a medal or a plaque 4.5 kB (was 3.2), a cup 6.9 kB (was 5.6), a pictogram 3.7 to 4.1 kB (was 1.8 to 2.7; the sumo and the handball hand are outlines of many points), a pennant 3.3 kB.
-const LIMITS = { puck: 12.5 * 1024, ball: 6.8 * 1024, flat: 4.6 * 1024, lathe: 7.1 * 1024, icon: 4.3 * 1024, pennant: 3.6 * 1024 };
+// The turning (`bindTurn`) is about 2.5 kB on top of the emblem: measured 2026-10-14 at 9.4 kB with a cup (6.9 kB of it the cup), 2.5 kB with no emblem.
+const LIMITS = { puck: 12.5 * 1024, ball: 6.8 * 1024, flat: 4.6 * 1024, lathe: 7.1 * 1024, icon: 4.3 * 1024, pennant: 3.6 * 1024, turn: 3 * 1024, turned: 10 * 1024 };
 
 test("one named ball, bundled by itself, stays small and leaves the other emblems out", async () => {
   const b = await one("BALL_SOCCER", "ball/ball.soccer");
@@ -96,4 +97,35 @@ test("the full registry is bigger than one item, and the bundle of one item is a
   const single = await one("BALL_SOCCER", "ball/ball.soccer");
   assert.ok(all.bytes > 8 * single.bytes);
   assert.ok(all.text.includes("ball:soccer") && all.text.includes("medal:gold") && all.text.includes("trophy:hockey-cup"));
+});
+
+// What a page downloads first: the registry that `bindTurn` loads for an id is a dynamic import, which a bundler makes a chunk of its own, loaded only when an id is bound. It is left out here (as `external`)
+// so that the size is the initial one whatever the bundler does with the chunk.
+const REGISTRY_CHUNK = [`${root}src/turn-registry.ts`];
+const turned = (constant: string, path: string): Promise<{ text: string; bytes: number; gzip: number }> =>
+  bundle(`import { bindTurn } from "./src/turn-entry.ts"; import { ${constant} } from "./src/emblems/${path}.ts"; bindTurn(document.body, ${constant}, { size: 96 });`, REGISTRY_CHUNK);
+
+test("bindTurn and one cup, bundled from the turn entry, stay under 10 kB gzipped and leave the registry and every other emblem out", async () => {
+  for (const [constant, path] of [["TROPHY_HOCKEY_CUP", "trophy/hockey-cup"], ["TROPHY_BASEBALL", "trophy/baseball"], ["TROPHY_TENNIS_CUP", "trophy/tennis-cup"]] as const) {
+    const b = await turned(constant, path);
+    assert.ok(b.gzip < LIMITS.turned, `${constant}: ${b.gzip} bytes gzipped`);
+    assert.ok(!b.text.includes("ball:soccer") && !b.text.includes("Gold medal") && !b.text.includes("trophy:cup"), `${constant}: another emblem came along`);
+    assert.ok(!b.text.includes("Unknown emblem"), `${constant}: the registry's functions came along`);
+  }
+  const hockey = await turned("TROPHY_HOCKEY_CUP", "trophy/hockey-cup");
+  assert.ok(!hockey.text.includes("trophy:baseball"), "another cup came along");
+  assert.ok(hockey.text.includes("trophy:hockey-cup"), "the cup is not in the bundle");
+});
+
+test("bindTurn by itself, with the registry loaded on demand, is a few kilobytes", async () => {
+  const b = await bundle(`import { bindTurn } from "./src/turn-entry.ts"; bindTurn(document.body, "trophy:cup", { size: 96 });`, REGISTRY_CHUNK);
+  assert.ok(b.gzip < LIMITS.turn, `${b.gzip} bytes gzipped`);
+  assert.ok(!b.text.includes("Gold medal") && !b.text.includes("ball:soccer"), "an emblem came along");
+  assert.ok(b.text.includes("turn-registry"), "the registry is not a dynamic import");
+});
+
+test("the main entry's bindTurn takes the registry with it, and the turn entry's takes none of it", async () => {
+  const full = await bundle(`import { bindTurn } from "./src/index.ts"; bindTurn(document.body, "trophy:cup", {});`);
+  const light = await bundle(`import { bindTurn } from "./src/turn-entry.ts"; bindTurn(document.body, "trophy:cup", {});`, REGISTRY_CHUNK);
+  assert.ok(full.gzip > 20 * light.gzip, `${full.gzip} against ${light.gzip} bytes gzipped`);
 });

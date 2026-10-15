@@ -59,20 +59,37 @@ Every id of the package turns, at every angle, in every style, and gives finite,
 
 ## Let the reader turn it: `bindTurn`
 
-`bindTurn(element, ref, options?)` draws an emblem into an element with `emblemFrame` and turns it as the reader drags it, presses the arrow keys or starts an auto-turn. It is in the `./turn` entry (and the full registry) and in a module of its own, so importing an emblem never pulls it in.
+`bindTurn(element, ref, options?)` draws an emblem into an element with the emblem's own `frame` and turns it as the reader drags it, presses the arrow keys or starts an auto-turn. It is in the `./turn` entry (and the main one) and in a module of its own, so importing an emblem never pulls it in.
+
+### Light: pass the emblem
 
 ```js no-run
 import { bindTurn } from "@johnmorrisdotca/dougu-sports/turn";
+import { TROPHY_HOCKEY_CUP } from "@johnmorrisdotca/dougu-sports/trophy/hockey-cup";
+import { TROPHY_TENNIS_CUP } from "@johnmorrisdotca/dougu-sports/trophy/tennis-cup";
 
-const turner = bindTurn(document.getElementById("cup"), "trophy:tennis-cup", {
+const turner = bindTurn(document.getElementById("cup"), TROPHY_HOCKEY_CUP, {
   size: 160,
   onTurn: ({ yaw, pitch, roll }) => console.log(yaw, pitch, roll),
 });
 document.getElementById("spin").onclick = () => turner.togglePlay();
 // later: another emblem at the same angles, and then let go of the element
-turner.update("trophy:hockey-cup", { size: 160 });
+turner.update(TROPHY_TENNIS_CUP, { size: 160 });
 turner.destroy();
 ```
+
+`ref` is an emblem object (the constant a module exports: `TROPHY_HOCKEY_CUP`, `MEDAL_GOLD`, `BALL_SOCCER`) or an id. With the object, `bindTurn` imports no drawing and not the registry, so a page carries the turning (about 2.5 kB gzipped) and the one emblem and its renderer (a cup is 6.9 kB of it), about 9.4 kB for a turnable cup, where the registry is about 80 kB. `test/size.test.ts` holds the bundle to 10 kB. The element is drawn, and `ready` is resolved, before `bindTurn` returns. The emblems stay tree-shakeable: nothing but what you import is in the bundle. What an id carries that an object does not is read by the registry: a style written after the id (`"trophy:cup/line"`; with an object pass `style: "line"`) and the print of a puck whose `face` names an emblem by id (with an object give the face an `image`).
+
+### By id
+
+```js no-run
+import { bindTurn } from "@johnmorrisdotca/dougu-sports/turn";
+
+const turner = bindTurn(document.getElementById("cup"), "trophy:tennis-cup", { size: 160 });
+await turner.ready; // the registry has loaded and the emblem is drawn
+```
+
+An id is read from the registry, and the registry is the whole package (about 80 kB gzipped), so `bindTurn` of `./turn` loads it only when it is given an id: a dynamic import, which a bundler makes a chunk of its own. Until it has loaded the element is left as it was, `turnable` is `false` and `ready` is pending, though `angles` and `setAngles` already work; when it has, the emblem is drawn at those angles. The second id after the first is bound at once, since the registry is then loaded. An id that names no emblem makes `ready` reject. `bindTurn` of the main entry (`@johnmorrisdotca/dougu-sports`) has the registry in hand and draws an id at once, with no `ready` to wait for, and takes an emblem object too.
 
 ### What the reader can do
 
@@ -110,9 +127,10 @@ Nothing moves by itself. `autoPlay` is off by default, `play()`, `pause()` and `
 | Controller | |
 | --- | --- |
 | `angles` | A copy of `{ yaw, pitch, roll }` |
-| `playing`, `turnable` | Whether the auto-turn runs, and whether the emblem can turn |
+| `playing`, `turnable` | Whether the auto-turn runs, and whether the emblem can turn (`false` until an id has loaded) |
+| `ready` | A promise: resolved when the emblem is drawn and bound (at once for an emblem object), rejected for an id that names nothing |
 | `setAngles(partial)` | Sets some angles (wrapped or clamped), draws at once, pauses the auto-turn |
-| `update(ref, options?)` | Draws another emblem or the same one with other options, and keeps the angles (unless the options carry some) |
+| `update(ref, options?)` | Draws another emblem (an object or an id) or the same one with other options, and keeps the angles (unless the options carry some) |
 | `play()`, `pause()`, `togglePlay()` | The auto-turn; `togglePlay()` gives the new state |
 | `destroy()` | Removes the listeners and every attribute and style `bindTurn` added, puts back what the page had, cancels the frame; the last drawing stays |
 
@@ -120,6 +138,7 @@ Nothing moves by itself. `autoPlay` is off by default, `play()`, `pause()` and `
 
 ```js
 import { bindTurn } from "@johnmorrisdotca/dougu-sports/turn";
+import { TROPHY_TENNIS_CUP } from "@johnmorrisdotca/dougu-sports/trophy/tennis-cup";
 
 const listeners = {};
 const element = {
@@ -132,7 +151,7 @@ const element = {
   setAttribute(name, value) { this.attributes[name] = value; },
   removeAttribute(name) { delete this.attributes[name]; },
 };
-const turner = bindTurn(element, "trophy:tennis-cup", { size: 96 });
+const turner = bindTurn(element, TROPHY_TENNIS_CUP, { size: 96 });
 listeners.keydown({ key: "ArrowRight", preventDefault() {} });
 listeners.keydown({ key: "ArrowRight", shiftKey: true, preventDefault() {} });
 console.log(turner.angles.yaw); // 20

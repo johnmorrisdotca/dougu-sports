@@ -1,7 +1,15 @@
-// `bindTurn`: an emblem that a pointer, the arrow keys, the Space bar or a clock can turn. It draws `emblemFrame` into an element and listens to that element, and it is a module of its own, so importing an
-// emblem never pulls it in. Nothing here moves by itself: an auto-turn starts only when the caller asks for it, and not at all under `prefers-reduced-motion` unless the caller forces it.
-import { emblemFrame, emblemOf, renderEmblem, type EmblemRef } from "./emblems/emblem.api.ts";
+// `bindTurn`: an emblem that a pointer, the arrow keys, the Space bar or a clock can turn. It draws the emblem's own `frame` into an element and listens to that element. It is a module of its own and it
+// never imports the registry: given an emblem (`TROPHY_HOCKEY_CUP`) it needs nothing else, so a bundle of `bindTurn` and one cup is a few kilobytes. Given an id it loads the registry on demand, with a dynamic import
+// that a bundler makes a chunk of. Nothing here moves by itself: an auto-turn starts only when the caller asks for it, and not at all under `prefers-reduced-motion` unless the caller forces it.
+import type { EmblemRef } from "./emblems/emblem.api.ts";
 import type { Emblem, FrameOptions } from "./emblems/emblem.core.ts";
+
+/** What reading an id needs of the registry: `emblemOf`, `renderEmblem` and `emblemFrame` of `emblem.api`. The main entry hands them to `bindTurn` itself; `./turn` loads them when an id is bound. */
+export interface TurnRegistry {
+  emblemOf(ref: EmblemRef): { emblem: Emblem };
+  renderEmblem(ref: EmblemRef, options?: FrameOptions): string;
+  emblemFrame(ref: EmblemRef, options?: FrameOptions): string;
+}
 
 /** The three angles of a turn, in degrees. */
 export interface TurnAngles {
@@ -42,8 +50,13 @@ export interface TurnController {
   readonly angles: TurnAngles;
   /** Whether the auto-turn is running. */
   readonly playing: boolean;
-  /** Whether the emblem now drawn can be turned at all (read from the registry, so an emblem that gains a turn is turnable here without a change). */
+  /** Whether the emblem now drawn can be turned at all (read from the emblem's own frames, so an emblem that gains a turn is turnable here without a change). `false` until an id has loaded; see `ready`. */
   readonly turnable: boolean;
+  /**
+   * Resolves when the emblem is drawn and bound. At once (already resolved) for an emblem object, and for an id from the main entry or once the registry has loaded; otherwise after the registry's chunk has loaded.
+   * Rejects for an id that names no emblem.
+   */
+  readonly ready: Promise<void>;
   /** Sets some of the angles (wrapped or clamped as a drag would) and draws. Pauses the auto-turn when `pauseOnInteract` is on. */
   setAngles(angles: Partial<TurnAngles>): void;
   /** Draws another emblem, or the same one with other options, and keeps the angles (unless the options carry some). */
@@ -108,7 +121,7 @@ const globals = globalThis as unknown as {
   document?: { hidden?: boolean; addEventListener(type: string, listener: () => void): void; removeEventListener(type: string, listener: () => void): void };
 };
 
-/** Whether an emblem turns at all, read from the registry's own frames: a turned view that differs from the resting one. An emblem may say so itself with a `turnable` flag. */
+/** Whether an emblem turns at all, read from the emblem's own frames: a turned view that differs from the resting one. An emblem may say so itself with a `turnable` flag. */
 const turns = new WeakMap<Emblem, boolean>();
 function canTurn(emblem: Emblem): boolean {
   const flag = (emblem as { turnable?: unknown }).turnable;
@@ -121,22 +134,50 @@ function canTurn(emblem: Emblem): boolean {
   return known;
 }
 
+/** One emblem, drawn at rest and at an angle: straight from its object, or through the registry for an id (which also reads a style written after the id, and a puck's print). */
+interface Drawer {
+  emblem: Emblem;
+  still(options: FrameOptions): string;
+  frame(options: FrameOptions): string;
+}
+const fromEmblem = (emblem: Emblem): Drawer => ({ emblem, still: (o) => emblem.svg(o), frame: (o) => emblem.frame(o) });
+const fromId = (registry: TurnRegistry, ref: EmblemRef): Drawer => ({ emblem: registry.emblemOf(ref).emblem, still: (o) => registry.renderEmblem(ref, o), frame: (o) => registry.emblemFrame(ref, o) });
+
+/** The registry, once something has loaded it: later ids are bound at once. */
+let loaded: TurnRegistry | undefined;
+let loading: Promise<TurnRegistry> | undefined;
+const load = (): Promise<TurnRegistry> => {
+  loading ??= import("./turn-registry.ts").then((api) => (loaded = api));
+  return loading;
+};
+
 /**
- * Binds an emblem to an element so that it can be turned: it draws `emblemFrame` into `container`, and a drag turns it (left and right are yaw, up and down are pitch, and Shift on a ball is roll), the arrow keys turn
+ * Binds an emblem to an element so that it can be turned: it draws the emblem's `frame` into `container`, and a drag turns it (left and right are yaw, up and down are pitch, and Shift on a ball is roll), the arrow keys turn
  * it, Home or 0 puts it back, and Space starts and stops an auto-turn. An emblem that cannot turn is drawn as it is, and nothing is listened to. Nothing moves by itself: `autoPlay` is off by default and, under
  * `prefers-reduced-motion`, only starts when it is `"force"`. The element gets `touch-action: none`, `user-select: none`, a grab cursor, a tab stop, a role description and a hint; `destroy()` takes them away.
+ *
+ * Pass the emblem itself (`TROPHY_HOCKEY_CUP`, from its own module) and nothing but the turning and that one emblem is in the bundle. Pass an id (`"trophy:hockey-cup"`) and the registry is loaded on
+ * demand: the element is drawn when `ready` resolves, not before. The main entry's `bindTurn` has the registry already and draws an id at once.
  * @example
  * ```ts
  * import { bindTurn } from "@johnmorrisdotca/dougu-sports/turn";
- * const turner = bindTurn(document.getElementById("cup")!, "trophy:tennis-cup", { size: 160 });
+ * import { TROPHY_TENNIS_CUP } from "@johnmorrisdotca/dougu-sports/trophy/tennis-cup";
+ * const turner = bindTurn(document.getElementById("cup")!, TROPHY_TENNIS_CUP, { size: 160 });
  * turner.setAngles({ yaw: 40 });
  * console.log(turner.angles.yaw);
  * // 40
  * ```
  */
 export function bindTurn(container: TurnContainer, ref: EmblemRef, options: TurnControlOptions = {}): TurnController {
+  return bindTurnWith(undefined, container, ref, options);
+}
+
+/** `bindTurn` with the registry in hand (or none, to load it when an id is bound): the main entry gives it, so that an id is drawn at once. An emblem object needs neither. */
+export function bindTurnWith(registry: TurnRegistry | undefined, container: TurnContainer, ref: EmblemRef, options: TurnControlOptions = {}): TurnController {
   let current = ref;
-  let emblem: Emblem = emblemOf(ref).emblem;
+  let drawer: Drawer | undefined;
+  let version = 0;
+  let pending: Promise<void> | undefined;
   let turnable = false;
   let sensitivity = 1.5;
   let range: readonly [number, number] = [-60, 60];
@@ -188,7 +229,8 @@ export function bindTurn(container: TurnContainer, ref: EmblemRef, options: Turn
     }
     const at = angles.yaw === 0 && angles.pitch === 0 && angles.roll === 0;
     // The resting view of an emblem that turns is drawn in the box of the turn too, so that the element is the same size at every angle and a drag does not make the emblem jump or zoom at its first step.
-    container.innerHTML = !turnable ? renderEmblem(current, frame) : at ? renderEmblem(current, { turnBox: true, ...frame }) : emblemFrame(current, { ...frame, ...angles });
+    if (drawer === undefined) return;
+    container.innerHTML = !turnable ? drawer.still(frame) : at ? drawer.still({ turnBox: true, ...frame }) : drawer.frame({ ...frame, ...angles });
   };
   /** One drawing for any number of changes within a frame. */
   const schedule = (): void => {
@@ -263,7 +305,7 @@ export function bindTurn(container: TurnContainer, ref: EmblemRef, options: Turn
     drag.x = x;
     drag.y = y;
     if (dx === 0 && dy === 0) return;
-    if (event.shiftKey === true && emblem.kind === "ball") place({ roll: angles.roll + dx, pitch: angles.pitch - dy });
+    if (event.shiftKey === true && drawer?.emblem.kind === "ball") place({ roll: angles.roll + dx, pitch: angles.pitch - dy });
     else place({ yaw: angles.yaw + dx, pitch: angles.pitch - dy });
     changed();
   };
@@ -360,23 +402,39 @@ export function bindTurn(container: TurnContainer, ref: EmblemRef, options: Turn
     drag = undefined;
     held = false;
   };
-  const settle = (): void => {
-    emblem = emblemOf(current).emblem;
-    turnable = canTurn(emblem);
+  const adopt = (next: Drawer): void => {
+    drawer = next;
+    turnable = canTurn(next.emblem);
+    detach();
     if (turnable) attach();
-    else {
-      detach();
-      setPlaying(false);
-    }
+    else setPlaying(false);
+  };
+  /** Binds what `current` names: at once for an emblem, or for an id when the registry is in hand; otherwise when it has loaded. Gives the wait, if there is one. */
+  const settle = (first: boolean): Promise<void> | undefined => {
+    const mine = ++version;
+    const now = current;
+    if (typeof now !== "string") return void adopt(fromEmblem(now));
+    const known = registry ?? loaded;
+    if (known !== undefined) return void adopt(fromId(known, now));
+    return load().then((api) => {
+      if (mine !== version || destroyed) return;
+      adopt(fromId(api, now));
+      draw();
+      if (first) autoStart();
+    });
+  };
+  const autoStart = (): void => {
+    if (!turnable || options.autoPlay === undefined || options.autoPlay === false) return;
+    const reduced = globals.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
+    if (options.autoPlay === "force" || !reduced) setPlaying(true);
   };
 
   configure(options);
   place({ yaw: options.yaw, pitch: options.pitch, roll: options.roll });
-  settle();
-  draw();
-  if (turnable && options.autoPlay !== undefined && options.autoPlay !== false) {
-    const reduced = globals.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
-    if (options.autoPlay === "force" || !reduced) setPlaying(true);
+  pending = settle(true);
+  if (pending === undefined) {
+    draw();
+    autoStart();
   }
 
   return {
@@ -388,6 +446,9 @@ export function bindTurn(container: TurnContainer, ref: EmblemRef, options: Turn
     },
     get turnable() {
       return turnable;
+    },
+    get ready() {
+      return pending ?? Promise.resolve();
     },
     setAngles(partial) {
       if (destroyed) return;
@@ -402,9 +463,8 @@ export function bindTurn(container: TurnContainer, ref: EmblemRef, options: Turn
       place({ yaw: o.yaw, pitch: o.pitch, roll: o.roll });
       // The pitch the new range allows.
       place({ pitch: angles.pitch });
-      detach();
-      settle();
-      draw();
+      pending = settle(false);
+      if (pending === undefined) draw();
     },
     play() {
       if (!turnable || destroyed) return false;
@@ -423,6 +483,7 @@ export function bindTurn(container: TurnContainer, ref: EmblemRef, options: Turn
       if (destroyed) return;
       setPlaying(false);
       destroyed = true;
+      version++;
       if (renderId !== undefined) globals.cancelAnimationFrame?.(renderId);
       renderId = undefined;
       detach();

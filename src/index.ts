@@ -2,7 +2,7 @@
 // its own module (`@johnmorrisdotca/dougu-sports/trophy/hockey-cup`), and for the functions alone `@johnmorrisdotca/dougu-sports/emblems`.
 export * from "./emblems-entry.ts";
 export { ballFrame, emblemFrame } from "./emblems/emblem.api.ts";
-export { bindTurn } from "./turn-control.ts";
+export { bindTurn } from "./turn-full.ts";
 export type { TurnAngles, TurnContainer, TurnControlOptions, TurnController, TurnEvent } from "./turn-control.ts";
 export { EMBLEM_TABLE } from "./emblems/emblem.registry.ts";
 export { AWARD_MEDAL } from "./emblems/award/medal.ts";
