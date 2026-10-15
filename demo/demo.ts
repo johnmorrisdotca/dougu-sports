@@ -210,3 +210,63 @@ for (const key of ["ring", "text", "name", "number"] as const) $(`puck-${key}`).
 $("puck-sign").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { puck.sign = b.dataset.value ?? ""; drawPuck(); } });
 $("puck-seed").addEventListener("input", () => { puck.seed = Number($<HTMLInputElement>("puck-seed").value); drawPuck(); });
 drawPuck();
+
+// The custom ball: a baseball, a softball or a soccer ball painted and printed from the fields beside it, turned by dragging it. A logo that is picked is read in the browser into a data URI and never sent anywhere.
+/** A neutral placeholder logo and mark, drawn for this demo: a ring, a chevron and a star; and a diamond. They stand in for the logo and the mark you would pass. */
+const SAMPLE_LOGO = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#1f4e8c"/><circle cx="50" cy="50" r="37" fill="none" stroke="#fff" stroke-width="3"/><path d="M24 64 L50 38 L76 64" fill="none" stroke="#f2b705" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><polygon points="50,14 54,25 66,25 56,32 60,43 50,36 40,43 44,32 34,25 46,25" fill="#fff"/></svg>`;
+const SAMPLE_MARK = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,6 94,50 50,94 6,50" fill="#1b2a5c"/><circle cx="50" cy="50" r="16" fill="#fff"/></svg>`;
+const BALL_WORDS: Record<string, string> = { "ball:baseball": "Baseball", "ball:softball": "Softball", "ball:soccer": "Soccer" };
+const ball = { id: "ball:baseball", colour: "", two: "", second: "#c4262e", stamp: true, sign: false, line1: "", line2: "", script: true, word: "", mark: "letter", logo: "" };
+const ballTurner = D.bindTurn($("ball-stage"), ball.id, { size: 320, speed: 36 });
+/** What the fields ask for: only what was set, so the ball's own words and colours show through until they are replaced. */
+function ballOptions(): D.EmblemOptions {
+  const o: D.EmblemOptions = { size: 320 };
+  const paint: D.BallPaint = {};
+  if (ball.colour !== "") paint.body = ball.colour;
+  if (ball.two !== "") {
+    paint.second = ball.second;
+    paint.split = ball.two === "half" ? "half" : "seam";
+  }
+  if (paint.body !== undefined || paint.second !== undefined) o.paint = paint;
+  if (ball.logo !== "") o.decal = ball.logo;
+  if (ball.stamp) {
+    const stamp: D.BallStamp = {};
+    const lines = [ball.line1.trim(), ball.line2.trim()];
+    if (lines[0] !== "" || lines[1] !== "") stamp.lines = lines[0] === "" ? [lines[1] as string] : lines[1] === "" ? [lines[0] as string] : lines;
+    if (ball.sign) stamp.sign = true;
+    o.stamp = Object.keys(stamp).length === 0 ? true : stamp;
+  }
+  if (ball.script) o.script = ball.word.trim() === "" ? true : ball.word.trim();
+  if (ball.mark === "sample") o.mark = { svg: SAMPLE_MARK };
+  else if (ball.mark === "none") o.mark = false;
+  else if (ball.mark === "letter" && !ball.script) o.mark = true;
+  return o;
+}
+function drawBall() {
+  const options = ballOptions();
+  ballTurner.update(ball.id, options);
+  $<HTMLSelectElement>("ball-id").value = ball.id;
+  $<HTMLInputElement>("ball-line2").placeholder = `DIGITAL ${(BALL_WORDS[ball.id] ?? "").toUpperCase()}`;
+  $<HTMLInputElement>("ball-word").placeholder = BALL_WORDS[ball.id] ?? "";
+  for (const key of ["colour", "two", "second", "mark"] as const) for (const b of $(`ball-${key}`).querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === ball[key]));
+  const shown = JSON.stringify(options, (_k, v: unknown) => (typeof v === "string" && v.startsWith("data:") ? "data:image/…" : typeof v === "string" && v.startsWith("<svg") ? "<svg …>" : v)).replace(/"(\w+)":/g, "$1: ").replace(/,/g, ", ").replace(/^\{/, "{ ").replace(/\}$/, " }");
+  $("ball-code").firstChild!.textContent = `import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";\n\nconst svg = renderEmblem("${ball.id}", ${shown});\n`;
+}
+$("ball-id").addEventListener("change", () => { ball.id = $<HTMLSelectElement>("ball-id").value; drawBall(); });
+for (const key of ["colour", "two", "second", "mark"] as const) {
+  $(`ball-${key}`).addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { ball[key] = b.dataset.value ?? ""; drawBall(); } });
+}
+for (const [key, id] of [["stamp", "ball-stamp"], ["sign", "ball-sign"], ["script", "ball-script"]] as const) $(id).addEventListener("change", () => { ball[key] = $<HTMLInputElement>(id).checked; drawBall(); });
+for (const [key, id] of [["line1", "ball-line1"], ["line2", "ball-line2"], ["word", "ball-word"]] as const) $(id).addEventListener("input", () => { ball[key] = $<HTMLInputElement>(id).value; drawBall(); });
+$("ball-sample").addEventListener("click", () => { ball.logo = SAMPLE_LOGO; $("ball-note").textContent = "Sample logo."; drawBall(); });
+$("ball-clear").addEventListener("click", () => { ball.logo = ""; $<HTMLInputElement>("ball-logo").value = ""; $("ball-note").textContent = ""; drawBall(); });
+$("ball-logo").addEventListener("change", () => {
+  const file = $<HTMLInputElement>("ball-logo").files?.[0];
+  if (file === undefined) return;
+  if (file.size > 300000) { $("ball-note").textContent = "That file is over 300 kB: pick a smaller one."; return; }
+  const reader = new FileReader();
+  // The file is read in the browser into a data URI, and the package draws it on the ball; nothing leaves the page.
+  reader.addEventListener("load", () => { ball.logo = String(reader.result); $("ball-note").textContent = file.type.includes("svg") ? "SVG: wrapped onto the ball exactly." : "Picture: laid on in small pieces."; drawBall(); });
+  reader.readAsDataURL(file);
+});
+drawBall();

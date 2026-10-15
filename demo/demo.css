@@ -62,3 +62,7 @@ details > pre { margin: 0; padding: 0 14px 14px; overflow-x: auto; font-family: 
 .sprite-stats { font-size: .85rem; color: var(--muted); margin: 8px 0 0; }
 .compose-card img.uri { display: block; margin: 0 auto; }
 .compose-card .backdrop { width: 96px; height: 96px; background-size: contain; background-repeat: no-repeat; background-position: center; margin: 0 auto; }
+.check { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding-right: 10px; }
+.check input { width: 22px; height: 22px; }
+#ball-sample, #ball-clear { min-height: 44px; }
+#ball-note { align-self: center; }

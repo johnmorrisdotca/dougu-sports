@@ -70,6 +70,32 @@
     <details open><summary>The call that draws it</summary><pre id="puck-code"><code></code></pre></details>
   </section>
 
+  <section class="more" aria-labelledby="ball-h">
+    <h2 id="ball-h">Custom ball</h2>
+    <p class="fam-fine">A baseball, a softball or a soccer ball in your colours, with a stamp, a cursive word, a small mark and your own logo printed on its side. Everything is drawn on the ball, so it curves with it and turns with it: drag it to see the lettering on the far side of a ball that has a logo.</p>
+    <div class="fam-panels">
+      <div class="fam-panel controls">
+        <div class="fam-row"><label class="fam-label" for="ball-id">Ball</label><select class="fam-field" id="ball-id" data-testid="ball-id"><option value="ball:baseball">Baseball</option><option value="ball:softball">Softball</option><option value="ball:soccer">Soccer ball</option></select></div>
+        <div class="fam-row"><span class="fam-label">Colour</span>
+          <div class="fam-seg" role="group" aria-label="Colour of the ball" id="ball-colour" data-testid="ball-colour"><button type="button" data-value="" aria-pressed="true">Own</button><button type="button" data-value="#c4262e" aria-pressed="false">Scarlet</button><button type="button" data-value="#1f4e8c" aria-pressed="false">Navy</button><button type="button" data-value="#0b6e4f" aria-pressed="false">Forest</button><button type="button" data-value="#101418" aria-pressed="false">Ink</button></div></div>
+        <div class="fam-row"><span class="fam-label">Two-tone</span>
+          <div class="fam-seg" role="group" aria-label="Two-tone: the second colour on one piece of the seam, or on half of the ball" id="ball-two" data-testid="ball-two"><button type="button" data-value="" aria-pressed="true">Off</button><button type="button" data-value="seam" aria-pressed="false">Seam</button><button type="button" data-value="half" aria-pressed="false">Half</button></div></div>
+        <div class="fam-row"><span class="fam-label">Second</span>
+          <div class="fam-seg" role="group" aria-label="Second colour" id="ball-second" data-testid="ball-second"><button type="button" data-value="#c4262e" aria-pressed="true">Scarlet</button><button type="button" data-value="#1f4e8c" aria-pressed="false">Navy</button><button type="button" data-value="#0b6e4f" aria-pressed="false">Forest</button><button type="button" data-value="#101418" aria-pressed="false">Ink</button></div></div>
+        <div class="fam-row"><span class="fam-label">Stamp</span><label class="check"><input type="checkbox" id="ball-stamp" data-testid="ball-stamp" checked /> On</label><label class="check"><input type="checkbox" id="ball-sign" data-testid="ball-sign" /> Signature line</label></div>
+        <div class="fam-row"><label class="fam-label" for="ball-line1">Line 1</label><input class="fam-field" id="ball-line1" type="text" maxlength="24" placeholder="UNOFFICIAL" autocomplete="off" aria-label="First line of the stamp, with a star on each side" data-testid="ball-line1" /></div>
+        <div class="fam-row"><label class="fam-label" for="ball-line2">Line 2</label><input class="fam-field" id="ball-line2" type="text" maxlength="24" placeholder="DIGITAL BASEBALL" autocomplete="off" aria-label="Second line of the stamp" data-testid="ball-line2" /></div>
+        <div class="fam-row"><span class="fam-label">Script</span><label class="check"><input type="checkbox" id="ball-script" data-testid="ball-script" checked /> On</label><input class="fam-field" id="ball-word" type="text" maxlength="16" placeholder="Baseball" autocomplete="off" aria-label="The cursive word, where a maker's mark sits" data-testid="ball-word" /></div>
+        <div class="fam-row"><span class="fam-label">Mark</span>
+          <div class="fam-seg" role="group" aria-label="The small mark under the script" id="ball-mark" data-testid="ball-mark"><button type="button" data-value="none" aria-pressed="false">None</button><button type="button" data-value="letter" aria-pressed="true">Letter</button><button type="button" data-value="sample" aria-pressed="false">Sample</button></div></div>
+        <div class="fam-row"><label class="fam-label" for="ball-logo">Logo</label><input class="fam-field" id="ball-logo" type="file" accept="image/svg+xml,image/png,image/jpeg,image/webp,image/gif" aria-label="A logo to print on the ball: an SVG is wrapped exactly, a picture is laid on in small pieces. It stays in your browser." data-testid="ball-logo" /></div>
+        <div class="fam-row"><span class="fam-label">&nbsp;</span><button type="button" class="fam-button" id="ball-sample" data-testid="ball-sample">Sample logo</button><button type="button" class="fam-button" id="ball-clear" data-testid="ball-clear">No logo</button><span class="fam-fine" id="ball-note" role="status"></span></div>
+      </div>
+      <div class="stage" id="ball-stage" data-testid="ball-stage" role="region" aria-label="The custom ball"></div>
+    </div>
+    <details open><summary>The call that draws it</summary><pre id="ball-code"><code></code></pre></details>
+  </section>
+
   <section class="more" aria-labelledby="code-h">
     <h2 id="code-h">The call</h2>
     <details id="code-box" open><summary>The call that draws it</summary><pre id="code"><code></code></pre></details>
