@@ -6,6 +6,24 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-10-15
+
+### Added
+
+- **Custom balls.** The baseball, the softball and the classic soccer balls (`ball:baseball`, `ball:softball`, `ball:soccer`, `ball:soccer-orange`, `ball:soccer-yellow` and `ball:soccer-colour`) take six options, drawn on the sphere so that they curve with it, are foreshortened toward the edge, go round the limb and turn with the ball (`renderEmblem`, `emblemFrame`, `ballFrame` and `bindTurn` take them):
+  - `paint`: a colour, or `{ body, second, split, angle, stitch }`. A solid ball takes the colour, and the stitches change to a thread that shows against it (red, cream, navy or near-black). Two colours make a two-tone ball, split along the figure-eight seam (each leather piece one colour, each stitch leg the thread that shows on its own side) or in halves. On a soccer ball `body` is the hexagons and `second` the pentagons.
+  - `decal`: a logo of your own as an SVG string, a `data:` image URI or `{ svg, href, size, turn }`. An SVG is flattened and wrapped exactly (fills cut at the limb, strokes thinning as they turn away); a PNG, JPEG, GIF or WebP is laid on in small affine triangles. Made safe with an allow-list; an address on the network is refused.
+  - `stamp`: bold condensed block lettering between small stars (`UNOFFICIAL` over `DIGITAL BASEBALL` by default, the ball's own word on each ball), your own lines, ink and an optional made-up signature line with a caption.
+  - `script`: an original cursive script (waypoints drawn for this package, a thick down stroke and a hairline up stroke, a to z and our own `Baseball` and `Soccer`), where a maker's mark sits; with a small circled letter under it, or your own mark.
+  - `mark`: a letter in a circle, or an SVG of your own drawn in its place (the slot for a mark this package must not carry).
+  - `spots`: where the logo and the lettering go. The logo has the middle and the lettering the far side by default.
+- **`printed(ball)`** (main entry) and the types `BallPaint`, `BallDecal`, `BallStamp`, `BallScript`, `BallMark`, `BallSpots` and `Spot`. The balls' own modules carry no printing code and ignore the options; the registry, `renderEmblem` and the main entry's constants are the printed ones, and `printed(BALL_BASEBALL)` gives a ball taken from its own module the printing (about 19 kB gzipped, against 8.6 kB for the plain baseball).
+- **`docs/custom-balls.md`** and its Japanese page, the gallery's note about the options, and a "Custom ball" section in the demo: colour, two-tone, stamp lines, script word, mark and a logo picked from a file (read in the browser into a data URI), with the call that draws it.
+
+### Changed
+
+- The ball engine can fill the disc of a ball and a region of it, and a ball's draw hook takes its paint and print options. A plain soccer ball bundled alone is 7.3 kB gzipped (was 6.5), so the size test's limit for a ball is 7.6 kB.
+
 ## [0.8.0] - 2026-10-14
 
 ### Added
