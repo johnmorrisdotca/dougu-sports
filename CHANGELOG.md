@@ -6,6 +6,17 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-10-14
+
+### Added
+
+- **`bindTurn` takes an emblem object and is light.** `bindTurn(element, TROPHY_HOCKEY_CUP, options)` draws and turns the emblem it is given with its own `frame` and imports neither a drawing nor the registry, so a bundle of `bindTurn` and one cup is about 9.4 kB gzipped (the turning is about 2.5 kB of it), where it was about 81 kB. `test/size.test.ts` holds it to 10 kB, and the other emblems stay tree-shakeable.
+- **`ready`** on the controller `bindTurn` returns: a promise that resolves when the emblem is drawn and bound (already, for an emblem object) and rejects for an id that names nothing.
+
+### Changed
+
+- **`bindTurn` of `./turn` loads the registry only for an id.** An id (`"trophy:tennis-cup"`) is read from the registry, which `bindTurn` now imports on demand (a dynamic import, a chunk of its own in a bundler) instead of at the top. The first id bound is drawn when `ready` resolves, not before; later ones at once. `bindTurn` of the main entry (`@johnmorrisdotca/dougu-sports`) has the registry already and draws an id at once, as before. New modules: `src/turn-registry.ts` (what is loaded) and `src/turn-full.ts` (the main entry's `bindTurn`).
+
 ## [0.7.3] - 2026-10-14
 
 The repository's own tooling is TypeScript. No change to the package: the same files are published, and the pictures are byte for byte the same.
