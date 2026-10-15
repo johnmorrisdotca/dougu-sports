@@ -12,6 +12,8 @@ id は `<グループ>:<名前>` の形です。定数とインポートパス�
 
 印刷パック（`puck:*`）は 1 つのファミリーモジュール `@johnmorrisdotca/dougu-sports/ball/ball.puck.print` にまとめてあり、`face` オプションを受け取ります（[pucks.ja.md](pucks.ja.md)）。
 
+野球のボール、ソフトボール、定番のサッカーボール（`ball:baseball`、`ball:softball`、`ball:soccer` と、そのオレンジ・イエロー・カラー版）は、`paint`、`decal`、`stamp`、`script`、`mark`、`spots` のオプションを受け取ります。単色またはツートンカラーの塗り分け、ボールに巻き付けて印刷するロゴ、スタンプの文字、筆記体の単語、小さなマークを指定できます（[custom-balls.ja.md](custom-balls.ja.md)）。
+
 エンブレムのソース（元の画像）が入っているフォルダーは、[layout.md](layout.md)（英語）にまとめてあります。
 
 ## award

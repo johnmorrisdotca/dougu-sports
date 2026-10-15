@@ -49,6 +49,8 @@ const PAGES: Record<"en" | "ja", Page> = {
 
 The printed pucks (\`puck:*\`) are made in one family module, \`${NAME}/ball/ball.puck.print\`, and take a \`face\` option ([pucks.md](pucks.md)).
 
+The baseball, the softball and the classic soccer balls (\`ball:baseball\`, \`ball:softball\`, \`ball:soccer\` and its orange, yellow and coloured versions) take \`paint\`, \`decal\`, \`stamp\`, \`script\`, \`mark\` and \`spots\` options: a solid or two-tone colour, a logo wrapped onto the ball, stamped text, a cursive word and a small mark ([custom-balls.md](custom-balls.md)).
+
 The folders the art lives in are in [layout.md](layout.md).`,
     none: "_No emblems yet._",
     name: (info: EmblemInfo) => info.en,
@@ -65,6 +67,8 @@ The folders the art lives in are in [layout.md](layout.md).`,
 - ball と gear は、ファミリーごとのモジュールにまとめてあり、1 つのファイルに複数のエンブレムが入っています。そのため、インポートのパスは \`${NAME}/ball/ball.<ファイル>\`（gear は \`gear/gear.<ファイル>\`）になります。ファミリーの名前は [layout.md](layout.md)（英語）に載っています（スカッシュのボールは \`ball/ball.squash\`）。上の定数は、パッケージのメインエントリからもインポートできます。
 
 印刷パック（\`puck:*\`）は 1 つのファミリーモジュール \`${NAME}/ball/ball.puck.print\` にまとめてあり、\`face\` オプションを受け取ります（[pucks.ja.md](pucks.ja.md)）。
+
+野球のボール、ソフトボール、定番のサッカーボール（\`ball:baseball\`、\`ball:softball\`、\`ball:soccer\` と、そのオレンジ・イエロー・カラー版）は、\`paint\`、\`decal\`、\`stamp\`、\`script\`、\`mark\`、\`spots\` のオプションを受け取ります。単色またはツートンカラーの塗り分け、ボールに巻き付けて印刷するロゴ、スタンプの文字、筆記体の単語、小さなマークを指定できます（[custom-balls.ja.md](custom-balls.ja.md)）。
 
 エンブレムのソース（元の画像）が入っているフォルダーは、[layout.md](layout.md)（英語）にまとめてあります。`,
     none: "_まだエンブレムはありません。_",

@@ -12,6 +12,8 @@ Ids are `<group>:<name>`. The constant and the import follow from the id, so the
 
 The printed pucks (`puck:*`) are made in one family module, `@johnmorrisdotca/dougu-sports/ball/ball.puck.print`, and take a `face` option ([pucks.md](pucks.md)).
 
+The baseball, the softball and the classic soccer balls (`ball:baseball`, `ball:softball`, `ball:soccer` and its orange, yellow and coloured versions) take `paint`, `decal`, `stamp`, `script`, `mark` and `spots` options: a solid or two-tone colour, a logo wrapped onto the ball, stamped text, a cursive word and a small mark ([custom-balls.md](custom-balls.md)).
+
 The folders the art lives in are in [layout.md](layout.md).
 
 ## award

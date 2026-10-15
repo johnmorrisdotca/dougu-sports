@@ -16,7 +16,7 @@ Bug reports and ideas go in the
 - **One module per item.** An emblem is one file, `src/emblems/<group>/<name>.ts`, made with `/* @__PURE__ */` and exported by
   its id in capitals, so that one import takes one emblem (the balls and the gear are one module per family). [docs/layout.md](docs/layout.md)
   says where each group goes and how to add one; `test/size.test.ts` holds a single item to a limit for its kind (a medal 4.6 kB,
-  a cup 7.1 kB or a ball 6.8 kB gzipped, most of it the renderer; `bindTurn` and a cup 10 kB).
+  a cup 7.1 kB or a ball 7.6 kB gzipped, most of it the renderer; `bindTurn` and a cup 10 kB).
 - **Trophies are generic and drawn, never traced.** A trophy is drawn in simplified SVG from what the object is known to look like, and is
   named for what it is (`trophy:hockey-cup`: a tall banded silver cup); no id, title, doc or drawing carries a real trophy's name, mark,
   logo or engraving. Look at a contact sheet (`node scripts/emblem-sheet.ts sheet.png trophy/<name>`) at 256, 64 and 16 pixels, light and dark.
