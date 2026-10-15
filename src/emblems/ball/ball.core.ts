@@ -3,6 +3,8 @@
 // is the shape of an emblem in the emblem registry, so a registry can take a ball or a piece of gear as it is.
 
 import type { FlagRenderer, PuckFace } from "./ball.face.ts";
+import type { Surface } from "./ball.engine.ts";
+import type { BallDecal, BallMark, BallPaint, BallScript, BallSpots, BallStamp } from "./ball.print.ts";
 
 /** `metal` (also written `colour`): full colour, with shading. `line`: one outline in `currentColor`. */
 export type PieceStyle = "metal" | "colour" | "color" | "line";
@@ -33,7 +35,24 @@ export interface PieceOptions {
   flags?: FlagRenderer;
   /** A judogi seen from behind: the back number on it (see `Backnumber`). The back views of the judogi (`gear:judogi-back`, `gear:judogi-blue-back`) take it; anything else ignores it. */
   backnumber?: Backnumber;
+  /** A baseball, a softball and the classic soccer balls: the colour of the ball, as one colour or two (see `BallPaint`). Any other ball takes the body colour as a tint. */
+  paint?: string | BallPaint;
+  /** A baseball, a softball and the classic soccer balls: a logo printed on the side of the ball, wrapped to the sphere (see `BallDecal`). An SVG string, a `data:` image URI or an object. */
+  decal?: string | BallDecal;
+  /** The same balls: stamped text like a ball's stamp, `true` for the default (see `BallStamp`). */
+  stamp?: boolean | string | readonly string[] | BallStamp;
+  /** The same balls: a cursive script word where a maker's mark sits, `true` for the ball's own word, or your text (see `BallScript`). */
+  script?: boolean | string | BallScript;
+  /** The same balls: a small mark under the script, `true` for the circled letter, an SVG string of your own, or an object (see `BallMark`). */
+  mark?: boolean | string | BallMark;
+  /** The same balls: where on the ball the logo and the lettering go (see `BallSpots`). */
+  spots?: BallSpots;
+  /** @internal The function that draws the print of a ball (`printLayers`). `renderEmblem`, the registry and `printed()` set it; a ball taken from its own module has none and ignores `decal`, `stamp`, `script` and `mark`. */
+  printer?: PrintRenderer;
 }
+
+/** What draws the print of a ball on its surface: the options, the ball's own word, and the colours the print lies on. */
+export type PrintRenderer = (s: Surface, p: PrintOptions | undefined, word: string, grounds: readonly string[]) => string;
 
 /**
  * The back number sewn on the back of a judogi (IJF Sport and Organisation Rules, C1.8): the competitor's family name and the three letters of the National Olympic Committee, on a white patch under a coloured band.
@@ -159,6 +178,58 @@ export interface ResolvedOptions {
   flags: FlagRenderer | undefined;
   /** A string that tells two faces apart, for the ids of a drawing. */
   faceKey: string;
+  /** The colours of a printed or painted ball, read and made safe; undefined when none was asked for. */
+  paint: ResolvedPaint | undefined;
+  /** What a ball is printed with, as the caller gave it (made safe where it is drawn, by `resolvePrint`); undefined when nothing was asked for. */
+  print: PrintOptions | undefined;
+  /** What draws the print, when the caller has it (see `PieceOptions.printer`). */
+  printer: PrintRenderer | undefined;
+}
+
+/** The colours of a painted ball, as hex colours. */
+export interface ResolvedPaint {
+  body: string | undefined;
+  second: string | undefined;
+  split: "seam" | "half";
+  angle: number;
+  stitch: string | undefined;
+}
+
+/** The printing options of a ball, as given. */
+export interface PrintOptions {
+  decal?: PieceOptions["decal"];
+  stamp?: PieceOptions["stamp"];
+  script?: PieceOptions["script"];
+  mark?: PieceOptions["mark"];
+  spots?: PieceOptions["spots"];
+}
+
+/** True when a ball is asked to carry a logo, lettering or a mark. */
+export const hasPrint = (p: PrintOptions | undefined): boolean => p !== undefined && ((p.decal !== undefined && (p.decal as unknown) !== false) || ([p.stamp, p.script, p.mark] as unknown[]).some((v) => v !== undefined && v !== false));
+
+function paintOf(value: unknown): ResolvedPaint | undefined {
+  const o = typeof value === "string" ? { body: value } : typeof value === "object" && value !== null ? (value as Record<string, unknown>) : undefined;
+  if (o === undefined) return undefined;
+  const pick = (v: unknown): string | undefined => {
+    const rgb = typeof v === "string" ? readColour(v) : undefined;
+    return rgb === undefined ? undefined : hexOf(rgb);
+  };
+  const body = pick(o.body), second = pick(o.second), stitch = pick(o.stitch);
+  if (body === undefined && second === undefined && stitch === undefined) return undefined;
+  const angle = typeof o.angle === "number" && Number.isFinite(o.angle) ? Math.max(-360, Math.min(360, o.angle)) : 0;
+  return { body, second, split: o.split === "half" ? "half" : "seam", angle, stitch };
+}
+
+/** The printing options that were given, copied (a hostile object is never held), or undefined when there are none. */
+function printOf(o: PieceOptions | undefined): PrintOptions | undefined {
+  if (o === undefined) return undefined;
+  const p: PrintOptions = {};
+  if (o.decal !== undefined) p.decal = o.decal;
+  if (o.stamp !== undefined) p.stamp = o.stamp;
+  if (o.script !== undefined) p.script = o.script;
+  if (o.mark !== undefined) p.mark = o.mark;
+  if (o.spots !== undefined) p.spots = o.spots;
+  return Object.keys(p).length === 0 ? undefined : p;
 }
 
 /** What tells one face from another: its plain data (a renderer is a function, and only its name goes in). */
@@ -186,7 +257,7 @@ export function resolveOptions(o: PieceOptions | undefined): ResolvedOptions {
   const theme = o?.theme === "auto" || o?.theme === "light" || o?.theme === "dark" ? o.theme : "inherit";
   const tint = readColour(o?.tint);
   const accent = readColour(o?.accent);
-  return { style: o?.style === "line" ? "line" : "colour", size, theme, tint: tint === undefined ? undefined : hexOf(tint), accent: accent === undefined ? undefined : hexOf(accent), colors: coloursOf(o?.colors), grain: typeof o?.grain === "boolean" ? o.grain : undefined, face: typeof o?.face === "object" && o.face !== null ? o.face : undefined, flags: typeof o?.flags === "function" ? o.flags : undefined, faceKey: faceKeyOf(o?.face) + (typeof o?.flags === "function" ? `|fn:${o.flags.name}` : "") };
+  return { style: o?.style === "line" ? "line" : "colour", size, theme, tint: tint === undefined ? undefined : hexOf(tint), accent: accent === undefined ? undefined : hexOf(accent), colors: coloursOf(o?.colors), grain: typeof o?.grain === "boolean" ? o.grain : undefined, face: typeof o?.face === "object" && o.face !== null ? o.face : undefined, flags: typeof o?.flags === "function" ? o.flags : undefined, faceKey: faceKeyOf(o?.face) + (typeof o?.flags === "function" ? `|fn:${o.flags.name}` : ""), paint: paintOf(o?.paint), print: printOf(o), printer: typeof o?.printer === "function" ? o.printer : undefined };
 }
 
 /** The ink of a drawing when a theme sets it, and the page it is made to read on. */

@@ -8,6 +8,15 @@ export interface SafeImage {
   /** x, y, width and height of the drawing's own coordinates (its viewBox). */
   box: readonly [number, number, number, number];
   markup: string;
+  /** The same drawing as a list of elements in order, with the attributes that survived (ids already renamed), for a caller that draws it its own way (`ball.warp.ts` wraps it onto a sphere). */
+  nodes: readonly SafeNode[];
+}
+
+/** One element of a safe drawing: opened (`open`), closed (`close`) or both at once (`self`), with its safe attributes. */
+export interface SafeNode {
+  kind: "open" | "close" | "self";
+  name: string;
+  attrs: Readonly<Record<string, string>>;
 }
 
 const SHAPES = new Set(["g", "defs", "path", "circle", "ellipse", "rect", "line", "polyline", "polygon", "linearGradient", "radialGradient", "stop", "clipPath"]);
@@ -60,6 +69,7 @@ export function safeImage(source: unknown, prefix: string): SafeImage | undefine
   const cleaned = source.replace(/<!--[\s\S]*?-->/g, "").replace(/<!\[CDATA\[[\s\S]*?\]\]>/g, "").replace(/<\?[\s\S]*?\?>/g, "").replace(/<![^>]*>/g, "");
   const tag = /<(\/?)([A-Za-z][\w:-]*)((?:[^>"']|"[^"]*"|'[^']*')*?)(\/?)>/g;
   let out = "";
+  const list: SafeNode[] = [];
   let nodes = 0;
   let root: Record<string, string> | undefined;
   // The depth inside an element being dropped (0 when none is).
@@ -77,7 +87,10 @@ export function safeImage(source: unknown, prefix: string): SafeImage | undefine
     }
     if (closing) {
       const top = open.pop();
-      if (top !== undefined && top !== "#root") out += `</${top}>`;
+      if (top !== undefined && top !== "#root") {
+        out += `</${top}>`;
+        list.push({ kind: "close", name: top, attrs: {} });
+      }
       continue;
     }
     const attrs: Record<string, string> = {};
@@ -96,19 +109,26 @@ export function safeImage(source: unknown, prefix: string): SafeImage | undefine
     const pairs: [string, string][] = Object.entries(attrs);
     if (attrs["style"] !== undefined) pairs.push(...styleAttrs(attrs["style"]));
     let written = "";
+    const kept: Record<string, string> = {};
     const seen = new Set<string>();
     for (const [key, raw] of pairs) {
       if (!ATTRS.has(key) || seen.has(key)) continue;
       const v = safeValue(key, raw, prefix);
       if (v === undefined) continue;
       seen.add(key);
+      kept[key] = v;
       written += ` ${key}="${escape(v)}"`;
     }
+    list.push({ kind: selfClosed ? "self" : "open", name, attrs: kept });
     out += `<${name}${written}${selfClosed ? "/>" : ">"}`;
     if (!selfClosed) open.push(name);
   }
   if (root === undefined || !/<(path|circle|ellipse|rect|line|polyline|polygon)\b/.test(out)) return undefined;
   // Close what the text left open, so the markup is always balanced.
-  for (let top = open.pop(); top !== undefined; top = open.pop()) if (top !== "#root") out += `</${top}>`;
-  return { box: boxOf(root), markup: out };
+  for (let top = open.pop(); top !== undefined; top = open.pop()) {
+    if (top === "#root") continue;
+    out += `</${top}>`;
+    list.push({ kind: "close", name: top, attrs: {} });
+  }
+  return { box: boxOf(root), markup: out, nodes: list };
 }

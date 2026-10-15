@@ -3,6 +3,7 @@
 
 import type { FlagRenderer, PuckFace } from "./ball/ball.face.ts";
 import type { Backnumber } from "./ball/ball.core.ts";
+import type { BallDecal, BallMark, BallPaint, BallScript, BallSpots, BallStamp } from "./ball/ball.print.ts";
 
 /** `metal`: full colour with a gradient. `line`: one outline in `currentColor`. `color`: flat fills of the main colour, with no gradient. */
 export type EmblemStyle = "metal" | "line" | "color";
@@ -70,6 +71,18 @@ export interface EmblemOptions {
   flags?: FlagRenderer;
   /** A judogi seen from behind: the back number sewn on it, `{ name, code, band }` (see `Backnumber`). `gear:judogi-back` and `gear:judogi-blue-back` take it; anything else ignores it. */
   backnumber?: Backnumber;
+  /** A baseball, a softball and the classic soccer balls: the colour of the ball, one colour or two (a baseball two-tone along its seam or in halves). A string is the body colour. See `BallPaint`. Any other ball takes the body colour as a tint. */
+  paint?: string | BallPaint;
+  /** The same balls: a logo printed on the ball and wrapped onto the sphere, so it turns with the ball. An SVG string (made safe first), a `data:` image URI, or `{ svg, href, size, turn }`. See `BallDecal`. */
+  decal?: string | BallDecal;
+  /** The same balls: stamped text, like a ball's stamp. `true` is `UNOFFICIAL` under small stars over `DIGITAL BASEBALL` (the ball's own word); a string or a list of strings are your lines; an object adds stars, a made-up signature and the ink. See `BallStamp`. */
+  stamp?: boolean | string | readonly string[] | BallStamp;
+  /** The same balls: a cursive word (our own script) where a maker's mark sits. `true` is the ball's word (`Baseball`, `Softball`, `Soccer`), a string is your word. See `BallScript`. */
+  script?: boolean | string | BallScript;
+  /** The same balls: the small mark under the script. `true` is a letter in a circle, a string is that letter or an SVG of your own, an object takes `{ letter, svg, href, colour }`. `false` leaves out the circled letter the script brings. See `BallMark`. */
+  mark?: boolean | string | BallMark;
+  /** The same balls: where the logo and the lettering go, in degrees from the middle of the label area (see `BallSpots`). */
+  spots?: BallSpots;
 }
 
 /** A turn, in degrees from the resting view (0 and 0 is the still drawing): `yaw` about the vertical axis, `pitch` the tilt toward the eye. */

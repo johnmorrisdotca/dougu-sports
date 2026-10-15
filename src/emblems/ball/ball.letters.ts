@@ -173,3 +173,51 @@ export function arcPath(text: string, o: Lettering, r: number, centre: number, i
     });
   }).join("");
 }
+
+/** The centre lines of a text on a straight line, centred on (`x`, `y`), as lists of points (curves sampled `steps` to a segment), for a caller that carries them onto a surface; draw them with a stroke of `weight * size`. */
+export function lineStrokes(text: string, o: Lettering, x: number, y: number, steps = 6): Pt[][] {
+  const glyphs = glyphsOf(text);
+  const s = setting(glyphs, o);
+  const k = o.size / GLYPH_H;
+  const left = x - (s.total * k) / 2;
+  const top = y - o.size / 2;
+  const shape = shaped(o);
+  const out: Pt[][] = [];
+  glyphs.forEach((g, i) => {
+    let cur: Pt[] = [];
+    let at: Pt = [0, 0];
+    let start: Pt = [0, 0];
+    const put = (p: Pt): void => {
+      const q = shape(p);
+      cur.push([left + ((s.at[i] as number) + q[0]) * k, top + q[1] * k]);
+    };
+    const flush = (): void => {
+      if (cur.length > 1) out.push(cur);
+      cur = [];
+    };
+    for (const part of g.d.match(/[MLCZ][^MLCZ]*/g) ?? []) {
+      const n = (part.slice(1).match(/-?\d+(?:\.\d+)?/g) ?? []).map(Number);
+      if (part[0] === "M") {
+        flush();
+        at = start = [n[0] as number, n[1] as number];
+        put(at);
+      } else if (part[0] === "L") {
+        at = [n[0] as number, n[1] as number];
+        put(at);
+      } else if (part[0] === "C") {
+        const [x1, y1, x2, y2, x3, y3] = n as [number, number, number, number, number, number];
+        const [x0, y0] = at;
+        for (let j = 1; j <= steps; j++) {
+          const t = j / steps, u = 1 - t;
+          put([u * u * u * x0 + 3 * u * u * t * x1 + 3 * u * t * t * x2 + t * t * t * x3, u * u * u * y0 + 3 * u * u * t * y1 + 3 * u * t * t * y2 + t * t * t * y3]);
+        }
+        at = [x3, y3];
+      } else {
+        at = start;
+        put(at);
+      }
+    }
+    flush();
+  });
+  return out;
+}

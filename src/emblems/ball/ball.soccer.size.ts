@@ -9,3 +9,12 @@ export const SOCCER_SIZE: PieceSize = {
   rule: "IFAB Laws of the Game, Law 2 The Ball, section 2.1 Qualities and measurements",
   note: "Diameter worked out from the middle of the circumference range (68 to 70 cm).",
 };
+
+/** Where the classic 32-panel ball takes a logo and lettering: the middle of a white hexagon, the way up there, and the view that shows it (the hexagon on the far side is the same, so the label can go there). */
+export const CLASSIC_HOME: import("./ball.engine.ts").BallSpec["home"] = {
+  c: [-0.577, -0.577, -0.577],
+  up: [-0.408, 0.816, -0.408],
+  reach: 0.38,
+  view: { yaw: 124.5, pitch: -40.8, roll: -6.1 },
+  word: "soccer",
+};

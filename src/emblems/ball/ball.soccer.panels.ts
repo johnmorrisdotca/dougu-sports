@@ -6,7 +6,7 @@ import { strips18 } from "./ball.family.panelled.ts";
 import type { V3 } from "./ball.math.ts";
 import { truncatedIcosahedron } from "./ball.polyhedra.ts";
 import { dodecahedron, gores, propellers14, rhombicuboctahedron } from "./ball.tilings.ts";
-import { SOCCER_SIZE } from "./ball.soccer.size.ts";
+import { CLASSIC_HOME, SOCCER_SIZE } from "./ball.soccer.size.ts";
 
 /** The tones a construction is laid in: the light panels, the dark ones, two in between, and the seam. */
 export interface Tones {
@@ -16,6 +16,8 @@ export interface Tones {
   /** A third tone between the light and the mid one, for a third kind of panel. */
   deep: string;
   seam: string;
+  /** What a layout lays between its panels and its seams (the print of a ball that has one), if it has any. */
+  under?: (s: Surface) => string;
 }
 
 export type Layout = (s: Surface, t: Tones) => string;
@@ -31,6 +33,7 @@ export const classic: Layout = (s, t) => {
   const g = truncatedIcosahedron();
   let out = "";
   for (const p of g.pentagons) out += s.panel(p, t.dark, { ink: true });
+  out += t.under?.(s) ?? "";
   out += s.strokes(g.edges, t.seam, 1.15);
   return out + lit(s, g.edges);
 };
@@ -132,7 +135,8 @@ function specOf(construction: Construction, way: Way, view: BallSpec["view"]): B
       base: INK,
       ground: WHITE,
       mat: construction === 6 ? { ...gloss, gloss: 0.9, grain: { f: 0.7, a: 0.07 } } : gloss,
-      draw: (s, base, accent) => layout(s, { light: WHITE, dark: base, mid: accent ?? "#dfe2ea", deep: blend(accent ?? "#dfe2ea", base, 0.12), seam: SEAM }),
+      home: construction === "classic" ? CLASSIC_HOME : undefined,
+      draw: (s, base, accent, _colors, custom) => layout(s, { light: WHITE, dark: base, mid: accent ?? "#dfe2ea", deep: blend(accent ?? "#dfe2ea", base, 0.12), seam: SEAM, under: construction === "classic" ? (u) => custom?.printer?.(u, custom.print, "soccer", [custom.paint?.body ?? WHITE]) ?? "" : undefined }),
     };
   }
   const c = COLOURWAYS[way];
@@ -140,7 +144,8 @@ function specOf(construction: Construction, way: Way, view: BallSpec["view"]): B
     view,
     base: c.base,
     mat: { ...(construction === 6 ? { ...gloss, gloss: 0.9, grain: { f: 0.7, a: 0.07 } } : gloss), shade: mix(c.base, -0.65) },
-    draw: (s, base, accent) => layout(s, { light: base, dark: accent ?? c.accent, mid: blend(base, "#ffffff", 0.4), deep: blend(base, "#ffffff", 0.18), seam: mix(base, -0.5) }),
+    home: construction === "classic" ? CLASSIC_HOME : undefined,
+    draw: (s, base, accent, _colors, custom) => layout(s, { light: base, dark: accent ?? c.accent, mid: blend(base, "#ffffff", 0.4), deep: blend(base, "#ffffff", 0.18), seam: mix(base, -0.5), under: construction === "classic" ? (u) => custom?.printer?.(u, custom.print, "soccer", [base]) ?? "" : undefined }),
   };
 }
 

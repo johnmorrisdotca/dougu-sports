@@ -4,7 +4,7 @@ import { defineBall } from "./ball.engine.ts";
 import { truncatedIcosahedron } from "./ball.polyhedra.ts";
 import { add, mul, norm } from "./ball.math.ts";
 import { blend, mix } from "./ball.core.ts";
-import { SOCCER_SIZE } from "./ball.soccer.size.ts";
+import { CLASSIC_HOME, SOCCER_SIZE } from "./ball.soccer.size.ts";
 
 const SEAM = "#6b7180";
 
@@ -18,10 +18,12 @@ export const BALL_SOCCER = /* @__PURE__ */ defineBall({
     base: "#1e2025",
     ground: "#f8f8f6",
     mat: { gloss: 0.8, shade: "#2a3450", grain: { f: 1.1, a: 0.16 } },
-    draw(s, base) {
+    home: CLASSIC_HOME,
+    draw(s, base, _accent, _colors, custom) {
       const t = truncatedIcosahedron();
       let out = "";
       for (const p of t.pentagons) out += s.panel(p, base, { ink: true });
+      out += custom?.printer?.(s, custom.print, "soccer", [custom.paint?.body ?? "#f8f8f6"]) ?? "";
       out += s.strokes(t.edges, SEAM, 1.15);
       out += s.strokes(t.edges, "#fff", 0.45, { deco: true, opacity: 0.5, dx: 0.3, dy: 0.35 });
       return out;
@@ -39,7 +41,8 @@ export const BALL_SOCCER_COLOUR = /* @__PURE__ */ defineBall({
     base: "#d4283c",
     ground: "#f8f8f6",
     mat: { gloss: 0.8, shade: "#3a2030", grain: { f: 1.1, a: 0.16 } },
-    draw(s, base) {
+    home: CLASSIC_HOME,
+    draw(s, base, _accent, _colors, custom) {
       const t = truncatedIcosahedron();
       const light = blend(base, "#ffffff", 0.45);
       let out = "";
@@ -52,6 +55,7 @@ export const BALL_SOCCER_COLOUR = /* @__PURE__ */ defineBall({
         );
       });
       for (const p of t.pentagons) out += s.panel(p, base, { ink: true });
+      out += custom?.printer?.(s, custom.print, "soccer", [custom.paint?.body ?? "#f8f8f6", light]) ?? "";
       out += s.strokes(t.edges, mix(base, -0.35), 1.1);
       out += s.strokes(t.edges, "#fff", 0.45, { deco: true, opacity: 0.45, dx: 0.3, dy: 0.35 });
       return out;

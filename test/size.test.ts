@@ -20,13 +20,25 @@ const one = (constant: string, path: string): Promise<{ text: string; bytes: num
 // (a cup) is about 5 kB, which is the price of its metal, its handles, its balls and its seams. A pictogram or an icon is a few hundred bytes of art on a small renderer.
 // Measured again 2026-10-14 with engraving and the one coin-flip turn in: a medal or a plaque 4.5 kB (was 3.2), a cup 6.9 kB (was 5.6), a pictogram 3.7 to 4.1 kB (was 1.8 to 2.7; the sumo and the handball hand are outlines of many points), a pennant 3.3 kB.
 // The turning (`bindTurn`) is about 2.5 kB on top of the emblem: measured 2026-10-14 at 9.4 kB with a cup (6.9 kB of it the cup), 2.5 kB with no emblem.
-const LIMITS = { puck: 12.5 * 1024, ball: 6.8 * 1024, flat: 4.6 * 1024, lathe: 7.1 * 1024, icon: 4.3 * 1024, pennant: 3.6 * 1024, turn: 3 * 1024, turned: 10 * 1024 };
+// Measured 2026-10-15 with the printing hooks in the engine (a surface can fill its disc and carry a label area, the draw hook takes the paint and the printer): a ball 7.3 kB (was 6.5), so the limit is 7.6 kB.
+// The printing itself (the warp onto the sphere, the cursive script, the block lettering, the sanitiser) is its own module, taken by `printed(ball)`: a printed baseball 19.5 kB, held to 21 kB; the balls' own modules carry none of it.
+const LIMITS = { puck: 12.5 * 1024, ball: 7.6 * 1024, printed: 21 * 1024, twoTone: 9.6 * 1024, flat: 4.6 * 1024, lathe: 7.1 * 1024, icon: 4.3 * 1024, pennant: 3.6 * 1024, turn: 3 * 1024, turned: 10 * 1024 };
 
 test("one named ball, bundled by itself, stays small and leaves the other emblems out", async () => {
   const b = await one("BALL_SOCCER", "ball/ball.soccer");
   assert.ok(b.gzip < LIMITS.ball, `${b.gzip} bytes gzipped`);
   assert.ok(b.text.includes("ball:soccer"));
   assert.ok(!b.text.includes("medal:gold") && !b.text.includes("Gold medal"), "the medal came along");
+});
+
+test("a ball bundled by itself carries none of the printing code, and printed() takes it with the ball", async () => {
+  const plain = await one("BALL_SOCCER", "ball/ball.soccer");
+  assert.ok(!plain.text.includes("data:image") && !plain.text.includes("evenodd"), "the plain ball took the printing");
+  const seamed = await one("BALL_BASEBALL", "ball/ball.baseball");
+  assert.ok(seamed.gzip < LIMITS.twoTone, `${seamed.gzip} bytes gzipped`);
+  const printed = await bundle(`import { BALL_BASEBALL } from "./src/emblems/ball/ball.baseball.ts"; import { printed } from "./src/emblems/ball/ball.print.ts"; console.log(printed(BALL_BASEBALL).svg({ stamp: true }));`);
+  assert.ok(printed.gzip < LIMITS.printed, `${printed.gzip} bytes gzipped`);
+  assert.ok(!printed.text.includes("ball:soccer") && !printed.text.includes("medal:gold"), "another emblem came along");
 });
 
 test("one printed puck, bundled by itself, carries its lettering and face and no other emblem, and the plain puck carries none of it", async () => {

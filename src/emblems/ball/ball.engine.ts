@@ -1,7 +1,7 @@
 // The ball renderer: one procedural engine for every sphere and every prolate ball. A ball is drawn in true 3D: a rotation, an orthographic projection, back faces dropped, panels cut at the limb
 // along the limb itself, then radial-gradient shading and a grain that stays where it is while the ball turns. A ball is a `BallSpec`: its shape (the semi-axes of an ellipsoid), its
 // view, its material and a `draw` function that lays panels, seams and dots on the unit sphere; the engine does the rest.
-import { type BallFrameOptions, type Piece, grainDef, type PieceOptions, type PieceSize, type ResolvedOptions, escape, hashOf, labelled, mix, num, radians, resolveOptions, wrapPiece } from "./ball.core.ts";
+import { type BallFrameOptions, type Piece, grainDef, hasPrint, type PieceOptions, type PieceSize, type PrintOptions, type PrintRenderer, type ResolvedOptions, type ResolvedPaint, blend, escape, hashOf, labelled, mix, num, radians, resolveOptions, wrapPiece } from "./ball.core.ts";
 import { type M3, type V3, add, apply, basis, cross, dot, ellipseOf, len, mul, norm, rotation, sampleRing, sub } from "./ball.math.ts";
 
 /** How a ball takes the light. */
@@ -29,9 +29,9 @@ export interface Surface {
   /** The screen position of a point and how squarely it faces you (1 facing, 0 on the limb, below 0 hidden). */
   project(u: V3): [number, number, number];
   /** A closed polygon on the surface, cut at the limb. Its edges follow the sphere. `n` is the samples an edge gets. */
-  panel(ring: readonly V3[], fill: string, o?: { ink?: boolean; opacity?: number; n?: number }): string;
+  panel(ring: readonly V3[], fill: string, o?: { ink?: boolean; opacity?: number; n?: number; rule?: "evenodd" }): string;
   /** Several closed polygons of one fill, drawn as one path (a smaller document than a path for each). */
-  panels(rings: ReadonlyArray<readonly V3[]>, fill: string, o?: { ink?: boolean; opacity?: number; n?: number }): string;
+  panels(rings: ReadonlyArray<readonly V3[]>, fill: string, o?: { ink?: boolean; opacity?: number; n?: number; rule?: "evenodd" }): string;
   /** A curve on the surface: only what faces you. `closed` joins its ends; `deco` marks a line that is not part of the ball's form (a highlight), which the line style leaves out. */
   stroke(pts: readonly V3[], colour: string, width: number, o?: StrokeOptions): string;
   /** Several curves drawn as one path. */
@@ -44,9 +44,17 @@ export interface Surface {
   facing(u: V3): number;
   /** A point of space, in units of the ball's radius from its centre (not on the surface): its screen position and depth (positive is toward you). */
   space(p: V3): [number, number, number];
+  /** The whole disc of the ball filled with a colour (a sphere's silhouette). */
+  fill(colour: string): string;
+  /** The ball's view, for a module that draws what the engine does not (`ball.region.ts`). Opaque to everything else. */
+  readonly view: Geometry;
+  /** Where a ball's printing sits: the middle of its label area in the ball's own frame, and the right-hand and upward directions there. Only a ball that is printed has one. */
+  readonly home: HomeFrame | undefined;
 }
 
 export interface StrokeOptions {
+  /** Digits kept after the point in the path (1 by default; lettering asks for 2). */
+  digits?: number;
   closed?: boolean;
   ink?: boolean;
   deco?: boolean;
@@ -71,8 +79,13 @@ export interface BallSpec {
   /** The colour the whole ball is filled with before its panels are laid on, where it is not `base` (a soccer ball is white, its pentagons are `base`). */
   ground?: string;
   mat: Material;
-  /** Lays the panels and seams. `base` is the main colour, or the tint; `accent` is the second colour or undefined. */
-  draw: (s: Surface, base: string, accent: string | undefined, colors?: readonly [string, string, string]) => string;
+  /** Lays the panels and seams. `base` is the main colour, or the tint; `accent` is the second colour or undefined. `custom` is what a caller asked to paint and print (a ball that takes it reads it; the rest ignore it). */
+  draw: (s: Surface, base: string, accent: string | undefined, colors?: readonly [string, string, string], custom?: Custom) => string;
+  /**
+   * Where a ball carries a logo and lettering: the middle of the label area (`c`) and the way up there (`up`), as directions in the ball's own frame, how far it reaches from the middle (`reach`, radians),
+   * the view that shows it (`view`, used instead of `view` when the caller prints something) and the ball's own word for the script and the stamp (`word`).
+   */
+  home?: { c: V3; up: V3; reach: number; view: { yaw: number; pitch: number; roll: number }; word: string };
   /** Where the ball's centre is in the 100 by 100 box (50, 50 by default): a hammer's head sits in a corner to leave room for the wire. */
   centre?: readonly [number, number];
   /** Where the ball is in space, in units of its radius from the middle of the whole (0, 0, 0 by default), turned with it: a hammer's head is at one end of the hammer, which turns about its middle. */
@@ -83,10 +96,26 @@ export interface BallSpec {
   attach?: (s: Surface, base: string) => { behind: string; front: string };
 }
 
-const EPS = 1e-6;
+/** The label area of a printed ball: its middle, and the right-hand and upward directions there, and how far it reaches. */
+export interface HomeFrame {
+  c: V3;
+  ex: V3;
+  up: V3;
+  reach: number;
+}
+
+/** What a caller asked a ball to be painted and printed with. */
+export interface Custom {
+  paint: ResolvedPaint | undefined;
+  print: PrintOptions | undefined;
+  /** Draws the print, when the caller has it; without it a ball draws no print. */
+  printer: PrintRenderer | undefined;
+}
+
+export const EPS = 1e-6;
 const STEP = Math.PI / 18;
 
-interface Geometry {
+export interface Geometry {
   /** The centre of the ball on the screen, and the middle of the whole (where a point of `space` is measured from). */
   cx: number;
   cy: number;
@@ -111,7 +140,7 @@ const shapeOf = (g: Geometry, u: V3): V3 => {
 };
 
 /** How squarely a point of the sphere faces the eye, before it is scaled: above 0 is the side you see. For an ellipsoid it is the dot of the point with `w`; for a pointed ball the surface's normal is worked out. */
-const visOf = (g: Geometry, u: V3): number => {
+export const visOf = (g: Geometry, u: V3): number => {
   if (g.point === undefined) return dot(u, g.w);
   const rest = Math.max(0, 1 - u[0] * u[0]);
   const a = g.axes[0];
@@ -120,7 +149,7 @@ const visOf = (g: Geometry, u: V3): number => {
   return (g.rz[0] * nx + g.rz[1] * a * u[1] + g.rz[2] * a * u[2]) / (a * b);
 };
 
-const project = (g: Geometry, u: V3): [number, number] => {
+export const project = (g: Geometry, u: V3): [number, number] => {
   const q = apply(g.rot, shapeOf(g, u));
   return [g.cx + g.k * q[0], g.cy - g.k * q[1]];
 };
@@ -179,12 +208,12 @@ function limbArc(g: Geometry, from: V3, to: V3): V3[] {
   return out;
 }
 
-interface Run {
+export interface Run {
   pts: Array<[number, number, number]>;
 }
 
 /** The parts of a curve that face you, each as screen points with their facing. The curve is cut exactly at the limb. */
-function visibleRuns(g: Geometry, pts: readonly V3[], closed: boolean): Run[] {
+export function visibleRuns(g: Geometry, pts: readonly V3[], closed: boolean): Run[] {
   const n = pts.length;
   const vis = pts.map((p) => visOf(g, p) / g.wl);
   const at = (u: V3, f: number): [number, number, number] => {
@@ -231,10 +260,37 @@ function visibleRuns(g: Geometry, pts: readonly V3[], closed: boolean): Run[] {
   return runs;
 }
 
-const pathOf = (pts: Array<[number, number, number]>): string => pts.map((p, i) => `${i === 0 ? "M" : "L"}${num(p[0])} ${num(p[1])}`).join("");
+export const pathOf = (pts: Array<[number, number, number]>, digits = 1): string => pts.map((p, i) => `${i === 0 ? "M" : "L"}${num(p[0], digits)} ${num(p[1], digits)}`).join("");
+
+/** A number written as short as SVG allows: no leading zero, and the space left out where the next number's own sign or point shows where it starts. */
+const tight = (text: string, after: string): string => {
+  const t = text.replace(/^(-?)0\./, "$1.");
+  return after === "" || t.startsWith("-") || (t.startsWith(".") && after.includes(".")) ? t : ` ${t}`;
+};
+
+/** A run as a path of relative moves in `digits` decimals, written tight: about half the bytes of `pathOf`. Each step is the difference of the rounded points, so the line does not drift. */
+function relativePath(pts: Array<[number, number, number]>, digits: number): string {
+  const r = (v: number): number => Math.round(v * 10 ** digits) / 10 ** digits;
+  const first = pts[0] as [number, number, number];
+  let x = r(first[0]), y = r(first[1]);
+  let out = `M${num(x, digits)} ${num(y, digits)}l`;
+  let last = "";
+  for (let i = 1; i < pts.length; i++) {
+    const p = pts[i] as [number, number, number];
+    const nx = r(p[0]), ny = r(p[1]);
+    for (const v of [nx - x, ny - y]) {
+      const t = tight(num(v, digits), last);
+      out += t;
+      last = t.trim();
+    }
+    x = nx;
+    y = ny;
+  }
+  return out;
+}
 
 /** A curve's visible parts as paths: a stroke is thinner where it turns toward the limb (three steps), so it does not sit on the ball like a wire. */
-function runPaths(runs: Run[], colour: string, width: number, extra: string): string {
+function runPaths(runs: Run[], colour: string, width: number, extra: string, digits = 1): string {
   const tiers: string[][] = [[], [], []];
   const factor = [1, 0.74, 0.5];
   const tierOf = (f: number): number => (f > 0.55 ? 0 : f > 0.25 ? 1 : 2);
@@ -242,7 +298,7 @@ function runPaths(runs: Run[], colour: string, width: number, extra: string): st
     let kind = -1;
     let piece: Array<[number, number, number]> = [];
     const flush = (): void => {
-      if (piece.length > 1) tiers[kind].push(pathOf(piece));
+      if (piece.length > 1) tiers[kind].push(digits > 1 ? relativePath(piece, digits) : pathOf(piece, digits));
       piece = [];
     };
     for (const p of run.pts) {
@@ -261,7 +317,7 @@ function runPaths(runs: Run[], colour: string, width: number, extra: string): st
   return make(tiers[2], width * factor[2]) + make(tiers[1], width * factor[1]) + make(tiers[0], width);
 }
 
-function surfaceOf(g: Geometry, line: boolean, minWidth: number): Surface {
+function surfaceOf(g: Geometry, line: boolean, minWidth: number, home: Surface["home"]): Surface {
   const INK = "currentColor";
   const facing = (u: V3): number => visOf(g, u) / g.wl;
   const s: Surface = {
@@ -281,21 +337,28 @@ function surfaceOf(g: Geometry, line: boolean, minWidth: number): Surface {
       if (line && o?.ink !== true) return "";
       const d = ringPath(g, sampleRing(ring, o?.n ?? 4));
       if (d === "") return "";
-      return `<path d="${d}" fill="${line ? INK : fill}"${o?.opacity === undefined ? "" : ` opacity="${o.opacity}"`}/>`;
+      return `<path d="${d}" fill="${line ? INK : fill}"${o?.rule === undefined ? "" : ` fill-rule="${o.rule}"`}${o?.opacity === undefined ? "" : ` opacity="${o.opacity}"`}/>`;
     },
     panels(rings, fill, o) {
       if (line && o?.ink !== true) return "";
       const d = rings.map((ring) => ringPath(g, sampleRing(ring, o?.n ?? 4))).join("");
       if (d === "") return "";
-      return `<path d="${d}" fill="${line ? INK : fill}"${o?.opacity === undefined ? "" : ` opacity="${o.opacity}"`}/>`;
+      return `<path d="${d}" fill="${line ? INK : fill}"${o?.rule === undefined ? "" : ` fill-rule="${o.rule}"`}${o?.opacity === undefined ? "" : ` opacity="${o.opacity}"`}/>`;
     },
+    fill(colour) {
+      if (line) return "";
+      const sil = silhouette(g);
+      return sil.d === "" ? `<circle ${sil.tag} fill="${colour}"/>` : `<path d="${sil.d}" fill="${colour}"/>`;
+    },
+    view: g,
+    home,
     stroke: (pts, colour, width, o) => s.strokes([pts], colour, width, o),
     strokes(curves, colour, width, o) {
       if (line && (o?.deco === true || o?.ink === false)) return "";
       const runs = curves.flatMap((pts) => visibleRuns(g, pts, o?.closed === true));
       if (runs.length === 0) return "";
       const extra = `${o?.opacity === undefined || line ? "" : ` opacity="${o.opacity}"`}${o?.dash === undefined ? "" : ` stroke-dasharray="${o.dash}"`}${o?.dx === undefined && o?.dy === undefined ? "" : ` transform="translate(${o.dx ?? 0} ${o.dy ?? 0})"`}`;
-      return runPaths(runs, line ? INK : colour, Math.max(width, minWidth), extra);
+      return runPaths(runs, line ? INK : colour, Math.max(width, minWidth), extra, o?.digits);
     },
     seam(pts, colour, width, o) {
       if (line) return s.stroke(pts, colour, width, { closed: o?.closed });
@@ -391,11 +454,15 @@ export function drawBall(title: string, key: string, spec: BallSpec, opts: Resol
   const g: Geometry = { ox, oy, cx: ox + kk * away[0], cy: oy - kk * away[1], axes, rot, k: (46 * (spec.fit ?? 1)) / Math.max(...axes), w, wl: len(w), rz, point: spec.point };
   const line = opts.style === "line";
   const minWidth = 80 / opts.size;
-  const base = opts.tint ?? spec.base;
-  const surface = surfaceOf(g, line, minWidth);
-  const layers = spec.draw(surface, base, opts.accent, opts.colors);
+  // A ball with a second colour of its own (a soccer ball's panels on a white ground) paints the body as the ground and the second colour as the panels; one with a single colour takes the body as its main colour.
+  const paint = opts.paint;
+  const two = spec.ground !== undefined;
+  const base = opts.tint ?? (two ? paint?.second : paint?.body) ?? spec.base;
+  const ground = two ? paint?.body ?? spec.ground : undefined;
+  const surface = surfaceOf(g, line, minWidth, homeOf(spec));
+  const layers = spec.draw(surface, base, opts.accent, opts.colors, { paint: opts.paint, print: opts.print, printer: opts.printer });
   const sil = silhouette(g);
-  const id = `k${hashOf(`${key}|${opts.style}|${opts.tint ?? ""}|${opts.accent ?? ""}${opts.colors === undefined ? "" : `|${opts.colors.join("")}`}|${sil.tag}${sil.d}`)}`;
+  const id = `k${hashOf(`${key}|${opts.style}|${opts.tint ?? ""}|${opts.accent ?? ""}${opts.colors === undefined ? "" : `|${opts.colors.join("")}`}|${sil.tag}${sil.d}${paint === undefined && (opts.print === undefined || opts.printer === undefined) ? "" : `|${JSON.stringify([paint, opts.printer === undefined ? undefined : opts.print])}`}`)}`;
   // A long outline (the hull of a pointed ball) is written once, in the definitions, and used wherever the silhouette is.
   const long = sil.d.length > 400;
   const outline = long ? `<path id="${id}s" d="${sil.d}"/>` : "";
@@ -406,7 +473,8 @@ export function drawBall(title: string, key: string, spec: BallSpec, opts: Resol
     return wrapPiece({ title, size: opts.size, theme: opts.theme, defs: outline, body: `<g fill="none" stroke-linecap="round" stroke-linejoin="round">${body}</g>` });
   }
   const m = spec.mat;
-  const shade = m.shade ?? mix(base, -0.62);
+  const painted = paint?.body !== undefined || paint?.second !== undefined;
+  const shade = painted && !two ? mix(paint?.second === undefined || paint.body === undefined ? base : blend(paint.body, paint.second, 0.5), -0.6) : m.shade ?? mix(base, -0.62);
   const grain = opts.grain ?? (opts.size >= 48 && !turning);
   const gr = grain && m.grain !== undefined ? m.grain : undefined;
   const rim = m.rim ?? 1;
@@ -420,11 +488,20 @@ export function drawBall(title: string, key: string, spec: BallSpec, opts: Resol
     (gr === undefined
       ? ""
       : grainDef(id, gr.f, gr.a, gr.seed));
-  const inner = `<g clip-path="url(#${id}c)"${gr === undefined ? "" : ` filter="url(#${id}n)"`}>${shape(`fill="${spec.ground ?? base}"`)}${layers}</g>`;
+  const inner = `<g clip-path="url(#${id}c)"${gr === undefined ? "" : ` filter="url(#${id}n)"`}>${shape(`fill="${ground ?? spec.ground ?? base}"`)}${layers}</g>`;
   const metal = m.metal === true ? shape(`fill="url(#${id}m)"`) : "";
   const overlays = shape(`fill="url(#${id}d)"`) + metal + shape(`fill="url(#${id}b)"`) + shape(`fill="url(#${id}h)"`);
   const at = spec.attach?.(surface, base);
   return wrapPiece({ title, size: opts.size, theme: opts.theme, defs: defs + metalDef(id, m.metal === true), body: `${at?.behind ?? ""}${inner}${overlays}${at?.front ?? ""}` });
+}
+
+/** A ball's label area as a surface sees it: the middle, the right-hand and the upward direction, orthogonal, and how far it reaches. */
+function homeOf(spec: BallSpec): Surface["home"] {
+  const h = spec.home;
+  if (h === undefined) return undefined;
+  const c = norm(h.c);
+  const ex = norm(cross(h.up, c));
+  return { c, ex, up: cross(c, ex), reach: h.reach };
 }
 
 const finite = (v: number | undefined): number => (typeof v === "number" && Number.isFinite(v) ? v : 0);
@@ -440,9 +517,11 @@ export interface BallDef {
 
 /** A ball from its definition: the `Piece` the registry and the gallery take. */
 export function defineBall(def: BallDef): Piece<BallSpec> {
-  const view = def.spec.view;
-  const render = (o: BallFrameOptions | undefined, turning: boolean): string =>
-    drawBall(escape(def.en), def.id, def.spec, resolveOptions(o), { yaw: radians(view.yaw + finite(o?.yaw), 0), pitch: radians(view.pitch + finite(o?.pitch), 0), roll: radians(view.roll + finite(o?.roll), 0) }, turning);
+  const render = (o: BallFrameOptions | undefined, turning: boolean): string => {
+    const opts = resolveOptions(o);
+    const view = hasPrint(opts.print) && opts.printer !== undefined && opts.style !== "line" && def.spec.home !== undefined ? def.spec.home.view : def.spec.view;
+    return drawBall(escape(def.en), def.id, def.spec, opts, { yaw: radians(view.yaw + finite(o?.yaw), 0), pitch: radians(view.pitch + finite(o?.pitch), 0), roll: radians(view.roll + finite(o?.roll), 0) }, turning);
+  };
   return {
     id: def.id,
     en: def.en,

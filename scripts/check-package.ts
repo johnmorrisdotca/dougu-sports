@@ -127,8 +127,8 @@ if (!text.includes("ball:soccer") || text.includes("medal:gold") || text.include
   console.error("FAIL the bundle of the soccer ball alone holds the wrong emblems");
   process.exit(1);
 }
-if (gzip > 6.8 * 1024) {
-  console.error(`FAIL the soccer ball alone bundles to ${gzip} bytes gzipped, over 6.8 kB`);
+if (gzip > 7.6 * 1024) {
+  console.error(`FAIL the soccer ball alone bundles to ${gzip} bytes gzipped, over 7.6 kB`);
   process.exit(1);
 }
 console.log(`ok   one ball, bundled from the installed package: ${text.length} bytes, ${gzip} gzipped`);

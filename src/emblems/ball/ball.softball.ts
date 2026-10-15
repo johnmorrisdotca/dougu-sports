@@ -1,5 +1,5 @@
 // Softball: an optic-yellow ball with red stitches along the seam (88 here, which the rule leaves free).
-import { seamedBall } from "./ball.family.seamed.ts";
+import { SEAMED_HOME, seamedBall } from "./ball.family.seamed.ts";
 
 export const BALL_SOFTBALL = /* @__PURE__ */ seamedBall({
   id: "ball:softball",
@@ -10,6 +10,7 @@ export const BALL_SOFTBALL = /* @__PURE__ */ seamedBall({
   b: 0.4,
   view: { yaw: 18, pitch: 28, roll: -10 },
   mat: { gloss: 0.35, shade: "#4c5a10", grain: { f: 1.4, a: 0.12 } },
+  home: SEAMED_HOME("softball"),
   groove: "#8a9420",
   stitch: { colour: "#d0262c", count: 88, half: 0.085, width: 0.95, lean: 0.04 },
 });
