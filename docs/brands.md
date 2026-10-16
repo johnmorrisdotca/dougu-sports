@@ -2,6 +2,8 @@
 
 [Back to the README](../README.md) · English
 
+> **Experimental and temporary: draft designs.** The `/brands` entry point and these logos are a first draft. The designs will change, and the entry point may be redone or removed, so do not depend on it yet.
+
 Twelve made-up makers of balls and sports gear and ten made-up teams, as SVG, in their own entry point, `@johnmorrisdotca/dougu-sports/brands`. They are meant to look like the marks of real sports companies and clubs (a bold geometric symbol, a plain wordmark, a crest or a mascot) while belonging to no one: the geometry, the lettering, the names and the colours are drawn for this package, and each one is checked against the real marks nearest to it.
 
 **The mark is the logo.** Every maker's mark works alone, and that is what you get by default; its name is a separate part you ask for (`layout`). A team logo is a mark only.

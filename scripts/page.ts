@@ -117,7 +117,7 @@ export function renderCompose() {
 export function renderBrands() {
   const body = `<main>
 <!--family:header-->
-<p class="note"><a href="./">Back to the playground</a>. Twelve made-up makers of balls and gear and ten made-up teams, as SVG. Each mark stands alone; the name is optional. Every one is drawn here from <code>dist/brands-entry.js</code>, with the call that made it. Nothing on this page is a real company's or club's mark.</p>
+<p class="note"><strong data-testid="draft">Draft designs</strong>: experimental and temporary, the logos will change. <a href="./">Back to the playground</a>. Twelve made-up makers of balls and gear and ten made-up teams, as SVG. Each mark stands alone; the name is optional. Every one is drawn here from <code>dist/brands-entry.js</code>, with the call that made it. Nothing on this page is a real company's or club's mark.</p>
 <div class="fam-panel controls" id="brand-controls">
   <div class="fam-row"><span class="fam-label">Look</span>
     <div class="fam-seg" role="group" aria-label="Look" id="look" data-testid="look"><button type="button" data-value="light">Light</button><button type="button" data-value="dark">Dark</button></div></div>
