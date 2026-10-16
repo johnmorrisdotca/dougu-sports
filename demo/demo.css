@@ -66,3 +66,23 @@ details > pre { margin: 0; padding: 0 14px 14px; overflow-x: auto; font-family: 
 .check input { width: 22px; height: 22px; }
 #ball-sample, #ball-clear { min-height: 44px; }
 #ball-note { align-self: center; }
+#makers-h, #teams-h, #balls-h, #shirts-h { margin: 28px 0 8px; font-size: 1.25rem; }
+.brand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.brand-card { border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); padding: 12px; min-width: 0; }
+.brand-card h3 { margin: 0 0 8px; font-size: 1rem; }
+.brand-card h3 span { color: var(--muted); font-weight: 500; font-size: .8rem; margin-left: 6px; }
+.brand-art { border-radius: 8px; padding: 12px; display: grid; gap: 12px; justify-items: center; overflow-x: auto; }
+.brand-art[data-look="light"] { background: #ffffff; color: #20262d; border: 1px solid var(--rule); }
+.brand-art[data-look="dark"] { background: #14181c; color: #eef1f3; }
+.brand-art .big { min-height: 132px; display: grid; align-items: center; justify-items: center; }
+.brand-art .small, .brand-art .mono { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center; }
+.brand-art svg { max-width: 100%; height: auto; display: block; }
+.brand-note { margin: 10px 0 0; font-size: .85rem; color: var(--muted); }
+.brand-card .copies { margin: 8px 0 0; }
+.brand-card .copy { min-height: 44px; }
+.brand-card pre { margin: 8px 0; padding: 8px; overflow-x: auto; font-family: var(--mono); font-size: .75rem; border: 1px solid var(--rule); border-radius: 8px; }
+.brand-ball-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-bottom: 12px; }
+.brand-ball-row figure, .brand-shirts figure { margin: 0; text-align: center; font-size: .8rem; color: var(--muted); }
+.brand-ball-row figure svg { display: block; margin: 0 auto 4px; max-width: 100%; height: auto; }
+.brand-shirts { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); padding: 12px; }
+.brand-shirts svg { max-width: 100%; height: auto; }

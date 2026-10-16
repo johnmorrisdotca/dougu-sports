@@ -12,6 +12,7 @@ src/
   turn-control.ts            bindTurn, which takes an emblem object and imports no drawing and not the registry (a module of its own, so importing an emblem never pulls it in)
   turn-registry.ts           what bindTurn loads, with a dynamic import, when it is given an id
   turn-full.ts               the main entry's bindTurn: the same, with the registry in hand, so an id is drawn at once
+  brands-entry.ts            ./brands: the made-up maker marks and team logos (src/brands/: the data, the stroke alphabet of the wordmarks, the drawing, and the printing on a ball)
   emblems/
     emblem.core.ts           options, colours, gradients, the wrapper, the Emblem type (imports nothing)
     emblem.ids.ts            the ids, the groups, the sports, the short names, and the folder of each group

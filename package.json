@@ -53,6 +53,11 @@
       "import": "./dist/emblems-entry.js",
       "default": "./dist/emblems-entry.js"
     },
+    "./brands": {
+      "types": "./dist/brands-entry.d.ts",
+      "import": "./dist/brands-entry.js",
+      "default": "./dist/brands-entry.js"
+    },
     "./turn": {
       "types": "./dist/turn-entry.d.ts",
       "import": "./dist/turn-entry.js",

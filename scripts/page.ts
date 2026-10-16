@@ -113,14 +113,47 @@ export function renderCompose() {
   return withFamily(html, { title: "Podium, award case and sprites · Dougu Sports 道具", description: "A podium, an award case, sprite sheets, data addresses and a sport's equipment, drawn from Dougu Sports." });
 }
 
+/** The contact sheet of the fictional maker marks and team logos: every one in its colours, in one colour, small, with its note, on a ball and on a shirt, drawn in the browser from the built package. */
+export function renderBrands() {
+  const body = `<main>
+<!--family:header-->
+<p class="note"><a href="./">Back to the playground</a>. Twelve made-up makers of balls and gear and ten made-up teams, as SVG. Each mark stands alone; the name is optional. Every one is drawn here from <code>dist/brands-entry.js</code>, with the call that made it. Nothing on this page is a real company's or club's mark.</p>
+<div class="fam-panel controls" id="brand-controls">
+  <div class="fam-row"><span class="fam-label">Look</span>
+    <div class="fam-seg" role="group" aria-label="Look" id="look" data-testid="look"><button type="button" data-value="light">Light</button><button type="button" data-value="dark">Dark</button></div></div>
+  <div class="fam-row"><span class="fam-label">Name</span>
+    <div class="fam-seg" role="group" aria-label="Which parts of a maker's logo to draw" id="layout" data-testid="layout"><button type="button" data-value="mark">Mark only</button><button type="button" data-value="horizontal">Mark and name</button><button type="button" data-value="stacked">Stacked</button><button type="button" data-value="wordmark">Name only</button></div></div>
+</div>
+<h2 id="makers-h">Makers</h2>
+<div class="brand-grid" id="makers" data-testid="makers"></div>
+<h2 id="teams-h">Teams</h2>
+<div class="brand-grid" id="teams" data-testid="teams"></div>
+<h2 id="balls-h">On a ball</h2>
+<p class="fam-fine">A maker's mark is printed on the ball and wrapped onto it, so it curves and turns with the ball. Pick a maker and a ball.</p>
+<div class="fam-panel controls">
+  <div class="fam-row"><label class="fam-label" for="ball-maker">Maker</label><select class="fam-field" id="ball-maker" data-testid="ball-maker"></select></div>
+  <div class="fam-row"><label class="fam-label" for="ball-kind">Ball</label><select class="fam-field" id="ball-kind" data-testid="ball-kind"><option value="ball:baseball">Baseball</option><option value="ball:softball">Softball</option><option value="ball:soccer">Soccer ball</option></select></div>
+</div>
+<div class="brand-balls" id="balls" data-testid="balls"></div>
+<h2 id="shirts-h">In your own drawing</h2>
+<p class="fam-fine">The logo as a group to place inside another SVG: here a plain T-shirt shape, drawn by this page, with a maker on the chest and a team on the sleeve.</p>
+<div class="brand-shirts" id="shirts" data-testid="shirts"></div>
+<!--family:unreviewed-->
+<!--family:footer-->
+</main>
+<!--family:scripts brands.js-->`;
+  const html = `<!doctype html>\n<html lang="en">\n<head>\n  <!--family:head-->\n  <link rel="stylesheet" href="family.css" />\n  <link rel="stylesheet" href="demo.css" />\n</head>\n<body>\n${body}\n</body>\n</html>\n`;
+  return withFamily(html, { title: "Fictional logos · Dougu Sports 道具", description: "Twelve made-up maker marks and ten made-up team logos as SVG: each as a mark alone or with its name, in colour and in one colour, light and dark, on a ball and in a drawing." });
+}
+
 /** The scripts of the demo's pages: demo/<name>.ts, served and published as <name>.js. */
-export const DEMO_SCRIPTS = ["demo", "compose", "gallery"];
+export const DEMO_SCRIPTS = ["demo", "compose", "gallery", "brands"];
 
 /**
  * The files a demo script imports for their types, and the files the browser loads in their place: the script imports ../src/index.ts, so that the editor and `pnpm typecheck` see the package's types,
  * and the page imports ./dist/index.js, the package as it is built and published. esbuild leaves the import in place and only changes its address.
  */
-const AS_BUILT: Record<string, string> = { "src/index.ts": "./dist/index.js", "scripts/family-backgrounds.ts": "./family-backgrounds.js" };
+const AS_BUILT: Record<string, string> = { "src/index.ts": "./dist/index.js", "src/brands-entry.ts": "./dist/brands-entry.js", "scripts/family-backgrounds.ts": "./family-backgrounds.js" };
 const asBuilt: Plugin = {
   name: "as-built",
   setup(b) {
