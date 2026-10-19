@@ -6,8 +6,12 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-10-19
+
 ### Added
 
+- **`award:ribbon`**, a ribbon on its own (a band with two swallow-tailed ends folded behind it), drawn for this package, in metal, colour and line like the other awards. 273 emblems.
+- **Nets and posts for three sports**, from their rulebooks' sizes (sources in NOTICE.md): `gear:takraw-net` (ISTAF Law of the Game, Regu: posts 1.55 m, net 0.7 m deep, 1.52 m at the centre), `gear:netball-post` (World Netball Rules of Netball 2024: a 3.05 m pole, a ring of 380 mm inside diameter) and `gear:teqball-table` (FITEQ Official Rules and Regulations of Teqball 2025: 3,000 mm long, surface 760 mm and 565 mm high, 900 mm with the net). They are the equipment of `sepaktakraw`, `netball` and `teqball` in `sportEquipment`. What is not to scale (a net drawn shorter, a rod drawn wider, the table's legs) is said in each file.
 - **The demo's podium shows Hata's round flags** for Japan, France and Italy (`demo/flags-data.ts`, made by `pnpm flags`; Hata 1.5.0 is a development dependency of the demo only), in place of three flags drawn by hand. The package is unchanged.
 - **Made-up maker and team logos (experimental, designs will change)**, in a new entry point `@johnmorrisdotca/dougu-sports/brands`: twelve fictional makers of balls and gear (`arvane`, `tarsin`, `ravelle`, `kovreth`, `dunmar`, `ostrel`, `vexlin`, `quillan`, `tenzar`, `marenko`, `halvane`, `solvik`) and ten fictional teams (`saltmere`, `greywick`, `brightwater`, `cinderfell`, `valmere`, `larkmoor`, `ironport`, `pinecrest`, `redfern`, `tarn`), as SVG. A mark stands alone and is what `makerLogo` draws by default; the name is optional (`layout: "wordmark" | "horizontal" | "stacked"`). Full colour or one colour, light or dark, with a note on the nearest real brand and how each differs. `makerLogoGroup` and `teamLogoGroup` return a `<g>` to place in another drawing; `makerBall` and `renderMakerBall` print a maker's mark on a baseball, a softball or a classic soccer ball. The set is data (`MAKERS`, `TEAMS`). The demo has a contact sheet (`brands.html`). See `docs/brands.md`.
 

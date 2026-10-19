@@ -71,6 +71,16 @@ Each ball's `size.rule` names the rule; the table gives the document and where i
 
 Facts only: a dimension or a mass is a fact, not a work. The NHL's puck rule was not read (the NHL's site was not fetched); the puck's size is the IIHF's.
 
+### The rulebooks the nets and posts are read from
+
+A piece of gear claims no size of its own, but these three are drawn from the sizes a rulebook gives, where the drawing allows. Each drawing's file says what is not to scale. A size the rulebook does not give is not drawn from any source: the legs of the teqball table and the thickness of its surface are drawn by eye.
+
+| Gear | Rulebook and rule | Read at |
+| --- | --- | --- |
+| `gear:takraw-net` | ISTAF Law of the Game, Sepaktakraw Regu, 2024 text (amendments approved 15 July 2023 and 8 December 2023; dated 1 January 2024): 2.1 posts 1.55 m men, 1.45 m women, radius not more than 0.04 m; 3.2 net 0.7 m wide, not shorter than 6.1 m; 3.5 net 1.52 m at the centre and 1.55 m at the posts (men) | https://img1.wsimg.com/blobby/go/b28abe2b-c8e0-4c25-b6ac-d2655417c6c3/Law%20of%20the%20Game%202024%20-%20Regu%20-.pdf |
+| `gear:netball-post` | World Netball Rules of Netball, 2024 edition, Rule 1 Technical specifications, 1.13 (placing) and 1.14 (a pole 65-100 mm across and 3.05 m high, padding up to 50 mm; a ring of 15 mm rod with an internal diameter of 380 mm; a 150 mm bar; a net 380-457 mm long) | https://netballhamilton.org.nz/media/1997/world-netball-rules-book-2024.pdf |
+| `gear:teqball-table` | FITEQ Official Rules and Regulations of Teqball, 2025 (effective 5 February 2025), 1.1.1-1.1.5 the table (3,000 mm long, 1,700 mm wide with the net, 900 mm high with the net, surface 760 mm at its highest and 565 mm at its lowest, 1,490 mm from the net to the lowest point) and 1.2.1-1.2.3 the net (1,700 mm wide, 20 mm thick, 140 mm above the surface) | https://cdn.buttercms.com/YBHXKq7GTv2wXkTVQbNC |
+
 ## The demo and the docs
 
 | What | Made from | Terms |

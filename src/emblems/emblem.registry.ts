@@ -4,6 +4,7 @@ import type { EmblemId } from "./emblem.ids.ts";
 import { AWARD_MEDAL } from "./award/medal.ts";
 import { AWARD_BADGE } from "./award/badge.ts";
 import { AWARD_CROWN } from "./award/crown.ts";
+import { AWARD_RIBBON } from "./award/ribbon.ts";
 import { AWARD_STAR } from "./award/star.ts";
 import { AWARD_SHIELD } from "./award/shield.ts";
 import { TROPHY_CUP } from "./trophy/cup.ts";
@@ -92,6 +93,7 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}`
   "award:crown": AWARD_CROWN,
   "award:star": AWARD_STAR,
   "award:shield": AWARD_SHIELD,
+  "award:ribbon": AWARD_RIBBON,
   "trophy:cup": TROPHY_CUP,
   "trophy:lidded-cup": TROPHY_LIDDED_CUP,
   "trophy:bowl": TROPHY_BOWL,

@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 269 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 273 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -25,6 +25,7 @@ The folders the art lives in are in [layout.md](layout.md).
 | `award:crown` | Crown | icon | ours |  |
 | `award:star` | Star | icon | ours |  |
 | `award:shield` | Shield | icon | ours |  |
+| `award:ribbon` | Ribbon | flat | ours |  |
 
 ## trophy
 
@@ -230,6 +231,9 @@ The folders the art lives in are in [layout.md](layout.md).
 | `gear:padel-racket` | Padel racket | gear | drawn |  |
 | `gear:pickleball-paddle` | Pickleball paddle | gear | drawn |  |
 | `gear:roundnet-set` | Roundnet set | gear | drawn |  |
+| `gear:takraw-net` | Sepak takraw net | gear | drawn |  |
+| `gear:netball-post` | Netball goalpost | gear | drawn |  |
+| `gear:teqball-table` | Teqball table | gear | drawn |  |
 | `gear:volleyball-net` | Volleyball net | gear | drawn |  |
 | `gear:basketball-hoop` | Basketball hoop | gear | drawn |  |
 | `gear:baseball-bat` | Baseball bat | gear | drawn |  |

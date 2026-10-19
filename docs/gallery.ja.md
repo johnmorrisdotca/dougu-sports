@@ -2,7 +2,7 @@
 
 [README に戻る](../README.md) · 日本語 · [English](gallery.md)
 
-パッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 269 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから `scripts/make-gallery.ts` が生成します（`pnpm gallery`）。
+パッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 273 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから `scripts/make-gallery.ts` が生成します（`pnpm gallery`）。
 
 id は `<グループ>:<名前>` の形です。定数とインポートパスは id から決まるので、行ごとには書いていません。
 
@@ -25,6 +25,7 @@ id は `<グループ>:<名前>` の形です。定数とインポートパス�
 | `award:crown` | 王冠 | icon | ours |  |
 | `award:star` | 星 | icon | ours |  |
 | `award:shield` | 盾 | icon | ours |  |
+| `award:ribbon` | リボン | flat | ours |  |
 
 ## trophy
 
@@ -230,6 +231,9 @@ id は `<グループ>:<名前>` の形です。定数とインポートパス�
 | `gear:padel-racket` | パデルのラケット | gear | drawn |  |
 | `gear:pickleball-paddle` | ピックルボールのパドル | gear | drawn |  |
 | `gear:roundnet-set` | ラウンドネットのセット | gear | drawn |  |
+| `gear:takraw-net` | セパタクローのネット | gear | drawn |  |
+| `gear:netball-post` | ネットボールのポスト | gear | drawn |  |
+| `gear:teqball-table` | テックボールのテーブル | gear | drawn |  |
 | `gear:volleyball-net` | バレーボールのネット | gear | drawn |  |
 | `gear:basketball-hoop` | バスケットゴール | gear | drawn |  |
 | `gear:baseball-bat` | 野球のバット | gear | drawn |  |
