@@ -511,6 +511,7 @@ The metals are `METALS` (gold `#d9a620`, silver `#aeb6c0`, bronze `#b8733a`); ea
 - A trophy in the metal style is about 3 to 4.5 kB of markup, a medal or a crest about 1 to 2 kB, a line drawing about 1 to 2.5 kB; a ball in 3D is 5 to 13 kB, and a piece of gear is 1 to 4 kB, drawn in layers.
 - The size is a number of pixels up to 4096; the drawing is a vector at any size.
 - No emblem carries a real league's, team's or federation's mark.
+- No jerseys: a jersey, a cap or a kit is drawn by [Senshu Jerseys](https://github.com/johnmorrisdotca/senshu-jerseys), its own package (a `jersey()` made here in 0.2.0's draft was taken out and moved there). The pennant, the ring, the banner and the made-up maker and team logos stay here.
 
 ## Accessibility
 
