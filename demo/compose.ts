@@ -2,6 +2,7 @@
 // the call that made it, with a button that copies it.
 // The package is imported from ../src here so that the editor and `pnpm typecheck` see its types; the build of the demo (scripts/page.ts) turns the import into ./dist/index.js, the built package.
 import * as D from "../src/index.ts";
+import { FLAGS as HATA } from "./flags-data.ts";
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string): T => document.getElementById(id) as T;
 const esc = (text: unknown) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -12,12 +13,8 @@ const lookAsked = params.get("look") ?? "";
 const sportAsked = params.get("sport") ?? "";
 const state: { look: Look; sport: D.SportName; locale: "en" | "ja" } = { look: looks.includes(lookAsked) ? (lookAsked as Look) : "inherit", sport: D.SPORT_NAMES.find((name) => name === sportAsked) ?? "nhl", locale: "en" };
 
-// Three small flags, drawn here as SVG strings; the podium takes SVG markup or a URL for a flag, and draws it as an image.
-const FLAGS = {
-  jp: '<svg viewBox="0 0 3 2"><rect width="3" height="2" fill="#fff"/><circle cx="1.5" cy="1" r=".6" fill="#bc002d"/></svg>',
-  fr: '<svg viewBox="0 0 3 2"><rect width="1" height="2" fill="#0055a4"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ef4135"/></svg>',
-  it: '<svg viewBox="0 0 3 2"><rect width="1" height="2" fill="#009246"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ce2b37"/></svg>',
-};
+// Three round flags from Hata (demo/flags-data.ts, made by `pnpm flags`); the podium takes SVG markup or a URL for a flag, and draws it as an image.
+const FLAGS = { jp: HATA.JP, fr: HATA.FR, it: HATA.IT };
 
 const card = (id: string, title: string, art: string, code: string, extra = "") =>
   `<article class="compose-card" id="${id}" data-testid="${id}"><h3>${esc(title)}</h3><div class="art" data-look="${state.look === "inherit" ? "page" : state.look}">${art}</div>${extra}<details><summary>The call</summary><pre><code>${esc(code)}</code></pre></details><p class="copies"><button type="button" class="fam-button copy" data-code="${esc(code)}" aria-label="Copy the call for ${esc(title)}">Copy the call</button></p></article>`;

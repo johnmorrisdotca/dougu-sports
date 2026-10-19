@@ -8,6 +8,7 @@ All notable changes to this project are written here. The format follows
 
 ### Added
 
+- **The demo's podium shows Hata's round flags** for Japan, France and Italy (`demo/flags-data.ts`, made by `pnpm flags`; Hata 1.5.0 is a development dependency of the demo only), in place of three flags drawn by hand. The package is unchanged.
 - **Made-up maker and team logos (experimental, designs will change)**, in a new entry point `@johnmorrisdotca/dougu-sports/brands`: twelve fictional makers of balls and gear (`arvane`, `tarsin`, `ravelle`, `kovreth`, `dunmar`, `ostrel`, `vexlin`, `quillan`, `tenzar`, `marenko`, `halvane`, `solvik`) and ten fictional teams (`saltmere`, `greywick`, `brightwater`, `cinderfell`, `valmere`, `larkmoor`, `ironport`, `pinecrest`, `redfern`, `tarn`), as SVG. A mark stands alone and is what `makerLogo` draws by default; the name is optional (`layout: "wordmark" | "horizontal" | "stacked"`). Full colour or one colour, light or dark, with a note on the nearest real brand and how each differs. `makerLogoGroup` and `teamLogoGroup` return a `<g>` to place in another drawing; `makerBall` and `renderMakerBall` print a maker's mark on a baseball, a softball or a classic soccer ball. The set is data (`MAKERS`, `TEAMS`). The demo has a contact sheet (`brands.html`). See `docs/brands.md`.
 
 ## [0.9.0] - 2026-10-15

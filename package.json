@@ -127,12 +127,14 @@
     "family:readme": "node scripts/family-readme.mjs",
     "dev": "pnpm build && node scripts/dev.ts",
     "gallery": "pnpm build && node scripts/make-gallery.ts",
+    "flags": "node scripts/make-flags.mjs",
     "site": "pnpm build && node scripts/site.ts",
     "test:demo": "pnpm site && playwright test",
     "screenshots": "pnpm site && node scripts/screenshots.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
+    "@johnmorrisdotca/hata": "1.5.0",
     "@playwright/test": "^1.63.0",
     "@types/node": "^24.0.0",
     "esbuild": "^0.25.0",
