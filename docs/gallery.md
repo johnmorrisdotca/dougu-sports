@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 274 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 275 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -55,6 +55,7 @@ The folders the art lives in are in [layout.md](layout.md).
 | `trophy:banner` | Rafter banner | flat | ours |  |
 | `trophy:sumo-cup` | Phoenix-handle cup | lathe | ours | A tall silver cup on a tall stepped stand, with an ornate phoenix-crested handle on each side |
 | `trophy:championship-banner` | Championship banner | flat | ours | A fringed banner on a pole with a gilt finial and an embroidered border, with no lettering unless some is given |
+| `trophy:paterson-cup` | Paterson Cup | lathe | ours | The Paterson Cup: a wide silver bowl with a straight engraved band at the rim, two scrolled ear handles, a short stem and a dark wooden base. Given to the champion of the Pacific Coast Hockey Association from 1912 |
 
 ## medal
 

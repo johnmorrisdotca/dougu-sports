@@ -6,6 +6,16 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- **A trophy that stands for one real trophy is drawn as a very close likeness of it, and may carry its name.** The rule, the method and the tools are in `docs/likeness.md`: photographs are the reference, the proportions are measured on them and checked side by side at the same height, the drawing is our own vector and never a trace, and no drawing carries lettering, a logo, a league, team or sponsor mark or a real engraving. This replaces the earlier rule that no id or title may be a real trophy's name (`CONTRIBUTING.md`, `docs/references.md`, `test/emblem.test.ts`); the generic trophies (`trophy:hockey-cup` and the rest) stay as they are.
+
+### Added
+
+- **`trophy:paterson-cup`**, the cup of the Pacific Coast Hockey Association (1912): a wide silver bowl with a straight band at the rim, two scrolled ear handles and a dark wooden base, measured on a 1912 photograph. 275 emblems.
+- **`NAMED_TROPHIES` and `namedTrophy(id)`** (`./emblems`): the facts of each trophy drawn as a likeness (name, sport, competition, what it honours, first awarded, what the drawing was measured on), with `docs/likeness-sources.md`.
+- **`scripts/likeness.ts`**, for drawing a likeness: a labelled grid over a photograph, the half widths of its silhouette, and the photograph and the drawing side by side at one height.
+
 ## [0.11.0] - 2026-10-19
 
 ### Changed

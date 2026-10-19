@@ -31,7 +31,7 @@ src/
     emblem.flip.ts           the one coin-flip turn of every flat drawing (gear, icons), with its mirrored back and its rim
     emblem.pennant.ts        the renderer for the pennant
     award/                   five awards
-    trophy/                  twenty-four trophies
+    trophy/                  the trophies, generic and named
     medal/                   gold, silver and bronze, and the badges for the first three places
     crest/                   the four generic crests
     sport/                   one pictogram for each of the thirty-eight sports
@@ -64,7 +64,7 @@ The `exports` map in `package.json` has one wildcard for each folder (`./award/*
 2. Add the id to its list in `src/emblems/emblem.ids.ts` (`TROPHY_IDS`, `MEDAL_IDS`, …); the `EmblemId` union follows.
 3. Add the constant to `OWN` in `src/emblems/emblem.registry.ts` (a missing or extra entry is a type error; balls and gear come from their indexes) and an export to `src/index.ts`.
 4. Name it in English and in Japanese, short, because the name is the accessible name (the English is the drawing's `<title>`: about 26 characters at most in English and 12 in Japanese), and put what does not fit in `src/emblems/emblem.descriptions.ts`. Have the Japanese read by someone who reads it.
-5. Look at it: `node scripts/emblem-sheet.ts sheet.png trophy/<name>` draws a contact sheet at 256, 64 and 16 pixels in light and dark, and with `--turn` five yaws. Compare it with what it stands for, and keep a trophy generic (no real name, mark or engraving).
+5. Look at it: `node scripts/emblem-sheet.ts sheet.png trophy/<name>` draws a contact sheet at 256, 64 and 16 pixels in light and dark, and with `--turn` five yaws. Compare it with what it stands for (for a named trophy, side by side with the photograph: `node scripts/likeness.ts compare`, see [likeness.md](likeness.md)), and keep every drawing free of lettering, logos and marks.
 6. Write its test, in `test/`. Every emblem is already drawn in all three styles and every theme and checked for well-formed, safe SVG, a size limit and a turn at every angle by `test/emblem.test.ts` and `test/turn.test.ts`; a test of its own says what is particular to it.
 7. Draw it yourself: nothing is copied from another project, so there is no source to add to `NOTICE.md` and no licence text for `LICENSES/`.
 8. `pnpm gallery` rewrites [gallery.md](gallery.md) and [gallery.ja.md](gallery.ja.md); `pnpm check` runs everything.

@@ -17,9 +17,11 @@ Bug reports and ideas go in the
   its id in capitals, so that one import takes one emblem (the balls and the gear are one module per family). [docs/layout.md](docs/layout.md)
   says where each group goes and how to add one; `test/size.test.ts` holds a single item to a limit for its kind (a medal 4.6 kB,
   a cup 7.1 kB or a ball 7.6 kB gzipped, most of it the renderer; `bindTurn` and a cup 10 kB).
-- **Trophies are generic and drawn, never traced.** A trophy is drawn in simplified SVG from what the object is known to look like, and is
-  named for what it is (`trophy:hockey-cup`: a tall banded silver cup); no id, title, doc or drawing carries a real trophy's name, mark,
-  logo or engraving. Look at a contact sheet (`node scripts/emblem-sheet.ts sheet.png trophy/<name>`) at 256, 64 and 16 pixels, light and dark.
+- **A named trophy is a very close likeness, drawn and never traced** ([docs/likeness.md](docs/likeness.md)). Where a trophy stands for one real trophy (a cup, a bowl, an award with a name), the drawing is a very, very close likeness of the original: the photographs of
+  the real object are the reference, the proportions of each part are measured on them, and the drawing is checked against the photograph at the same height until someone who knows the trophy knows it at once. The drawing is our own vector, made in the lathe's
+  numbers: never the photograph, never a copy of anyone's drawing, never an automatic trace. The id, the title and the docs may carry the trophy's own name (`trophy:stanley-cup`, "Stanley Cup"), because the name is what it is; the drawing carries no lettering, no logo,
+  no league, team or sponsor mark, and no real engraving (a band that holds an engraving is left plain, for the `engrave` option). A trophy that stands for no real one stays generic and is named for what it is (`trophy:hockey-cup`: a tall banded silver cup). The
+  photograph looked at, and its licence, go in `docs/likeness-sources.md`. Look at a contact sheet (`node scripts/emblem-sheet.ts sheet.png trophy/<name>`) at 256, 64 and 16 pixels, light and dark, and at the comparison (`node scripts/likeness.ts compare`).
 - **Japanese names are read** by someone who reads Japanese before they ship.
 - **Test what you change.** Tests sit in `test/`. A rule you change has a test that would have caught it.
 - **Art is drawn for this package, never copied.** No icon set, emoji, clip art or photograph goes in, so `LICENSES/` holds the MIT text and nothing

@@ -82,6 +82,7 @@ export const EMBLEM_DESCRIPTIONS: Readonly<Partial<Record<EmblemId, EmblemDescri
   "gear:football-helmet": { en: "Football helmet", ja: "アメリカンフットボールのヘルメット" },
   "gear:hurley": { en: "Hurley", ja: "ハーリー（ハーリングのスティック）" },
   "trophy:sumo-cup": { en: "A tall silver cup on a tall stepped stand, with an ornate phoenix-crested handle on each side", ja: "段のある高い台に載った、背の高い銀の杯。両側の取っ手に鳳凰の飾りが付く" },
+  "trophy:paterson-cup": { en: "The Paterson Cup: a wide silver bowl with a straight engraved band at the rim, two scrolled ear handles, a short stem and a dark wooden base. Given to the champion of the Pacific Coast Hockey Association from 1912", ja: "パターソン・カップ。縁にまっすぐな彫刻の帯がある幅広の銀のボウルで、渦巻き形の耳状の取っ手が2つ付き、短い脚と濃い色の木の台座があります。1912年から、パシフィック・コースト・ホッケー協会の優勝チームに贈られました。" },
   "trophy:championship-banner": { en: "A fringed banner on a pole with a gilt finial and an embroidered border, with no lettering unless some is given", ja: "金の先端飾りの付いた竿に掛けた、刺繍の縁と房の付いた旗。文字は指定したときだけ入る" },
   "sport:sumo": { en: "Two wrestlers in the crouch they face each other in at the start of a bout, with their belts", ja: "仕切りの姿勢で向かい合う、廻しを締めた二人の力士" },
   "sport:handball": { en: "A hand throwing the ball, with lines of speed", ja: "ボールを投げる手と、速さを表す線" },

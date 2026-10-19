@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { test } from "node:test";
 
 import * as D from "../src/index.ts";
@@ -18,18 +19,43 @@ const METAL_LIMIT = 4500;
 const LINE_LIMIT = 2600;
 const COLOR_LIMIT = 3200;
 // A ball is drawn in 3D with its own panels, seams and shading, and a piece of gear is a detailed drawing in layers: they are bigger, and are held to limits of their own.
+// A trophy drawn as a likeness of one real trophy has more parts than a generic one (handles, bands, figures, tiers), and is held to limits of its own.
+const NAMED_LIMIT = { metal: 9000, line: 4800, color: 7200 } as const;
 const BIG_LIMIT = { metal: 14000, line: 13000, color: 14000 } as const;
 const isPiece = (id: D.EmblemId): boolean => D.emblemInfo(id).kind === "ball" || D.emblemInfo(id).kind === "gear";
 
-test("the ids number 274 in their groups, with no id twice, and the groups hold what they say", () => {
+test("the ids number 275 in their groups, with no id twice, and the groups hold what they say", () => {
   assert.equal(new Set(D.EMBLEM_IDS).size, D.EMBLEM_IDS.length);
-  assert.equal(D.EMBLEM_IDS.length, 274);
-  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 6, trophy: 24, medal: 6, crest: 4, ball: 117, puck: 8, gear: 70, sport: 38, pennant: 1 });
+  assert.equal(D.EMBLEM_IDS.length, 275);
+  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 6, trophy: 25, medal: 6, crest: 4, ball: 117, puck: 8, gear: 70, sport: 38, pennant: 1 });
 });
 
-test("no id, title or name is a real trophy, mark or competition", () => {
-  const text = JSON.stringify(D.EMBLEM_IDS.map((id) => D.emblemInfo(id)));
-  for (const real of [/stanley/i, /lombardi/i, /grey cup/i, /fifa/i, /world cup/i, /world series/i, /olympic/i, /larry/i, /o'brien/i, /commissioner/i, /nhl cup/i, /davis/i, /ashes/i, /webb ellis/i, /wimbledon/i, /rosewater/i, /\bnike\b/i, /adidas/i]) assert.doesNotMatch(text, real);
+// The ids of the trophies drawn as a likeness of one real trophy (docs/likeness.md): they may carry the trophy's own name, and so are held to the limits of a detailed drawing.
+const NAMED = new Set<string>(D.NAMED_TROPHIES.map((t) => t.id));
+
+test("a drawing carries no lettering, logo, league mark or sponsor wordmark of its own, whatever its name", () => {
+  for (const id of D.EMBLEM_IDS.filter((x) => x.startsWith("trophy:") || x.startsWith("award:"))) {
+    for (const style of EMBLEM_STYLES) {
+      const svg = D.renderEmblem(id, { style }).replace(/<title>.*?<\/title>/, "");
+      assert.doesNotMatch(svg, /<text|<image|<use\b/i, `${id} ${style}`);
+    }
+  }
+  // A sponsor's name or a maker's is not part of any trophy's name here: it is not on the drawing, and it is not in the id.
+  const ids = D.EMBLEM_IDS.join(" ");
+  for (const brand of [/\bnike\b/i, /adidas/i, /emirates/i, /rolex/i, /rawlings/i, /molten/i, /spalding/i, /wilson\b/i]) assert.doesNotMatch(ids, brand);
+});
+
+test("every named trophy is a trophy id, once, with its facts, and every trophy that carries a real name has an entry", () => {
+  assert.equal(NAMED.size, D.NAMED_TROPHIES.length, "a trophy is named once");
+  for (const t of D.NAMED_TROPHIES) {
+    assert.ok(D.TROPHY_IDS.includes(t.id), t.id);
+    assert.equal(D.namedTrophy(t.id), t);
+    assert.ok(t.name.length > 2 && t.honours.length > 10 && /^\d{4}(-\d{2})?$/.test(t.first) && t.reference.length > 10 && t.sport === t.sport.toLowerCase(), t.id);
+    assert.equal(D.emblemInfo(t.id).en.length <= 26, true, `${t.id}: the name is the accessible name, short`);
+  }
+  const sources = readFileSync("docs/likeness-sources.md", "utf8");
+  for (const t of D.NAMED_TROPHIES) assert.ok(sources.includes(`\`${t.id}\``), `${t.id} is in docs/likeness-sources.md`);
+  assert.equal(D.namedTrophy("trophy:cup"), undefined, "a generic trophy has no entry");
 });
 
 test("a trophy or an award has a short name, and the short name is the full id", () => {
@@ -61,7 +87,7 @@ test("every emblem draws well-formed, titled, safe SVG in every style and theme,
         assert.doesNotMatch(svg, /NaN|undefined|Infinity|null/, where);
       }
       const size = D.renderEmblem(id, { style }).length;
-      assert.ok(size < (isPiece(id) ? BIG_LIMIT[style] : style === "metal" ? METAL_LIMIT : style === "line" ? LINE_LIMIT : COLOR_LIMIT), `${id} ${style} is ${size} bytes`);
+      assert.ok(size < (isPiece(id) ? BIG_LIMIT[style] : NAMED.has(id) ? NAMED_LIMIT[style] : style === "metal" ? METAL_LIMIT : style === "line" ? LINE_LIMIT : COLOR_LIMIT), `${id} ${style} is ${size} bytes`);
     }
   }
 });

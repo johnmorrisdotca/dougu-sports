@@ -20,6 +20,7 @@ export const TROPHY_IDS = [
   "trophy:tennis-plate", "trophy:tennis-cup", "trophy:cricket-urn", "trophy:rugby-cup",
   "trophy:plaque", "trophy:belt", "trophy:laurel", "trophy:rosette", "trophy:ring", "trophy:banner",
   "trophy:sumo-cup", "trophy:championship-banner",
+  "trophy:paterson-cup",
 ] as const;
 export type TrophyId = (typeof TROPHY_IDS)[number];
 

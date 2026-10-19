@@ -1,5 +1,7 @@
 // The emblems entry point: `renderEmblem(id, options)` draws any emblem from its id, and the ids and types say which there are. Nothing here imports a single drawing's module directly, so for one
 // emblem and nothing else import its own module (`@johnmorrisdotca/dougu-sports/ball/soccer`).
+export { NAMED_TROPHIES, namedTrophy } from "./emblems/emblem.named.ts";
+export type { NamedKind, NamedTrophy } from "./emblems/emblem.named.ts";
 export { EMBLEM_DESCRIPTIONS } from "./emblems/emblem.descriptions.ts";
 export type { EmblemDescription } from "./emblems/emblem.descriptions.ts";
 export { EMBLEMS, crest, emblemInfo, emblemModel, emblemName, emblemOf, emblemSvg, isBallId, isEmblemId, medal, parseEmblem, pennant, renderEmblem, sportIcon } from "./emblems/emblem.api.ts";

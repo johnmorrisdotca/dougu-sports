@@ -31,6 +31,7 @@ import { TROPHY_SUMO_CUP } from "./trophy/sumo-cup.ts";
 import { TROPHY_CHAMPIONSHIP_BANNER } from "./trophy/championship-banner.ts";
 import { TROPHY_RING } from "./trophy/ring.ts";
 import { TROPHY_BANNER } from "./trophy/banner.ts";
+import { TROPHY_PATERSON_CUP } from "./trophy/paterson-cup.ts";
 import { MEDAL_GOLD } from "./medal/gold.ts";
 import { MEDAL_SILVER } from "./medal/silver.ts";
 import { MEDAL_BRONZE } from "./medal/bronze.ts";
@@ -118,6 +119,7 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}`
   "trophy:championship-banner": TROPHY_CHAMPIONSHIP_BANNER,
   "trophy:ring": TROPHY_RING,
   "trophy:banner": TROPHY_BANNER,
+  "trophy:paterson-cup": TROPHY_PATERSON_CUP,
   "medal:gold": MEDAL_GOLD,
   "medal:silver": MEDAL_SILVER,
   "medal:bronze": MEDAL_BRONZE,

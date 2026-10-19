@@ -35,6 +35,7 @@ export { TROPHY_SUMO_CUP } from "./emblems/trophy/sumo-cup.ts";
 export { TROPHY_CHAMPIONSHIP_BANNER } from "./emblems/trophy/championship-banner.ts";
 export { TROPHY_RING } from "./emblems/trophy/ring.ts";
 export { TROPHY_BANNER } from "./emblems/trophy/banner.ts";
+export { TROPHY_PATERSON_CUP } from "./emblems/trophy/paterson-cup.ts";
 export { MEDAL_GOLD } from "./emblems/medal/gold.ts";
 export { MEDAL_SILVER } from "./emblems/medal/silver.ts";
 export { MEDAL_BRONZE } from "./emblems/medal/bronze.ts";
