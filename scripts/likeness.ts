@@ -5,6 +5,8 @@
 //   node scripts/likeness.ts silhouette <photo> --box=x,y,w,h [--axis=x] [--rows=40] [--tol=60] [--to=y0,y1]
 //       the half width of the object (against the colour of the box's corners) at evenly spaced rows, for a clean background; with --to the rows and radii are
 //       scaled so that the object stands from y0 to y1 in the 64 unit box of a lathe emblem, which is the first draft of its profile, to be corrected by eye.
+//   node scripts/likeness.ts contact <out.png> <photo> <photo>...
+//       the photographs side by side at one height, each with its file name, to choose among references.
 //   node scripts/likeness.ts compare <emblem module path under src/emblems> <photo> <out.png> --box=x,y,w,h [--yaw=0] [--style=metal]
 //       the photo's object and the drawing (in the style asked and as a line) at the same height side by side, to adjust until they agree.
 import { readFileSync } from "node:fs";
@@ -99,6 +101,13 @@ try {
       const half = Math.max(axis - r.l, r.r - axis);
       console.log(`[${(y0 + (r.y - top) * k).toFixed(1)}, ${(half * k).toFixed(1)}],  // row ${r.y}  ${r.l}..${r.r}`);
     }
+  } else if (mode === "contact") {
+    const [out, ...photos] = rest as string[];
+    const height = Number(flags.height ?? 700);
+    await page.setViewportSize({ width: 2400, height: height + 40 });
+    await page.setContent(`<body style="margin:0;background:#fff;font:12px sans-serif;display:flex;gap:8px;flex-wrap:wrap">${photos.map((p) => `<div><img style="height:${height}px;display:block" src="${uri(p)}"><div>${p.split("/").pop()}</div></div>`).join("")}`);
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: out, fullPage: true });
   } else if (mode === "compare") {
     const [path, photo, out] = rest as [string, string, string];
     const module = (await import(`${pathToFileURL(join(process.cwd(), "src/emblems", `${path}.ts`)).href}?${Date.now()}`)) as Record<string, unknown>;

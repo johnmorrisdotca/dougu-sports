@@ -32,6 +32,25 @@ import { TROPHY_CHAMPIONSHIP_BANNER } from "./trophy/championship-banner.ts";
 import { TROPHY_RING } from "./trophy/ring.ts";
 import { TROPHY_BANNER } from "./trophy/banner.ts";
 import { TROPHY_PATERSON_CUP } from "./trophy/paterson-cup.ts";
+import { TROPHY_STANLEY_CUP } from "./trophy/stanley-cup.ts";
+import { TROPHY_HART_TROPHY } from "./trophy/hart-trophy.ts";
+import { TROPHY_VEZINA_TROPHY } from "./trophy/vezina-trophy.ts";
+import { TROPHY_NORRIS_TROPHY } from "./trophy/norris-trophy.ts";
+import { TROPHY_CALDER_TROPHY } from "./trophy/calder-trophy.ts";
+import { TROPHY_PRESIDENTS_TROPHY } from "./trophy/presidents-trophy.ts";
+import { TROPHY_ART_ROSS_TROPHY } from "./trophy/art-ross-trophy.ts";
+import { TROPHY_LADY_BYNG_TROPHY } from "./trophy/lady-byng-trophy.ts";
+import { TROPHY_JENNINGS_TROPHY } from "./trophy/jennings-trophy.ts";
+import { TROPHY_SELKE_TROPHY } from "./trophy/selke-trophy.ts";
+import { TROPHY_KING_CLANCY_TROPHY } from "./trophy/king-clancy-trophy.ts";
+import { TROPHY_MASTERTON_TROPHY } from "./trophy/masterton-trophy.ts";
+import { TROPHY_JACK_ADAMS_TROPHY } from "./trophy/jack-adams-trophy.ts";
+import { TROPHY_PRINCE_OF_WALES_TROPHY } from "./trophy/prince-of-wales-trophy.ts";
+import { TROPHY_CAMPBELL_BOWL } from "./trophy/campbell-bowl.ts";
+import { TROPHY_ROCKET_RICHARD_TROPHY } from "./trophy/rocket-richard-trophy.ts";
+import { TROPHY_CONN_SMYTHE_TROPHY } from "./trophy/conn-smythe-trophy.ts";
+import { TROPHY_TED_LINDSAY_AWARD } from "./trophy/ted-lindsay-award.ts";
+import { TROPHY_LESTER_PATRICK_TROPHY } from "./trophy/lester-patrick-trophy.ts";
 import { MEDAL_GOLD } from "./medal/gold.ts";
 import { MEDAL_SILVER } from "./medal/silver.ts";
 import { MEDAL_BRONZE } from "./medal/bronze.ts";
@@ -119,6 +138,25 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}`
   "trophy:championship-banner": TROPHY_CHAMPIONSHIP_BANNER,
   "trophy:ring": TROPHY_RING,
   "trophy:banner": TROPHY_BANNER,
+  "trophy:lester-patrick-trophy": TROPHY_LESTER_PATRICK_TROPHY,
+  "trophy:ted-lindsay-award": TROPHY_TED_LINDSAY_AWARD,
+  "trophy:conn-smythe-trophy": TROPHY_CONN_SMYTHE_TROPHY,
+  "trophy:rocket-richard-trophy": TROPHY_ROCKET_RICHARD_TROPHY,
+  "trophy:campbell-bowl": TROPHY_CAMPBELL_BOWL,
+  "trophy:prince-of-wales-trophy": TROPHY_PRINCE_OF_WALES_TROPHY,
+  "trophy:jack-adams-trophy": TROPHY_JACK_ADAMS_TROPHY,
+  "trophy:masterton-trophy": TROPHY_MASTERTON_TROPHY,
+  "trophy:king-clancy-trophy": TROPHY_KING_CLANCY_TROPHY,
+  "trophy:selke-trophy": TROPHY_SELKE_TROPHY,
+  "trophy:jennings-trophy": TROPHY_JENNINGS_TROPHY,
+  "trophy:lady-byng-trophy": TROPHY_LADY_BYNG_TROPHY,
+  "trophy:art-ross-trophy": TROPHY_ART_ROSS_TROPHY,
+  "trophy:presidents-trophy": TROPHY_PRESIDENTS_TROPHY,
+  "trophy:calder-trophy": TROPHY_CALDER_TROPHY,
+  "trophy:norris-trophy": TROPHY_NORRIS_TROPHY,
+  "trophy:vezina-trophy": TROPHY_VEZINA_TROPHY,
+  "trophy:hart-trophy": TROPHY_HART_TROPHY,
+  "trophy:stanley-cup": TROPHY_STANLEY_CUP,
   "trophy:paterson-cup": TROPHY_PATERSON_CUP,
   "medal:gold": MEDAL_GOLD,
   "medal:silver": MEDAL_SILVER,

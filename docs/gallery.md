@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 275 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 294 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -56,6 +56,25 @@ The folders the art lives in are in [layout.md](layout.md).
 | `trophy:sumo-cup` | Phoenix-handle cup | lathe | ours | A tall silver cup on a tall stepped stand, with an ornate phoenix-crested handle on each side |
 | `trophy:championship-banner` | Championship banner | flat | ours | A fringed banner on a pole with a gilt finial and an embroidered border, with no lettering unless some is given |
 | `trophy:paterson-cup` | Paterson Cup | lathe | ours | The Paterson Cup: a wide silver bowl with a straight engraved band at the rim, two scrolled ear handles, a short stem and a dark wooden base. Given to the champion of the Pacific Coast Hockey Association from 1912 |
+| `trophy:stanley-cup` | Stanley Cup | lathe | ours | The Stanley Cup: a wide fluted bowl with a smooth band at the rim, a beaded neck, three narrow rings that step out and a barrel of five bands on a black base. |
+| `trophy:hart-trophy` | Hart Trophy | lathe | ours | The Hart Memorial Trophy: a gilt flame-shaped bulb on a long tapering silver stem, over a domed bell and a dark octagonal base. |
+| `trophy:vezina-trophy` | Vezina Trophy | lathe | ours | The Vezina Trophy: a silver pavilion of four columns under a dome and a dark ball, on a flared bell and a stepped base of dark red wood. |
+| `trophy:norris-trophy` | Norris Trophy | lathe | ours | The James Norris Memorial Trophy: a silver lidded bowl with an acorn finial on a knopped stem and a domed foot, over a two-tiered octagonal base of pale wood. |
+| `trophy:calder-trophy` | Calder Trophy | lathe | ours | The Calder Memorial Trophy: a tall two-handled silver cup with looped handles and a knotted stem, on two stacked blocks of dark wood with copper trim. |
+| `trophy:presidents-trophy` | Presidents' Trophy | lathe | ours | The Presidents' Trophy: a wide shallow silver dish with two crossed hockey sticks over it, on three slender columns, a dark cap and a dark plinth. |
+| `trophy:art-ross-trophy` | Art Ross Trophy | lathe | ours | The Art Ross Trophy: a wide silver bowl on a small footed cup, on a tall square pyramid of red-brown wood that widens a long way toward its foot. |
+| `trophy:lady-byng-trophy` | Lady Byng Trophy | lathe | ours | The Lady Byng Memorial Trophy: a silver lidded cup with two flat ear handles, a knopped stem and a spreading foot, on a block of honey-brown wood. |
+| `trophy:jennings-trophy` | Jennings Trophy | lathe | ours | The William M. Jennings Trophy: a wide silver bowl on a stepped foot over three tiers of dark red wood. |
+| `trophy:selke-trophy` | Selke Trophy | lathe | ours | The Frank J. Selke Trophy: a crowned silver bowl with garlands and ring handles on a flared foot, over a dark hexagonal base. |
+| `trophy:king-clancy-trophy` | King Clancy Trophy | lathe | ours | The King Clancy Memorial Trophy: a tall lidded two-handled silver cup on a knopped stem, over a round base of honey-brown wood in two tiers. |
+| `trophy:masterton-trophy` | Masterton Trophy | lathe | ours | The Bill Masterton Memorial Trophy: two tall silver cones with gilt flames on a round dish, over an octagonal base of honey-coloured wood. |
+| `trophy:jack-adams-trophy` | Jack Adams Award | lathe | ours | The Jack Adams Award: a flared silver urn with scroll handles under a framed portrait, on a block with a large plate and wide stepped tiers of wood. |
+| `trophy:prince-of-wales-trophy` | Prince of Wales Trophy | lathe | ours | The Prince of Wales Trophy: a tall flared silver vase under a broad lid and a feathered finial, held by three stick-shaped legs round a clear crystal, on a dark octagonal base. |
+| `trophy:campbell-bowl` | Campbell Bowl | lathe | ours | The Clarence S. Campbell Bowl: a lidded two-handled silver bowl with large scrolling handles, on a dark hexagonal base. |
+| `trophy:rocket-richard-trophy` | Rocket Richard Trophy | lathe | ours | The Maurice Richard Trophy: a gilt skater in a wide flared funnel of clear amber, on a dark tapering base with a silver collar. |
+| `trophy:conn-smythe-trophy` | Conn Smythe Trophy | lathe | ours | The Conn Smythe Trophy: a fan of silver maple leaves rising from a silver building, on tiers of honey-brown wood that widen to a moulded foot. |
+| `trophy:ted-lindsay-award` | Ted Lindsay Award | lathe | ours | The Ted Lindsay Award: a bronze skater with a stick on a pin, over a tall black hexagonal pillar and a flared silver base. |
+| `trophy:lester-patrick-trophy` | Lester Patrick Trophy | lathe | ours | The Lester Patrick Trophy: a bronze figure of a man standing at ease on a tall square pedestal of reddish wood. |
 
 ## medal
 

@@ -43,8 +43,10 @@ test("a body of revolution keeps its outline at every yaw and moves its light", 
     // A stand with flat faces has no round pieces: its faces are tested below.
     if (id === "trophy:football") continue;
     assert.ok(still.length > 0, id);
+    // A solid that stands off the axis (`at`: the second goblet of a trophy, the legs of a figure) goes round it, so the outline of such an emblem is the profile's only for the solids on the axis.
+    const off = ((D.emblemModel(id) as { solids?: { at?: unknown }[] } | null)?.solids ?? []).some((solid) => solid.at !== undefined);
     for (const yaw of [20, 90, 200]) {
-      assert.deepEqual(pieces(D.emblemFrame(id, { yaw })), still, `${id} ${yaw}`);
+      if (!off) assert.deepEqual(pieces(D.emblemFrame(id, { yaw })), still, `${id} ${yaw}`);
       assert.notEqual(D.emblemFrame(id, { yaw }), D.renderEmblem(id), `${id} ${yaw}`);
     }
     assert.equal(D.emblemFrame(id, { yaw: 360 }), D.renderEmblem(id, { turnBox: true }), id);

@@ -26,6 +26,10 @@ export interface Solid {
   p: readonly Pt[];
   open?: boolean;
   sides?: number;
+  /** The angle in degrees that a body with flat sides is turned about its axis at rest: -45 on a square body shows a flat face to the eye, and 0 a corner. */
+  turn?: number;
+  /** Stands off the axis: at the distance `r` from it, at the angle `deg` (90 is the right side, 0 faces the eye), and turns round the axis with the rest. Its own profile is about its own axis. */
+  at?: readonly [r: number, deg: number];
   tone?: string;
   decor?: readonly Decor[];
 }
@@ -188,6 +192,7 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
   const where = (R: number, y: number, deg: number): string => pt(...(at(R, y, deg).slice(0, 2) as [number, number]));
 
   for (const solid of model.solids) {
+    const mark = mid.length;
     const p = solid.p;
     const list = piecesOf(p);
     const base = tone(solid.tone);
@@ -224,8 +229,8 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
         // A body with flat faces: each face that looks toward the eye is a quadrilateral, lit by which way it faces.
         const n = solid.sides;
         for (let face = 0; face < n; face++) {
-          const a0 = (360 * face) / n + yaw;
-          const a1 = (360 * (face + 1)) / n + yaw;
+          const a0 = (360 * face) / n + yaw + (solid.turn ?? 0);
+          const a1 = (360 * (face + 1)) / n + yaw + (solid.turn ?? 0);
           const m = (a0 + a1) / 2;
           if (Math.cos(m * RAD) <= 0) continue;
           const lit = -Math.sin(m * RAD);
@@ -237,7 +242,7 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
       const above = k > 0 ? p[list[k - 1][list[k - 1].length - 1]] : undefined;
       if (!line && ((above === undefined && solid.open !== true && a[1] > 1) || (above !== undefined && a[1] > above[1] + 0.3))) {
         const sides = solid.sides;
-        mid.push(sides === undefined ? ellipse(CX, a[0], a[1], a[1] * s, t.light) : `<path d="M${Array.from({ length: sides }, (_, i) => where(a[1], a[0], (360 * i) / sides + yaw)).join("L")}z" fill="${t.light}"${own(t)}/>`);
+        mid.push(sides === undefined ? ellipse(CX, a[0], a[1], a[1] * s, t.light) : `<path d="M${Array.from({ length: sides }, (_, i) => where(a[1], a[0], (360 * i) / sides + yaw + (solid.turn ?? 0))).join("L")}z" fill="${t.light}"${own(t)}/>`);
       }
     }
     if (solid.open === true) {
@@ -315,6 +320,12 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
         }
         mid.push(`<path d="${m}" stroke-width="${width}" stroke="${t.edge}"/><path d="${m}" stroke-width="${width - 0.9}" stroke="${t.light}"/>`);
       }
+    }
+    // A solid that stands off the axis is moved to its place, behind the body when it is on the far side and in front of it when it is on the near side.
+    if (solid.at !== undefined) {
+      const deg = solid.at[1] + yaw;
+      const piece = mid.splice(mark);
+      (Math.cos(deg * RAD) >= 0 ? front : back).push(`<g transform="translate(${f(solid.at[0] * Math.sin(deg * RAD))} ${f(s * solid.at[0] * Math.cos(deg * RAD))})">${piece.join("")}</g>`);
     }
   }
 
@@ -464,8 +475,8 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
     else {
       const n = solid.sides;
       const k = plate.face ?? 0;
-      const a0 = (360 * k) / n + yaw;
-      const a1 = (360 * (k + 1)) / n + yaw;
+      const a0 = (360 * k) / n + yaw + (solid.turn ?? 0);
+      const a1 = (360 * (k + 1)) / n + yaw + (solid.turn ?? 0);
       const [ax, ay] = at(radius, y, a0);
       const [bx, by] = at(radius, y, a1);
       mid.push(sideText(words, 2 * radius * Math.sin(Math.PI / n), plate.y1 - plate.y0, ink, [ax, ay], [bx, by], Math.cos(((a0 + a1) / 2) * RAD)));
