@@ -74,7 +74,7 @@ export const BALL_SOCCER_RETRO_LEAVES = /* @__PURE__ */ ball("ball:soccer-retro-
 });
 
 /** The 1980s: a five-petal rosette on each hexagon in a warm clay, each petal ornamented with a row of white beads along its spine, and gold-ringed dark pentagons. */
-export const BALL_SOCCER_RETRO_ROSETTE = /* @__PURE__ */ ball("ball:soccer-retro-rosette", "Soccer, decorated triads", "80年代風・飾り三つ巴", {
+export const BALL_SOCCER_RETRO_ROSETTE = /* @__PURE__ */ ball("ball:soccer-retro-rosette", "Soccer, decorated rosette", "80年代風・飾りロゼット", {
   view: VIEW,
   base: "#d1633a",
   ground: WHITE,
@@ -138,7 +138,7 @@ export const BALL_SOCCER_RETRO_PINWHEEL = /* @__PURE__ */ ball("ball:soccer-retr
 });
 
 /** The early 2000s: long kites that sweep across each hexagon, in slate blue and silver, over charcoal pentagons. */
-export const BALL_SOCCER_RETRO_KITES = /* @__PURE__ */ ball("ball:soccer-retro-kites", "Soccer, triangle sweep", "00年代風・三角の流れ", {
+export const BALL_SOCCER_RETRO_KITES = /* @__PURE__ */ ball("ball:soccer-retro-kites", "Soccer, kite sweep", "2000年代風・凧の流れ", {
   view: VIEW,
   base: "#3d5a80",
   ground: "#f3efe4",
@@ -160,7 +160,7 @@ export const BALL_SOCCER_RETRO_KITES = /* @__PURE__ */ ball("ball:soccer-retro-k
 });
 
 /** The mid 2000s: the 14-panel layout (six propellers and eight triangles) with a double border: two parallel black lines along every seam (a thin gap between them), and two parallel red lines inside each propeller; white propellers, dark triangles with a red dot. */
-export const BALL_SOCCER_14_PANEL_DOUBLE_BORDER = /* @__PURE__ */ ball("ball:soccer-14-panel-double-border", "Soccer, 14-panel propeller", "14枚貼り・プロペラ形", {
+export const BALL_SOCCER_14_PANEL_DOUBLE_BORDER = /* @__PURE__ */ ball("ball:soccer-14-panel-double-border", "Soccer, 14-panel borders", "14枚貼り・二重縁取り", {
   view: { yaw: 40, pitch: 36, roll: 0 },
   base: "#23282f",
   ground: "#f4f2ea",
@@ -184,7 +184,7 @@ export const BALL_SOCCER_14_PANEL_DOUBLE_BORDER = /* @__PURE__ */ ball("ball:soc
 });
 
 /** The early 2010s: the 8-panel layout, an octahedron whose edges are bent into S curves, with plain seams: the white panels are plain, and the slate-blue ones carry three white contour lines. */
-export const BALL_SOCCER_8_PANEL_PLAIN = /* @__PURE__ */ ball("ball:soccer-8-panel-plain", "Soccer, 8-panel grooved", "8枚貼り・溝つき", {
+export const BALL_SOCCER_8_PANEL_PLAIN = /* @__PURE__ */ ball("ball:soccer-8-panel-plain", "Soccer, 8-panel plain", "8枚貼り・無地と等高線", {
   view: { yaw: 32, pitch: 26, roll: 0 },
   base: "#f6f8f8",
   ground: "#f6f8f8",
@@ -236,7 +236,7 @@ function poleDiamonds(s: Surface, at: (i: number, u: number, s: number) => V3, c
 }
 
 /** The mid 2010s: six twisted panels in white, crossed by straight bands along each panel in blue, amber and magenta, and a series of diamonds at each pole where the seams meet. */
-export const BALL_SOCCER_6_PANEL_BANDS = /* @__PURE__ */ ball("ball:soccer-6-panel-bands", "Soccer, 6-panel ribbons", "6枚貼り・リボン柄", {
+export const BALL_SOCCER_6_PANEL_BANDS = /* @__PURE__ */ ball("ball:soccer-6-panel-bands", "Soccer, 6-panel bands", "6枚貼り・帯柄", {
   view: { yaw: 20, pitch: 22, roll: 0 },
   base: "#3b6fb6",
   ground: "#f5f5f1",
@@ -270,7 +270,7 @@ export const BALL_SOCCER_6_PANEL_BANDS = /* @__PURE__ */ ball("ball:soccer-6-pan
 });
 
 /** The late 2010s: six panels covered with small diamonds, thick on one side and thinning out toward the other, and a series of diamonds at each pole where the seams meet. */
-export const BALL_SOCCER_6_PANEL_DIAMONDS = /* @__PURE__ */ ball("ball:soccer-6-panel-diamonds", "Soccer, pixel blocks", "ピクセル柄", {
+export const BALL_SOCCER_6_PANEL_DIAMONDS = /* @__PURE__ */ ball("ball:soccer-6-panel-diamonds", "Soccer, 6-panel diamonds", "6枚貼り・ひし形柄", {
   view: { yaw: 20, pitch: 22, roll: 0 },
   base: "#2a2f3a",
   ground: "#f2f2ee",
@@ -304,7 +304,7 @@ export const BALL_SOCCER_6_PANEL_DIAMONDS = /* @__PURE__ */ ball("ball:soccer-6-
 });
 
 /** The early 2020s: twenty triangles (an icosahedron) in deep blue, cream and sand, each carrying one inner outline and a dot at its middle. */
-export const BALL_SOCCER_20_PANEL_DOTS = /* @__PURE__ */ ball("ball:soccer-20-panel-dots", "Soccer, 20-panel shell", "20枚貼り・貝殻柄", {
+export const BALL_SOCCER_20_PANEL_DOTS = /* @__PURE__ */ ball("ball:soccer-20-panel-dots", "Soccer, 20-panel dots", "20枚貼り・点と輪郭", {
   view: { yaw: 30, pitch: 24, roll: 8 },
   base: "#1f4f7d",
   ground: "#f1ece0",

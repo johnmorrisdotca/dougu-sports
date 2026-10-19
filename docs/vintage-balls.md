@@ -34,7 +34,7 @@ Each is on the construction of its time, with graphics of our own that only sugg
 | Id | The construction | The look |
 | --- | --- | --- |
 | `ball:soccer-retro-pentagons` | 32 panels (12 pentagons, 20 hexagons) | Slate pentagons with a white ring, white hexagons with a pale dished centre and a dot |
-| `ball:soccer-retro-leaves` | 32 panels | Three straight navy leaves on each hexagon, their points meeting round each pentagon |
+| `ball:soccer-retro-leaves` | 32 panels | Three straight navy leaves on each hexagon, each pointing at a pentagon |
 | `ball:soccer-retro-rosette` | 32 panels | A five-petal rosette on each hexagon in warm clay, with a row of white beads along each petal, and gold-ringed dark pentagons |
 | `ball:soccer-retro-star` | 32 panels | A second 1980s look: a six-armed deep-teal star with a saffron dot on each cream hexagon, navy pentagons ringed in cream |
 | `ball:soccer-retro-pinwheel` | 32 panels | Curved leaves in green, amber and plum on white, a solid deep green circle where the three meet, and deep green pentagons |
