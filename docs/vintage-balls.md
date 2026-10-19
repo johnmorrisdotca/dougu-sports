@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](vintage-balls.ja.md) · English
 
-Fifty balls that the plain soccer, baseball and volleyball ids do not cover: worn leather balls with the stitching of their time, soccer balls in the style of an era's match balls, the patterns of a shop wall, baseballs of other threads and times, and volleyballs in national colours. Every one is drawn in true 3D, turns with `ballFrame`, and comes in the colour style and the line style. Every drawing is our own: the constructions are facts (a panel count, a polyhedron, a curve), and the graphics are made here to evoke a period or a style, never to copy a design. The sources are in [references.md](references.md#vintage-era-style-and-patterned-balls).
+Fifty-one balls that the plain soccer, baseball and volleyball ids do not cover: worn leather balls with the stitching of their time, soccer balls in the style of an era's match balls, the patterns of a shop wall, baseballs of other threads and times, and volleyballs in national colours. Every one is drawn in true 3D, turns with `ballFrame`, and comes in the colour style and the line style. Every drawing is our own: the constructions are facts (a panel count, a polyhedron, a curve), and the graphics are made here to evoke a period or a style, never to copy a design. The sources are in [references.md](references.md#vintage-era-style-and-patterned-balls).
 
 ```js
 import { renderEmblem } from "@johnmorrisdotca/dougu-sports";
@@ -10,7 +10,7 @@ import { ballFrame } from "@johnmorrisdotca/dougu-sports/turn";
 
 console.log(renderEmblem("ball:soccer-1900-laced").includes("<title>Soccer ball, laced</title>")); // true
 console.log(renderEmblem("ball:volleyball-colours", { colors: ["#e8112d", "#ffffff", "#0b2d72"] }).includes("#e8112d")); // true
-console.log(ballFrame("ball:soccer-2006-propeller", { yaw: 360 }) === ballFrame("ball:soccer-2006-propeller", { yaw: 0 })); // true
+console.log(ballFrame("ball:soccer-14-panel-double-border", { yaw: 360 }) === ballFrame("ball:soccer-14-panel-double-border", { yaw: 0 })); // true
 ```
 
 ## Vintage soccer balls (5)
@@ -27,22 +27,23 @@ Worn leather in tan, brown and chestnut, with scuffs and a stitch line along eve
 
 The four older balls are drawn at the circumference the Laws have given since 1872 (27 to 28 inches); the 1960s ball is the size of today's (see [soccer-balls.md](soccer-balls.md)).
 
-## Soccer balls in the style of an era (11)
+## Soccer balls in the style of an era (12)
 
 Each is on the construction of its time, with graphics of our own that only suggest the period. None uses a real ball's design, mark or name, and the ids name the style and the decade.
 
 | Id | The construction | The look |
 | --- | --- | --- |
-| `ball:soccer-1970-black-white` | 32 panels (12 pentagons, 20 hexagons) | Slate pentagons with a white ring, white hexagons with a pale dished centre and a dot |
-| `ball:soccer-1978-triad` | 32 panels | Three straight navy leaves on each hexagon, their points meeting round each pentagon |
-| `ball:soccer-1986-decorated-triad` | 32 panels | A five-petal rosette on each hexagon in warm clay, with a row of white beads along each petal, and gold-ringed dark pentagons |
-| `ball:soccer-1998-coloured-triad` | 32 panels | Curved leaves in green, amber and plum on white, with deep green pentagons |
-| `ball:soccer-2002-triangle-sweep` | 32 panels | Three slate-blue and silver kites on each hexagon, over charcoal pentagons |
-| `ball:soccer-2006-propeller` | 14 panels (6 propellers, 8 triangles) | A coral line inside each propeller, a coral mark on each dark triangle |
-| `ball:soccer-2010-grooved` | 8 panels (an octahedron with its edges bent into S curves) | White and slate-blue panels, plain seams, and three contour lines across each panel |
-| `ball:soccer-2014-ribbon` | 6 twisted panels | White, crossed by straight bands in blue, amber and magenta |
-| `ball:soccer-2018-pixel` | 6 panels | Diamond pixels in graphite, teal and gold, thick on one side and thinning out |
-| `ball:soccer-2022-speed-shell` | 20 triangles (an icosahedron) | Blue and sand panels, each with a ring of dots at its centre |
+| `ball:soccer-retro-pentagons` | 32 panels (12 pentagons, 20 hexagons) | Slate pentagons with a white ring, white hexagons with a pale dished centre and a dot |
+| `ball:soccer-retro-leaves` | 32 panels | Three straight navy leaves on each hexagon, their points meeting round each pentagon |
+| `ball:soccer-retro-rosette` | 32 panels | A five-petal rosette on each hexagon in warm clay, with a row of white beads along each petal, and gold-ringed dark pentagons |
+| `ball:soccer-retro-star` | 32 panels | A second 1980s look: a six-armed deep-teal star with a saffron dot on each cream hexagon, navy pentagons ringed in cream |
+| `ball:soccer-retro-pinwheel` | 32 panels | Curved leaves in green, amber and plum on white, a solid deep green circle where the three meet, and deep green pentagons |
+| `ball:soccer-retro-kites` | 32 panels | Three slate-blue and silver kites on each hexagon, over charcoal pentagons |
+| `ball:soccer-14-panel-double-border` | 14 panels (6 propellers, 8 triangles) | A double border: two black lines along every seam with a thin gap between them, two red lines inside each white propeller, and a red dot on each dark triangle |
+| `ball:soccer-8-panel-plain` | 8 panels (an octahedron with its edges bent into S curves) | Plain white panels, and slate-blue panels with three white contour lines, divided by deep grooves |
+| `ball:soccer-6-panel-bands` | 6 twisted panels | White, crossed by straight bands in blue, amber and magenta, with a series of three nested diamonds at each pole where the seams meet |
+| `ball:soccer-6-panel-diamonds` | 6 panels | Small diamonds in graphite, grey, teal and gold, thick on one side and thinning out, with a series of three nested diamonds at each pole |
+| `ball:soccer-20-panel-dots` | 20 triangles (an icosahedron) | Blue and sand panels, each with a ring of dots at its centre |
 | `ball:soccer-training-high-vis` | 32 panels | A modern high-visibility training ball: fluorescent yellow-green, hot pink pentagons, dark speed marks |
 
 The 14-panel layout, the 6-gore layout and the 32 panels are the same constructions as `ball:soccer-14`, `ball:soccer-6` and `ball:soccer`; the 8-panel octahedron and the 20-panel icosahedron are new tilings (`octahedron8` and `icosahedron` in `src/emblems/ball/ball.tilings.ts`). A graphic is a flat shape laid on the sphere at a point (`frameAt` in `ball.decal.ts`), so it turns with the ball and foreshortens as a mark printed on it does.

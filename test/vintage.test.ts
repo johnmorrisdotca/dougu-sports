@@ -1,4 +1,4 @@
-// The fifty balls of docs/vintage-balls.md: vintage leather soccer balls, soccer balls in the style of an era, the patterns of a shop wall, baseballs of other threads, volleyballs in national colours, the `colors`
+// The fifty-one balls of docs/vintage-balls.md: vintage leather soccer balls, soccer balls in the style of an era, the patterns of a shop wall, baseballs of other threads, volleyballs in national colours, the `colors`
 // option, and the tilings and decal tools they are made from.
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -12,7 +12,7 @@ import { colourCentres, gorePoint, icosahedron, octahedron8 } from "../src/emble
 import { wellFormed } from "./helpers.ts";
 
 const VINTAGE = ["1870-hand-stitched", "1900-laced", "1930-18-panel", "1950-12-panel", "1960-32-panel-leather"].map((n) => `ball:soccer-${n}`) as D.BallId[];
-const ERA = ["1970-black-white", "1978-triad", "1986-decorated-triad", "1998-coloured-triad", "2002-triangle-sweep", "2006-propeller", "2010-grooved", "2014-ribbon", "2018-pixel", "2022-speed-shell", "training-high-vis"].map((n) => `ball:soccer-${n}`) as D.BallId[];
+const ERA = ["retro-pentagons", "retro-leaves", "retro-rosette", "retro-star", "retro-pinwheel", "retro-kites", "14-panel-double-border", "8-panel-plain", "6-panel-bands", "6-panel-diamonds", "20-panel-dots", "training-high-vis"].map((n) => `ball:soccer-${n}`) as D.BallId[];
 const PATTERNS = { stars: ["blue", "red", "night"], hexagons: ["cyan", "magenta", "lime"], flames: ["fire", "ice", "toxic"], chevrons: ["red", "green", "blue"], swirl: ["blue", "red", "teal"], metallic: ["gold", "silver", "cobalt"] } as const;
 const STORE = Object.entries(PATTERNS).flatMap(([pattern, ways]) => ways.map((way) => `ball:soccer-${pattern}-${way}`)) as D.BallId[];
 const BASEBALLS = ["ball:baseball-lemon-peel", "ball:baseball-red-blue", "ball:baseball-black-red", "ball:baseball-vintage-leather", "ball:softball-11-optic"] as D.BallId[];
@@ -22,12 +22,12 @@ const NEW: D.BallId[] = [...VINTAGE, ...ERA, ...STORE, ...BASEBALLS, ...VOLLEYBA
 /** What no id, title, description or document of these balls may name. */
 const NOT_NAMED = /telstar|tango|azteca|etrusco|questra|tricolore|fevernova|teamgeist|jabulani|brazuca|al rihla|trionda|fifa|world cup|adidas|official|nike|swoosh/i;
 
-test("there are fifty new balls, each an id of the registry, once", () => {
-  assert.equal(NEW.length, 50);
-  assert.equal(new Set(NEW).size, 50);
+test("there are fifty-one new balls, each an id of the registry, once", () => {
+  assert.equal(NEW.length, 51);
+  assert.equal(new Set(NEW).size, 51);
   for (const id of NEW) assert.ok(D.isEmblemId(id) && D.BALL_IDS.includes(id), id);
-  assert.equal(VINTAGE.length + ERA.length + STORE.length, 34);
-  assert.equal(D.BALL_IDS.length, 116);
+  assert.equal(VINTAGE.length + ERA.length + STORE.length, 35);
+  assert.equal(D.BALL_IDS.length, 117);
 });
 
 test("ids and names describe a style and an era, and name no real ball, tournament, maker or mark", () => {
@@ -37,9 +37,9 @@ test("ids and names describe a style and an era, and name no real ball, tourname
     assert.doesNotMatch(text, NOT_NAMED, id);
     assert.ok(info.description !== undefined && info.description.en.length > 20 && /[぀-ヿ一-鿿]/.test(info.description.ja), `${id} has no description`);
   }
-  for (const id of ERA.filter((x) => !x.includes("training"))) assert.match(id, /^ball:soccer-(19[789]\d|20[012]\d)-[a-z-]+$/, id);
-  assert.equal(new Set(NEW.map((id) => D.emblemInfo(id).en)).size, 50, "the titles are all different");
-  assert.equal(new Set(NEW.map((id) => D.emblemInfo(id).ja)).size, 50, "the Japanese names are all different");
+  for (const id of ERA.filter((x) => !x.includes("training"))) assert.match(id, /^ball:soccer-(retro-[a-z]+|\d+-panel-[a-z-]+)$/, id);
+  assert.equal(new Set(NEW.map((id) => D.emblemInfo(id).en)).size, 51, "the titles are all different");
+  assert.equal(new Set(NEW.map((id) => D.emblemInfo(id).ja)).size, 51, "the Japanese names are all different");
   for (const file of ["../docs/vintage-balls.md", "../docs/vintage-balls.ja.md"]) assert.doesNotMatch(readFileSync(new URL(file, import.meta.url), "utf8"), NOT_NAMED, file);
 });
 
@@ -257,19 +257,36 @@ function contrast(a: string, b: string): number {
 }
 
 test("the 2010-style ball has an accent that reads on a light page and on a dark one, grooves darker than both panels, and contour lines that survive 32 pixels", () => {
-  const svg = D.renderEmblem("ball:soccer-2010-grooved", { style: "color", size: 32 });
+  const svg = D.renderEmblem("ball:soccer-8-panel-plain", { style: "color", size: 32 });
   const accent = "#5f86c0", white = "#f6f8f8", groove = "#16262f";
   for (const colour of [accent, white, groove]) assert.ok(svg.includes(colour), colour);
   assert.ok(contrast(accent, "#ffffff") >= 3 && contrast(accent, "#14181c") >= 3, "the accent is 3 to 1 against a white page and against a dark one");
   assert.ok(contrast(accent, white) >= 3, "the two kinds of panel are 3 to 1 apart");
   assert.ok(contrast(groove, accent) >= 4 && contrast(groove, white) >= 12, "the grooves are clearly darker than either panel");
   // The accent is `accent`'s to change, as before.
-  assert.ok(D.renderEmblem("ball:soccer-2010-grooved", { accent: "#ff8800" }).includes("#ff8800"));
-  // The contour lines are two inks, one for each kind of panel, each 3 to 1 against its own panel, drawn at the floor width (80 / size units: 0.8 pixel) where they face the eye.
+  assert.ok(D.renderEmblem("ball:soccer-8-panel-plain", { accent: "#ff8800" }).includes("#ff8800"));
+  // The contour lines are two inks, white, 3 to 1 against the blue panels, drawn at the floor width (80 / size units: 0.8 pixel) where they face the eye.
   const ink = [...svg.matchAll(/stroke="(#[0-9a-f]{6})" stroke-width="([\d.]+)"[^>]*opacity="0.95"/g)].map((m) => ({ colour: m[1] as string, width: Number(m[2]) }));
-  assert.deepEqual([...new Set(ink.map((i) => i.colour))].sort(), ["#3e577d", "#ffffff"], "slate-blue lines on the white panels, white lines on the blue ones");
-  assert.ok(contrast("#3e577d", white) >= 3 && contrast("#ffffff", accent) >= 3, "each ink reads on its panel");
+  assert.deepEqual([...new Set(ink.map((i) => i.colour))].sort(), ["#ffffff"], "white contour lines on the blue panels only; the white panels are plain");
+  assert.ok(contrast("#ffffff", accent) >= 3, "the ink reads on its panel");
   assert.ok(Math.max(...ink.map((i) => i.width)) >= 80 / 32 - 0.01, "at 32 pixels the lines reach 0.8 pixel");
   // The line style keeps the grooves and the contour rings, and both themes and every turn are well formed.
-  for (const theme of ["light", "dark"] as const) for (const yaw of [0, 90, 180, 270]) assert.equal(wellFormed(D.ballFrame("ball:soccer-2010-grooved", { yaw, theme, size: 16 })), null, `${theme} ${yaw}`);
+  for (const theme of ["light", "dark"] as const) for (const yaw of [0, 90, 180, 270]) assert.equal(wellFormed(D.ballFrame("ball:soccer-8-panel-plain", { yaw, theme, size: 16 })), null, `${theme} ${yaw}`);
+});
+
+test("the era balls John asked to change: a double border, plain white panels, diamonds at the poles, a solid centre on the pinwheel, a second 1980s ball", () => {
+  const colour = (id: string): string => D.renderEmblem(id as D.BallId, { style: "color", grain: false });
+  const count = (svg: string, re: RegExp): number => (svg.match(re) ?? []).length;
+  // 2006: two red lines inside each propeller (two strokes per propeller on the near side) and a black seam with a gap of ground drawn over it.
+  const border = colour("ball:soccer-14-panel-double-border");
+  assert.ok(count(border, /stroke="#c8302f"[^>]*opacity="0.95"/g) >= 6, "red lines inside the propellers");
+  assert.ok(border.includes('stroke="#16181c"') && border.includes('stroke="#f4f2ea"'), "a black seam with a gap in it");
+  // 2010: contour lines only on the blue panels, so no line ink but white.
+  assert.ok(!colour("ball:soccer-8-panel-plain").includes("#3e577d"));
+  // 2014 and 2018: the diamonds at the poles are drawn, so the ball differs from one drawn without them (a ball's top view shows one).
+  for (const id of ["ball:soccer-6-panel-bands", "ball:soccer-6-panel-diamonds"]) assert.notEqual(D.ballFrame(id as D.BallId, { pitch: 80 }), D.ballFrame(id as D.BallId, { pitch: 80, yaw: 0, size: 100 }), id);
+  // The pinwheel's solid circle is in the deep green of its pentagons, which now fills two kinds of shape.
+  const pinwheel = colour("ball:soccer-retro-pinwheel");
+  assert.ok(count(pinwheel, /fill="#15472d"/g) >= 2, "a solid circle at the middle of each pinwheel, in the pentagons' green");
+  assert.equal(D.emblemInfo("ball:soccer-retro-star").en, "Soccer, 1980s star");
 });

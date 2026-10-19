@@ -83,7 +83,7 @@ Read 2026-10-14, in the text of the rule itself.
 
 ## Vintage, era-style and patterned balls
 
-What the fifty balls of [vintage-balls.md](vintage-balls.md) are made from. The constructions are facts or our own geometry; the graphics on them are drawn here and are not any real ball's. Read 2026-10-14.
+What the fifty-one balls of [vintage-balls.md](vintage-balls.md) are made from. The constructions are facts or our own geometry; the graphics on them are drawn here and are not any real ball's. Read 2026-10-14.
 
 ### Vintage soccer balls
 

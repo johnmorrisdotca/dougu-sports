@@ -38,7 +38,7 @@ describe("the proportions of the balls and implements", () => {
 
   it("draws the soccer balls as spheres of their rules' sizes: the 11-a-side constructions, colourways, era styles and patterns at 68 to 70 cm, the vintage ones at the 27 to 28 inches of the 1872 Laws, futsal at 62 to 64 cm (size 4), beach soccer at 68 to 70 cm", () => {
     const soccer = BALLS.filter((b) => /^ball:(soccer|futsal|beach-soccer)/.test(b.id));
-    expect(soccer.length).toBe(55);
+    expect(soccer.length).toBe(56);
     for (const b of soccer) {
       const m = measure(b);
       const circumference = b.size!.circumferenceMm!;

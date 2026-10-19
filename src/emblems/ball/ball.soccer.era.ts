@@ -42,7 +42,7 @@ function laidTriads(s: Surface, t: Truncated, frames: ReturnType<typeof hexFrame
 }
 
 /** The 1970s: twelve dark slate pentagons and twenty white hexagons that each hold a pale dished hexagon. */
-export const BALL_SOCCER_1970_BLACK_WHITE = /* @__PURE__ */ ball("ball:soccer-1970-black-white", "Soccer, 1970s black-white", "70年代風・白黒", {
+export const BALL_SOCCER_RETRO_PENTAGONS = /* @__PURE__ */ ball("ball:soccer-retro-pentagons", "Soccer, 1970s black-white", "70年代風・白黒", {
   view: VIEW,
   base: "#262c3b",
   ground: WHITE,
@@ -60,7 +60,7 @@ export const BALL_SOCCER_1970_BLACK_WHITE = /* @__PURE__ */ ball("ball:soccer-19
 });
 
 /** The late 1970s: a trefoil of three straight leaves on each of the twenty hexagons, navy on white, each pointing at a pentagon. */
-export const BALL_SOCCER_1978_TRIAD = /* @__PURE__ */ ball("ball:soccer-1978-triad", "Soccer, late-1970s triads", "70年代後期風・三つ巴", {
+export const BALL_SOCCER_RETRO_LEAVES = /* @__PURE__ */ ball("ball:soccer-retro-leaves", "Soccer, late-1970s triads", "70年代後期風・三つ巴", {
   view: VIEW,
   base: "#243a63",
   ground: WHITE,
@@ -74,7 +74,7 @@ export const BALL_SOCCER_1978_TRIAD = /* @__PURE__ */ ball("ball:soccer-1978-tri
 });
 
 /** The 1980s: a five-petal rosette on each hexagon in a warm clay, each petal ornamented with a row of white beads along its spine, and gold-ringed dark pentagons. */
-export const BALL_SOCCER_1986_DECORATED_TRIAD = /* @__PURE__ */ ball("ball:soccer-1986-decorated-triad", "Soccer, decorated triads", "80年代風・飾り三つ巴", {
+export const BALL_SOCCER_RETRO_ROSETTE = /* @__PURE__ */ ball("ball:soccer-retro-rosette", "Soccer, decorated triads", "80年代風・飾り三つ巴", {
   view: VIEW,
   base: "#d1633a",
   ground: WHITE,
@@ -97,8 +97,30 @@ export const BALL_SOCCER_1986_DECORATED_TRIAD = /* @__PURE__ */ ball("ball:socce
   },
 });
 
-/** The 1990s: a pinwheel of three curved leaves in three colours (green, amber and plum) on a white ground, turning the other way from the 1970s, with deep green pentagons. */
-export const BALL_SOCCER_1998_COLOURED_TRIAD = /* @__PURE__ */ ball("ball:soccer-1998-coloured-triad", "Soccer, coloured triads", "90年代風・色つき三つ巴", {
+/** The 1980s, second version: a six-armed star on each hexagon in deep teal with a saffron centre, over cream hexagons, with navy pentagons ringed in cream. */
+export const BALL_SOCCER_RETRO_STAR = /* @__PURE__ */ ball("ball:soccer-retro-star", "Soccer, 1980s star", "80年代風・星形", {
+  view: VIEW,
+  base: "#1f7f86",
+  ground: "#f6f0e2",
+  mat: GLOSS,
+  draw(s, base, accent) {
+    const t = truncatedIcosahedron();
+    const hf = hexFrames(t);
+    let out = "";
+    for (const p of t.pentagons) out += s.panel(p, "#1d2b45", { ink: true });
+    t.pentagons.forEach((p, i) => {
+      out += s.strokes([shrink(p, t.pentagonCentres[i], 0.4)], "#f6f0e2", 0.6, { closed: true, deco: true });
+    });
+    const ray = [[0.3, 0], [0.11, 0.075], [0.03, 0], [0.11, -0.075]] as const;
+    out += s.panels(hf.flatMap((f) => [0, 1, 2, 3, 4, 5].map((k) => place(f, turned(ray, (Math.PI * k) / 3)))), base, { n: 1 });
+    out += s.dots(t.hexagonCentres, 0.05, accent ?? "#e9a92b", { light: false });
+    out += s.strokes(t.edges, mix(base, -0.5), 1);
+    return out + lit(s, t.edges, 0.4);
+  },
+});
+
+/** The 1990s: a pinwheel of three curved leaves in three colours (green, amber and plum) on a white ground, turning the other way from the 1970s, a solid deep green circle where the three meet, and deep green pentagons. */
+export const BALL_SOCCER_RETRO_PINWHEEL = /* @__PURE__ */ ball("ball:soccer-retro-pinwheel", "Soccer, coloured triads", "90年代風・色つき三つ巴", {
   view: VIEW,
   base: "#2f9e63",
   ground: WHITE,
@@ -108,13 +130,15 @@ export const BALL_SOCCER_1998_COLOURED_TRIAD = /* @__PURE__ */ ball("ball:soccer
     let out = "";
     for (const p of t.pentagons) out += s.panel(p, mix(base, -0.55), { ink: true });
     out += laidTriads(s, t, hexFrames(t), triad(0.0, 0.31, 0.9, 0.2, 0.2), [base, "#e08a2e", accent ?? "#7d3c98"], "#ffffff", 0.35);
+    // A solid circle where the three colours meet, in the pentagons' deep green.
+    out += s.dots(t.hexagonCentres, 0.052, mix(base, -0.55), { light: false });
     out += s.strokes(t.edges, GREY, 0.9);
     return out + lit(s, t.edges, 0.4);
   },
 });
 
 /** The early 2000s: long kites that sweep across each hexagon, in slate blue and silver, over charcoal pentagons. */
-export const BALL_SOCCER_2002_TRIANGLE_SWEEP = /* @__PURE__ */ ball("ball:soccer-2002-triangle-sweep", "Soccer, triangle sweep", "00年代風・三角の流れ", {
+export const BALL_SOCCER_RETRO_KITES = /* @__PURE__ */ ball("ball:soccer-retro-kites", "Soccer, triangle sweep", "00年代風・三角の流れ", {
   view: VIEW,
   base: "#3d5a80",
   ground: "#f3efe4",
@@ -135,31 +159,32 @@ export const BALL_SOCCER_2002_TRIANGLE_SWEEP = /* @__PURE__ */ ball("ball:soccer
   },
 });
 
-/** The mid 2000s: the 14-panel propeller layout (six propellers and eight triangles), with a fine coral line following each curved seam inside the panel, and a small ring on each triangle. */
-export const BALL_SOCCER_2006_PROPELLER = /* @__PURE__ */ ball("ball:soccer-2006-propeller", "Soccer, 14-panel propeller", "14枚貼り・プロペラ形", {
+/** The mid 2000s: the 14-panel layout (six propellers and eight triangles) with a double border: two parallel black lines along every seam (a thin gap between them), and two parallel red lines inside each propeller; white propellers, dark triangles with a red dot. */
+export const BALL_SOCCER_14_PANEL_DOUBLE_BORDER = /* @__PURE__ */ ball("ball:soccer-14-panel-double-border", "Soccer, 14-panel propeller", "14枚貼り・プロペラ形", {
   view: { yaw: 40, pitch: 36, roll: 0 },
-  base: "#23403a",
+  base: "#23282f",
   ground: "#f4f2ea",
   mat: GLOSS,
   draw(s, base, accent) {
     const g = propellers14();
-    const gold = accent ?? "#e07a5f";
+    const red = accent ?? "#c8302f";
+    const ring = (p: readonly V3[], c: V3, k: number): V3[] => shrink(p, c, k).filter((_, j) => j % 3 === 0);
     let out = "";
     for (const p of g.triangles) out += s.panel(p, base, { n: 6, ink: true });
-    g.triangles.forEach((p, i) => {
-      out += s.panel(shrink(p, g.triangleCentres[i], 0.4), gold, { n: 4 });
-    });
-    // A line a little inside each propeller, following its seam.
+    out += s.dots(g.triangleCentres, 0.05, red, { light: false });
+    // The double red border inside each propeller, two parallel lines following its seam.
     g.propellers.forEach((p, i) => {
-      out += s.strokes([shrink(p, g.propellerCentres[i], 0.3).filter((_, j) => j % 2 === 0)], gold, 0.55, { closed: true, deco: true, opacity: 0.95 });
+      for (const k of [0.2, 0.3]) out += s.strokes([ring(p, g.propellerCentres[i], k)], red, 0.7, { closed: true, deco: true, opacity: 0.95 });
     });
-    out += s.strokes(g.seams, "#3a3f4a", 1.4);
+    // The double black border on every seam: two black lines with a thin gap of ground between them.
+    out += s.strokes(g.seams, "#16181c", 2.7);
+    out += s.strokes(g.seams, "#f4f2ea", 0.8);
     return out + lit(s, g.seams);
   },
 });
 
-/** The early 2010s: the 8-panel layout, an octahedron whose edges are bent into S curves, with plain seams and three contour lines across each panel: white panels with slate-blue lines and slate-blue panels with white ones. */
-export const BALL_SOCCER_2010_GROOVED = /* @__PURE__ */ ball("ball:soccer-2010-grooved", "Soccer, 8-panel grooved", "8枚貼り・溝つき", {
+/** The early 2010s: the 8-panel layout, an octahedron whose edges are bent into S curves, with plain seams: the white panels are plain, and the slate-blue ones carry three white contour lines. */
+export const BALL_SOCCER_8_PANEL_PLAIN = /* @__PURE__ */ ball("ball:soccer-8-panel-plain", "Soccer, 8-panel grooved", "8枚貼り・溝つき", {
   view: { yaw: 32, pitch: 26, roll: 0 },
   base: "#f6f8f8",
   ground: "#f6f8f8",
@@ -171,12 +196,12 @@ export const BALL_SOCCER_2010_GROOVED = /* @__PURE__ */ ball("ball:soccer-2010-g
     g.panels.forEach((p, i) => {
       if (g.parity[i] === 1) out += s.panel(p, tone[1], { n: 1 });
     });
-    // Contour lines: two rings in each panel, in the other panel colour's dark or light so that they show on both.
+    // Contour lines on the blue panels only; the white ones stay plain.
     const groove = "#16262f";
     g.panels.forEach((p, i) => {
-      const onAccent = g.parity[i] === 1;
-      const ink = onAccent ? "#ffffff" : mix(tone[1], -0.35);
-      for (const [k, w] of [[0.72, 0.8], [0.48, 0.8], [0.24, 0.8]] as const) out += s.strokes([shrink(p, g.centres[i], k).filter((_, j) => j % 2 === 0)], ink, w, { closed: true, deco: true, opacity: 0.95 });
+      if (g.parity[i] !== 1) return;
+      const ink = "#ffffff";
+      for (const [k, w] of [[0.72, 0.8], [0.48, 0.8], [0.24, 0.8]] as const) out += s.strokes([shrink(p, g.centres[i], k).filter((_, j) => j % 3 === 0)], ink, w, { closed: true, deco: true, opacity: 0.95 });
     });
     // The grooves: a wide dark channel with a lit lip beside it.
     out += s.strokes(g.seams, groove, 1.3);
@@ -197,8 +222,21 @@ function sixGores(s: Surface, tilt: readonly [number, number, number], tone: str
   return { g, out };
 }
 
-/** The mid 2010s: six twisted panels in white, crossed by straight bands along each panel in blue, amber and magenta. */
-export const BALL_SOCCER_2014_RIBBON = /* @__PURE__ */ ball("ball:soccer-2014-ribbon", "Soccer, 6-panel ribbons", "6枚貼り・リボン柄", {
+/** A series of diamonds at the two poles of a six-gore ball, where all the seams meet: three nested diamonds, outer to inner in `cols`. */
+function poleDiamonds(s: Surface, at: (i: number, u: number, s: number) => V3, cols: readonly [string, string, string]): string {
+  const diamond = (k: number): ReadonlyArray<readonly [number, number]> => [[0.32 * k, 0], [0, 0.19 * k], [-0.32 * k, 0], [0, -0.19 * k]];
+  let out = "";
+  for (const pole of [1, -1]) {
+    const f = frameAt(at(0, 0, pole), at(0, 0.5, pole * 0.8));
+    [1, 0.62, 0.26].forEach((k, j) => {
+      out += s.panel(place(f, diamond(k)), cols[j], { n: 1 });
+    });
+  }
+  return out;
+}
+
+/** The mid 2010s: six twisted panels in white, crossed by straight bands along each panel in blue, amber and magenta, and a series of diamonds at each pole where the seams meet. */
+export const BALL_SOCCER_6_PANEL_BANDS = /* @__PURE__ */ ball("ball:soccer-6-panel-bands", "Soccer, 6-panel ribbons", "6枚貼り・リボン柄", {
   view: { yaw: 20, pitch: 22, roll: 0 },
   base: "#3b6fb6",
   ground: "#f5f5f1",
@@ -226,12 +264,13 @@ export const BALL_SOCCER_2014_RIBBON = /* @__PURE__ */ ball("ball:soccer-2014-ri
       }
     }
     out += s.strokes(g.seams, GREY, 0.85);
+    out += poleDiamonds(s, at, [cols[0], "#f5f5f1", cols[1]]);
     return out + lit(s, g.seams, 0.5);
   },
 });
 
-/** The late 2010s: six panels covered with small diamonds, thick on one side and thinning out toward the other. */
-export const BALL_SOCCER_2018_PIXEL = /* @__PURE__ */ ball("ball:soccer-2018-pixel", "Soccer, pixel blocks", "ピクセル柄", {
+/** The late 2010s: six panels covered with small diamonds, thick on one side and thinning out toward the other, and a series of diamonds at each pole where the seams meet. */
+export const BALL_SOCCER_6_PANEL_DIAMONDS = /* @__PURE__ */ ball("ball:soccer-6-panel-diamonds", "Soccer, pixel blocks", "ピクセル柄", {
   view: { yaw: 20, pitch: 22, roll: 0 },
   base: "#2a2f3a",
   ground: "#f2f2ee",
@@ -259,12 +298,13 @@ export const BALL_SOCCER_2018_PIXEL = /* @__PURE__ */ ball("ball:soccer-2018-pix
       out += s.panels(groups[k], c, { n: 1, ink: k === 0 });
     });
     out += s.strokes(g.seams, GREY, 0.85);
+    out += poleDiamonds(s, gorePoint(6, 90, [0, 0, 28]), [base, "#e7e7e1", pal[2]]);
     return out + lit(s, g.seams, 0.5);
   },
 });
 
 /** The early 2020s: twenty triangles (an icosahedron) in deep blue, cream and sand, each carrying one inner outline and a dot at its middle. */
-export const BALL_SOCCER_2022_SPEED_SHELL = /* @__PURE__ */ ball("ball:soccer-2022-speed-shell", "Soccer, 20-panel shell", "20枚貼り・貝殻柄", {
+export const BALL_SOCCER_20_PANEL_DOTS = /* @__PURE__ */ ball("ball:soccer-20-panel-dots", "Soccer, 20-panel shell", "20枚貼り・貝殻柄", {
   view: { yaw: 30, pitch: 24, roll: 8 },
   base: "#1f4f7d",
   ground: "#f1ece0",

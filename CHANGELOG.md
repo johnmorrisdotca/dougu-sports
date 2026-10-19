@@ -6,6 +6,14 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- **Era soccer balls get neutral ids and new looks** (review branch, not released): the ten era balls move from year-and-style ids to neutral ones (`ball:soccer-retro-pentagons`, `-leaves`, `-rosette`, `-pinwheel`, `-kites`, `ball:soccer-14-panel-double-border`, `-8-panel-plain`, `-6-panel-bands`, `-6-panel-diamonds`, `-20-panel-dots`); the ids published in 0.9.0 and 0.10.0 still work as aliases (`EMBLEM_ALIASES`). The 14-panel ball has a double border (two black lines along each seam, two red inside each propeller), the 8-panel ball has plain white panels, the two 6-panel balls have a series of diamonds at each pole, and the three-colour pinwheel has a solid circle at its centre.
+
+### Added
+
+- `ball:soccer-retro-star`, a second 1980s-style soccer ball with a six-armed teal star on cream hexagons. 274 emblems.
+
 ## [0.10.0] - 2026-10-19
 
 ### Added

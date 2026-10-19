@@ -113,7 +113,7 @@ try {
     .map((id) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.renderEmblem(id, { size: 146 })}</figure>`).join("");
   // The vintage leather balls, four baseballs of other threads and the era-style soccer balls: eighteen, two rows of nine.
   const vintage = (D: Dist) => ["ball:soccer-1870-hand-stitched", "ball:soccer-1900-laced", "ball:soccer-1930-18-panel", "ball:soccer-1950-12-panel", "ball:soccer-1960-32-panel-leather", "ball:baseball-lemon-peel", "ball:baseball-red-blue", "ball:baseball-black-red", "ball:baseball-vintage-leather",
-    "ball:soccer-1970-black-white", "ball:soccer-1978-triad", "ball:soccer-1986-decorated-triad", "ball:soccer-1998-coloured-triad", "ball:soccer-2002-triangle-sweep", "ball:soccer-2006-propeller", "ball:soccer-2010-grooved", "ball:soccer-2014-ribbon", "ball:soccer-2022-speed-shell"]
+    "ball:soccer-retro-pentagons", "ball:soccer-retro-leaves", "ball:soccer-retro-rosette", "ball:soccer-retro-star", "ball:soccer-retro-pinwheel", "ball:soccer-retro-kites", "ball:soccer-14-panel-double-border", "ball:soccer-8-panel-plain", "ball:soccer-6-panel-bands", "ball:soccer-20-panel-dots"]
     .map((id) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.renderEmblem(id, { size: 146 })}</figure>`).join("");
   // Gear: thirty-six of the pieces.
   const gear = (D: Dist) => ["gear:hockey-stick", "gear:hockey-skate", "gear:goalie-mask", "gear:field-hockey-stick", "gear:lacrosse-stick", "gear:hurley", "gear:cricket-bat", "gear:wicket", "gear:baseball-bat",

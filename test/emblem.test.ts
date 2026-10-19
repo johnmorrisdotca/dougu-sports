@@ -21,10 +21,10 @@ const COLOR_LIMIT = 3200;
 const BIG_LIMIT = { metal: 14000, line: 13000, color: 14000 } as const;
 const isPiece = (id: D.EmblemId): boolean => D.emblemInfo(id).kind === "ball" || D.emblemInfo(id).kind === "gear";
 
-test("the ids number 273 in their groups, with no id twice, and the groups hold what they say", () => {
+test("the ids number 274 in their groups, with no id twice, and the groups hold what they say", () => {
   assert.equal(new Set(D.EMBLEM_IDS).size, D.EMBLEM_IDS.length);
-  assert.equal(D.EMBLEM_IDS.length, 273);
-  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 6, trophy: 24, medal: 6, crest: 4, ball: 116, puck: 8, gear: 70, sport: 38, pennant: 1 });
+  assert.equal(D.EMBLEM_IDS.length, 274);
+  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 6, trophy: 24, medal: 6, crest: 4, ball: 117, puck: 8, gear: 70, sport: 38, pennant: 1 });
 });
 
 test("no id, title or name is a real trophy, mark or competition", () => {
@@ -35,7 +35,11 @@ test("no id, title or name is a real trophy, mark or competition", () => {
 test("a trophy or an award has a short name, and the short name is the full id", () => {
   assert.equal(D.EMBLEM_ALIASES.cup, "trophy:cup");
   assert.equal(D.EMBLEM_ALIASES.crown, "award:crown");
-  assert.equal(Object.keys(D.EMBLEM_ALIASES).length, D.TROPHY_IDS.length + D.AWARD_IDS.length);
+  assert.equal(Object.keys(D.EMBLEM_ALIASES).length, D.TROPHY_IDS.length + D.AWARD_IDS.length + 10, "plus the ten era balls' old ids");
+  // An id published for an era ball still draws the ball that took its place.
+  assert.equal(D.renderEmblem("ball:soccer-2006-propeller"), D.renderEmblem("ball:soccer-14-panel-double-border"));
+  assert.equal(D.renderEmblem("ball:soccer-1998-coloured-triad/line"), D.renderEmblem("ball:soccer-retro-pinwheel", { style: "line" }));
+  for (const old of Object.keys(D.EMBLEM_ALIASES).filter((k) => k.startsWith("ball:"))) assert.ok(D.isEmblemId(D.EMBLEM_ALIASES[old]!) && !D.isEmblemId(old), old);
   assert.equal(D.renderEmblem("cup"), D.renderEmblem("trophy:cup"));
   assert.equal(D.renderEmblem("crown/line"), D.renderEmblem("award:crown", { style: "line" }));
 });

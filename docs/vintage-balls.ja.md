@@ -2,7 +2,7 @@
 
 [README に戻る](../README.md) · 日本語 · [English](vintage-balls.md)
 
-通常のサッカー、野球、バレーボールの id では足りない 50 種類のボールです。その時代の縫い方をした、使い込んだ革のボール、年代ごとの試合球をイメージしたサッカーボール、店の壁に並ぶような柄のボール、糸の色や時代が違う野球ボール、国の色のバレーボールを収めています。どれも立体（3D）で描き、`ballFrame` で回転し、カラースタイルとラインスタイルの両方があります。絵はすべてこのパッケージ独自のものです。パネル構成は事実（パネルの枚数、多面体、曲線）に基づき、模様は時代や雰囲気を思わせるように描いたもので、実在のデザインを写したものではありません。出典は [references.md](references.md#vintage-era-style-and-patterned-balls)（英語）にあります。
+通常のサッカー、野球、バレーボールの id では足りない 51 種類のボールです。その時代の縫い方をした、使い込んだ革のボール、年代ごとの試合球をイメージしたサッカーボール、店の壁に並ぶような柄のボール、糸の色や時代が違う野球ボール、国の色のバレーボールを収めています。どれも立体（3D）で描き、`ballFrame` で回転し、カラースタイルとラインスタイルの両方があります。絵はすべてこのパッケージ独自のものです。パネル構成は事実（パネルの枚数、多面体、曲線）に基づき、模様は時代や雰囲気を思わせるように描いたもので、実在のデザインを写したものではありません。出典は [references.md](references.md#vintage-era-style-and-patterned-balls)（英語）にあります。
 
 ```js
 import { renderEmblem } from "@johnmorrisdotca/dougu-sports";
@@ -10,7 +10,7 @@ import { ballFrame } from "@johnmorrisdotca/dougu-sports/turn";
 
 console.log(renderEmblem("ball:soccer-1900-laced").includes("<title>Soccer ball, laced</title>")); // true
 console.log(renderEmblem("ball:volleyball-colours", { colors: ["#e8112d", "#ffffff", "#0b2d72"] }).includes("#e8112d")); // true
-console.log(ballFrame("ball:soccer-2006-propeller", { yaw: 360 }) === ballFrame("ball:soccer-2006-propeller", { yaw: 0 })); // true
+console.log(ballFrame("ball:soccer-14-panel-double-border", { yaw: 360 }) === ballFrame("ball:soccer-14-panel-double-border", { yaw: 0 })); // true
 ```
 
 ## ヴィンテージのサッカーボール（5 種類）
@@ -27,22 +27,23 @@ console.log(ballFrame("ball:soccer-2006-propeller", { yaw: 360 }) === ballFrame(
 
 古い 4 つのボールは、1872 年以降の規則が定める円周（27〜28 インチ）で描いています。1960 年代のボールは現在と同じ大きさです（[soccer-balls.ja.md](soccer-balls.ja.md) を参照）。
 
-## 年代風のサッカーボール（11 種類）
+## 年代風のサッカーボール（12 種類）
 
 どれも、その時代のパネル構成の上に、時代の雰囲気だけを思わせるこのパッケージ独自の模様を描いています。実在のボールのデザイン、マーク、名前は使っていません。id には模様と年代を入れています。
 
 | id | パネル構成 | 見た目 |
 | --- | --- | --- |
-| `ball:soccer-1970-black-white` | 32 枚貼り（五角形 12 枚、六角形 20 枚） | 白い輪のある黒い五角形と、中央に淡いくぼみと点のある白い六角形。1970 年代前半の試合球風 |
-| `ball:soccer-1978-triad` | 32 枚貼り | 六角形ごとに太い曲線の三角形を 3 枚、風車のように配し、先端が五角形のまわりに集まる。1970 年代後半の試合球風 |
-| `ball:soccer-1986-decorated-triad` | 32 枚貼り | 同じ三つ巴を素焼きの赤にして白い珠の列を飾り、五角形は金の輪をあしらった暗い色にしたもの |
-| `ball:soccer-1998-coloured-triad` | 32 枚貼り | 白地に青、赤、金の三つ巴を置き、五角形は深い紺色にしたもの |
-| `ball:soccer-2002-triangle-sweep` | 32 枚貼り | 六角形ごとに細長い三角形が流れるように並ぶ。黒鉛色に金色を添え、五角形は炭色 |
-| `ball:soccer-2006-propeller` | 14 枚貼り（プロペラ形 6 枚、三角形 8 枚） | 各プロペラの内側に金の線、暗い三角形に金の印 |
-| `ball:soccer-2010-grooved` | 8 枚貼り（辺を S 字に曲げた正八面体） | 白とティールのパネル。継ぎ目は深く暗い溝で、各パネルに等高線のような線（白いパネルには濃いティール、ティールのパネルには白）。明るい背景でも暗い背景でも、32 ピクセルでもはっきり見える濃さ |
-| `ball:soccer-2014-ribbon` | ねじれた 6 枚貼り | 白地に、ティール、オレンジ、紫の幅広いリボンが交差する |
-| `ball:soccer-2018-pixel` | 6 枚貼り | 黒鉛色、灰色、赤、金の四角いピクセルが、一方に密集し反対側へまばらになる |
-| `ball:soccer-2022-speed-shell` | 三角形 20 枚（正二十面体） | えんじ、クリーム、金のパネルそれぞれに、貝殻のように重なる輪郭線 |
+| `ball:soccer-retro-pentagons` | 32 枚貼り（五角形 12 枚、六角形 20 枚） | 白い輪のある黒い五角形と、中央に淡いくぼみと点のある白い六角形。1970 年代前半の試合球風 |
+| `ball:soccer-retro-leaves` | 32 枚貼り | 六角形ごとに太い曲線の三角形を 3 枚、風車のように配し、先端が五角形のまわりに集まる。1970 年代後半の試合球風 |
+| `ball:soccer-retro-rosette` | 32 枚貼り | 六角形ごとに素焼きの赤の 5 枚花びらのロゼットを置き、花びらに白い珠の列を飾る。五角形は金の輪をあしらった暗い色 |
+| `ball:soccer-retro-star` | 32 枚貼り | 1980 年代風の別版。クリーム色の六角形ごとに、濃いティールの 6 本腕の星と中央のサフラン色の点を置く。五角形はクリーム色の輪をあしらった紺色 |
+| `ball:soccer-retro-pinwheel` | 32 枚貼り | 白地に緑、琥珀色、すもも色の曲線の葉を風車のように置き、3 色が出会う中心に濃い緑の円を置く。五角形は濃い緑 |
+| `ball:soccer-retro-kites` | 32 枚貼り | 六角形ごとに細長い凧形がスレートブルーで流れるように並び、銀色の小さな凧形が添えられる。五角形は炭色 |
+| `ball:soccer-14-panel-double-border` | 14 枚貼り（プロペラ形 6 枚、三角形 8 枚） | 二重の縁取り。すべての継ぎ目に細い隙間をはさんだ黒い線 2 本、白いプロペラの内側に赤い線 2 本、暗い三角形に赤い点 |
+| `ball:soccer-8-panel-plain` | 8 枚貼り（辺を S 字に曲げた正八面体） | 何も描かれていない白いパネルと、白い等高線が 3 本入ったスレートブルーのパネルを、深く暗い溝で区切る |
+| `ball:soccer-6-panel-bands` | ねじれた 6 枚貼り | 白地に、青、琥珀色、マゼンタの帯が交差する。継ぎ目が集まる両極に、入れ子の 3 つのひし形 |
+| `ball:soccer-6-panel-diamonds` | 6 枚貼り | 黒鉛色、灰色、ティール、金の小さなひし形が一方に密集し反対側へまばらになる。両極に入れ子の 3 つのひし形 |
+| `ball:soccer-20-panel-dots` | 三角形 20 枚（正二十面体） | 濃い青、クリーム、砂色のパネルそれぞれに、入れ子の輪郭線 1 本と中央の点 |
 | `ball:soccer-training-high-vis` | 32 枚貼り | 現代の高視認性トレーニングボール。蛍光の黄緑色に、濃いピンクの五角形と黒い速度線 |
 
 14 枚貼り、6 枚貼り、32 枚貼りは、それぞれ `ball:soccer-14`、`ball:soccer-6`、`ball:soccer` と同じパネル構成です。8 枚貼りの正八面体と 20 枚貼りの正二十面体は新しい構成です（`src/emblems/ball/ball.tilings.ts` の `octahedron8` と `icosahedron`）。模様は、球の 1 点に接する平面に描いた図形を球面に載せたもの（`ball.decal.ts` の `frameAt`）なので、ボールと一緒に回転し、印刷された模様と同じように縮んで見えます。

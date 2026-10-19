@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 273 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 274 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -106,16 +106,17 @@ The folders the art lives in are in [layout.md](layout.md).
 | `ball:soccer-1930-18-panel` | Soccer ball, 18 strips | ball | generated | 1930s: 18 strips of chestnut and tan leather, six panels of three, the seams stitched |
 | `ball:soccer-1950-12-panel` | Soccer ball, 12 panels | ball | generated | 1950s: 12 pentagons of chestnut leather in four tones, so that no two that touch match, the seams stitched |
 | `ball:soccer-1960-32-panel-leather` | Soccer ball, 32 leather | ball | generated | 1960s: the 32 panels (12 pentagons and 20 hexagons) in leather, chestnut pentagons on tan hexagons, stitched along the seams |
-| `ball:soccer-1970-black-white` | Soccer, 1970s black-white | ball | generated | In the style of the early-1970s match balls: 32 panels, black pentagons with a white ring and white hexagons with a pale dished centre and a dot |
-| `ball:soccer-1978-triad` | Soccer, late-1970s triads | ball | generated | In the style of the late-1970s match balls: 32 panels, each hexagon carrying three bold curved triangles in a pinwheel, their points meeting round each pentagon |
-| `ball:soccer-1986-decorated-triad` | Soccer, decorated triads | ball | generated | In the style of the 1980s match balls: the triads in clay red, each blade ornamented with a row of white beads, and dark pentagons ringed in gold |
-| `ball:soccer-1998-coloured-triad` | Soccer, coloured triads | ball | generated | In the style of the 1990s match balls: the triads in blue, red and gold on white hexagons, with deep navy pentagons |
-| `ball:soccer-2002-triangle-sweep` | Soccer, triangle sweep | ball | generated | In the style of the early-2000s match balls: long thin triangles that sweep across each hexagon in graphite, with gold sparks, over charcoal pentagons |
-| `ball:soccer-2006-propeller` | Soccer, 14-panel propeller | ball | generated | In the style of the mid-2000s match balls: 14 panels (6 propellers and 8 triangles), a fine gold line inside each propeller and a gold mark on each dark triangle |
-| `ball:soccer-2010-grooved` | Soccer, 8-panel grooved | ball | generated | In the style of the early-2010s match balls: 8 panels (an octahedron whose edges are bent into S curves) in white and teal, with deep dark grooves for seams and contour lines across each panel, dark teal on the white panels and white on the teal ones |
-| `ball:soccer-2014-ribbon` | Soccer, 6-panel ribbons | ball | generated | In the style of the mid-2010s match balls: 6 twisted panels in white, crossed by wide ribbons in teal, orange and violet |
-| `ball:soccer-2018-pixel` | Soccer, pixel blocks | ball | generated | In the style of the late-2010s match balls: 6 panels covered with square pixel blocks in graphite, grey, red and gold, thick on one side and thinning out |
-| `ball:soccer-2022-speed-shell` | Soccer, 20-panel shell | ball | generated | In the style of the early-2020s match balls: 20 triangular panels (an icosahedron) in burgundy, cream and gold, each carrying nested outlines like a shell |
+| `ball:soccer-retro-pentagons` | Soccer, 1970s black-white | ball | generated | A 1970s-style ball: 32 panels, black pentagons with a white ring and white hexagons with a pale dished centre and a dot |
+| `ball:soccer-retro-leaves` | Soccer, late-1970s triads | ball | generated | A late-1970s-style ball: 32 panels, each hexagon carrying three bold curved triangles in a pinwheel, their points meeting round each pentagon |
+| `ball:soccer-retro-rosette` | Soccer, decorated triads | ball | generated | A 1980s-style ball: the triads in clay red, each blade ornamented with a row of white beads, and dark pentagons ringed in gold |
+| `ball:soccer-retro-star` | Soccer, 1980s star | ball | generated | A second 1980s-style ball: a six-armed deep-teal star with a saffron dot at the middle of each cream hexagon, and navy pentagons ringed in cream |
+| `ball:soccer-retro-pinwheel` | Soccer, coloured triads | ball | generated | A 1990s-style ball: a pinwheel of three curved leaves in green, amber and plum on each white hexagon, a solid deep green circle where the three colours meet, and deep green pentagons |
+| `ball:soccer-retro-kites` | Soccer, triangle sweep | ball | generated | An early-2000s-style ball: long thin kites that sweep across each hexagon in slate blue with silver sparks, over charcoal pentagons |
+| `ball:soccer-14-panel-double-border` | Soccer, 14-panel propeller | ball | generated | A mid-2000s-style 14-panel ball (6 propellers and 8 triangles) with a double border: two parallel black lines along each seam, two parallel red lines inside each white propeller, and a red ring on each dark triangle |
+| `ball:soccer-8-panel-plain` | Soccer, 8-panel grooved | ball | generated | An early-2010s-style 8-panel ball (an octahedron whose edges are bent into S curves): plain white panels and slate-blue panels with three white contour lines, divided by deep dark grooves |
+| `ball:soccer-6-panel-bands` | Soccer, 6-panel ribbons | ball | generated | A mid-2010s-style 6-panel ball: twisted white panels crossed by bands in blue, amber and magenta, and a series of three nested diamonds at each pole where the seams meet |
+| `ball:soccer-6-panel-diamonds` | Soccer, pixel blocks | ball | generated | A late-2010s-style 6-panel ball covered with small diamonds in graphite, grey, teal and gold, thick on one side and thinning out, and a series of three nested diamonds at each pole where the seams meet |
+| `ball:soccer-20-panel-dots` | Soccer, 20-panel shell | ball | generated | An early-2020s-style 20-panel ball (an icosahedron) in deep blue, cream and sand triangles, each carrying one nested outline and a dot at its middle |
 | `ball:soccer-training-high-vis` | Soccer, high-vis training | ball | generated | A modern high-visibility training ball: 32 panels in fluorescent yellow-green with hot pink pentagons ringed in black and three dark speed marks on each hexagon |
 | `ball:soccer-stars-blue` | Soccer, stars, blue | ball | generated | A shop-wall pattern: a five-pointed star on every panel; the blue colourway |
 | `ball:soccer-stars-red` | Soccer, stars, red | ball | generated | A shop-wall pattern: a five-pointed star on every panel; the red colourway |
