@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 294 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 308 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -75,6 +75,20 @@ The folders the art lives in are in [layout.md](layout.md).
 | `trophy:conn-smythe-trophy` | Conn Smythe Trophy | lathe | ours | The Conn Smythe Trophy: a fan of silver maple leaves rising from a silver building, on tiers of honey-brown wood that widen to a moulded foot. |
 | `trophy:ted-lindsay-award` | Ted Lindsay Award | lathe | ours | The Ted Lindsay Award: a bronze skater with a stick on a pin, over a tall black hexagonal pillar and a flared silver base. |
 | `trophy:lester-patrick-trophy` | Lester Patrick Trophy | lathe | ours | The Lester Patrick Trophy: a bronze figure of a man standing at ease on a tall square pedestal of reddish wood. |
+| `trophy:lombardi-trophy` | Lombardi Trophy | lathe | ours | The Vince Lombardi Trophy: a silver football tilted over a tall three-sided pylon that widens to its foot. |
+| `trophy:larry-obrien-trophy` | Larry O'Brien Trophy | lathe | ours | The Larry O'Brien Championship Trophy: a gold basketball over a hoop and a tapering net-shaped body on a round foot. |
+| `trophy:commissioners-trophy` | Commissioner's Trophy | lathe | ours | The Commissioner's Trophy: thirty slender poles with gilt pennants in a ring whose tops are higher at the back than at the front, over a wide round silver base. |
+| `trophy:grey-cup` | Grey Cup | lathe | ours | The Grey Cup: a two-handled silver cup with a swirled stem on a tall flared cone of twelve panels crossed by dark bands. |
+| `trophy:cy-young-award` | Cy Young Award | flat | ours | The Cy Young Award: a dark plaque with a curved silver band, a V and a hand holding a baseball over a nameplate. |
+| `trophy:mlb-mvp-award` | Baseball MVP award | flat | ours | The Most Valuable Player Award: a dark octagonal plaque with a silver ring and diamond, a gilt medallion, a nameplate and crossed bats. |
+| `trophy:walter-cup` | Walter Cup | lathe | ours | The Walter Cup: a wide shallow silver bowl on a stem between two tall stick-shaped blades, over a heavy round base. |
+| `trophy:wnba-championship-trophy` | WNBA Championship Trophy | lathe | ours | The WNBA Championship Trophy: a silver basketball held on two slanting tubes over a low slab. |
+| `trophy:lamar-hunt-trophy` | Lamar Hunt Trophy | lathe | ours | The Lamar Hunt Trophy: a clear football-shaped ring on a round silver base over a flat black slab. |
+| `trophy:silver-slugger-award` | Silver Slugger Award | flat | ours | The Silver Slugger Award: a silver bat across a tall black board with an oval badge and a plate. |
+| `trophy:world-series-mvp-trophy` | World Series MVP Trophy | lathe | ours | The World Series MVP trophy: a twisted silver flame on a wide round base with a dark band. |
+| `trophy:avco-world-trophy` | Avco World Trophy | lathe | ours | The Avco World Trophy: a wide silver bowl on a stem over a glass cylinder with a silver ball in it, a ringed collar, a tall black drum with silver plates and a wide silver foot. |
+| `trophy:obrien-cup` | O'Brien Cup | flat | ours | The O'Brien Cup: a wide shallow gilt bowl with wire handles on a dark block between two bronze skaters, on a long dark base. |
+| `trophy:gold-glove-award` | Gold Glove Award | flat | ours | The Gold Glove Award: a gilt fielder's glove between two gilt baseballs on a pedestal over a wooden base. |
 
 ## medal
 

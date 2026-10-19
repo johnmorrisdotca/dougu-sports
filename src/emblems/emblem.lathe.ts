@@ -63,6 +63,8 @@ export interface Poles {
   top1: number;
   top2: number;
   size: number;
+  /** The tops lie on a tilted ring, not a spiral: `top1` at the pole that faces the eye at rest, `top2` at the one opposite, and the sides between. */
+  tilted?: boolean;
 }
 
 /** What a body of revolution is made of. All of it is in the 64 by 64 box with the axis at x = 32. */
@@ -360,7 +362,7 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
     for (let i = 0; i < o.n; i++) {
       const deg = yaw + (360 * i) / o.n;
       const near = Math.cos(deg * RAD) >= 0 ? "front" : "back";
-      const topY = o.top1 + ((o.top2 - o.top1) * i) / o.n;
+      const topY = o.tilted === true ? o.top1 + ((o.top2 - o.top1) * (1 - Math.cos((2 * Math.PI * i) / o.n))) / 2 : o.top1 + ((o.top2 - o.top1) * i) / o.n;
       const [x0, y0] = at(o.r0, o.y0, deg);
       const [x1, y1] = at(o.r1, topY, deg);
       lines[near] += `M${pt(x0, y0)}L${pt(x1, y1)}`;

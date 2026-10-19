@@ -40,6 +40,20 @@ export const TROPHY_IDS = [
   "trophy:conn-smythe-trophy",
   "trophy:ted-lindsay-award",
   "trophy:lester-patrick-trophy",
+  "trophy:lombardi-trophy",
+  "trophy:larry-obrien-trophy",
+  "trophy:commissioners-trophy",
+  "trophy:grey-cup",
+  "trophy:cy-young-award",
+  "trophy:mlb-mvp-award",
+  "trophy:walter-cup",
+  "trophy:wnba-championship-trophy",
+  "trophy:lamar-hunt-trophy",
+  "trophy:silver-slugger-award",
+  "trophy:world-series-mvp-trophy",
+  "trophy:avco-world-trophy",
+  "trophy:obrien-cup",
+  "trophy:gold-glove-award",
 ] as const;
 export type TrophyId = (typeof TROPHY_IDS)[number];
 

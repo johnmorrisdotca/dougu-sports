@@ -1,0 +1,95 @@
+# Trophy audit: every major award of the five leagues, the WNBA, the PWHL and the NWSL
+
+[Back to the README](../README.md) · English
+
+Made 2026-10-19 for [spxn.com](https://spxn.com), which holds 58 awards in its `api.awards` view (the award codes below are its own). For each award: the emblem that draws it, and what is missing. A named emblem is a close likeness drawn by the method in [likeness.md](likeness.md), with its references in [likeness-sources.md](likeness-sources.md) and its facts in `NAMED_TROPHIES`. **Photo** says whether a freely licensed photograph is on Wikimedia Commons (found by searching the trophy's name; the status of 2026-10-19). Where there is none the gap says what John must supply: a photograph of the whole trophy from the front, a little above its base, in even light, with a plain background, the whole object in the frame.
+
+How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`trophy:hockey-cup`) is what a site shows until the named one exists; "gap" has no named emblem yet.
+
+## NHL
+
+| Award code | Award | Emblem | Photo |
+| --- | --- | --- | --- |
+| `nhl_stanley_cup` | Stanley Cup | `trophy:stanley-cup` | yes |
+| `nhl_hart` | Hart Memorial Trophy | `trophy:hart-trophy` | yes |
+| `nhl_vezina` | Vezina Trophy | `trophy:vezina-trophy` | yes |
+| `nhl_norris` | James Norris Memorial Trophy | `trophy:norris-trophy` | yes |
+| `nhl_calder` | Calder Memorial Trophy | `trophy:calder-trophy` | yes |
+| `nhl_art_ross` | Art Ross Trophy | `trophy:art-ross-trophy` | yes |
+| `nhl_conn_smythe` | Conn Smythe Trophy | `trophy:conn-smythe-trophy` | yes |
+| `nhl_lady_byng` | Lady Byng Memorial Trophy | `trophy:lady-byng-trophy` | yes |
+| `nhl_selke` | Frank J. Selke Trophy | `trophy:selke-trophy` | yes |
+| `nhl_jennings` | William M. Jennings Trophy | `trophy:jennings-trophy` | yes |
+| `nhl_masterton` | Bill Masterton Memorial Trophy | `trophy:masterton-trophy` | yes |
+| `nhl_king_clancy` | King Clancy Memorial Trophy | `trophy:king-clancy-trophy` | yes |
+| `nhl_jack_adams` | Jack Adams Award | `trophy:jack-adams-trophy` | yes |
+| `nhl_presidents_trophy` | Presidents' Trophy | `trophy:presidents-trophy` | yes |
+| `nhl_rocket_richard` | Maurice "Rocket" Richard Trophy | `trophy:rocket-richard-trophy` | yes |
+| `nhl_ted_lindsay` | Ted Lindsay Award | `trophy:ted-lindsay-award` | yes |
+| `nhl_gm_of_the_year` | NHL General Manager of the Year Award (Jim Gregory Trophy) | gap | no: John to supply |
+| not held | Prince of Wales Trophy, Clarence S. Campbell Bowl, Lester Patrick Trophy | `trophy:prince-of-wales-trophy`, `trophy:campbell-bowl`, `trophy:lester-patrick-trophy` | yes |
+| not held | Mark Messier Leadership Award, Willie O'Ree Community Hero Award, NHL Foundation Player Award | gap | no: John to supply |
+
+## NBA
+
+| Award code | Award | Emblem | Photo |
+| --- | --- | --- | --- |
+| `nba_larry_obrien` | Larry O'Brien Championship Trophy | `trophy:larry-obrien-trophy` | yes |
+| `nba_mvp` | Maurice Podoloff Trophy (Most Valuable Player) | gap | no: John to supply |
+| `nba_finals_mvp` | Bill Russell NBA Finals Most Valuable Player Award | gap | no: John to supply |
+| `nba_defensive_player` | Hakeem Olajuwon Trophy (Defensive Player of the Year) | gap | no: John to supply |
+| `nba_rookie_of_the_year` | Wilt Chamberlain Trophy (Rookie of the Year) | gap | no: John to supply |
+| `nba_sixth_man` | John Havlicek Trophy (Sixth Man of the Year) | gap | no: John to supply |
+| `nba_coach_of_the_year` | Red Auerbach Trophy (Coach of the Year) | gap | no: John to supply |
+| `nba_most_improved` | George Mikan Trophy (Most Improved Player) | gap | no: John to supply |
+| not held | Eastern and Western Conference trophies (Oscar Robertson, Larry Bird), NBA Cup | gap | no: John to supply |
+
+## MLB
+
+| Award code | Award | Emblem | Photo |
+| --- | --- | --- | --- |
+| `mlb_world_series` | Commissioner's Trophy | `trophy:commissioners-trophy` | yes |
+| `mlb_mvp` | Kenesaw Mountain Landis Memorial Baseball Award (Most Valuable Player) | `trophy:mlb-mvp-award` | yes |
+| `mlb_cy_young` | Cy Young Award | `trophy:cy-young-award` | yes |
+| `mlb_gold_glove` | Rawlings Gold Glove Award | `trophy:gold-glove-award` | yes |
+| `mlb_silver_slugger` | Silver Slugger Award | `trophy:silver-slugger-award` | yes |
+| `mlb_world_series_mvp` | World Series Most Valuable Player Award | `trophy:world-series-mvp-trophy` (approximate) | yes, at a distance |
+| `mlb_rookie_of_the_year` | Jackie Robinson Rookie of the Year Award | gap | no: John to supply |
+| `mlb_hank_aaron` | Hank Aaron Award | gap | no: John to supply |
+| `mlb_manager_of_the_year` | Manager of the Year Award | gap | no: John to supply |
+| `mlb_rolaids_relief_man` | Rolaids Relief Man Award (now the Reliever of the Year awards) | gap | no: John to supply |
+
+## NFL
+
+| Award code | Award | Emblem | Photo |
+| --- | --- | --- | --- |
+| `nfl_super_bowl` | Vince Lombardi Trophy | `trophy:lombardi-trophy` | yes |
+| `nfl_super_bowl_mvp` | Pete Rozelle Trophy (Super Bowl MVP) | gap | no: John to supply |
+| `nfl_ap_mvp`, `nfl_ap_offensive_player`, `nfl_ap_defensive_player` | The Associated Press NFL awards | gap (the AP gives no single famous trophy; a generic plaque stands for them) | no |
+| not held | Lamar Hunt Trophy (AFC champion) | `trophy:lamar-hunt-trophy` | yes |
+| not held | George Halas Trophy (NFC champion) | gap | no: John to supply |
+| `afl_championship`, `aafc_championship` | The AFL and AAFC championships | generic `trophy:football` | no |
+
+## CFL
+
+| Award code | Award | Emblem | Photo |
+| --- | --- | --- | --- |
+| `cfl_grey_cup` | Grey Cup | `trophy:grey-cup` | yes |
+| `cfl_most_outstanding_player`, `cfl_most_outstanding_defensive`, `cfl_most_outstanding_canadian`, `cfl_most_outstanding_lineman`, `cfl_most_outstanding_rookie`, `cfl_coach_of_the_year`, `cfl_special_teams`, `cfl_grey_cup_mvp` | The CFL's individual awards (the Schenley Awards, the Annis Stukus, the John Agro and the rest) | gap | no: John to supply |
+
+## The women's leagues
+
+| Award code | Award | Emblem | Photo |
+| --- | --- | --- | --- |
+| `wnba_championship` | WNBA Championship Trophy | `trophy:wnba-championship-trophy` (approximate) | yes, carried |
+| `pwhl_walter_cup` | Walter Cup | `trophy:walter-cup` (approximate) | yes, at a distance |
+| `nwsl_championship` | NWSL Championship trophy | gap | only a small crystal trophy at a distance: John to supply |
+
+## The earlier hockey leagues
+
+| Award code | Award | Emblem | Photo |
+| --- | --- | --- | --- |
+| `pcha_championship` | Paterson Cup (PCHA, 1912 to 1924) | `trophy:paterson-cup` | one photograph, not freely licensed (looked at only) |
+| `nha_championship` | O'Brien Cup (NHA, then the early NHL) | `trophy:obrien-cup` | yes |
+| `wha_championship` | Avco World Trophy | `trophy:avco-world-trophy` | yes |
+| `wchl_championship` | WCHL championship (no single trophy has been identified) | generic `trophy:hockey-cup` | no |

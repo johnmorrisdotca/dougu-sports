@@ -51,6 +51,20 @@ import { TROPHY_ROCKET_RICHARD_TROPHY } from "./trophy/rocket-richard-trophy.ts"
 import { TROPHY_CONN_SMYTHE_TROPHY } from "./trophy/conn-smythe-trophy.ts";
 import { TROPHY_TED_LINDSAY_AWARD } from "./trophy/ted-lindsay-award.ts";
 import { TROPHY_LESTER_PATRICK_TROPHY } from "./trophy/lester-patrick-trophy.ts";
+import { TROPHY_LOMBARDI_TROPHY } from "./trophy/lombardi-trophy.ts";
+import { TROPHY_LARRY_OBRIEN_TROPHY } from "./trophy/larry-obrien-trophy.ts";
+import { TROPHY_COMMISSIONERS_TROPHY } from "./trophy/commissioners-trophy.ts";
+import { TROPHY_GREY_CUP } from "./trophy/grey-cup.ts";
+import { TROPHY_CY_YOUNG_AWARD } from "./trophy/cy-young-award.ts";
+import { TROPHY_MLB_MVP_AWARD } from "./trophy/mlb-mvp-award.ts";
+import { TROPHY_WALTER_CUP } from "./trophy/walter-cup.ts";
+import { TROPHY_WNBA_CHAMPIONSHIP_TROPHY } from "./trophy/wnba-championship-trophy.ts";
+import { TROPHY_LAMAR_HUNT_TROPHY } from "./trophy/lamar-hunt-trophy.ts";
+import { TROPHY_SILVER_SLUGGER_AWARD } from "./trophy/silver-slugger-award.ts";
+import { TROPHY_WORLD_SERIES_MVP_TROPHY } from "./trophy/world-series-mvp-trophy.ts";
+import { TROPHY_AVCO_WORLD_TROPHY } from "./trophy/avco-world-trophy.ts";
+import { TROPHY_OBRIEN_CUP } from "./trophy/obrien-cup.ts";
+import { TROPHY_GOLD_GLOVE_AWARD } from "./trophy/gold-glove-award.ts";
 import { MEDAL_GOLD } from "./medal/gold.ts";
 import { MEDAL_SILVER } from "./medal/silver.ts";
 import { MEDAL_BRONZE } from "./medal/bronze.ts";
@@ -138,6 +152,20 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}`
   "trophy:championship-banner": TROPHY_CHAMPIONSHIP_BANNER,
   "trophy:ring": TROPHY_RING,
   "trophy:banner": TROPHY_BANNER,
+  "trophy:gold-glove-award": TROPHY_GOLD_GLOVE_AWARD,
+  "trophy:obrien-cup": TROPHY_OBRIEN_CUP,
+  "trophy:avco-world-trophy": TROPHY_AVCO_WORLD_TROPHY,
+  "trophy:world-series-mvp-trophy": TROPHY_WORLD_SERIES_MVP_TROPHY,
+  "trophy:silver-slugger-award": TROPHY_SILVER_SLUGGER_AWARD,
+  "trophy:lamar-hunt-trophy": TROPHY_LAMAR_HUNT_TROPHY,
+  "trophy:wnba-championship-trophy": TROPHY_WNBA_CHAMPIONSHIP_TROPHY,
+  "trophy:walter-cup": TROPHY_WALTER_CUP,
+  "trophy:mlb-mvp-award": TROPHY_MLB_MVP_AWARD,
+  "trophy:cy-young-award": TROPHY_CY_YOUNG_AWARD,
+  "trophy:grey-cup": TROPHY_GREY_CUP,
+  "trophy:commissioners-trophy": TROPHY_COMMISSIONERS_TROPHY,
+  "trophy:larry-obrien-trophy": TROPHY_LARRY_OBRIEN_TROPHY,
+  "trophy:lombardi-trophy": TROPHY_LOMBARDI_TROPHY,
   "trophy:lester-patrick-trophy": TROPHY_LESTER_PATRICK_TROPHY,
   "trophy:ted-lindsay-award": TROPHY_TED_LINDSAY_AWARD,
   "trophy:conn-smythe-trophy": TROPHY_CONN_SMYTHE_TROPHY,
