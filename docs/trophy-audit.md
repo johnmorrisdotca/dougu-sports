@@ -93,3 +93,24 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | `nha_championship` | O'Brien Cup (NHA, then the early NHL) | `trophy:obrien-cup` | yes |
 | `wha_championship` | Avco World Trophy | `trophy:avco-world-trophy` | yes |
 | `wchl_championship` | WCHL championship (no single trophy has been identified) | generic `trophy:hockey-cup` | no |
+
+## The world's most famous trophies (ticket of 2026-10-17)
+
+| Trophy | Emblem | Photo |
+| --- | --- | --- |
+| FIFA World Cup | `trophy:fifa-world-cup` | yes |
+| Woodlawn Vase (Preakness Stakes) | `trophy:woodlawn-vase` (approximate) | yes |
+| Borg-Warner Trophy (Indianapolis 500) | `trophy:borg-warner-trophy` | yes |
+| FA Cup | `trophy:fa-cup` | yes |
+| America's Cup | `trophy:americas-cup` | one old black-and-white photograph |
+| ICC Cricket World Cup | `trophy:cricket-world-cup` (top of the photograph cut off) | yes |
+| Wimbledon Gentlemen's Singles Trophy | `trophy:wimbledon-gentlemens-trophy` | yes |
+| Venus Rosewater Dish | `trophy:venus-rosewater-dish` | yes |
+| Ballon d'Or | `trophy:ballon-dor` | yes, the 1998 trophy |
+| DFB-Pokal | `trophy:dfb-pokal` (from a clear rendering) | yes |
+| The Ashes urn | `trophy:ashes-urn` | yes |
+| Webb Ellis Cup | `trophy:webb-ellis-cup` | yes |
+| UEFA Champions League trophy | `trophy:champions-league-trophy` | yes |
+| Stanley Cup, Lombardi Trophy, Commissioner's Trophy, Larry O'Brien Trophy | already named (see the tables above) | yes |
+| Africa Cup of Nations trophy | gap | only small photographs of it held aloft: John to supply |
+| Ryder Cup | gap | only a small photograph in a display case: John to supply |

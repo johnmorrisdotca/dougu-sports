@@ -65,6 +65,19 @@ import { TROPHY_WORLD_SERIES_MVP_TROPHY } from "./trophy/world-series-mvp-trophy
 import { TROPHY_AVCO_WORLD_TROPHY } from "./trophy/avco-world-trophy.ts";
 import { TROPHY_OBRIEN_CUP } from "./trophy/obrien-cup.ts";
 import { TROPHY_GOLD_GLOVE_AWARD } from "./trophy/gold-glove-award.ts";
+import { TROPHY_FIFA_WORLD_CUP } from "./trophy/fifa-world-cup.ts";
+import { TROPHY_WOODLAWN_VASE } from "./trophy/woodlawn-vase.ts";
+import { TROPHY_DFB_POKAL } from "./trophy/dfb-pokal.ts";
+import { TROPHY_CHAMPIONS_LEAGUE_TROPHY } from "./trophy/champions-league-trophy.ts";
+import { TROPHY_WEBB_ELLIS_CUP } from "./trophy/webb-ellis-cup.ts";
+import { TROPHY_FA_CUP } from "./trophy/fa-cup.ts";
+import { TROPHY_CRICKET_WORLD_CUP } from "./trophy/cricket-world-cup.ts";
+import { TROPHY_WIMBLEDON_GENTLEMENS_TROPHY } from "./trophy/wimbledon-gentlemens-trophy.ts";
+import { TROPHY_VENUS_ROSEWATER_DISH } from "./trophy/venus-rosewater-dish.ts";
+import { TROPHY_BALLON_DOR } from "./trophy/ballon-dor.ts";
+import { TROPHY_ASHES_URN } from "./trophy/ashes-urn.ts";
+import { TROPHY_BORG_WARNER_TROPHY } from "./trophy/borg-warner-trophy.ts";
+import { TROPHY_AMERICAS_CUP } from "./trophy/americas-cup.ts";
 import { MEDAL_GOLD } from "./medal/gold.ts";
 import { MEDAL_SILVER } from "./medal/silver.ts";
 import { MEDAL_BRONZE } from "./medal/bronze.ts";
@@ -152,6 +165,19 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}`
   "trophy:championship-banner": TROPHY_CHAMPIONSHIP_BANNER,
   "trophy:ring": TROPHY_RING,
   "trophy:banner": TROPHY_BANNER,
+  "trophy:americas-cup": TROPHY_AMERICAS_CUP,
+  "trophy:borg-warner-trophy": TROPHY_BORG_WARNER_TROPHY,
+  "trophy:ashes-urn": TROPHY_ASHES_URN,
+  "trophy:ballon-dor": TROPHY_BALLON_DOR,
+  "trophy:venus-rosewater-dish": TROPHY_VENUS_ROSEWATER_DISH,
+  "trophy:wimbledon-gentlemens-trophy": TROPHY_WIMBLEDON_GENTLEMENS_TROPHY,
+  "trophy:cricket-world-cup": TROPHY_CRICKET_WORLD_CUP,
+  "trophy:fa-cup": TROPHY_FA_CUP,
+  "trophy:webb-ellis-cup": TROPHY_WEBB_ELLIS_CUP,
+  "trophy:champions-league-trophy": TROPHY_CHAMPIONS_LEAGUE_TROPHY,
+  "trophy:dfb-pokal": TROPHY_DFB_POKAL,
+  "trophy:woodlawn-vase": TROPHY_WOODLAWN_VASE,
+  "trophy:fifa-world-cup": TROPHY_FIFA_WORLD_CUP,
   "trophy:gold-glove-award": TROPHY_GOLD_GLOVE_AWARD,
   "trophy:obrien-cup": TROPHY_OBRIEN_CUP,
   "trophy:avco-world-trophy": TROPHY_AVCO_WORLD_TROPHY,

@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 308 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 321 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -89,6 +89,19 @@ The folders the art lives in are in [layout.md](layout.md).
 | `trophy:avco-world-trophy` | Avco World Trophy | lathe | ours | The Avco World Trophy: a wide silver bowl on a stem over a glass cylinder with a silver ball in it, a ringed collar, a tall black drum with silver plates and a wide silver foot. |
 | `trophy:obrien-cup` | O'Brien Cup | flat | ours | The O'Brien Cup: a wide shallow gilt bowl with wire handles on a dark block between two bronze skaters, on a long dark base. |
 | `trophy:gold-glove-award` | Gold Glove Award | flat | ours | The Gold Glove Award: a gilt fielder's glove between two gilt baseballs on a pedestal over a wooden base. |
+| `trophy:fifa-world-cup` | FIFA World Cup | lathe | ours | The FIFA World Cup: a gilt globe held up by two spiral figures, over a base of malachite green bands and a gilt band. |
+| `trophy:woodlawn-vase` | Woodlawn Vase | lathe | ours | The Woodlawn Vase: a very tall tiered silver vase with a wide chased bowl and two scrolled handles, on a waisted stem and a round base. |
+| `trophy:dfb-pokal` | DFB-Pokal | lathe | ours | The DFB-Pokal: a tall gilt cup with a band round its bowl, a slim waist and a ringed foot. |
+| `trophy:champions-league-trophy` | Champions League Trophy | lathe | ours | The UEFA Champions League trophy: a tall silver urn with two long looping handles. |
+| `trophy:webb-ellis-cup` | Webb Ellis Cup | lathe | ours | The Webb Ellis Cup: a gilt lidded two-handled cup with a pineapple finial on a round plinth. |
+| `trophy:fa-cup` | FA Cup | lathe | ours | The FA Cup: a tall lidded silver cup with scrolled ear handles, a rounded belly and a wide foot. |
+| `trophy:cricket-world-cup` | Cricket World Cup | lathe | ours | The Cricket World Cup: a gilt globe in a silver ring on four swept silver bands, over a black dome with silver discs. |
+| `trophy:wimbledon-gentlemens-trophy` | Gentlemen's Singles Trophy | lathe | ours | The Wimbledon Gentlemen's Singles Trophy: a gilt lidded two-handled cup with a pineapple finial, on a tall round plinth. |
+| `trophy:venus-rosewater-dish` | Venus Rosewater Dish | flat | ours | The Venus Rosewater Dish: a broad round silver dish seen face on, with rings of ornament and a central boss. |
+| `trophy:ballon-dor` | Ballon d'Or | lathe | ours | The Ballon d'Or: a gilt soccer ball on a black domed base. |
+| `trophy:ashes-urn` | The Ashes urn | lathe | ours | The Ashes urn: a small terracotta urn with square handles on a turned wooden base. |
+| `trophy:borg-warner-trophy` | Borg-Warner Trophy | lathe | ours | The Borg-Warner Trophy: a very tall tapering silver body of relief faces under a figure with a chequered flag, on a drum base. |
+| `trophy:americas-cup` | America's Cup | lathe | ours | The America's Cup: a tall silver ewer with a spout, a broad rounded belly and a great spiral handle, on a stepped foot. |
 
 ## medal
 
