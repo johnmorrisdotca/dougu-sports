@@ -33,16 +33,16 @@ Each is on the construction of its time, with graphics of our own that only sugg
 
 | Id | The construction | The look |
 | --- | --- | --- |
-| `ball:soccer-1970-black-white` | 32 panels (12 pentagons, 20 hexagons) | Black pentagons with a white ring, white hexagons with a pale dished centre and a dot, in the style of the early-1970s match balls |
-| `ball:soccer-1978-triad` | 32 panels | Three bold curved triangles in a pinwheel on each hexagon, their points meeting round each pentagon, in the style of the late-1970s match balls |
-| `ball:soccer-1986-decorated-triad` | 32 panels | The same triads in clay red, ornamented with a row of white beads, with gold-ringed dark pentagons |
-| `ball:soccer-1998-coloured-triad` | 32 panels | Triads in blue, red and gold on white, with deep navy pentagons |
-| `ball:soccer-2002-triangle-sweep` | 32 panels | Long thin triangles that sweep across each hexagon, graphite with gold, over charcoal pentagons |
-| `ball:soccer-2006-propeller` | 14 panels (6 propellers, 8 triangles) | A gold line inside each propeller, a gold mark on each dark triangle |
-| `ball:soccer-2010-grooved` | 8 panels (an octahedron with its edges bent into S curves) | White and teal panels, deep dark grooves for seams and contour lines across each panel (dark teal on the white ones, white on the teal ones), strong enough for a light page, a dark one and 32 pixels |
-| `ball:soccer-2014-ribbon` | 6 twisted panels | White, crossed by wide ribbons in teal, orange and violet |
-| `ball:soccer-2018-pixel` | 6 panels | Square pixel blocks in graphite, grey, red and gold, thick on one side and thinning out |
-| `ball:soccer-2022-speed-shell` | 20 triangles (an icosahedron) | Burgundy, cream and gold panels, each with nested outlines like a shell |
+| `ball:soccer-1970-black-white` | 32 panels (12 pentagons, 20 hexagons) | Slate pentagons with a white ring, white hexagons with a pale dished centre and a dot |
+| `ball:soccer-1978-triad` | 32 panels | Three straight navy leaves on each hexagon, their points meeting round each pentagon |
+| `ball:soccer-1986-decorated-triad` | 32 panels | A five-petal rosette on each hexagon in warm clay, with a row of white beads along each petal, and gold-ringed dark pentagons |
+| `ball:soccer-1998-coloured-triad` | 32 panels | Curved leaves in green, amber and plum on white, with deep green pentagons |
+| `ball:soccer-2002-triangle-sweep` | 32 panels | Three slate-blue and silver kites on each hexagon, over charcoal pentagons |
+| `ball:soccer-2006-propeller` | 14 panels (6 propellers, 8 triangles) | A coral line inside each propeller, a coral mark on each dark triangle |
+| `ball:soccer-2010-grooved` | 8 panels (an octahedron with its edges bent into S curves) | White and slate-blue panels, plain seams, and three contour lines across each panel |
+| `ball:soccer-2014-ribbon` | 6 twisted panels | White, crossed by straight bands in blue, amber and magenta |
+| `ball:soccer-2018-pixel` | 6 panels | Diamond pixels in graphite, teal and gold, thick on one side and thinning out |
+| `ball:soccer-2022-speed-shell` | 20 triangles (an icosahedron) | Blue and sand panels, each with a ring of dots at its centre |
 | `ball:soccer-training-high-vis` | 32 panels | A modern high-visibility training ball: fluorescent yellow-green, hot pink pentagons, dark speed marks |
 
 The 14-panel layout, the 6-gore layout and the 32 panels are the same constructions as `ball:soccer-14`, `ball:soccer-6` and `ball:soccer`; the 8-panel octahedron and the 20-panel icosahedron are new tilings (`octahedron8` and `icosahedron` in `src/emblems/ball/ball.tilings.ts`). A graphic is a flat shape laid on the sphere at a point (`frameAt` in `ball.decal.ts`), so it turns with the ball and foreshortens as a mark printed on it does.

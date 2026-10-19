@@ -258,7 +258,7 @@ function contrast(a: string, b: string): number {
 
 test("the 2010-style ball has an accent that reads on a light page and on a dark one, grooves darker than both panels, and contour lines that survive 32 pixels", () => {
   const svg = D.renderEmblem("ball:soccer-2010-grooved", { style: "color", size: 32 });
-  const accent = "#0f9b8e", white = "#f6f8f8", groove = "#16262f";
+  const accent = "#5f86c0", white = "#f6f8f8", groove = "#16262f";
   for (const colour of [accent, white, groove]) assert.ok(svg.includes(colour), colour);
   assert.ok(contrast(accent, "#ffffff") >= 3 && contrast(accent, "#14181c") >= 3, "the accent is 3 to 1 against a white page and against a dark one");
   assert.ok(contrast(accent, white) >= 3, "the two kinds of panel are 3 to 1 apart");
@@ -267,8 +267,8 @@ test("the 2010-style ball has an accent that reads on a light page and on a dark
   assert.ok(D.renderEmblem("ball:soccer-2010-grooved", { accent: "#ff8800" }).includes("#ff8800"));
   // The contour lines are two inks, one for each kind of panel, each 3 to 1 against its own panel, drawn at the floor width (80 / size units: 0.8 pixel) where they face the eye.
   const ink = [...svg.matchAll(/stroke="(#[0-9a-f]{6})" stroke-width="([\d.]+)"[^>]*opacity="0.95"/g)].map((m) => ({ colour: m[1] as string, width: Number(m[2]) }));
-  assert.deepEqual([...new Set(ink.map((i) => i.colour))].sort(), ["#0a655c", "#ffffff"], "teal lines on the white panels, white lines on the teal ones");
-  assert.ok(contrast("#0a655c", white) >= 3 && contrast("#ffffff", accent) >= 3, "each ink reads on its panel");
+  assert.deepEqual([...new Set(ink.map((i) => i.colour))].sort(), ["#3e577d", "#ffffff"], "slate-blue lines on the white panels, white lines on the blue ones");
+  assert.ok(contrast("#3e577d", white) >= 3 && contrast("#ffffff", accent) >= 3, "each ink reads on its panel");
   assert.ok(Math.max(...ink.map((i) => i.width)) >= 80 / 32 - 0.01, "at 32 pixels the lines reach 0.8 pixel");
   // The line style keeps the grooves and the contour rings, and both themes and every turn are well formed.
   for (const theme of ["light", "dark"] as const) for (const yaw of [0, 90, 180, 270]) assert.equal(wellFormed(D.ballFrame("ball:soccer-2010-grooved", { yaw, theme, size: 16 })), null, `${theme} ${yaw}`);
