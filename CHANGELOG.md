@@ -6,6 +6,16 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.12.1] - 2026-10-20
+
+The npm page and the demo open on a trophy that turns. No change to the package's code beyond its version.
+
+### Changed
+
+- **README: the first thing is a turning trophy.** Five famous trophies turning in 3D (the Stanley Cup first), seven balls rolling, and a medal, a banner, a crest, a skate and a glove flipping like coins, each an animated webp in a light and a dark twin (`docs/images/trophies-turn-*.webp`, `balls-turn-*.webp`, `flips-turn-*.webp`, each under 1 MB), then "The best of it": the 47 famous trophies, the 117 balls and implements, the trophies, medals and crests, and the 70 pieces of gear, a picture each. The vintage balls picture moved to `docs/vintage-balls.md`, the turned-emblems strip to `docs/turning.md`, and the engraving examples to a new `docs/engraving.md` (nothing removed); the README is not longer than before.
+- **The pictures are made by a script from the demo:** `pnpm animations` (`scripts/animations.ts`) takes one frame per angle with Playwright and joins them with `img2webp`.
+- **Demo: it opens on the Stanley Cup turning by itself**, with quick picks (cups, balls, a medal, a banner, a skate) and its controls (Stop, speed, the turn slider) under it, the stage pinned in view while the options scroll past, on a phone and on a desk. Changing the emblem, the style or the tint while it turns leaves the turn going from where it was. The address holds `turn=0` once it is paused (an address with an angle opens still); a reader who prefers reduced motion gets it still. The trophy case turns by itself too.
+
 ### Fixed
 
 - The shared background module in `scripts/` (tooling for the demo and the README pictures; the package ships none of it) is now the family's version 1.0.1: the `id` it is given is made safe (letters, digits, `_` and `-`; `bg-` in front of one that does not start with a letter) before it is written into element ids and `url(#...)`. `test/family-backgrounds.test.ts` draws every preset with hostile ids.
