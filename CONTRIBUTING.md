@@ -56,6 +56,10 @@ pnpm screenshots    # the README's pictures, into docs/images
 pnpm dev            # the demo on http://127.0.0.1:7200/ (and /gallery.html)
 ```
 
+## A release that adds something to look at
+
+New visual feature (a trophy, a ball series, a uniform or gear, a style)? Update the README images (`pnpm screenshots`, or `ONLY=<name> node scripts/screenshots.ts` for one) and add a showcase section to the docs if the current examples do not show it well, linked from the README. A small fix or an internal change needs neither.
+
 ## Releasing
 
 Maintainers bump the version in `package.json` and in `src/version.ts`, move *Unreleased* to the new version in

@@ -1,4 +1,4 @@
-// Takes the README's pictures of the demo into docs/images, as webp made in the browser: the balls, the vintage balls, the trophies with the medals and crests, the gear and the phone sheet (each light
+// Takes the README's pictures of the demo into docs/images, as webp made in the browser: the balls, the vintage balls, the trophies with the medals and crests, the famous trophies, the gear and the phone sheet (each light
 // and dark), the printed pucks, the judo suits from behind and the six steps of tying the belt (each light and dark) and four emblems turned. Every sheet stands on one of the family's shared backgrounds (scripts/family-backgrounds.ts, drawn in code, copied from taisen-brackets
 // and never edited here), in the dark or the light variant, and its labels take the ink the background returns, so they read. The grid runs edge to edge and every row is full.
 // It serves the demo on port 7210, or TEST_PORT (this package's own block, tests and tools from 7211 up) and stops the server it started. IMAGES_OUT writes somewhere else than docs/images; ONLY=name,name takes some.
@@ -111,10 +111,16 @@ try {
     "ball:tennis", "ball:padel", "ball:pickleball-outdoor", "ball:squash", "ball:racquetball", "ball:golf", "ball:cricket-red", "ball:cricket-pink", "ball:water-polo",
     "ball:sepak-takraw", "ball:shuttlecock-feather", "ball:puck", "ball:curling-stone", "ball:lacrosse", "ball:handball", "ball:table-tennis", "ball:sliotar", "ball:roundnet"]
     .map((id) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.renderEmblem(id, { size: 146 })}</figure>`).join("");
-  // The vintage leather balls, four baseballs of other threads and the era-style soccer balls: eighteen, two rows of nine.
+  // The vintage leather balls, four baseballs of other threads and nine of the era-style soccer balls: eighteen, two rows of nine.
   const vintage = (D: Dist) => ["ball:soccer-1870-hand-stitched", "ball:soccer-1900-laced", "ball:soccer-1930-18-panel", "ball:soccer-1950-12-panel", "ball:soccer-1960-32-panel-leather", "ball:baseball-lemon-peel", "ball:baseball-red-blue", "ball:baseball-black-red", "ball:baseball-vintage-leather",
-    "ball:soccer-retro-pentagons", "ball:soccer-retro-leaves", "ball:soccer-retro-rosette", "ball:soccer-retro-star", "ball:soccer-retro-pinwheel", "ball:soccer-retro-kites", "ball:soccer-14-panel-double-border", "ball:soccer-8-panel-plain", "ball:soccer-6-panel-bands", "ball:soccer-20-panel-dots"]
+    "ball:soccer-retro-pentagons", "ball:soccer-retro-leaves", "ball:soccer-retro-rosette", "ball:soccer-retro-star", "ball:soccer-retro-pinwheel", "ball:soccer-retro-kites", "ball:soccer-14-panel-double-border", "ball:soccer-8-panel-plain", "ball:soccer-6-panel-bands"]
     .map((id) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.renderEmblem(id, { size: 146 })}</figure>`).join("");
+  // The famous trophies, each a likeness measured on a photograph (docs/likeness.md), with its name: the world's thirteen, the leagues' own and the NHL's main ones. Thirty-six, four rows of nine.
+  const famous = (D: Dist, ink: Ink) => ([["fifa-world-cup", "FIFA World Cup"], ["stanley-cup", "Stanley Cup"], ["lombardi-trophy", "Lombardi Trophy"], ["larry-obrien-trophy", "Larry O'Brien"], ["grey-cup", "Grey Cup"], ["fa-cup", "FA Cup"], ["americas-cup", "America's Cup"], ["borg-warner-trophy", "Borg-Warner"], ["wimbledon-gentlemens-trophy", "Wimbledon"],
+    ["venus-rosewater-dish", "Rosewater Dish"], ["ballon-dor", "Ballon d'Or"], ["champions-league-trophy", "Champions League"], ["webb-ellis-cup", "Webb Ellis Cup"], ["ashes-urn", "The Ashes urn"], ["cricket-world-cup", "Cricket World Cup"], ["woodlawn-vase", "Woodlawn Vase"], ["dfb-pokal", "DFB-Pokal"],
+    ["commissioners-trophy", "Commissioner's"], ["cy-young-award", "Cy Young"], ["gold-glove-award", "Gold Glove"], ["silver-slugger-award", "Silver Slugger"], ["mlb-mvp-award", "MLB MVP"], ["world-series-mvp-trophy", "World Series MVP"], ["wnba-championship-trophy", "WNBA"], ["lamar-hunt-trophy", "Lamar Hunt"],
+    ["hart-trophy", "Hart"], ["vezina-trophy", "Vezina"], ["norris-trophy", "Norris"], ["calder-trophy", "Calder"], ["conn-smythe-trophy", "Conn Smythe"], ["art-ross-trophy", "Art Ross"], ["presidents-trophy", "Presidents'"], ["prince-of-wales-trophy", "Prince of Wales"], ["campbell-bowl", "Campbell Bowl"], ["rocket-richard-trophy", "Rocket Richard"], ["walter-cup", "Walter Cup"]] as const)
+    .map(([id, name]) => `<figure style="margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center">${D.renderEmblem(`trophy:${id}`, { size: 128 })}<figcaption style="margin-top:-2px;color:${ink.muted}">${name}</figcaption></figure>`).join("");
   // Gear: thirty-six of the pieces.
   const gear = (D: Dist) => ["gear:hockey-stick", "gear:hockey-skate", "gear:goalie-mask", "gear:field-hockey-stick", "gear:lacrosse-stick", "gear:hurley", "gear:cricket-bat", "gear:wicket", "gear:baseball-bat",
     "gear:baseball-glove", "gear:football-helmet", "gear:goalposts", "gear:basketball-hoop", "gear:volleyball-net", "gear:tennis-racket", "gear:badminton-racket", "gear:table-tennis-paddle", "gear:padel-racket",
@@ -138,6 +144,7 @@ try {
     await sheet(`balls-desk-${scheme}`, { width: 1400, cols: 9, rows: [150, 150, 150, 150], scheme, preset: "floodlights", intensity: 0.9 }, balls);
     await sheet(`vintage-desk-${scheme}`, { width: 1400, cols: 9, rows: [150, 150], scheme, preset: "sunburst" }, vintage);
     await sheet(`hero-desk-${scheme}`, { width: 1400, cols: 9, rows: [152, 152, 132, 160], scheme, preset: "royal", intensity: 0.9 }, trophies);
+    await sheet(`famous-desk-${scheme}`, { width: 1400, cols: 9, rows: [160, 160, 160, 160], scheme, preset: "royal", intensity: 0.9 }, famous);
     await sheet(`gear-desk-${scheme}`, { width: 1400, cols: 9, rows: [150, 150, 150, 150], scheme, preset: scheme === "dark" ? "carbon" : "hardwood", intensity: scheme === "dark" ? 1 : 0.9 }, gear);
     await sheet(`phone-${scheme}`, { width: 390, cols: 3, rows: [124, 124, 124, 124], gap: 4, phone: true, scheme, preset: "glow" }, phoneCells);
     await sheet(`judogi-${scheme}`, { width: 1000, cols: 4, rows: [260], gap: 10, pad: 20, scheme, preset: scheme === "dark" ? "carbon" : "hardwood", intensity: scheme === "dark" ? 1 : 0.9 }, judogi);

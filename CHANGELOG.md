@@ -6,8 +6,11 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-10-19
+
 ### Changed
 
+- **The README and the docs show the famous trophies.** A new picture of thirty-six named trophies with their names, a new page, `docs/famous-trophies.md` (what it is, a short example, what is drawn), the vintage balls picture remade for the era balls of 0.11.0, and a release-checklist line in `CONTRIBUTING.md` for a release that adds something to look at. `ONLY=<name> node scripts/screenshots.ts` takes one picture.
 - **A trophy that stands for one real trophy is drawn as a very close likeness of it, and may carry its name.** The rule, the method and the tools are in `docs/likeness.md`: photographs are the reference, the proportions are measured on them and checked side by side at the same height, the drawing is our own vector and never a trace, and no drawing carries lettering, a logo, a league, team or sponsor mark or a real engraving. This replaces the earlier rule that no id or title may be a real trophy's name (`CONTRIBUTING.md`, `docs/references.md`, `test/emblem.test.ts`); the generic trophies (`trophy:hockey-cup` and the rest) stay as they are.
 
 ### Added
