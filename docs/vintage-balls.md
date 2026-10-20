@@ -2,6 +2,13 @@
 
 [Back to the README](../README.md) · [日本語](vintage-balls.ja.md) · English
 
+<p align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/vintage-desk-dark.webp">
+<img alt="Eighteen more balls on a warm sunburst, in two rows of nine: five vintage leather soccer balls (hand-stitched, laced, 18 strips, 12 panels, 32 panels), a lemon-peel baseball, two baseballs stitched in two colours and an aged baseball, then nine soccer balls in the style of an era, with patterns of pentagons, leaves, a rosette, a star, a pinwheel and kites, a double border and plain white panels." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/vintage-desk-light.webp" width="760">
+</picture>
+</p>
+
 Fifty-one balls that the plain soccer, baseball and volleyball ids do not cover: worn leather balls with the stitching of their time, soccer balls in the style of an era's match balls, the patterns of a shop wall, baseballs of other threads and times, and volleyballs in national colours. Every one is drawn in true 3D, turns with `ballFrame`, and comes in the colour style and the line style. Every drawing is our own: the constructions are facts (a panel count, a polyhedron, a curve), and the graphics are made here to evoke a period or a style, never to copy a design. The sources are in [references.md](references.md#vintage-era-style-and-patterned-balls).
 
 ```js

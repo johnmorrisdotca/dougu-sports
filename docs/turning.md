@@ -2,6 +2,10 @@
 
 [Back to the README](../README.md). An emblem can be drawn at an angle. A turn is a function of two numbers, so a slider, an animation loop or a server can each make the frames; there is no timer, no canvas and no WebGL in the package.
 
+<p align="center">
+<img alt="A two-handled cup, a medal, a soccer ball and a championship banner each turned through seven angles: the cup keeps its outline and moves its light and handles, the medal and the banner flip like a coin to show their plain backs, and the ball rolls." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/turn-desk.webp" width="640">
+</p>
+
 ```js
 import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
 import { emblemFrame } from "@johnmorrisdotca/dougu-sports/turn";

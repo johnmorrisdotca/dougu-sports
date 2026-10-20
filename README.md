@@ -11,28 +11,32 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
   <img alt="TypeScript" src="https://img.shields.io/badge/types-TypeScript-3178c6">
 </p>
 
-<p align="center"><a href="https://johnmorrisdotca.github.io/dougu-sports/"><strong>Open the demo →</strong></a> · <a href="https://johnmorrisdotca.github.io/dougu-sports/gallery.html">Gallery</a> · <a href="./docs/gallery.md">Every id</a> · <a href="./docs/turning.md">Turning</a> · <a href="./docs/layout.md">Layout</a> · <a href="./docs/japanese-sports.md">Japanese sports</a></p>
+<p align="center"><a href="https://johnmorrisdotca.github.io/dougu-sports/"><strong>Open the demo →</strong></a> · <a href="https://johnmorrisdotca.github.io/dougu-sports/gallery.html">Gallery</a> · <a href="./docs/gallery.md">Every id</a> · <a href="./docs/turning.md">Turning</a> · <a href="./docs/engraving.md">Engraving</a> · <a href="./docs/layout.md">Layout</a> · <a href="./docs/japanese-sports.md">Japanese sports</a></p>
 
 <p align="center">
 <picture>
-<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-dark.webp">
-<img alt="Thirty-six balls and pucks drawn in 3D under floodlights, in four rows of nine: soccer balls of several constructions and colours, then basketball, the 3x3 ball, baseball, softball, a football, a rugby ball, an Australian football and two volleyballs, then tennis, padel, pickleball with its holes, squash with its two dots, racquetball, golf, red and pink cricket and water polo, and last sepak takraw, a shuttlecock, a puck, a curling stone, lacrosse, handball, table tennis, a sliotar and a roundnet ball." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-light.webp" width="760">
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/trophies-turn-dark.webp">
+<img alt="Five famous trophies turning in 3D on royal purple, each a little behind the one before: the Stanley Cup first, then the FIFA World Cup, the Lombardi Trophy, the Larry O'Brien trophy and the Webb Ellis Cup. Each keeps its outline while its light and its handles move." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/trophies-turn-light.webp" width="760">
 </picture>
 </p>
 
 <p align="center">
 <picture>
-<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/vintage-desk-dark.webp">
-<img alt="Eighteen more balls on a warm sunburst, in two rows of nine: five vintage leather soccer balls (hand-stitched, laced, 18 strips, 12 panels, 32 panels), a lemon-peel baseball, two baseballs stitched in two colours and an aged baseball, then nine soccer balls in the style of an era, with patterns of pentagons, leaves, a rosette, a star, a pinwheel and kites, a double border and plain white panels." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/vintage-desk-light.webp" width="760">
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-turn-dark.webp">
+<img alt="Seven balls rolling under floodlights: a soccer ball, a basketball, a baseball, a rugby ball, a volleyball, a tennis ball and a golf ball, each turned a little differently so that the seams and panels travel across them." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-turn-light.webp" width="760">
 </picture>
 </p>
 
 <p align="center">
 <picture>
-<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/hero-desk-dark.webp">
-<img alt="Trophies, medals and crests, in four rows of nine: nine famous cups, then a gilded cup, a phoenix-handle cup, a soccer ball trophy, a wreath, a rosette, a belt, a banner, a ring and a plaque, then three medals, three place badges and three crests, and last three cups each in metal, line and colour." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/hero-desk-light.webp" width="760">
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/flips-turn-dark.webp">
+<img alt="A gold and a silver medal, a championship banner, a crest, a hockey skate and a baseball glove flipping like coins on royal purple: each shows its face, then its edge, then its plain back." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/flips-turn-light.webp" width="760">
 </picture>
 </p>
+
+## The best of it
+
+- **47 famous trophies**, each a close likeness measured on a photograph and carrying no lettering, logo or mark: the Stanley Cup, the FIFA World Cup, the Lombardi Trophy, the Larry O'Brien trophy, the Grey Cup and the rest ([famous trophies](./docs/famous-trophies.md)).
 
 <p align="center">
 <picture>
@@ -41,6 +45,26 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 </picture>
 </p>
 
+- **117 balls and implements in 3D**, from the 32-panel soccer ball to the pucks and the curling stone, that roll as they turn ([gallery](./docs/gallery.md), [vintage and era-style balls](./docs/vintage-balls.md)).
+
+<p align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-dark.webp">
+<img alt="Thirty-six balls and pucks drawn in 3D under floodlights, in four rows of nine: soccer balls of several constructions and colours, then basketball, the 3x3 ball, baseball, softball, a football, a rugby ball, an Australian football and two volleyballs, then tennis, padel, pickleball with its holes, squash with its two dots, racquetball, golf, red and pink cricket and water polo, and last sepak takraw, a shuttlecock, a puck, a curling stone, lacrosse, handball, table tennis, a sliotar and a roundnet ball." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-light.webp" width="760">
+</picture>
+</p>
+
+- **Trophies, medals, crests and the icon of every sport**, in metal, one line or flat colour, light and dark.
+
+<p align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/hero-desk-dark.webp">
+<img alt="Trophies, medals and crests, in four rows of nine: nine famous cups, then a gilded cup, a phoenix-handle cup, a soccer ball trophy, a wreath, a rosette, a belt, a banner, a ring and a plaque, then three medals, three place badges and three crests, and last three cups each in metal, line and colour." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/hero-desk-light.webp" width="760">
+</picture>
+</p>
+
+- **70 pieces of gear**, among them the Japanese sports and budo ([Japanese sports](./docs/japanese-sports.md)).
+
 <p align="center">
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/gear-desk-dark.webp">
@@ -48,16 +72,13 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 </picture>
 </p>
 
-<table align="center">
-<tr>
-<td align="center" valign="top">
-<img alt="A two-handled cup, a medal, a soccer ball and a championship banner each turned through seven angles: the cup keeps its outline and moves its light and handles, the medal and the banner flip like a coin to show their plain backs, and the ball rolls." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/turn-desk.webp" width="470"><br><em>Turned: a ball rolls, a medal flips</em>
-</td>
-<td align="center" valign="top">
-<img alt="Cups, a medal, balls and gear on a phone, three to a row." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/phone-light.webp" width="200"><br><em>On a phone</em>
-</td>
-</tr>
-</table>
+- **On a phone**, and **turned by hand**: drag, arrow keys or the automatic turn ([turning](./docs/turning.md)).
+
+<p align="center">
+<picture>
+<img alt="Cups, a medal, balls and gear on a phone, three to a row." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/phone-light.webp" width="200">
+</picture>
+</p>
 
 > **Status: preview.** 321 emblems: 71 trophies, 6 awards, 6 medals, 4 crests, a pictogram for each of the 38 sports, 117 balls and implements drawn in 3D, 8 printed pucks ([docs/pucks.md](./docs/pucks.md)), 70 pieces of gear (among them the Japanese sports and budo, [docs/japanese-sports.md](./docs/japanese-sports.md)) and a championship pennant; [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
 
@@ -91,7 +112,7 @@ Put the string in a page (`element.innerHTML = svg`), write it to a file, or sen
 - **Three styles** for every emblem: `metal` (polished metal: a gradient, a highlight and a soft rim of reflected light, edged in a darker tone of its own metal, with no heavy outline), `line` (one clean outline in the page's text colour, made to read at 14 pixels) and `color` (flat fills); see [Theming](#theming).
 - **Size, tint, accent and theme** as options: a tint recolours the main part (a medal's metal, a crest's colour, a ball's patches), an accent the second colour (a ribbon, a crest's band, the pennants), a theme sets the ink for light, dark or either.
 - **Turning**: `emblemFrame` and `ballFrame` return the emblem at an angle, in plain SVG: every emblem turns, a ball rolls, a cup keeps its outline and moves its light, and everything flat (gear, a bat, a crown, a sport's icon) flips like a coin; `bindTurn` lets a drag, the arrow keys or an auto-turn do the turning in a page; see [docs/turning.md](./docs/turning.md).
-- **Engraving**: text cut into a medal, a plaque, the belt, a ring, a banner, a pennant and the plinth of a cup, from `label`, `year` and `rank` or one `engrave` string, in the ink that reads at 4.5 to 1 on the metal, and it turns with the emblem; see [Engrave an emblem](#engrave-an-emblem).
+- **Engraving**: text cut into a medal, a plaque, the belt, a ring, a banner, a pennant and the plinth of a cup, from `label`, `year` and `rank` or one `engrave` string, in the ink that reads at 4.5 to 1 on the metal, and it turns with the emblem; see [engraving](./docs/engraving.md).
 - **Custom balls**: a baseball, a softball and the classic soccer balls take `paint` (a solid colour, or two: along the seam or in halves, with stitches that still show), `decal` (your own SVG or image as a logo, wrapped onto the sphere so that it turns with the ball), `stamp` (condensed bold text between small stars, with an optional made-up signature), `script` (an original cursive word) and `mark` (a letter in a circle, or an SVG of your own); see [docs/custom-balls.md](./docs/custom-balls.md). The package carries no logo of anyone's: a logo or a mark is the one you pass.
 - **Labels in two languages**: the `<title>` is English or Japanese (`locale`), your own words (`title: "…"`), or left out for an emblem that sits beside text that says the same (`title: false`).
 - **As an image, a sprite, a podium or a case**: `emblemDataUri` for an `<img>`, a CSS background or a canvas, `emblemSprite` to draw one emblem fifty times cheaply, `sportEquipment` for what a sport is played with, and `podium` and `awardCase` for results and trophy shelves; see [docs/compose.md](./docs/compose.md).
@@ -259,28 +280,7 @@ More in [docs/turning.md](./docs/turning.md).
 
 ### Engrave an emblem
 
-```js
-import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
-
-const medal = renderEmblem("medal:gold", { engrave: "MVP 2026" });
-console.log(medal.includes(">MVP<") && medal.includes(">2026<")); // true
-const plaque = renderEmblem("trophy:plaque", { label: "Champions", year: 2026 });
-console.log(plaque.includes(">Champions<") && plaque.includes(">2026<")); // true
-const cup = renderEmblem("trophy:hockey-cup", { engrave: "優勝 2026" });
-console.log(cup.includes(">優<")); // true
-console.log(renderEmblem("medal:gold").includes("<text")); // false
-```
-
-A medal, a place badge, the plaque, the belt, a ring (the team up one shoulder and the year down the other), a banner and a pennant take an engraving, and so does the plinth of every cup that stands on one. Give one string (`engrave`, any text, Japanese included, up to three lines of 24 letters), or a `label`, a `year` and a `rank`: the rank is the biggest line, the year the smallest. The text is escaped, fitted to its face (a longer word is set smaller, and a space is a place to break the line when that makes bigger letters) and cut in the ink that reads at 4.5 to 1 on the metal, a tone of the metal, black or white, in the line style the page's ink.
-
-```js
-import { emblemFrame } from "@johnmorrisdotca/dougu-sports/turn";
-
-const at = (yaw) => emblemFrame("medal:gold", { engrave: "MVP", engraveBack: "2026", yaw });
-console.log(at(0).includes(">MVP<"), at(180).includes(">MVP<"), at(180).includes(">2026<")); // true false true
-```
-
-Turned, the engraving goes with its face: squeezed with a medal, hidden on its back (which has an engraving of its own when `engraveBack` is given), and on a cup set letter by letter round the plinth, so it foreshortens, slides behind the edge and comes round again. A drawn numeral or star that an engraving replaces is left out.
+`engrave` (one string, any text, Japanese included), or `label`, `year` and `rank`, cuts text into a medal, a place badge, the plaque, the belt, a ring, a banner, a pennant and the plinth of every cup that stands on one, in the ink that reads on the metal, and it turns with the emblem. Every option, the back of a medal (`engraveBack`) and every example: [engraving](./docs/engraving.md).
 
 ### Draw a championship pennant
 
@@ -484,7 +484,7 @@ The thirty-eight sports the ball, gear and sport emblems are made for are `SPORT
 | `initials` | Up to three letters (a crest, or the championship banner) | none: the crest has a star, the banner a ring and a star |
 | `theme` | `"inherit"`, `"auto"`, `"light"`, `"dark"` | `"inherit"` |
 | `grain` | `true` or `false` (a ball only) | on for a ball of 48 pixels or more that is not turning |
-| `engrave` | Any text, up to three lines of 24 letters, Japanese included: cut into the face (see [Engrave an emblem](#engrave-an-emblem)) | none |
+| `engrave` | Any text, up to three lines of 24 letters, Japanese included: cut into the face (see [engraving](./docs/engraving.md)) | none |
 | `label`, `year`, `rank` | The words, the year (smaller, under them) and the number (the biggest line) to engrave when `engrave` is not given | none (a place badge's rank is its place) |
 | `engraveBack` | The text of a medal's, ring's or banner's back, shown when it is turned over | a plain back |
 | `backnumber` | `{ name, code, band }` for `gear:judogi-back` and `gear:judogi-blue-back`: the family name in capitals, the three letters of the National Olympic Committee, and `"blue"`, `"gold"` or `"red"` for the band ([docs/judogi-back.md](./docs/judogi-back.md)) | `TANAKA`, `JPN`, blue |
