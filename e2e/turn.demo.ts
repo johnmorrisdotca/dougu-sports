@@ -225,6 +225,71 @@ test("the trophy case turns each emblem on its own button, and nothing moves bef
 
 test("the turning controls are 44 pixels tall at least, and the page does not scroll sideways", async ({ page }) => {
   await page.goto("/?id=ball:soccer");
-  for (const control of await page.locator("#play, #speed button, #roll, #case .case-play").all()) expect((await control.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
+  for (const control of await page.locator("#play, #speed button, #roll, #picks button, #case .case-play").all()) expect((await control.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
+
+// The page opens on the emblem turning by itself with its controls beside it. The suite runs with reduced motion on, so these ask for the ordinary setting.
+test.describe("a reader who has not asked for reduced motion", () => {
+  test.use({ reducedMotion: "no-preference" });
+
+  test("the emblem turns by itself when the page opens, and Stop, turn=0 and an angle in the address hold it", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator("#stage > svg")).toBeVisible();
+    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+    await expect.poll(() => yaw(page), { timeout: 5000 }).not.toBe(0);
+    // The address leaves the angles out while it turns, so that a reload starts the turn again.
+    expect(page.url()).not.toMatch(/yaw=/);
+    await page.locator("#play").click();
+    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
+    await expect(page).toHaveURL(/turn=0/);
+    const stopped = await yaw(page);
+    await page.waitForTimeout(400);
+    expect(await yaw(page)).toBe(stopped);
+    await page.goto("/?turn=0");
+    await page.waitForTimeout(500);
+    expect(await yaw(page)).toBe(0);
+    await page.goto("/?yaw=70");
+    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
+    await page.waitForTimeout(400);
+    expect(await yaw(page)).toBe(70);
+  });
+
+  test("the stage, the quick picks and the turn controls are in the first screen, and a change while it turns leaves the turn going", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+    const height = page.viewportSize()!.height;
+    for (const selector of ["#stage", "#picks button", "#play", "#yaw"]) {
+      const box = (await page.locator(selector).first().boundingBox())!;
+      expect(box, selector).not.toBeNull();
+      expect(box.y + box.height, `${selector} is in the first screen`).toBeLessThanOrEqual(height);
+    }
+    await expect.poll(() => yaw(page), { timeout: 5000 }).not.toBe(0);
+    const gap = (a: number, b: number) => Math.min(Math.abs(a - b), 360 - Math.abs(a - b));
+    const changes = [
+      () => page.locator('#style button[data-value="line"]').click(),
+      () => page.locator('#style button[data-value="metal"]').click(),
+      () => page.locator('#tint button[data-value="#c8102e"]').click(),
+      () => page.locator('#picks button[data-id="ball:basketball"]').click(),
+      () => page.locator('#picks button[data-id="trophy:stanley-cup"]').click(),
+    ];
+    for (const change of changes) {
+      const before = await yaw(page);
+      await change();
+      await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+      const after = await yaw(page);
+      expect(gap(before, after), "the angle was not reset").toBeLessThan(60);
+      await expect.poll(async () => gap(after, await yaw(page)), { timeout: 5000 }).toBeGreaterThan(3);
+    }
+  });
+
+  test("the trophy case turns by itself, and each button holds one", async ({ page }) => {
+    await page.goto("/");
+    const first = page.locator("#case li").first();
+    await expect(first.getByTestId("case-play")).toHaveAttribute("aria-pressed", "true");
+    const before = await first.locator(".case-stage").innerHTML();
+    await expect.poll(() => first.locator(".case-stage").innerHTML(), { timeout: 5000 }).not.toBe(before);
+    await first.getByTestId("case-play").click();
+    await expect(first.getByTestId("case-play")).toHaveAttribute("aria-pressed", "false");
+  });
 });

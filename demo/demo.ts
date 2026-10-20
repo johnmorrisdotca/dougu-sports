@@ -13,8 +13,8 @@ declare global {
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string): T => document.getElementById(id) as T;
 const params = new URLSearchParams(location.search);
-const FIRST: D.EmblemId = "trophy:hockey-cup";
-const DEFAULTS: Record<(typeof CHOICES)[number] | "background", string> = { style: "metal", theme: "inherit", size: "128", tint: "", speed: "36", background: "" };
+const FIRST: D.EmblemId = "trophy:stanley-cup";
+const DEFAULTS: Record<(typeof CHOICES)[number] | "background", string> = { style: "metal", theme: "inherit", size: "256", tint: "", speed: "36", background: "" };
 const BACKGROUNDS = [...document.querySelectorAll<HTMLOptionElement>("#background option")].map((o) => o.value);
 const pick = <T extends string>(value: string | null, allowed: readonly T[], fallback: T): T => allowed.find((one) => one === value) ?? fallback;
 const number = (value: string | null, low: number, high: number) => { const n = Number(value); return Number.isFinite(n) ? Math.max(low, Math.min(high, n)) : 0; };
@@ -29,6 +29,8 @@ interface State {
   speed: string;
   background: string;
   engrave: string;
+  /** "1" while it turns by itself (the default), "0" once it has been paused: the address says so. */
+  turn: string;
 }
 /** The choices made with a row of buttons. */
 const CHOICES = ["style", "theme", "size", "tint", "speed"] as const;
@@ -41,6 +43,7 @@ const state: State = {
   speed: pick(params.get("speed"), ["18", "36", "90"], DEFAULTS.speed),
   background: pick(params.get("background"), BACKGROUNDS, DEFAULTS.background),
   engrave: (params.get("engrave") ?? "").slice(0, 24),
+  turn: params.get("turn") === "0" ? "0" : "1",
 };
 
 $("emblem").innerHTML = Object.entries(D.EMBLEM_GROUPS)
@@ -48,11 +51,13 @@ $("emblem").innerHTML = Object.entries(D.EMBLEM_GROUPS)
   .map(([group, ids]) => `<optgroup label="${group}">${ids.map((id) => `<option value="${id}">${D.emblemName(id)} (${id})</option>`).join("")}</optgroup>`)
   .join("");
 
+/** False until the stage is bound and drawn once: the auto-turn starts inside `bindTurn`, before there is a `turner` to read. */
+let booted = false;
 const locale = () => (document.documentElement.lang === "ja" ? "ja" : "en");
-/** What the stage draws with: the look, and how the turning behaves. Nothing turns until the reader presses the auto-turn. */
+/** What the stage draws with: the look, and how the turning behaves. The emblem turns by itself when the page opens (not for a reader who prefers reduced motion), unless the address holds an angle or says turn=0. */
 function turnOptions(): D.TurnControlOptions {
   // A spin and a drag turn many times a second: they follow with a slow address. A choice is written at once.
-  const options: D.TurnControlOptions = { style: state.style, size: Number(state.size), theme: state.theme, speed: Number(state.speed), locale: locale(), onTurn: () => sync(false), onPlayChange: () => sync(true) };
+  const options: D.TurnControlOptions = { style: state.style, size: Number(state.size), theme: state.theme, speed: Number(state.speed), locale: locale(), onTurn: () => sync(false), onPlayChange: (playing) => { state.turn = playing ? "1" : "0"; if (booted) sync(true); } };
   if (state.tint) options.tint = state.tint;
   if (state.engrave.trim() !== "") options.engrave = state.engrave;
   return options;
@@ -60,6 +65,7 @@ function turnOptions(): D.TurnControlOptions {
 
 const turner = D.bindTurn($("stage"), state.id, {
   ...turnOptions(),
+  autoPlay: state.turn === "1" && !["yaw", "pitch", "roll"].some((key) => params.has(key)),
   yaw: number(params.get("yaw"), -180, 180),
   pitch: number(params.get("pitch"), -60, 60),
   roll: number(params.get("roll"), -180, 180),
@@ -71,8 +77,10 @@ function writeAddress() {
   const next = new URLSearchParams();
   if (state.id !== FIRST) next.set("id", state.id);
   for (const key of [...CHOICES, "background"] as const) if (state[key] !== DEFAULTS[key]) next.set(key, state[key]);
+  if (state.turn === "0") next.set("turn", "0");
+  // While it turns by itself the angles change every frame: the address then leaves them out, so a reload starts the turn again.
   const a = turner.angles;
-  for (const key of ["yaw", "pitch", "roll"] as const) if (a[key] !== 0) next.set(key, String(a[key]));
+  if (!turner.playing) for (const key of ["yaw", "pitch", "roll"] as const) if (a[key] !== 0) next.set(key, String(a[key]));
   if (state.engrave.trim() !== "") next.set("engrave", state.engrave);
   try {
     history.replaceState(null, "", next.size === 0 ? location.pathname : `?${next}`);
@@ -145,10 +153,24 @@ function draw() {
   $("note").textContent = `${info.en} · ${info.ja} · ${info.kind}, from ${info.source}.`;
   $<HTMLSelectElement>("emblem").value = state.id;
   $<HTMLSelectElement>("background").value = state.background;
+  for (const b of $("picks").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.id === state.id));
   for (const group of CHOICES) for (const b of $(group).querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state[group]));
   sync();
 }
 
+/** A few emblems one press away, beside the stage: the Stanley Cup and the World Cup, balls that roll, a medal and a banner that flip like coins, and a skate. */
+const PICKS: D.EmblemId[] = ["trophy:stanley-cup", "trophy:fifa-world-cup", "ball:soccer", "ball:basketball", "ball:baseball", "medal:gold", "trophy:championship-banner", "gear:hockey-skate"];
+function drawPicks() {
+  $("picks").replaceChildren(...PICKS.map((id) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.dataset.id = id;
+    b.textContent = D.emblemName(id, locale());
+    b.setAttribute("aria-pressed", String(id === state.id));
+    return b;
+  }));
+}
+$("picks").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b?.dataset.id) { state.id = b.dataset.id as D.EmblemId; draw(); } });
 $("emblem").addEventListener("change", () => { state.id = $<HTMLSelectElement>("emblem").value as D.EmblemId; draw(); });
 for (const group of CHOICES) {
   $(group).addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { (state as Record<typeof group, string>)[group] = b.dataset.value ?? ""; draw(); } });
@@ -162,18 +184,20 @@ for (const name of ["yaw", "pitch", "roll"]) {
 }
 $("play").addEventListener("click", () => { turner.togglePlay(); sync(true); });
 // The language chooser changes <html lang>; the stage's spoken description follows it.
-new MutationObserver(() => turner.update(state.id, turnOptions())).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+new MutationObserver(() => { turner.update(state.id, turnOptions()); drawPicks(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
 
+drawPicks();
+booted = true;
 draw();
 
-// A trophy case: a few emblems that turn, each with its own button. Nothing turns until a button is pressed.
+// A trophy case: a few emblems that turn by themselves (a reader who prefers reduced motion gets them still), each with its own button to hold or start it.
 const CASE = ["trophy:hockey-cup", "trophy:tennis-cup", "medal:gold", "ball:rugby"];
 for (const id of CASE) {
   const cell = document.createElement("li");
   cell.innerHTML = `<div class="case-stage" data-testid="case-stage"></div><button type="button" class="fam-button case-play" aria-pressed="false" data-testid="case-play"><span class="when-off" data-say="play">Auto-turn</span><span class="when-on" data-say="stop">Stop</span></button>`;
   $("case").append(cell);
   const button = cell.querySelector("button")!;
-  const control = D.bindTurn(cell.querySelector<HTMLElement>(".case-stage")!, id, { size: 96, speed: 45, onPlayChange: (playing) => button.setAttribute("aria-pressed", String(playing)), locale: locale() });
+  const control = D.bindTurn(cell.querySelector<HTMLElement>(".case-stage")!, id, { size: 96, speed: 45, autoPlay: true, onPlayChange: (playing) => button.setAttribute("aria-pressed", String(playing)), locale: locale() });
   button.addEventListener("click", () => control.togglePlay());
 }
 // The words of the buttons just added, in the page's language.

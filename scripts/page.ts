@@ -27,7 +27,8 @@ const WORDS = {
     fast: "Fast",
     hint: "Drag the emblem, or use the sliders or the arrow keys, to turn it.",
     caseHeading: "A trophy case",
-    caseNote: "Each one turns when you press its button, or when you drag it. Nothing moves by itself.",
+    caseNote: "Each one turns by itself. Press its button to hold it, or drag it.",
+    picks: "Try one",
   },
   ja: {
     pitch: "トロフィー、メダル、紋章、ボールや用具など、スポーツのエンブレムをSVGで描きます。",
@@ -42,7 +43,8 @@ const WORDS = {
     fast: "速い",
     hint: "エンブレムは、ドラッグするか、スライダーや矢印キーで回せます。",
     caseHeading: "トロフィーケース",
-    caseNote: "それぞれのボタンを押すか、エンブレムをドラッグすると回ります。自動では動きません。",
+    caseNote: "それぞれ自動で回ります。ボタンで止めたり、ドラッグで回したりできます。",
+    picks: "選んでみる",
   },
 };
 
