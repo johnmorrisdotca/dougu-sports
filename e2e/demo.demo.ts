@@ -13,7 +13,8 @@ test("the playground draws an emblem and does not scroll sideways", async ({ pag
 });
 
 test("every emblem draws, in every style, and the address says which", async ({ page }) => {
-  test.slow();
+  // About a thousand clicks: a shared CI runner's WebKit takes well over a minute, so the limit is three minutes, not the ninety seconds `test.slow()` gives.
+  test.setTimeout(180_000);
   await page.goto("/");
   const ids = await page.locator("#emblem option").evaluateAll((options) => options.map((o) => (o as HTMLOptionElement).value));
   expect(ids.length).toBeGreaterThanOrEqual(140);
