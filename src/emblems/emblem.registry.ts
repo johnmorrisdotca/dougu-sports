@@ -129,6 +129,10 @@ import { SPORT_KENDO } from "./sport/kendo.ts";
 import { SPORT_JUDO } from "./sport/judo.ts";
 import { SPORT_KYUDO } from "./sport/kyudo.ts";
 import { SPORT_KARATE } from "./sport/karate.ts";
+import { SPORT_MMA } from "./sport/mma.ts";
+import { SPORT_BOXING } from "./sport/boxing.ts";
+import { SPORT_WRESTLING } from "./sport/wrestling.ts";
+import { SPORT_PROWRESTLING } from "./sport/prowrestling.ts";
 
 /** The balls and the gear are drawn by families, each family in a module of its own, and listed in order by their own indexes. */
 const PIECES: Readonly<Record<string, Emblem>> = Object.fromEntries([...BALLS, ...PUCKS, ...GEARS].map((piece) => [piece.id, piece]));
@@ -261,6 +265,10 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}`
   "sport:judo": SPORT_JUDO,
   "sport:kyudo": SPORT_KYUDO,
   "sport:karate": SPORT_KARATE,
+  "sport:mma": SPORT_MMA,
+  "sport:boxing": SPORT_BOXING,
+  "sport:wrestling": SPORT_WRESTLING,
+  "sport:prowrestling": SPORT_PROWRESTLING,
 };
 
 /** Every emblem, by id. */

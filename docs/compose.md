@@ -85,19 +85,19 @@ The numbers include the sheet itself; the more uses, the closer a use is to its 
 
 ## What a sport is played with: `sportEquipment`
 
-`sportEquipment(sport)` is `{ sport, ball?, gear[], trophy, medal? }` for each of the 38 `SPORT_NAMES`, typed, with every id an id of the registry (a test holds it):
+`sportEquipment(sport)` is `{ sport, ball?, gear[], trophy, medal? }` for each of the 42 `SPORT_NAMES`, typed, with every id an id of the registry (a test holds it):
 
 ```js
 import { SPORT_NAMES, renderEmblem, sportEquipment } from "@johnmorrisdotca/dougu-sports/emblems";
 
 console.log(JSON.stringify(sportEquipment("nhl"))); // {"sport":"nhl","ball":"ball:puck","gear":["gear:hockey-stick","gear:hockey-skate","gear:goalie-mask","gear:goal-net"],"trophy":"trophy:hockey-cup"}
 console.log(sportEquipment("athletics").medal); // medal:gold
-console.log(SPORT_NAMES.filter((sport) => sportEquipment(sport).ball === undefined).join(" ")); // swimming diving artisticswimming skating sumo kendo judo kyudo karate
+console.log(SPORT_NAMES.filter((sport) => sportEquipment(sport).ball === undefined).join(" ")); // swimming diving artisticswimming skating sumo kendo judo kyudo karate mma boxing wrestling prowrestling
 const everything = [sportEquipment("tennis").ball, ...sportEquipment("tennis").gear, sportEquipment("tennis").trophy].map((id) => renderEmblem(id));
 console.log(everything.length); // 3
 ```
 
-- `ball` is the ball or the implement that stands for one (the puck, the shuttlecock, the shot). Swimming, diving, artistic swimming, skating and the five Japanese sports (sumo, kendo, judo, kyudo, karate) have none, so it is left out. `sportEquipment("sumo")` is the war fan, the mawashi and `trophy:sumo-cup`.
+- `ball` is the ball or the implement that stands for one (the puck, the shuttlecock, the shot). Swimming, diving, artistic swimming, skating the five Japanese sports (sumo, kendo, judo, kyudo, karate) and the four combat sports (MMA, boxing, wrestling, professional wrestling) have none, so it is left out. `sportEquipment("sumo")` is the war fan, the mawashi and `trophy:sumo-cup`.
 - `gear` lists the pieces of gear the package has an emblem for, most telling first; it is empty for a sport with none yet (sepak takraw, teqball, netball).
 - `trophy` is the sport's own where the package draws one, and otherwise a plain `trophy:cup`, `trophy:bowl` or `trophy:laurel`. `medal` is `medal:gold` for a sport in the Games.
 - The arrays are new on every call, and an unknown sport is an error.

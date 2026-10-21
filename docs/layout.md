@@ -34,7 +34,7 @@ src/
     trophy/                  the trophies, generic and named
     medal/                   gold, silver and bronze, and the badges for the first three places
     crest/                   the four generic crests
-    sport/                   one pictogram for each of the thirty-eight sports
+    sport/                   one pictogram for each of the forty-two sports
     pennant/                 the championship pennant
     ball/                    the balls, drawn in 3D by their own engine (ball.engine.ts), one module per family (the vintage, era-style and patterned soccer balls are ball.soccer.vintage.ts, ball.soccer.era.ts and ball.soccer.store.ts, the baseballs of other threads ball.baseball.vintage.ts, the national volleyballs ball.volleyball.flag.ts, and what they are decorated with ball.decal.ts); also the printed pucks (ball.puck.print.ts, their face in ball.face.ts, the lettering in ball.letters.ts); and what paints and prints a baseball, a softball and a classic soccer ball (ball.print.ts: the options, the label and `printed()`; ball.warp.ts: a logo carried onto the sphere; ball.script.ts: our cursive script; ball.region.ts and ball.contrast.ts: a two-tone fill and the thread that shows; ball.printable.ts: the printed balls the registry takes)
     gear/                    the gear, one module per piece or family

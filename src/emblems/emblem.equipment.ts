@@ -5,9 +5,9 @@ import type { BallId, GearId, MedalId, SportName, TrophyId } from "./emblem.ids.
 /** The equipment of one sport. */
 export interface SportEquipment {
   sport: SportName;
-  /** The ball, or the implement that stands for one (the puck, the shuttlecock, the shot). Swimming, diving, artistic swimming, skating and the Japanese sports (sumo, kendo, judo, kyudo, karate) have none. */
+  /** The ball, or the implement that stands for one (the puck, the shuttlecock, the shot). Swimming, diving, artistic swimming, skating, the Japanese sports (sumo, kendo, judo, kyudo, karate) and the combat sports (MMA, boxing, wrestling, professional wrestling) have none. */
   ball?: BallId;
-  /** The gear the sport has an emblem for, most telling first. Empty where the package has none yet. */
+  /** The gear the sport has an emblem for, most telling first. Empty where the package has none yet (the combat sports). */
   gear: GearId[];
   /** The trophy that stands for the sport's cup: its own where the package draws one, otherwise a plain cup, bowl or globe. */
   trophy: TrophyId;
@@ -58,6 +58,10 @@ const TABLE: Readonly<Record<SportName, Entry>> = {
   judo: [undefined, ["gear:judogi", "gear:obi"], "trophy:cup", GOLD],
   kyudo: [undefined, ["gear:yumi", "gear:ya"], "trophy:cup"],
   karate: [undefined, ["gear:karate-gi"], "trophy:cup", GOLD],
+  mma: [undefined, [], "trophy:belt"],
+  boxing: [undefined, [], "trophy:belt", GOLD],
+  wrestling: [undefined, [], "trophy:cup", GOLD],
+  prowrestling: [undefined, [], "trophy:belt"],
 };
 
 /**

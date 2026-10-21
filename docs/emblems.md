@@ -64,7 +64,7 @@ console.log(shield.includes(">JPN<"), gold.includes("<title>Gold medal</title>")
 // true true true
 ```
 
-- **Pictograms** (`sport:*`) are one for each of the thirty-eight sports, all drawn here, each as the equipment (a stone, a shuttlecock, a racket, a net, a stick, an oval ball, and for the Japanese sports a war fan, a helmet, a suit, a bow, a fist). They are drawn in the page's ink, and the metal style gives them a grey sheet when they are tinted.
+- **Pictograms** (`sport:*`) are one for each of the forty-two sports, all drawn here, each as the equipment (a stone, a shuttlecock, a racket, a net, a stick, an oval ball, and for the Japanese sports a war fan, a helmet, a suit, a bow, a fist, and for the combat sports a glove, a cage, two wrestlers and a ring). They are drawn in the page's ink, and the metal style gives them a grey sheet when they are tinted.
 - **Awards** (`award:*`) are a medal on a ribbon, a badge, a crown, a star and a shield, drawn here and painted with the metal gradient, a bevel and an edge of the metal's own darker tone in the metal style, in flat fills in `color` and as one outline in `line`.
 
 ## Balls and gear

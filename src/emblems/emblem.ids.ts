@@ -1,11 +1,12 @@
 // The ids of the emblems, in their groups, and the types they make. Nothing is imported: this file is only names, so it costs nothing to read. An id is `<group>:<name>`.
 // Each list below holds the emblems that exist. The art for the rest arrives group by group (docs/layout.md), and each arrival adds its names here and its entry to emblem.registry.ts.
 
-/** The thirty-eight sports the emblems are made for (the five Japanese ones, sumo, kendo, judo, kyudo and karate, have a pictogram and their gear, and no ball): the names that `ball:<sport>`, `gear:<sport>` and `sport:<sport>` use. */
+/** The forty-two sports the emblems are made for (the five Japanese ones, sumo, kendo, judo, kyudo and karate, have a pictogram and their gear, and no ball; the four combat sports, MMA, boxing, wrestling and professional wrestling, have a pictogram and no ball or gear yet): the names that `ball:<sport>`, `gear:<sport>` and `sport:<sport>` use. */
 export const SPORT_NAMES = [
   "nfl", "cfl", "ifaf", "nhl", "nba", "mlb", "soccer", "curling", "tennis", "volleyball", "badminton", "pickleball", "tabletennis", "padel", "squash", "racquetball", "sepaktakraw", "teqball", "roundnet", "netball",
   "swimming", "waterpolo", "diving", "artisticswimming", "lacrosse", "rugby", "afl", "gaelic", "cricket", "fieldhockey", "handball", "athletics", "skating",
   "sumo", "kendo", "judo", "kyudo", "karate",
+  "mma", "boxing", "wrestling", "prowrestling",
 ] as const;
 export type SportName = (typeof SPORT_NAMES)[number];
 
@@ -125,7 +126,7 @@ export type JapaneseId = (typeof JAPANESE_IDS)[number];
 export const PENNANT_IDS = ["pennant:championship"] as const;
 export type PennantId = (typeof PENNANT_IDS)[number];
 
-/** The sports' own emblems: one pictogram for each of the thirty-eight. */
+/** The sports' own emblems: one pictogram for each of the forty-two. */
 export type SportEmblemId = `sport:${SportName}`;
 export const SPORT_IDS: readonly SportEmblemId[] = SPORT_NAMES.map((name) => `sport:${name}` as const);
 

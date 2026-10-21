@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 321 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 325 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -375,6 +375,10 @@ The folders the art lives in are in [layout.md](layout.md).
 | `sport:judo` | Judo | icon | ours | A judo suit: a jacket with sleeves down to the wrist and crossed lapels, a belt in a flat knot with two ends hanging, and trousers |
 | `sport:kyudo` | Kyudo | icon | ours | A long bow, its string and an arrow |
 | `sport:karate` | Karate | icon | ours | A karate suit: a short jacket with three-quarter sleeves and a wide V of lapels, a belt in a flat knot, and straight trousers |
+| `sport:mma` | MMA | icon | ours | A mixed martial arts cage seen from above: an eight-sided floor inside a fence of diamond mesh |
+| `sport:boxing` | Boxing | icon | ours | A boxing glove: the padded fist with the thumb against its side, the fold of the fingers and the cuff with its band |
+| `sport:wrestling` | Wrestling | icon | ours | Two wrestlers in the tie-up, heads up and hands on each other's shoulders, knees bent, on the round of the mat |
+| `sport:prowrestling` | Pro wrestling | icon | ours | A professional wrestling ring seen from a corner: the canvas, a post at each corner with three ropes between them, and the apron |
 
 ## pennant
 

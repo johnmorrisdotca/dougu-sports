@@ -137,7 +137,7 @@ test("sixty-four uses of a ball and of a medal cost a fraction of the nodes and 
 });
 
 test("every sport has equipment, and every id in it is in the registry", () => {
-  assert.equal(D.SPORT_NAMES.length, 38);
+  assert.equal(D.SPORT_NAMES.length, 42);
   const noBall: string[] = [];
   for (const sport of D.SPORT_NAMES) {
     const e = D.sportEquipment(sport);
@@ -153,7 +153,7 @@ test("every sport has equipment, and every id in it is in the registry", () => {
     // And every id draws.
     for (const id of [e.ball, ...e.gear, e.trophy, e.medal]) if (id !== undefined) assert.ok(D.renderEmblem(id).startsWith("<svg"), id);
   }
-  assert.deepEqual(noBall.sort(), ["artisticswimming", "diving", "judo", "karate", "kendo", "kyudo", "skating", "sumo", "swimming"]);
+  assert.deepEqual(noBall.sort(), ["artisticswimming", "boxing", "diving", "judo", "karate", "kendo", "kyudo", "mma", "prowrestling", "skating", "sumo", "swimming", "wrestling"]);
   assert.deepEqual(D.sportEquipment("nhl"), { sport: "nhl", ball: "ball:puck", gear: ["gear:hockey-stick", "gear:hockey-skate", "gear:goalie-mask", "gear:goal-net"], trophy: "trophy:hockey-cup" });
   // The ball of a sport is the one its own sport icon names, wherever the ball is named for the sport.
   assert.equal(D.sportEquipment("soccer").ball, "ball:soccer");

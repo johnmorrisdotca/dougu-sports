@@ -6,6 +6,15 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-10-20
+
+Four combat sports get their pictograms, so a page that lists MMA, boxing, wrestling or professional wrestling no longer borrows the judo or karate suit.
+
+### Added
+
+- **`sport:mma`, `sport:boxing`, `sport:wrestling` and `sport:prowrestling`** (`SPORT_MMA`, `SPORT_BOXING`, `SPORT_WRESTLING`, `SPORT_PROWRESTLING`), in the metal, colour and line styles like the other pictograms, all drawn for this package with no mark of any promotion, federation or maker and no lettering: MMA is a generic eight-sided cage seen from above inside a fence of diamond mesh, boxing a padded glove with the thumb against its side and a banded cuff, wrestling two wrestlers in the tie-up on the round of the mat, and professional wrestling a ring seen from a corner with a post at each corner, three ropes between them and the apron. Names: "MMA", "Boxing", "Wrestling", "Pro wrestling" (each also has a Japanese name). 325 emblems.
+- **`mma`, `boxing`, `wrestling` and `prowrestling` in `SPORT_NAMES`** (42 sports). `sportEquipment` gives each a trophy (the belt for MMA, boxing and professional wrestling, a cup for wrestling), a gold medal for boxing and wrestling, no ball and no gear yet.
+
 ## [0.12.1] - 2026-10-20
 
 The npm page and the demo open on a trophy that turns. No change to the package's code beyond its version.
