@@ -3,7 +3,8 @@
 export * from "./emblems-entry.ts";
 export { ballFrame, emblemFrame } from "./emblems/emblem.api.ts";
 export { bindTurn } from "./turn-full.ts";
-export type { TurnAngles, TurnContainer, TurnControlOptions, TurnController, TurnEvent } from "./turn-control.ts";
+export { turnDirection } from "./turn-control.ts";
+export type { TurnAngles, TurnContainer, TurnControlOptions, TurnController, TurnDirection, TurnEvent } from "./turn-control.ts";
 export { EMBLEM_TABLE } from "./emblems/emblem.registry.ts";
 export { AWARD_MEDAL } from "./emblems/award/medal.ts";
 export { AWARD_BADGE } from "./emblems/award/badge.ts";

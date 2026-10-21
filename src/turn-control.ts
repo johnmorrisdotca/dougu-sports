@@ -11,6 +11,17 @@ export interface TurnRegistry {
   emblemFrame(ref: EmblemRef, options?: FrameOptions): string;
 }
 
+/**
+ * Which way the auto-turn goes, seen from above. `"counterclockwise"` is how it has always turned: the front swings to the viewer's right. `"clockwise"` is the other way: the front swings to the viewer's left.
+ * A drag, the arrow keys and `setAngles` are not reversed.
+ */
+export type TurnDirection = "clockwise" | "counterclockwise";
+
+/** A direction from anything: `"clockwise"` is clockwise, and everything else is the default, `"counterclockwise"`. */
+export function turnDirection(value: unknown): TurnDirection {
+  return value === "clockwise" ? "clockwise" : "counterclockwise";
+}
+
 /** The three angles of a turn, in degrees. */
 export interface TurnAngles {
   /** About the vertical axis, from -180 (excluded) to 180. */
@@ -38,6 +49,8 @@ export interface TurnControlOptions extends FrameOptions {
   autoPlay?: boolean | "force";
   /** Degrees of yaw each second the auto-turn advances (36 by default; negative turns the other way). */
   speed?: number;
+  /** Which way the auto-turn goes (`"counterclockwise"`, the way it has always turned, by default). `update` keeps the direction unless it names one; a negative `speed` reverses it. */
+  direction?: TurnDirection;
   /** When true (the default), a drag holds the auto-turn while the pointer is down, and an arrow key, Home or `setAngles` pauses it. When false nothing but `pause()` stops it. */
   pauseOnInteract?: boolean;
   /** Called with `true` when the auto-turn starts and `false` when it stops, whatever stopped it. */
@@ -65,6 +78,10 @@ export interface TurnController {
   play(): boolean;
   /** Stops the auto-turn. */
   pause(): void;
+  /** Which way the auto-turn goes. */
+  direction(): TurnDirection;
+  /** Changes which way the auto-turn goes, at once and without stopping it. */
+  setDirection(direction: TurnDirection): void;
   /** Starts or stops the auto-turn and gives the new state; `false` for an emblem that cannot turn. */
   togglePlay(): boolean;
   /** Removes the listeners and the attributes and styles `bindTurn` added; the last drawing stays. */
@@ -183,6 +200,7 @@ export function bindTurnWith(registry: TurnRegistry | undefined, container: Turn
   let range: readonly [number, number] = [-60, 60];
   let keyStep = 5;
   let speed = 36;
+  let way: TurnDirection = turnDirection(options.direction);
   let pauseOnInteract = true;
   let locale: "en" | "ja" = "en";
   let onTurn: TurnControlOptions["onTurn"];
@@ -207,12 +225,13 @@ export function bindTurnWith(registry: TurnRegistry | undefined, container: Turn
     range = low <= high ? [low, high] : [high, low];
     keyStep = clamp(finite(o.keyStep, 5), 0.5, 90);
     speed = clamp(finite(o.speed, 36), -720, 720);
+    if (o.direction !== undefined) way = turnDirection(o.direction);
     pauseOnInteract = o.pauseOnInteract !== false;
     locale = o.locale === "ja" ? "ja" : "en";
     onTurn = typeof o.onTurn === "function" ? o.onTurn : undefined;
     onPlayChange = typeof o.onPlayChange === "function" ? o.onPlayChange : undefined;
     const rest: Record<string, unknown> = { ...o };
-    for (const name of ["sensitivity", "pitchRange", "keyStep", "onTurn", "autoPlay", "speed", "pauseOnInteract", "onPlayChange", "yaw", "pitch", "roll"]) delete rest[name];
+    for (const name of ["sensitivity", "pitchRange", "keyStep", "onTurn", "autoPlay", "speed", "direction", "pauseOnInteract", "onPlayChange", "yaw", "pitch", "roll"]) delete rest[name];
     frame = rest as FrameOptions;
   };
   const place = (partial: Partial<TurnAngles>): void => {
@@ -269,7 +288,7 @@ export function bindTurnWith(registry: TurnRegistry | undefined, container: Turn
     const dt = last === undefined ? 0 : clamp((time - last) / 1000, 0, 0.1);
     last = time;
     if (!held && dt > 0) {
-      place({ yaw: angles.yaw + speed * dt });
+      place({ yaw: angles.yaw + (way === "clockwise" ? -1 : 1) * speed * dt });
       draw();
       onTurn?.(copy());
     }
@@ -465,6 +484,12 @@ export function bindTurnWith(registry: TurnRegistry | undefined, container: Turn
       place({ pitch: angles.pitch });
       pending = settle(false);
       if (pending === undefined) draw();
+    },
+    direction() {
+      return way;
+    },
+    setDirection(next) {
+      way = turnDirection(next);
     },
     play() {
       if (!turnable || destroyed) return false;

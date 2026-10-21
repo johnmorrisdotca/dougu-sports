@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
 
-import { wrapAngle, type TurnContainer, type TurnEvent } from "../src/turn-control.ts";
+import { turnDirection, wrapAngle, type TurnContainer, type TurnEvent } from "../src/turn-control.ts";
 import { bindTurn } from "../src/turn-full.ts";
 import { type Emblem, emblemFrame, emblemOf, renderEmblem } from "../src/index.ts";
 
@@ -359,6 +359,39 @@ test("the auto-turn wraps its yaw the way the slider does, and a negative speed 
   frame(16);
   frame(100);
   assert.equal(back.angles.yaw, -10);
+});
+
+test("the auto-turn goes counterclockwise by default and clockwise when asked, at the same speed, and the direction changes while it turns", () => {
+  assert.equal(turnDirection("clockwise"), "clockwise");
+  for (const other of ["counterclockwise", "anticlockwise", "CLOCKWISE", "", undefined, null, 1, {}]) assert.equal(turnDirection(other), "counterclockwise", String(other));
+  for (const [direction, sign] of [[undefined, 1], ["counterclockwise", 1], ["clockwise", -1]] as const) {
+    const turner = bindTurn(new Fake(), "trophy:tennis-cup", { speed: 100, ...(direction === undefined ? {} : { direction }) });
+    assert.equal(turner.direction(), direction ?? "counterclockwise");
+    turner.play();
+    frame(16);
+    frame(100);
+    assert.equal(turner.angles.yaw, sign * 10, String(direction));
+    turner.setDirection(sign === 1 ? "clockwise" : "counterclockwise");
+    frame(100);
+    assert.equal(turner.angles.yaw, 0, "it goes back the way it came, from where it was");
+    assert.equal(turner.playing, true, "changing the direction does not stop it");
+    turner.destroy();
+  }
+  // A negative speed reverses a direction; update keeps the direction unless it names one, and a drag and setAngles are not reversed.
+  const el = new Fake();
+  const turner = bindTurn(el, "trophy:tennis-cup", { speed: -100, direction: "clockwise" });
+  turner.play();
+  frame(16);
+  frame(100);
+  assert.equal(turner.angles.yaw, 10);
+  turner.update("trophy:tennis-cup", { speed: 100 });
+  assert.equal(turner.direction(), "clockwise");
+  turner.update("trophy:tennis-cup", { speed: 100, direction: "counterclockwise" });
+  assert.equal(turner.direction(), "counterclockwise");
+  turner.setAngles({ yaw: 0 });
+  drag(el, [100, 100], [110, 100]);
+  assert.equal(turner.angles.yaw, 15, "a drag to the right always turns the yaw up");
+  turner.destroy();
 });
 
 test("a hidden page does not tick, and a page that shows again starts from a fresh clock", () => {
