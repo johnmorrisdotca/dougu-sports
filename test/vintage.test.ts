@@ -27,7 +27,7 @@ test("there are fifty-one new balls, each an id of the registry, once", () => {
   assert.equal(new Set(NEW).size, 51);
   for (const id of NEW) assert.ok(D.isEmblemId(id) && D.BALL_IDS.includes(id), id);
   assert.equal(VINTAGE.length + ERA.length + STORE.length, 35);
-  assert.equal(D.BALL_IDS.length, 117);
+  assert.equal(D.BALL_IDS.length, 118);
 });
 
 test("ids and names describe a style and an era, and name no real ball, tournament, maker or mark", () => {

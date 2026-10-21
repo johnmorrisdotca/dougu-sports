@@ -24,8 +24,8 @@ function balanced(svg: string): boolean {
 }
 
 describe("the balls", () => {
-  it("has the 117 ids, each once, in the form ball:name", () => {
-    expect(BALLS.length).toBe(117);
+  it("has the 118 ids, each once, in the form ball:name", () => {
+    expect(BALLS.length).toBe(118);
     expect(new Set(BALL_IDS).size).toBe(BALL_IDS.length);
     for (const id of BALL_IDS) expect(id).toMatch(/^ball:[a-z0-9]+(?:-[a-z0-9]+)*$/);
   });

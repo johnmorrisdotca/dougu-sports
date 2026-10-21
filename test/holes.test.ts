@@ -6,6 +6,8 @@ import { describe, expect, it } from "./vitest-shim.ts";
 import { BALLS, ballOf } from "../src/emblems/ball/ball.index.ts";
 import { rotation, spread } from "../src/emblems/ball/ball.math.ts";
 import { BALL_PICKLEBALL_INDOOR, BALL_PICKLEBALL_OUTDOOR } from "../src/emblems/ball/ball.pickleball.ts";
+import { BALL_PLASTIC_BASEBALL_SLOTTED as SLOTTED } from "../src/emblems/ball/ball.plastic.ts";
+import { slotRing } from "../src/emblems/ball/ball.holes.ts";
 
 const GOLDEN: Record<string, string> = {
   "ball:tennis": "9cdf31544602,bec9e04e1624,9796c0564442,0d618daf248d,c06aa3a25294",
@@ -41,7 +43,7 @@ describe("the balls with marks that are not holes", () => {
 
   it("carry no mask and no inside, which only a ball with holes has", () => {
     for (const b of BALLS) {
-      if (b.id.startsWith("ball:pickleball")) continue;
+      if (b.id.startsWith("ball:pickleball") || b.id === "ball:plastic-baseball-slotted") continue;
       expect(b.svg({ size: 64 }), b.id).not.toContain("<mask");
     }
   });
@@ -103,5 +105,43 @@ describe("the pickleball", () => {
     const red = BALL_PICKLEBALL_INDOOR.svg({ size: 64, tint: "#cc2020" });
     expect(red).not.toBe(plain);
     expect(red).toContain("<mask");
+  });
+});
+
+describe("the slotted plastic practice baseball", () => {
+  const cuts = (svg: string): number => {
+    const m = /<path id="([^"]*f[^"]*)" d="([^"]*)"\/><mask/.exec(svg);
+    return m === null ? 0 : (m[2].match(/M/g) ?? []).length;
+  };
+
+  it("has eight slots, all of them near when its pole faces you, and a solid half that has none", () => {
+    // The resting view is 22 degrees round and 22 down from the pole facing the eye.
+    expect(cuts(SLOTTED.frame({ size: 100, yaw: 22, pitch: -22 }))).toBe(8);
+    const solid = SLOTTED.frame({ size: 100, yaw: 180 + 22, pitch: -22 });
+    expect(cuts(solid)).toBe(0);
+    expect(solid).not.toContain("<g mask=");
+  });
+
+  it("is named without the maker's mark, in English and in Japanese, anywhere it is written down", () => {
+    const text = [SLOTTED.id, SLOTTED.en, SLOTTED.ja, JSON.stringify(SLOTTED.size)].join(" ");
+    // The mark is held apart in the test too, so the package never carries it, not even as a pattern.
+    expect(text).not.toMatch(new RegExp(["wif", "fle"].join("") + "|" + ["ウィ", "ッフル"].join("") + "|" + ["ウイ", "ッフル"].join(""), "i"));
+    expect(SLOTTED.id).toBe("ball:plastic-baseball-slotted");
+  });
+
+  it("draws a slot 19 mm long on a ball 73.8 mm across, ends rounded, on the sphere", () => {
+    const m: [number, number, number] = [0, 0, 1];
+    const ring = slotRing(m, [1, 0, 0], 19 / 73.8 / 3, 19 / 73.8);
+    for (const p of ring) expect(Math.hypot(p[0], p[1], p[2])).toBeCloseTo(1, 6);
+    const along = ring.map((p) => Math.asin(p[0]));
+    expect(Math.max(...along) - Math.min(...along)).toBeCloseTo((2 * 19) / 73.8, 2);
+    const across = ring.map((p) => Math.asin(p[1]));
+    expect(Math.max(...across) - Math.min(...across)).toBeCloseTo((2 * 19) / 73.8 / 3, 2);
+  });
+
+  it("keeps the line style as outlines of the slots, and cuts nothing out in it", () => {
+    const line = SLOTTED.svg({ size: 64, style: "line" });
+    expect(line).not.toContain("<mask");
+    expect(line).toContain("currentColor");
   });
 });

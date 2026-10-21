@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 325 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 326 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -223,6 +223,7 @@ The folders the art lives in are in [layout.md](layout.md).
 | `ball:netball` | Netball | ball | generated |  |
 | `ball:pickleball-outdoor` | Pickleball, outdoor | ball | generated |  |
 | `ball:pickleball-indoor` | Pickleball, indoor | ball | generated |  |
+| `ball:plastic-baseball-slotted` | Plastic baseball, slotted | ball | generated | A hollow white plastic practice baseball with eight oblong slots on one half and the other half solid |
 | `ball:squash` | Squash ball, 2 yellow dots | ball | generated | Squash ball, double yellow dot |
 | `ball:squash-yellow` | Squash ball, yellow dot | ball | generated | Squash ball, yellow dot |
 | `ball:squash-green` | Squash ball, green dot | ball | generated | Squash ball, green dot |

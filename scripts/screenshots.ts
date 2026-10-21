@@ -133,6 +133,8 @@ try {
   const turned = (D: Dist) => ["trophy:tennis-cup", "medal:gold", "ball:soccer", "trophy:championship-banner"].flatMap((id) => [-120, -80, -40, 0, 40, 80, 120].map((yaw) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.emblemFrame(id, { yaw, size: 180 })}</figure>`)).join("");
   // The two pickleballs, each at rest and then at three turns that show the page through their holes: the outdoor ball above, the indoor ball below.
   const pickleball = (D: Dist) => [["ball:pickleball-outdoor", [{}, { yaw: 45 }, { yaw: 240 }, { yaw: 270 }]], ["ball:pickleball-indoor", [{}, { yaw: 165, pitch: 15 }, { yaw: 300, pitch: 15 }, { yaw: 0, pitch: 15 }]]].flatMap(([id, turns]) => (turns as object[]).map((turn, i) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${i === 0 ? D.renderEmblem(id as string, { size: 236 }) : D.emblemFrame(id as string, { ...turn, size: 236 })}</figure>`)).join("");
+  // The slotted plastic practice baseball at rest, from the side (a near slot over a far one: the page shows through), from the pole and from the solid half.
+  const slotted = (D: Dist) => [{}, { yaw: 112, pitch: -22 }, { yaw: 22, pitch: -22 }, { yaw: 202, pitch: -22 }].map((turn, i) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${i === 0 ? D.renderEmblem("ball:plastic-baseball-slotted", { size: 236 }) : D.emblemFrame("ball:plastic-baseball-slotted", { ...turn, size: 236 })}</figure>`).join("");
   // The eight printed pucks, four to a row.
   const pucks = (D: Dist) => ["puck:canada", "puck:canada-red", "puck:canada-white", "puck:usa", "puck:usa-navy", "puck:player", "puck:signed", "puck:souvenir"].map((id) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.renderEmblem(id, { size: 240 })}</figure>`).join("");
   // The judo suit from the front and from behind with its back number: white (TANAKA, JPN), blue (TREMBLAY, CAN) and white with a gold band (SMITH, USA), four to a row.
@@ -152,6 +154,7 @@ try {
     await sheet(`judogi-${scheme}`, { width: 1000, cols: 4, rows: [260], gap: 10, pad: 20, scheme, preset: scheme === "dark" ? "carbon" : "hardwood", intensity: scheme === "dark" ? 1 : 0.9 }, judogi);
     await sheet(`obi-steps-${scheme}`, { width: 780, cols: 3, rows: [260, 260], gap: 10, pad: 20, scheme, preset: scheme === "dark" ? "carbon" : "hardwood", intensity: scheme === "dark" ? 1 : 0.9 }, obiSteps);
     await sheet(`pickleball-${scheme}`, { width: 1000, cols: 4, rows: [250, 250], gap: 10, pad: 20, scheme, preset: "floodlights", intensity: 0.9 }, pickleball);
+    await sheet(`slotted-${scheme}`, { width: 1000, cols: 4, rows: [250], gap: 10, pad: 20, scheme, preset: "floodlights", intensity: 0.9 }, slotted);
     await sheet(`pucks-${scheme}`, { width: 1000, cols: 4, rows: [250, 250], gap: 10, pad: 20, scheme, preset: "ice" }, pucks);
   }
   await sheet("turn-desk", { width: 1280, cols: 7, rows: [176, 176, 176, 176], scheme: "dark", preset: "royal", intensity: 0.9 }, turned);

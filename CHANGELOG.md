@@ -6,6 +6,16 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.16.0] - 2026-10-21
+
+A slotted plastic practice baseball joins the balls, drawn with the see-through holes of the pickleballs.
+
+### Added
+
+- **`ball:plastic-baseball-slotted`** (`BALL_PLASTIC_BASEBALL_SLOTTED`; "Plastic baseball, slotted"), the hollow white plastic practice baseball with eight oblong slots on one half and the other half solid (326 emblems, 118 balls). The size is a baseball's (73.8 mm); the slot count, the 19 mm slot length, the one perforated half and the wall of at most 3.2 mm are from the English Wikipedia article on the ball (read 2026-10-21); no source read gives a mass, so none is stated, and a slot's width, which is not given, is drawn at a third of its length (`docs/slotted-ball.md`). The package names no maker: the ball is generic, and the maker's registered trademark is in no id, name, document or picture (`NOTICE.md` cites the article without a link, because its address carries the mark).
+- **Slots in `ball.holes.ts`**: `Holes` takes `long` and `dirs` to drill slots (half circles at the ends, a direction along the surface for each) instead of circles, and `slotRing` gives a slot's outline as points on the sphere; the same near holes, inside of the ball, far holes and mask as the pickleballs, so the page shows through where a near slot and a far one line up. The pickleballs are drawn as in 0.15.0.
+- **`docs/slotted-ball.md`** with a still picture and a turning one (`pnpm screenshots`, sheet `slotted`; `pnpm animations`, scene `slotted-turn`), and tests in `test/holes.test.ts` and `e2e/holes.demo.ts` (a pixel through a near and a far slot is the page's own; the solid half has none).
+
 ## [0.15.0] - 2026-10-21
 
 The pickleballs get real holes: cut through the shell, with the inside of the ball behind them, and the page showing through where two holes line up.

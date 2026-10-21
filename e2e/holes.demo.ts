@@ -6,6 +6,7 @@ import { defineBall } from "../src/emblems/ball/ball.engine.ts";
 import { holeLayers } from "../src/emblems/ball/ball.holes.ts";
 import { BALL_GOLF } from "../src/emblems/ball/ball.golf.ts";
 import { BALL_PICKLEBALL_INDOOR, BALL_PICKLEBALL_OUTDOOR } from "../src/emblems/ball/ball.pickleball.ts";
+import { BALL_PLASTIC_BASEBALL_SLOTTED } from "../src/emblems/ball/ball.plastic.ts";
 
 /** A ball with two holes, straight through it from the eye: the near one at the middle and the far one right behind it. */
 const THROUGH = defineBall({
@@ -108,4 +109,17 @@ test("a turning pickleball lets the page through some of its holes at some angle
   }
   expect(await holesOpen(page, BALL_GOLF.frame({ size: SIZE, yaw: 45 }))).toBe(0);
   expect(await holesOpen(page, BALL_GOLF.svg({ size: SIZE }))).toBe(0);
+});
+
+test("the slotted practice ball lets the page through where a near slot and a far one line up, and not through its solid half", async ({ page }) => {
+  // Seen from the side (the pole across the line of sight, 90 degrees from the resting view's 22 and 22), a near slot and the far slot behind it are on the same line.
+  const side = await holesOpen(page, BALL_PLASTIC_BASEBALL_SLOTTED.frame({ size: SIZE, yaw: 112, pitch: -22 }));
+  expect(side).toBeGreaterThan(200);
+  // Seen from the pole, or from the solid half, there is nothing behind the slots but the solid half.
+  expect(await holesOpen(page, BALL_PLASTIC_BASEBALL_SLOTTED.frame({ size: SIZE, yaw: 22, pitch: -22 }))).toBe(0);
+  expect(await holesOpen(page, BALL_PLASTIC_BASEBALL_SLOTTED.frame({ size: SIZE, yaw: 202, pitch: -22 }))).toBe(0);
+  // The slots' shell is solid: a point on the solid half's middle is plastic.
+  const [middle] = await read(page, BALL_PLASTIC_BASEBALL_SLOTTED.frame({ size: SIZE, yaw: 202, pitch: -22 }), [[50, 50]], "#ff00ff");
+  expect(middle[3]).toBe(255);
+  expect(middle[0]).toBeGreaterThan(200);
 });

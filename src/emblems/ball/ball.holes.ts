@@ -4,24 +4,26 @@
 // bore that faces you, lit or shaded by where it points), then the shell, which has the near holes cut out of it by a mask. Orthographic, like the rest of the engine.
 import type { Surface } from "./ball.engine.ts";
 import { hashOf, mix, num } from "./ball.core.ts";
-import { type V3, basis, ellipseOf, mul } from "./ball.math.ts";
+import { type V3, add, basis, cross, ellipseOf, mul, norm } from "./ball.math.ts";
 
-/** Where a ball is drilled: the hole centres on the unit sphere, a hole's radius as the angle of its cap in radians, and the shell's thickness as a fraction of the ball's radius (0.05 by default). */
+/**
+ * Where a ball is drilled: the hole centres on the unit sphere, a hole's radius as the angle of its cap in radians, and the shell's thickness as a fraction of the ball's radius (0.05 by default).
+ * With `long` the holes are slots instead of circles: `radius` is then half the width of a slot, `long` is half its length (both in radians, `long` at least `radius`), and `dirs` has, for each
+ * centre, a direction along the ball's surface at that centre (it is made to lie in the surface) that the slot's length runs along. The ends of a slot are half circles.
+ */
 export interface Holes {
   centres: readonly V3[];
   radius: number;
   wall?: number;
+  long?: number;
+  dirs?: readonly V3[];
 }
 
-/** The ellipse a circle of the sphere makes on the screen: its centre, semi-axes, angle, and the facing of the hole it belongs to. */
+/** What a hole's opening is on the screen: the path of its outline, its middle and the facing of the hole it belongs to. */
 interface Opening {
+  d: string;
   x: number;
   y: number;
-  rx: number;
-  ry: number;
-  deg: number;
-  ax: number;
-  ay: number;
   facing: number;
 }
 
@@ -31,6 +33,57 @@ export interface HoleLayers {
   behind: string;
   edge: string;
   mask: string | undefined;
+}
+
+/** The outline of a slot as points in the plane that touches the sphere at its middle, `a` along the length and `b` across: two straight sides and a half circle at each end. */
+function capsule(half: number, long: number): Array<[number, number]> {
+  const out: Array<[number, number]> = [];
+  const run = long - half;
+  const steps = 6;
+  for (let i = 0; i <= steps; i++) {
+    const t = -Math.PI / 2 + (Math.PI * i) / steps;
+    out.push([run + half * Math.cos(t), half * Math.sin(t)]);
+  }
+  for (let i = 0; i <= steps; i++) {
+    const t = Math.PI / 2 + (Math.PI * i) / steps;
+    out.push([-run + half * Math.cos(t), half * Math.sin(t)]);
+  }
+  return out;
+}
+
+/** A polygon as a path: the first point, then the steps between rounded points (so the outline does not drift), to a tenth of a unit of the box. */
+function polygon(pts: ReadonlyArray<readonly [number, number]>): string {
+  const r = (v: number): number => Math.round(v * 10) / 10;
+  let x = r(pts[0][0]), y = r(pts[0][1]);
+  let out = `M${num(x)} ${num(y)}l`;
+  for (let i = 1; i < pts.length; i++) {
+    const nx = r(pts[i][0]), ny = r(pts[i][1]);
+    out += `${i === 1 ? "" : " "}${num(nx - x)} ${num(ny - y)}`;
+    x = nx;
+    y = ny;
+  }
+  return `${out}z`;
+}
+
+/** The slot's outline as points on the sphere (or `depth` below it: the bore is a cylinder along the line to the ball's centre), for a slot with this middle and this direction along its length. */
+export function slotRing(m: V3, dir: V3, half: number, long: number, depth = 0): V3[] {
+  const t1 = norm(add(dir, mul(m, -(dir[0] * m[0] + dir[1] * m[1] + dir[2] * m[2]))));
+  const t2 = cross(m, t1);
+  return capsule(half, long).map(([a, b]) => {
+    const r = Math.hypot(a, b) || 1e-9;
+    const k = Math.sin(r) / r;
+    return add(mul(m, Math.cos(r) - depth), add(mul(t1, a * k), mul(t2, b * k)));
+  });
+}
+
+/** The slot's outline `depth` below the surface, as the polygon it makes on the screen. */
+function slot(s: Surface, m: V3, dir: V3, holes: Holes, depth: number): Opening | undefined {
+  const pts = slotRing(m, dir, holes.radius, holes.long ?? holes.radius, depth).map((p) => {
+    const q = s.project(p);
+    return [q[0], q[1]] as const;
+  });
+  const c = s.project(mul(m, 1 - depth));
+  return { d: polygon(pts), x: c[0], y: c[1], facing: s.facing(m) };
 }
 
 /** The circle of the hole's bore at `depth` below the surface (0 on the outside), as the ellipse it makes on the screen; undefined where it is too thin to draw. */
@@ -45,12 +98,17 @@ function bore(s: Surface, m: V3, radius: number, depth: number): Opening | undef
   const db = [pb[0] - o[0], pb[1] - o[1]];
   const { rx, ry, angle } = ellipseOf([[da[0], db[0], 0], [da[1], db[1], 0]]);
   if (rx < 0.05) return undefined;
-  return { x: c[0], y: c[1], rx, ry: Math.max(ry, 0.05), deg: (angle * 180) / Math.PI, ax: Math.cos(angle) * rx, ay: Math.sin(angle) * rx, facing: s.facing(m) };
+  const ry2 = Math.max(ry, 0.05);
+  const ax = Math.cos(angle) * rx, ay = Math.sin(angle) * rx;
+  const arcs = `a${num(rx)} ${num(ry2)} ${num((angle * 180) / Math.PI, 0)} 1 0`;
+  return { d: `M${num(c[0] + ax)} ${num(c[1] + ay)}${arcs}${num(-2 * ax)} ${num(-2 * ay)}${arcs}${num(2 * ax)} ${num(2 * ay)}`, x: c[0], y: c[1], facing: s.facing(m) };
 }
 
-const ellipse = (e: Opening): string => {
-  const arcs = `a${num(e.rx)} ${num(e.ry)} ${num(e.deg, 0)} 1 0`;
-  return `M${num(e.x + e.ax)} ${num(e.y + e.ay)}${arcs}${num(-2 * e.ax)} ${num(-2 * e.ay)}${arcs}${num(2 * e.ax)} ${num(2 * e.ay)}`;
+/** A hole's opening at a depth: a circle's ellipse, or a slot's outline. */
+const opening = (s: Surface, holes: Holes, i: number, depth: number): Opening | undefined => {
+  const m = holes.centres[i];
+  const dir = holes.dirs?.[i];
+  return holes.long !== undefined && dir !== undefined ? slot(s, m, dir, holes, depth) : bore(s, m, holes.radius, depth);
 };
 
 /** The light comes from the upper left, as it does everywhere else in the engine. */
@@ -66,14 +124,14 @@ export const holeLayers: Drill = (s, id, holes, base, shape, minWidth) => {
   const front: Array<{ out: Opening; inn: Opening | undefined }> = [];
   const backOut: Opening[] = [];
   const backIn: Opening[] = [];
-  for (const m of holes.centres) {
-    const f = s.facing(m);
+  for (let i = 0; i < holes.centres.length; i++) {
+    const f = s.facing(holes.centres[i]);
     if (f >= 0.08) {
-      const out = bore(s, m, holes.radius, 0);
-      if (out !== undefined) front.push({ out, inn: bore(s, m, holes.radius, thick) });
+      const out = opening(s, holes, i, 0);
+      if (out !== undefined) front.push({ out, inn: opening(s, holes, i, thick) });
     } else if (f <= -0.08) {
-      const out = bore(s, m, holes.radius, 0);
-      const inn = bore(s, m, holes.radius, thick);
+      const out = opening(s, holes, i, 0);
+      const inn = opening(s, holes, i, thick);
       if (out !== undefined && inn !== undefined) {
         backOut.push(out);
         backIn.push(inn);
@@ -82,9 +140,9 @@ export const holeLayers: Drill = (s, id, holes, base, shape, minWidth) => {
   }
   if (front.length === 0 && backOut.length === 0) return { defs: "", behind: "", edge: "", mask: undefined };
 
-  const frontPath = front.map((h) => ellipse(h.out)).join("");
-  const backOutPath = backOut.map(ellipse).join("");
-  const backInPath = backIn.map(ellipse).join("");
+  const frontPath = front.map((h) => h.out.d).join("");
+  const backOutPath = backOut.map((o) => o.d).join("");
+  const backInPath = backIn.map((o) => o.d).join("");
   const key = hashOf(frontPath + "|" + backOutPath + "|" + backInPath);
 
   // The inside of the ball: lit a little where the light that comes through the near holes lands (low and to the right), dark toward the edge.
@@ -108,7 +166,7 @@ export const holeLayers: Drill = (s, id, holes, base, shape, minWidth) => {
     const k = -0.3 + 0.2 * lit - 0.25 * (1 - h.out.facing);
     let best = 0;
     for (let i = 1; i < TONES.length; i++) if (Math.abs(TONES[i] - k) < Math.abs(TONES[best] - k)) best = i;
-    buckets[best].push(ellipse(h.out) + ellipse(h.inn));
+    buckets[best].push(h.out.d + h.inn.d);
   }
   const walls = buckets.map((b, i) => (b.length === 0 ? "" : `<path d="${b.join("")}" fill="${mix(base, TONES[i])}" fill-rule="evenodd"/>`)).join("");
   const behind = `<g clip-path="url(#${id}c)">${disc}${walls}</g>`;

@@ -154,6 +154,7 @@ export { BALL_HAMMER } from "./emblems/ball/ball.hammer.ts";
 export { BALL_HANDBALL } from "./emblems/ball/ball.handball.ts";
 export { BALL_PADEL } from "./emblems/ball/ball.padel.ts";
 export { BALL_PICKLEBALL_OUTDOOR, BALL_PICKLEBALL_INDOOR } from "./emblems/ball/ball.pickleball.ts";
+export { BALL_PLASTIC_BASEBALL_SLOTTED } from "./emblems/ball/ball.plastic.ts";
 export { BALL_PUCK } from "./emblems/ball/ball.puck.ts";
 export { PUCK_CANADA, PUCK_CANADA_RED, PUCK_CANADA_WHITE, PUCK_USA, PUCK_USA_NAVY, PUCK_PLAYER, PUCK_SIGNED, PUCK_SOUVENIR } from "./emblems/ball/ball.puck.print.ts";
 export { BALL_ROUNDNET } from "./emblems/ball/ball.roundnet.ts";

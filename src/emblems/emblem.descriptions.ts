@@ -57,6 +57,7 @@ export const EMBLEM_DESCRIPTIONS: Readonly<Partial<Record<EmblemId, EmblemDescri
   "ball:football-ifaf": { en: "Football (IFAF)", ja: "アメリカンフットボールのボール（IFAF）" },
   "ball:afl": { en: "Australian football", ja: "オーストラリアンフットボールのボール" },
   "ball:gaelic-football": { en: "Gaelic football", ja: "ゲーリックフットボールのボール" },
+  "ball:plastic-baseball-slotted": { en: "A hollow white plastic practice baseball with eight oblong slots on one half and the other half solid", ja: "中空の白いプラスチック製の野球練習球。半球の一方に細長い穴が8つ並び、もう一方には穴がない" },
   "ball:squash": { en: "Squash ball, double yellow dot", ja: "スカッシュボール（ダブルイエロードット）" },
   "ball:squash-yellow": { en: "Squash ball, yellow dot", ja: "スカッシュボール（イエロードット）" },
   "ball:squash-green": { en: "Squash ball, green dot", ja: "スカッシュボール（グリーンドット）" },

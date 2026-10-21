@@ -2,7 +2,7 @@
 
 [README に戻る](../README.md) · 日本語 · [English](gallery.md)
 
-パッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 325 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから `scripts/make-gallery.ts` が生成します（`pnpm gallery`）。
+パッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 326 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから `scripts/make-gallery.ts` が生成します（`pnpm gallery`）。
 
 id は `<グループ>:<名前>` の形です。定数とインポートパスは id から決まるので、行ごとには書いていません。
 
@@ -223,6 +223,7 @@ id は `<グループ>:<名前>` の形です。定数とインポートパス�
 | `ball:netball` | ネットボール | ball | generated |  |
 | `ball:pickleball-outdoor` | ピックルボール（屋外用） | ball | generated |  |
 | `ball:pickleball-indoor` | ピックルボール（屋内用） | ball | generated |  |
+| `ball:plastic-baseball-slotted` | 野球の穴あき練習球 | ball | generated | 中空の白いプラスチック製の野球練習球。半球の一方に細長い穴が8つ並び、もう一方には穴がない |
 | `ball:squash` | スカッシュ球（ダブルイエロー） | ball | generated | スカッシュボール（ダブルイエロードット） |
 | `ball:squash-yellow` | スカッシュ球（黄色） | ball | generated | スカッシュボール（イエロードット） |
 | `ball:squash-green` | スカッシュ球（緑） | ball | generated | スカッシュボール（グリーンドット） |
