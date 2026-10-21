@@ -3,7 +3,7 @@
 // a dark twin. Playwright takes one png per angle and `img2webp` (libwebp's tool: `brew install webp`) joins them into a looping lossy animation, each file well under 1.5 MB.
 //
 //   node scripts/animations.ts                 all of them (needs a build: `pnpm animations` builds first)
-//   ONLY=trophies-turn node scripts/animations.ts   one scene (trophies-turn, balls-turn, flips-turn), both twins
+//   ONLY=trophies-turn node scripts/animations.ts   one scene (trophies-turn, balls-turn, pickleball-turn, flips-turn), both twins
 //   IMAGES_OUT=dir                             writes somewhere else than docs/images
 //   FRAMES=48 DELAY=140 QUALITY=80             the number of frames in the circle, the milliseconds each is shown (140: half the speed of the first pictures, which used 70), the webp quality
 //
@@ -55,6 +55,10 @@ const balls = (D: Dist, yaw: number) => {
   const f = (svg: string) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${svg}</figure>`;
   return ["ball:soccer", "ball:basketball", "ball:baseball", "ball:rugby", "ball:volleyball", "ball:tennis", "ball:golf"].map((id, i) => f(D.emblemFrame(id, { yaw: yaw + i * 51, pitch: 12, size: 112 }))).join("");
 };
+const pickleballs = (D: Dist, yaw: number) => {
+  const f = (svg: string) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${svg}</figure>`;
+  return ["ball:pickleball-outdoor", "ball:pickleball-indoor", "ball:pickleball-outdoor", "ball:pickleball-indoor"].map((id, i) => f(D.emblemFrame(id, { yaw: yaw + i * 90, pitch: 15, size: 170 }))).join("");
+};
 const flips = (D: Dist, yaw: number) => {
   const f = (svg: string) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${svg}</figure>`;
   return ["medal:gold", "medal:silver", "trophy:championship-banner", "crest:shield", "gear:hockey-skate", "gear:baseball-glove"].map((id, i) => f(D.emblemFrame(id, { yaw: yaw + i * 60, size: 150 }))).join("");
@@ -63,6 +67,7 @@ const flips = (D: Dist, yaw: number) => {
 const SCENES: Scene[] = [
   { name: "trophies-turn", width: 760, height: 280, cols: 5, preset: "royal", intensity: 0.9, make: trophies },
   { name: "balls-turn", width: 760, height: 180, cols: 7, preset: "floodlights", intensity: 0.9, make: balls },
+  { name: "pickleball-turn", width: 760, height: 190, cols: 4, preset: "floodlights", intensity: 0.9, make: pickleballs },
   { name: "flips-turn", width: 760, height: 200, cols: 6, preset: "royal", intensity: 0.9, make: flips },
 ];
 

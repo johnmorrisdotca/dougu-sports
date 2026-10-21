@@ -22,13 +22,23 @@ const one = (constant: string, path: string): Promise<{ text: string; bytes: num
 // The turning (`bindTurn`) is about 2.5 kB on top of the emblem: measured 2026-10-14 at 9.4 kB with a cup (6.9 kB of it the cup), 2.5 kB with no emblem.
 // Measured 2026-10-15 with the printing hooks in the engine (a surface can fill its disc and carry a label area, the draw hook takes the paint and the printer): a ball 7.3 kB (was 6.5), so the limit is 7.6 kB.
 // The printing itself (the warp onto the sphere, the cursive script, the block lettering, the sanitiser) is its own module, taken by `printed(ball)`: a printed baseball 19.5 kB, held to 21 kB; the balls' own modules carry none of it.
-const LIMITS = { puck: 12.5 * 1024, ball: 7.6 * 1024, printed: 21 * 1024, twoTone: 9.6 * 1024, flat: 4.6 * 1024, lathe: 7.1 * 1024, icon: 4.3 * 1024, pennant: 3.6 * 1024, turn: 3 * 1024, turned: 10 * 1024 };
+// Measured 2026-10-21 with the pickleball's real holes in (ball.holes.ts, taken by the pickleballs alone): a pickleball 8.0 kB, held to 8.6 kB; the other balls did not change.
+const LIMITS = { holed: 8.6 * 1024, puck: 12.5 * 1024, ball: 7.6 * 1024, printed: 21 * 1024, twoTone: 9.6 * 1024, flat: 4.6 * 1024, lathe: 7.1 * 1024, icon: 4.3 * 1024, pennant: 3.6 * 1024, turn: 3 * 1024, turned: 10 * 1024 };
 
 test("one named ball, bundled by itself, stays small and leaves the other emblems out", async () => {
   const b = await one("BALL_SOCCER", "ball/ball.soccer");
   assert.ok(b.gzip < LIMITS.ball, `${b.gzip} bytes gzipped`);
   assert.ok(b.text.includes("ball:soccer"));
   assert.ok(!b.text.includes("medal:gold") && !b.text.includes("Gold medal"), "the medal came along");
+});
+
+test("a pickleball carries the code of its holes and every other ball carries none of it", async () => {
+  const b = await one("BALL_PICKLEBALL_OUTDOOR", "ball/ball.pickleball");
+  assert.ok(b.gzip < LIMITS.holed, `${b.gzip} bytes gzipped`);
+  assert.ok(b.text.includes("evenodd") && b.text.includes("<mask"), "the holes are not in the pickleball");
+  const golf = await one("BALL_GOLF", "ball/ball.golf");
+  assert.ok(golf.gzip < LIMITS.ball, `${golf.gzip} bytes gzipped`);
+  assert.ok(!golf.text.includes("<mask"), "the golf ball took the holes");
 });
 
 test("a ball bundled by itself carries none of the printing code, and printed() takes it with the ball", async () => {

@@ -2,6 +2,7 @@
 // along the limb itself, then radial-gradient shading and a grain that stays where it is while the ball turns. A ball is a `BallSpec`: its shape (the semi-axes of an ellipsoid), its
 // view, its material and a `draw` function that lays panels, seams and dots on the unit sphere; the engine does the rest.
 import { type BallFrameOptions, type Piece, grainDef, hasPrint, type PieceOptions, type PieceSize, type PrintOptions, type PrintRenderer, type ResolvedOptions, type ResolvedPaint, blend, escape, hashOf, labelled, mix, num, radians, resolveOptions, wrapPiece } from "./ball.core.ts";
+import type { HoleLayers } from "./ball.holes.ts";
 import { type M3, type V3, add, apply, basis, cross, dot, ellipseOf, len, mul, norm, rotation, sampleRing, sub } from "./ball.math.ts";
 
 /** How a ball takes the light. */
@@ -92,6 +93,11 @@ export interface BallSpec {
   at?: V3;
   /** The fraction of the box's radius the ball takes (1 by default): a hammer's head is small, to leave room for its wire. */
   fit?: number;
+  /**
+   * A ball with real holes (a pickleball), drilled through its shell: each near hole is cut out and shows the inside of the ball, and where a near and a far hole line up the page shows through.
+   * It is a function (`drillHoles` in ball.holes.ts, bound to the hole centres) so that a ball without holes does not carry the code. The line style does not call it (a `draw` that wants marks there draws them).
+   */
+  holes?: (s: Surface, id: string, base: string, shape: (attrs: string) => string, minWidth: number) => HoleLayers;
   /** What is attached to the ball and sticks out of it (a hammer's wire and handle): drawn behind the ball or in front of it, by what is nearer to you. */
   attach?: (s: Surface, base: string) => { behind: string; front: string };
 }
@@ -488,11 +494,13 @@ export function drawBall(title: string, key: string, spec: BallSpec, opts: Resol
     (gr === undefined
       ? ""
       : grainDef(id, gr.f, gr.a, gr.seed));
-  const inner = `<g clip-path="url(#${id}c)"${gr === undefined ? "" : ` filter="url(#${id}n)"`}>${shape(`fill="${ground ?? spec.ground ?? base}"`)}${layers}</g>`;
+  const hol = spec.holes?.(surface, id, base, shape, minWidth);
+  const inner = `<g clip-path="url(#${id}c)"${gr === undefined ? "" : ` filter="url(#${id}n)"`}>${shape(`fill="${ground ?? spec.ground ?? base}"`)}${layers}${hol?.edge ?? ""}</g>`;
   const metal = m.metal === true ? shape(`fill="url(#${id}m)"`) : "";
   const overlays = shape(`fill="url(#${id}d)"`) + metal + shape(`fill="url(#${id}b)"`) + shape(`fill="url(#${id}h)"`);
   const at = spec.attach?.(surface, base);
-  return wrapPiece({ title, size: opts.size, theme: opts.theme, defs: defs + metalDef(id, m.metal === true), body: `${at?.behind ?? ""}${inner}${overlays}${at?.front ?? ""}` });
+  const shell = hol?.mask === undefined ? `${inner}${overlays}` : `<g mask="url(#${hol.mask})">${inner}${overlays}</g>`;
+  return wrapPiece({ title, size: opts.size, theme: opts.theme, defs: defs + (hol?.defs ?? "") + metalDef(id, m.metal === true), body: `${at?.behind ?? ""}${hol?.behind ?? ""}${shell}${at?.front ?? ""}` });
 }
 
 /** A ball's label area as a surface sees it: the middle, the right-hand and the upward direction, orthogonal, and how far it reaches. */

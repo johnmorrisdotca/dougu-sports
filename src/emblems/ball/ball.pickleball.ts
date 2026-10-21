@@ -1,5 +1,6 @@
 // Pickleball: a perforated plastic ball. The outdoor ball has 40 small holes; the indoor ball has 26 larger ones (the rulebook gives 26 to 40 holes; the split is how balls are sold).
 import { dottedBall } from "./ball.family.dotted.ts";
+import { holeLayers } from "./ball.holes.ts";
 
 export const BALL_PICKLEBALL_OUTDOOR = /* @__PURE__ */ dottedBall({
   id: "ball:pickleball-outdoor",
@@ -12,6 +13,7 @@ export const BALL_PICKLEBALL_OUTDOOR = /* @__PURE__ */ dottedBall({
   mat: { gloss: 0.55, shade: "#4a5008", grain: { f: 1.4, a: 0.1 } },
   mark: "#454b0e",
   depth: 0.75,
+  hollow: holeLayers,
 });
 
 export const BALL_PICKLEBALL_INDOOR = /* @__PURE__ */ dottedBall({
@@ -25,4 +27,5 @@ export const BALL_PICKLEBALL_INDOOR = /* @__PURE__ */ dottedBall({
   mat: { gloss: 0.6, shade: "#3a3a40", grain: { f: 1.4, a: 0.08 } },
   mark: "#3d3d44",
   depth: 0.7,
+  hollow: holeLayers,
 });

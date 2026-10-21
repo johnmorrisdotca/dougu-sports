@@ -5,6 +5,7 @@ import { mix } from "./ball.core.ts";
 import { type V3, spread } from "./ball.math.ts";
 import type { Piece } from "./ball.core.ts";
 import type { BallSpec } from "./ball.engine.ts";
+import type { Drill } from "./ball.holes.ts";
 
 export interface DottedOptions {
   id: string;
@@ -23,6 +24,8 @@ export interface DottedOptions {
   mark?: string;
   /** A lit rim on each mark (not for a dimple pattern of two hundred, which is large enough already). */
   light?: boolean;
+  /** Real holes through the shell, not marks on it (`holeLayers` from ball.holes.ts, taken by the pickleball only): the near ones are cut out and show the inside of the ball, and where two line up the page shows through. The line style still draws marks. */
+  hollow?: Drill;
   /** Turns the spread, so a ball does not show its spiral's pole straight on. */
   phase?: number;
 }
@@ -38,8 +41,10 @@ export function dottedBall(o: DottedOptions): Piece<BallSpec> {
     mat: o.mat,
     draw: (s, base) => {
       const mark = o.mark ?? mix(base, -0.55);
+      if (o.hollow !== undefined && !s.line) return "";
       return s.dots(centres, o.radius, mark, { opacity: o.depth ?? 0.55, ink: true, light: o.light ?? true });
     },
+    holes: o.hollow === undefined ? undefined : (s, id, base, shape, minWidth) => o.hollow!(s, id, { centres, radius: o.radius }, base, shape, minWidth),
   };
   return defineBall({ id: o.id, en: o.en, ja: o.ja, spec, size: o.size });
 }

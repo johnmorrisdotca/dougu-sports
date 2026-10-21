@@ -6,6 +6,20 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.15.0] - 2026-10-21
+
+The pickleballs get real holes: cut through the shell, with the inside of the ball behind them, and the page showing through where two holes line up.
+
+### Changed
+
+- **`ball:pickleball-outdoor` and `ball:pickleball-indoor` have real holes** (new module `src/emblems/ball/ball.holes.ts`, taken only by the pickleballs). Each hole on the near side is cut out of the shell by a mask, so its shading, highlight and grain are cut with it; behind it is the inside of the hollow ball (the far shell's inner surface, darker, lit low and to the right) with the far holes cut out of it, so where a near hole and a far hole line up the SVG is transparent and the page shows through, on any background. A hole is a cylinder along the line to the centre: near the edge it is a thin ellipse and the bore's wall shows as a crescent, toned by the light, and the cut edge carries a soft shadow and a thin lit rim (the thickness of the shell). It turns with `ballFrame`, `emblemFrame` and `bindTurn`; every turn has ids of its own. The line style still draws a mark for each hole, and the hole counts and sizes are unchanged (40 small, 26 large). A pickleball's drawing is about 8 kB where it was 3.7 kB (about 1.7 to 2 kB gzipped); its bundle is 8.0 kB gzipped (the other balls' are unchanged).
+- Every other ball with round marks (a golf ball's and a field hockey ball's dimples, a squash ball's dots) is drawn exactly as before: `BallSpec` gained an optional `holes` function that only the pickleballs set, and `test/holes.test.ts` holds the drawings of 0.14.0 by hash.
+
+### Added
+
+- **`docs/pickleball.md`**, with pictures of both balls at rest and turned, light and dark, and a turning picture (`pnpm animations`, scene `pickleball-turn`; `pnpm screenshots`, sheet `pickleball`). The README shows the still picture under "The best of it", and the balls sheet is redrawn with the new hole.
+- **`e2e/holes.demo.ts`**: in a real browser, a pixel seen through a near hole and the far hole behind it is transparent and equals the page's own on four page colours; the shell round a hole is solid; a turned ball shows the dark inside; a turning pickleball has open holes at some angle and a golf ball never does.
+
 ## [0.14.0] - 2026-10-21
 
 The auto-turn can go either way, and the pictures and the demo are slower and wait for the pointer.
