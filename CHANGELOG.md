@@ -6,6 +6,14 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.16.1] - 2026-10-21
+
+The turning pictures show one thing moving: in a row, only the centre one turns.
+
+### Changed
+
+- **Only the centre figure turns in every animated picture** (`pnpm animations`): in the README's rows of five trophies (the Lombardi Trophy turns), seven balls (the rugby ball rolls) and seven pieces of gear (the gold medal flips), and in the pickleball and slotted-ball pictures, which are now rows of three. The other figures stand still at a resting angle. The speed (half of the first pictures') and the still hero first are unchanged, and the files are several times smaller. The demo already kept every emblem still until the pointer is over it or it is tapped; nothing there changed.
+
 ## [0.16.0] - 2026-10-21
 
 A slotted plastic practice baseball joins the balls, drawn with the see-through holes of the pickleballs.

@@ -1,4 +1,4 @@
-// Makes the README's moving pictures into docs/images, as animated webp: five famous trophies turning (the Stanley Cup first), seven balls rolling, and a medal, a banner, a crest and gear flipping like coins.
+// Makes the README's moving pictures into docs/images, as animated webp: a row of five famous trophies, seven balls, three pickleballs, three slotted balls, and seven medals, banners, crests and gear: in each row only the centre one turns (a trophy turns, a ball rolls, a medal flips like a coin) and the rest stand still at a resting angle.
 // Each is drawn by the package's own turn (`emblemFrame`, the frames the demo's turntable shows) inside the demo page, on one of the family's shared backgrounds (scripts/family-backgrounds.ts), in a light and
 // a dark twin. Playwright takes one png per angle and `img2webp` (libwebp's tool: `brew install webp`) joins them into a looping lossy animation, each file well under 1.5 MB.
 //
@@ -46,34 +46,36 @@ if (spawnSync("img2webp", ["-version"], { stdio: "ignore" }).status === null) th
 mkdirSync(out, { recursive: true });
 
 // The figures of each scene at one angle, as the page builds them from the built package (each function is sent to the page as text, so each carries what it uses).
-// Every figure is a fifth, seventh or sixth of a turn behind the one before, so the row is never all front or all back (each function carries its own `f`).
+// Only the centre figure of a row turns; the others stand still at their own resting angle (`rest`, in degrees of yaw), so the eye has one thing to follow (John, 2026-10-21).
 const trophies = (D: Dist, yaw: number) => {
   const f = (svg: string) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${svg}</figure>`;
-  return ["trophy:stanley-cup", "trophy:fifa-world-cup", "trophy:lombardi-trophy", "trophy:larry-obrien-trophy", "trophy:webb-ellis-cup"].map((id, i) => f(D.emblemFrame(id, { yaw: yaw + i * 72, size: 400 }))).join("");
+  const rest = [-18, 14, 0, -14, 18];
+  return ["trophy:stanley-cup", "trophy:fifa-world-cup", "trophy:lombardi-trophy", "trophy:larry-obrien-trophy", "trophy:webb-ellis-cup"].map((id, i) => f(D.emblemFrame(id, { yaw: i === 2 ? yaw : rest[i], size: 400 }))).join("");
 };
 const balls = (D: Dist, yaw: number) => {
   const f = (svg: string) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${svg}</figure>`;
-  return ["ball:soccer", "ball:basketball", "ball:baseball", "ball:rugby", "ball:volleyball", "ball:tennis", "ball:golf"].map((id, i) => f(D.emblemFrame(id, { yaw: yaw + i * 51, pitch: 12, size: 112 }))).join("");
+  const rest = [20, -30, 35, 0, -25, 40, 15];
+  return ["ball:soccer", "ball:basketball", "ball:baseball", "ball:rugby", "ball:volleyball", "ball:tennis", "ball:golf"].map((id, i) => f(D.emblemFrame(id, { yaw: i === 3 ? yaw : rest[i], pitch: 12, size: 112 }))).join("");
 };
 const pickleballs = (D: Dist, yaw: number) => {
   const f = (svg: string) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${svg}</figure>`;
-  return ["ball:pickleball-outdoor", "ball:pickleball-indoor", "ball:pickleball-outdoor", "ball:pickleball-indoor"].map((id, i) => f(D.emblemFrame(id, { yaw: yaw + i * 90, pitch: 15, size: 170 }))).join("");
+  return ["ball:pickleball-outdoor", "ball:pickleball-indoor", "ball:pickleball-outdoor"].map((id, i) => f(D.emblemFrame(id, { yaw: i === 1 ? yaw : 25, pitch: 15, size: 170 }))).join("");
 };
 const slotted = (D: Dist, yaw: number) => {
   const f = (svg: string) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${svg}</figure>`;
-  return [0, 1, 2, 3].map((i) => f(D.emblemFrame("ball:plastic-baseball-slotted", { yaw: yaw + i * 90, pitch: -10, size: 170 }))).join("");
+  return [0, 1, 2].map((i) => f(D.emblemFrame("ball:plastic-baseball-slotted", { yaw: i === 1 ? yaw : i === 0 ? 0 : 90, pitch: -10, size: 170 }))).join("");
 };
 const flips = (D: Dist, yaw: number) => {
   const f = (svg: string) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${svg}</figure>`;
-  return ["medal:gold", "medal:silver", "trophy:championship-banner", "crest:shield", "gear:hockey-skate", "gear:baseball-glove"].map((id, i) => f(D.emblemFrame(id, { yaw: yaw + i * 60, size: 150 }))).join("");
+  return ["crest:shield", "gear:hockey-skate", "medal:silver", "medal:gold", "trophy:championship-banner", "gear:baseball-glove", "gear:football-helmet"].map((id, i) => f(D.emblemFrame(id, { yaw: i === 3 ? yaw : 0, size: 150 }))).join("");
 };
 
 const SCENES: Scene[] = [
   { name: "trophies-turn", width: 760, height: 280, cols: 5, preset: "royal", intensity: 0.9, make: trophies },
   { name: "balls-turn", width: 760, height: 180, cols: 7, preset: "floodlights", intensity: 0.9, make: balls },
-  { name: "pickleball-turn", width: 760, height: 190, cols: 4, preset: "floodlights", intensity: 0.9, make: pickleballs },
-  { name: "slotted-turn", width: 760, height: 190, cols: 4, preset: "floodlights", intensity: 0.9, make: slotted },
-  { name: "flips-turn", width: 760, height: 200, cols: 6, preset: "royal", intensity: 0.9, make: flips },
+  { name: "pickleball-turn", width: 760, height: 190, cols: 3, preset: "floodlights", intensity: 0.9, make: pickleballs },
+  { name: "slotted-turn", width: 760, height: 190, cols: 3, preset: "floodlights", intensity: 0.9, make: slotted },
+  { name: "flips-turn", width: 760, height: 200, cols: 7, preset: "royal", intensity: 0.9, make: flips },
 ];
 
 const server = spawn(process.execPath, ["scripts/dev.ts"], { cwd: root, env: { ...process.env, PORT: String(port) }, stdio: "ignore" });

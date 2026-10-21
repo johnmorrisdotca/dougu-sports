@@ -66,7 +66,7 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 <p align="center">
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/trophies-turn-dark.webp">
-<img alt="Five famous trophies turning in 3D on royal purple, each a little behind the one before: the Stanley Cup first, then the FIFA World Cup, the Lombardi Trophy, the Larry O'Brien trophy and the Webb Ellis Cup. Each keeps its outline while its light and its handles move." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/trophies-turn-light.webp" width="760">
+<img alt="A row of five famous trophies on royal purple, the Stanley Cup, the FIFA World Cup, the Lombardi Trophy, the Larry O'Brien trophy and the Webb Ellis Cup: the four outer ones stand still and only the Lombardi Trophy in the centre turns in 3D, keeping its outline while its light moves." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/trophies-turn-light.webp" width="760">
 </picture>
 </p>
 
@@ -75,7 +75,7 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 <p align="center">
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-turn-dark.webp">
-<img alt="Seven balls rolling under floodlights: a soccer ball, a basketball, a baseball, a rugby ball, a volleyball, a tennis ball and a golf ball, each turned a little differently so that the seams and panels travel across them." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-turn-light.webp" width="760">
+<img alt="Seven balls under floodlights: a soccer ball, a basketball, a baseball, a rugby ball, a volleyball, a tennis ball and a golf ball. Six stand still and only the rugby ball in the centre rolls, so that its stripes and panels travel across it." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-turn-light.webp" width="760">
 </picture>
 </p>
 
@@ -102,7 +102,7 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 <p align="center">
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/flips-turn-dark.webp">
-<img alt="A gold and a silver medal, a championship banner, a crest, a hockey skate and a baseball glove flipping like coins on royal purple: each shows its face, then its edge, then its plain back." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/flips-turn-light.webp" width="760">
+<img alt="A crest, a hockey skate, a silver medal, a gold medal, a championship banner, a baseball glove and a football helmet on royal purple: six stand still and only the gold medal in the centre flips like a coin, showing its face, then its edge, then its plain back." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/flips-turn-light.webp" width="760">
 </picture>
 </p>
 

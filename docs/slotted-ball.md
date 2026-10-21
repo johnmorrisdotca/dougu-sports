@@ -48,6 +48,6 @@ console.log(ballFrame("ball:plastic-baseball-slotted", { yaw: 202, pitch: -22 })
 <p align="center">
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/slotted-turn-dark.webp">
-<img alt="Four slotted plastic balls rolling, each a quarter turn behind the one before: the ring of slots comes round, the page shows through as two slots line up, and the solid half goes by." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/slotted-turn-light.webp" width="760">
+<img alt="Three slotted plastic balls: the one on the left stands still showing its ring of slots, the one on the right stands still seen from the side, and only the one in the centre rolls, so that the ring of slots comes round, the page shows through as two slots line up, and the solid half goes by." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/slotted-turn-light.webp" width="760">
 </picture>
 </p>

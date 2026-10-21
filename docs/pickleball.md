@@ -46,6 +46,6 @@ The demo turns any emblem: [the outdoor ball](https://johnmorrisdotca.github.io/
 <p align="center">
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/pickleball-turn-dark.webp">
-<img alt="Four pickleballs rolling, outdoor and indoor in turn, each a quarter turn behind the one before: the near holes show the dark inside and flash with the background as holes line up." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/pickleball-turn-light.webp" width="760">
+<img alt="Three pickleballs, an outdoor ball, an indoor ball and an outdoor ball: the two outdoor balls stand still and only the indoor ball in the centre rolls, its near holes showing the dark inside and flashing with the background as holes line up." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/pickleball-turn-light.webp" width="760">
 </picture>
 </p>
