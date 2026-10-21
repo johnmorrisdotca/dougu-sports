@@ -109,7 +109,9 @@ The element gets `tabindex="0"` (unless the page set one), a role (`group`, unle
 
 ### The auto-turn
 
-Nothing moves by itself. `autoPlay` is off by default, `play()`, `pause()` and `togglePlay()` start and stop it, and `speed` is degrees of yaw a second (36, negative to turn the other way, at most 720 either way).
+Nothing moves by itself. `autoPlay` is off by default, `play()`, `pause()` and `togglePlay()` start and stop it, and `speed` is degrees of yaw a second (36, at most 720; a negative speed turns the other way too).
+
+**Which way: `direction`.** Seen from above, `"counterclockwise"` (the default, and how it has always turned) swings the front to the viewer's right; `"clockwise"` swings the front to the viewer's left. `controller.setDirection("clockwise")` changes it while it turns, without stopping it, `controller.direction()` says which it is, and `turnDirection(value)` is the check the option goes through (anything but `"clockwise"` is counterclockwise). `update` keeps the direction unless it names one. A drag, the arrow keys and `setAngles` are not reversed: a drag to the right always swings the front to the right. The demo has a Reverse button for it, kept in the address as `dir=cw`; it waits still, turns while the pointer is over the stage (a tap on a phone turns it and a second tap holds it) and runs at 18 degrees a second, and `?turn=1` starts it with the page.
 
 - It runs on `requestAnimationFrame` with the elapsed time, clamped to 0.1 s so that a slow frame is not a jump, stops asking for frames while the page is hidden, and calls `onTurn` on every frame so that a slider follows.
 - With `pauseOnInteract` (on by default) a drag holds it while the pointer is down and it goes on from the new angle with no jump; an arrow key, Home or `setAngles` (a slider) pauses it. With it off only `pause()` stops it.
@@ -126,12 +128,13 @@ Nothing moves by itself. `autoPlay` is off by default, `play()`, `pause()` and `
 | `keyStep`: degrees for an arrow key (three times as much with Shift) | `5` |
 | `onTurn(angles)`: after each turn by the pointer, a key or the clock; not for `setAngles` or `update` | none |
 | `autoPlay`: `false`, `true` or `"force"` (only read by `bindTurn`) | `false` |
-| `speed`, `pauseOnInteract`, `onPlayChange(playing)` | `36`, `true`, none |
+| `speed`, `direction`, `pauseOnInteract`, `onPlayChange(playing)` | `36`, `"counterclockwise"`, `true`, none |
 
 | Controller | |
 | --- | --- |
 | `angles` | A copy of `{ yaw, pitch, roll }` |
 | `playing`, `turnable` | Whether the auto-turn runs, and whether the emblem can turn (`false` until an id has loaded) |
+| `direction()`, `setDirection(direction)` | Which way the auto-turn goes (`"clockwise"` or `"counterclockwise"`), and a change of it, without stopping the turn |
 | `ready` | A promise: resolved when the emblem is drawn and bound (at once for an emblem object), rejected for an id that names nothing |
 | `setAngles(partial)` | Sets some angles (wrapped or clamped), draws at once, pauses the auto-turn |
 | `update(ref, options?)` | Draws another emblem (an object or an id) or the same one with other options, and keeps the angles (unless the options carry some) |

@@ -15,46 +15,17 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 
 <p align="center">
 <picture>
-<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/trophies-turn-dark.webp">
-<img alt="Five famous trophies turning in 3D on royal purple, each a little behind the one before: the Stanley Cup first, then the FIFA World Cup, the Lombardi Trophy, the Larry O'Brien trophy and the Webb Ellis Cup. Each keeps its outline while its light and its handles move." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/trophies-turn-light.webp" width="760">
-</picture>
-</p>
-
-<p align="center">
-<picture>
-<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-turn-dark.webp">
-<img alt="Seven balls rolling under floodlights: a soccer ball, a basketball, a baseball, a rugby ball, a volleyball, a tennis ball and a golf ball, each turned a little differently so that the seams and panels travel across them." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-turn-light.webp" width="760">
-</picture>
-</p>
-
-<p align="center">
-<picture>
-<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/flips-turn-dark.webp">
-<img alt="A gold and a silver medal, a championship banner, a crest, a hockey skate and a baseball glove flipping like coins on royal purple: each shows its face, then its edge, then its plain back." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/flips-turn-light.webp" width="760">
-</picture>
-</p>
-
-## The best of it
-
-- **47 famous trophies**, each a close likeness measured on a photograph and carrying no lettering, logo or mark: the Stanley Cup, the FIFA World Cup, the Lombardi Trophy, the Larry O'Brien trophy, the Grey Cup and the rest ([famous trophies](./docs/famous-trophies.md)).
-
-<p align="center">
-<picture>
-<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/famous-desk-dark.webp">
-<img alt="Thirty-six famous trophies on royal purple, each with its name under it: the FIFA World Cup, the Stanley Cup, the Lombardi Trophy, the Larry O'Brien trophy, the Grey Cup, the FA Cup, the America's Cup, the Ashes urn and the Webb Ellis Cup among them, then the baseball awards and the NHL's Hart, Vezina, Norris and Calder trophies." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/famous-desk-light.webp" width="760">
-</picture>
-</p>
-
-- **117 balls and implements in 3D**, from the 32-panel soccer ball to the pucks and the curling stone, that roll as they turn ([gallery](./docs/gallery.md), [vintage and era-style balls](./docs/vintage-balls.md)).
-
-<p align="center">
-<picture>
 <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-dark.webp">
 <img alt="Thirty-six balls and pucks drawn in 3D under floodlights, in four rows of nine: soccer balls of several constructions and colours, then basketball, the 3x3 ball, baseball, softball, a football, a rugby ball, an Australian football and two volleyballs, then tennis, padel, pickleball with its holes, squash with its two dots, racquetball, golf, red and pink cricket and water polo, and last sepak takraw, a shuttlecock, a puck, a curling stone, lacrosse, handball, table tennis, a sliotar and a roundnet ball." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-desk-light.webp" width="760">
 </picture>
 </p>
 
-- **Trophies, medals, crests and the icon of every sport**, in metal, one line or flat colour, light and dark.
+<p align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/vintage-desk-dark.webp">
+<img alt="Eighteen more balls on a warm sunburst, in two rows of nine: five vintage leather soccer balls (hand-stitched, laced, 18 strips, 12 panels, 32 panels), a lemon-peel baseball, two baseballs stitched in two colours and an aged baseball, then nine soccer balls in the style of an era, with patterns of pentagons, leaves, a rosette, a star, a pinwheel and kites, a double border and plain white panels." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/vintage-desk-light.webp" width="760">
+</picture>
+</p>
 
 <p align="center">
 <picture>
@@ -63,7 +34,12 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 </picture>
 </p>
 
-- **70 pieces of gear**, among them the Japanese sports and budo ([Japanese sports](./docs/japanese-sports.md)).
+<p align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/famous-desk-dark.webp">
+<img alt="Thirty-six famous trophies on royal purple, each with its name under it: the FIFA World Cup, the Stanley Cup, the Lombardi Trophy, the Larry O'Brien trophy, the Grey Cup, the FA Cup, the America's Cup, the Ashes urn and the Webb Ellis Cup among them, then the baseball awards and the NHL's Hart, Vezina, Norris and Calder trophies." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/famous-desk-light.webp" width="760">
+</picture>
+</p>
 
 <p align="center">
 <picture>
@@ -72,13 +48,49 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 </picture>
 </p>
 
-- **On a phone**, and **turned by hand**: drag, arrow keys or the automatic turn ([turning](./docs/turning.md)).
+<table align="center">
+<tr>
+<td align="center" valign="top">
+<img alt="A two-handled cup, a medal, a soccer ball and a championship banner each turned through seven angles: the cup keeps its outline and moves its light and handles, the medal and the banner flip like a coin to show their plain backs, and the ball rolls." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/turn-desk.webp" width="470"><br><em>Turned: a ball rolls, a medal flips</em>
+</td>
+<td align="center" valign="top">
+<img alt="Cups, a medal, balls and gear on a phone, three to a row." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/phone-light.webp" width="200"><br><em>On a phone</em>
+</td>
+</tr>
+</table>
+
+## The best of it
+
+- **47 famous trophies**, each a close likeness measured on a photograph and carrying no lettering, logo or mark: the Stanley Cup, the FIFA World Cup, the Lombardi Trophy, the Larry O'Brien trophy, the Grey Cup and the rest ([famous trophies](./docs/famous-trophies.md)).
 
 <p align="center">
 <picture>
-<img alt="Cups, a medal, balls and gear on a phone, three to a row." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/phone-light.webp" width="200">
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/trophies-turn-dark.webp">
+<img alt="Five famous trophies turning in 3D on royal purple, each a little behind the one before: the Stanley Cup first, then the FIFA World Cup, the Lombardi Trophy, the Larry O'Brien trophy and the Webb Ellis Cup. Each keeps its outline while its light and its handles move." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/trophies-turn-light.webp" width="760">
 </picture>
 </p>
+
+- **117 balls and implements in 3D**, from the 32-panel soccer ball to the pucks and the curling stone, that roll as they turn ([gallery](./docs/gallery.md), [vintage and era-style balls](./docs/vintage-balls.md)).
+
+<p align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-turn-dark.webp">
+<img alt="Seven balls rolling under floodlights: a soccer ball, a basketball, a baseball, a rugby ball, a volleyball, a tennis ball and a golf ball, each turned a little differently so that the seams and panels travel across them." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-turn-light.webp" width="760">
+</picture>
+</p>
+
+- **Trophies, medals, crests and the icon of every sport**, in metal, one line or flat colour, light and dark.
+
+<p align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/flips-turn-dark.webp">
+<img alt="A gold and a silver medal, a championship banner, a crest, a hockey skate and a baseball glove flipping like coins on royal purple: each shows its face, then its edge, then its plain back." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/flips-turn-light.webp" width="760">
+</picture>
+</p>
+
+- **70 pieces of gear**, among them the Japanese sports and budo ([Japanese sports](./docs/japanese-sports.md)).
+
+- **On a phone**, and **turned by hand**: drag, arrow keys or the automatic turn ([turning](./docs/turning.md)).
 
 > **Status: preview.** 325 emblems: 71 trophies, 6 awards, 6 medals, 4 crests, a pictogram for each of the 42 sports, 117 balls and implements drawn in 3D, 8 printed pucks ([docs/pucks.md](./docs/pucks.md)), 70 pieces of gear (among them the Japanese sports and budo, [docs/japanese-sports.md](./docs/japanese-sports.md)) and a championship pennant; [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
 
@@ -394,9 +406,10 @@ import { TROPHY_TENNIS_CUP } from "@johnmorrisdotca/dougu-sports/trophy/tennis-c
 
 const turner = bindTurn(document.getElementById("cup"), TROPHY_TENNIS_CUP, { size: 160, speed: 36 });
 document.getElementById("spin").onclick = () => turner.togglePlay();
+turner.setDirection("clockwise"); // seen from above: the other way (the default, `"counterclockwise"`, swings the front to the viewer's right)
 ```
 
-A drag turns it, the arrow keys turn it, Space starts and stops an auto-turn, and nothing moves until you ask. Pass the emblem itself and the page carries the turning and that one emblem and nothing else (a cup and the turning are about 9 kB gzipped); pass an id, `"trophy:tennis-cup"`, and the registry is loaded when it is needed. See [docs/turning.md](./docs/turning.md).
+`direction` is `"counterclockwise"` (how it has always turned) or `"clockwise"`, and `turnDirection(value)` is the check it goes through (anything but `"clockwise"` is counterclockwise). A drag turns it, the arrow keys turn it, Space starts and stops an auto-turn, and nothing moves until you ask. Pass the emblem itself and the page carries the turning and that one emblem and nothing else (a cup and the turning are about 9 kB gzipped); pass an id, `"trophy:tennis-cup"`, and the registry is loaded when it is needed. See [docs/turning.md](./docs/turning.md).
 
 ### In React, Vue and the rest
 
@@ -645,7 +658,7 @@ Bug reports and ideas go in the [issues](https://github.com/johnmorrisdotca/doug
 
 ## Changes
 
-See [CHANGELOG.md](./CHANGELOG.md). 0.13.0 adds a pictogram for each of four combat sports, MMA (a cage), boxing (a glove), wrestling (two wrestlers on the mat) and professional wrestling (a ring with ropes), in the three styles (325 emblems); 0.12.0 adds forty-seven named trophies, each a close likeness measured on a photograph (321 emblems); 0.11.0 gives the era soccer balls neutral ids (the old ones stay as aliases), new looks and a second 1980s ball (274 emblems); 0.10.0 adds a standalone ribbon and the nets and posts of sepak takraw, netball and teqball from their rulebooks' sizes (273 emblems); 0.9.0 lets the baseball, the softball and the classic soccer balls be painted and printed: solid and two-tone colours, a logo of your own wrapped onto the ball, stamped text, an original cursive word and a small mark, all turning with the ball ([docs/custom-balls.md](./docs/custom-balls.md)); 0.8.0 makes `bindTurn` light: it takes an emblem object and then needs no registry, so a turnable cup is about 9.4 kB gzipped instead of about 81 kB, and an id loads the registry on demand; 0.7.3 turns the build, docs and picture scripts, the browser tests and the demo's source from JavaScript into TypeScript, with no change to the package; 0.7.2 makes every docs page single-language (a page in Japanese beside each page that had Japanese words in it, and a test that holds them apart), with no change to the pictures; 0.7.1 puts real countries (Canada, Japan) in the crest and puck examples in place of made-up teams, with no change to the code; 0.7.0 gives the national volleyballs layouts that tell them apart (Japan a crimson band, Poland white above and red below, the USA a navy field), strengthens the 2010-style grooved soccer ball, and adds six pictures of how the judo belt is tied, `gear:obi-step-1` to `gear:obi-step-6` (269 emblems: [docs/obi-steps.md](./docs/obi-steps.md)); 0.6.0 gives the judo suit and the karate suit their sleeves (a judogi has no short ones: they reach the wrist) and adds the judogi seen from behind with the IJF-style back number, a family name and a country code on a patch, with a `backnumber` option (269 emblems: [docs/judogi-back.md](./docs/judogi-back.md)); 0.5.1 redraws the judo suit, the belt and the football pictograms and adds the blue and folded suits and the belts of every grade (261 emblems: [docs/japanese-sports.md](./docs/japanese-sports.md)); 0.5.0 adds fifty balls: vintage leather soccer balls, era-style and shop-wall soccer balls, baseballs of other threads and volleyballs in national colours, with a `colors` option (244 emblems: [docs/vintage-balls.md](./docs/vintage-balls.md)); 0.4.0 adds eight printed pucks and a `face` option (194 emblems: [docs/pucks.md](./docs/pucks.md)); 0.3.0 adds nineteen soccer balls (26, 18, 14, 12 and 6 panels, winter orange and high-visibility yellow, futsal and beach soccer: 186 emblems); 0.2.1 draws every ball and implement to the rulebook's proportions; 0.2.0 is 167 emblems, every one drawn here, with the Japanese sports, engraving, a turn for every emblem and the compose helpers; 0.1.0 brought the first full set of 148; 0.0.1 was the first preview.
+See [CHANGELOG.md](./CHANGELOG.md). 0.14.0 lets the auto-turn go either way (`direction: "clockwise"` or `"counterclockwise"`, `setDirection()`); 0.13.0 adds a pictogram for each of four combat sports, MMA (a cage), boxing (a glove), wrestling (two wrestlers on the mat) and professional wrestling (a ring with ropes), in the three styles (325 emblems); 0.12.0 adds forty-seven named trophies, each a close likeness measured on a photograph (321 emblems); 0.11.0 gives the era soccer balls neutral ids (the old ones stay as aliases), new looks and a second 1980s ball (274 emblems); 0.10.0 adds a standalone ribbon and the nets and posts of sepak takraw, netball and teqball from their rulebooks' sizes (273 emblems); 0.9.0 lets the baseball, the softball and the classic soccer balls be painted and printed: solid and two-tone colours, a logo of your own wrapped onto the ball, stamped text, an original cursive word and a small mark, all turning with the ball ([docs/custom-balls.md](./docs/custom-balls.md)); 0.8.0 makes `bindTurn` light: it takes an emblem object and then needs no registry, so a turnable cup is about 9.4 kB gzipped instead of about 81 kB, and an id loads the registry on demand; 0.7.3 turns the build, docs and picture scripts, the browser tests and the demo's source from JavaScript into TypeScript, with no change to the package; 0.7.2 makes every docs page single-language (a page in Japanese beside each page that had Japanese words in it, and a test that holds them apart), with no change to the pictures; 0.7.1 puts real countries (Canada, Japan) in the crest and puck examples in place of made-up teams, with no change to the code; 0.7.0 gives the national volleyballs layouts that tell them apart (Japan a crimson band, Poland white above and red below, the USA a navy field), strengthens the 2010-style grooved soccer ball, and adds six pictures of how the judo belt is tied, `gear:obi-step-1` to `gear:obi-step-6` (269 emblems: [docs/obi-steps.md](./docs/obi-steps.md)); 0.6.0 gives the judo suit and the karate suit their sleeves (a judogi has no short ones: they reach the wrist) and adds the judogi seen from behind with the IJF-style back number, a family name and a country code on a patch, with a `backnumber` option (269 emblems: [docs/judogi-back.md](./docs/judogi-back.md)); 0.5.1 redraws the judo suit, the belt and the football pictograms and adds the blue and folded suits and the belts of every grade (261 emblems: [docs/japanese-sports.md](./docs/japanese-sports.md)); 0.5.0 adds fifty balls: vintage leather soccer balls, era-style and shop-wall soccer balls, baseballs of other threads and volleyballs in national colours, with a `colors` option (244 emblems: [docs/vintage-balls.md](./docs/vintage-balls.md)); 0.4.0 adds eight printed pucks and a `face` option (194 emblems: [docs/pucks.md](./docs/pucks.md)); 0.3.0 adds nineteen soccer balls (26, 18, 14, 12 and 6 panels, winter orange and high-visibility yellow, futsal and beach soccer: 186 emblems); 0.2.1 draws every ball and implement to the rulebook's proportions; 0.2.0 is 167 emblems, every one drawn here, with the Japanese sports, engraving, a turn for every emblem and the compose helpers; 0.1.0 brought the first full set of 148; 0.0.1 was the first preview.
 
 ## Credits
 

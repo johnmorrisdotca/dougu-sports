@@ -6,6 +6,20 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-10-21
+
+The auto-turn can go either way, and the pictures and the demo are slower and wait for the pointer.
+
+### Added
+
+- **`direction` for the auto-turn**: `bindTurn(container, emblem, { direction: "clockwise" })` (seen from above; the default, `"counterclockwise"`, is how it has always turned, the front swinging to the viewer's right). `controller.setDirection(direction)` changes it while it turns without stopping it, `controller.direction()` reads it, and `turnDirection(value)` is the check the option goes through (exported from `./turn` and the main entry, with the `TurnDirection` type). `update` keeps the direction unless it names one. A drag, the keys and `setAngles` are not reversed. Tests: `test/turn-control.test.ts` and the demo's.
+
+### Changed
+
+- **README: it opens on the still pictures again** (the balls, the vintage balls, the trophies, the famous trophies and the gear, with the turned and phone pictures), as before 0.12.1. The turning pictures sit lower, each beside its own point of "The best of it" (the famous trophies, the balls, the medals and crests), never stacked.
+- **The turning pictures run at half the speed** (`pnpm animations` shows each frame 140 ms, it was 70; `DELAY=70` for the old pace).
+- **Demo: the emblem waits still and turns while the mouse is over it.** Leaving stops it where it is; a tap on a phone turns it and a second tap holds it (a drag turns it by hand as before). Auto-turn keeps it going wherever the pointer is, and `?turn=1` starts it with the page. The speed buttons are Slow 9, Medium 18 (the default, half of the old 36) and Fast 45 degrees a second; addresses with `speed=18`, `36` or `90` still mean those speeds. A **Reverse** button (`逆回転`, "reverse rotation", with the label `逆向きに回す`, "Turn the other way") turns it the other way, kept in the address as `dir=cw`. The trophy case waits still too and turns an emblem while the pointer is over it or after a tap, at 22 degrees a second (it was 45). A reader who prefers reduced motion is never turned for by the pointer. The package's own default speed (36) is unchanged.
+
 ## [0.13.0] - 2026-10-20
 
 Four combat sports get their pictograms, so a page that lists MMA, boxing, wrestling or professional wrestling no longer borrows the judo or karate suit.
