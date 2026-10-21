@@ -17,8 +17,9 @@
         <div class="picks" id="picks" role="group" aria-label="Try one" data-say-label="picks" data-testid="picks"></div>
         <div class="fam-row" id="spin-row"><span class="fam-label" data-say="spin">Auto-turn</span>
         <button type="button" class="fam-button play" id="play" aria-pressed="false" data-testid="play"><span class="when-off" data-say="play">Auto-turn</span><span class="when-on" data-say="stop">Stop</span></button>
+        <button type="button" class="fam-button" id="direction" aria-pressed="false" data-testid="direction" data-say="reverse" data-say-label="reverseLabel">Reverse</button>
         <div class="fam-seg" role="group" aria-label="Speed" id="speed" data-testid="speed">
-          <button type="button" data-value="18" data-say="slow">Slow</button><button type="button" data-value="36" data-say="medium">Medium</button><button type="button" data-value="90" data-say="fast">Fast</button>
+          <button type="button" data-value="9" data-say="slow">Slow</button><button type="button" data-value="18" data-say="medium">Medium</button><button type="button" data-value="45" data-say="fast">Fast</button>
         </div></div>
         <div class="fam-row" id="turn-row"><label class="fam-label" for="yaw">Turn</label><input class="range" type="range" id="yaw" min="-180" max="180" step="5" value="0" aria-label="Turn about the vertical axis, in degrees" data-testid="yaw" /><output id="yaw-out" for="yaw">0°</output></div>
       </div>
@@ -52,7 +53,7 @@
 
   <section class="more" aria-labelledby="case-h">
     <h2 id="case-h" data-say="caseHeading">A trophy case</h2>
-    <p class="fam-fine" data-say="caseNote">Each one turns when you press its button, or when you drag it. Nothing moves by itself.</p>
+    <p class="fam-fine" data-say="caseNote">Each one turns while the pointer is over it, or when you tap it. Press its button to keep it turning, or drag it.</p>
     <ul class="case" id="case" data-testid="case"></ul>
   </section>
 

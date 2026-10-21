@@ -229,42 +229,104 @@ test("the turning controls are 44 pixels tall at least, and the page does not sc
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
 
-// The page opens on the emblem turning by itself with its controls beside it. The suite runs with reduced motion on, so these ask for the ordinary setting.
+// The page opens on a still emblem with its controls beside it; it turns while the pointer is over it (a tap on a phone), and Auto-turn and `?turn=1` keep it going. The suite runs with reduced motion on, so these ask for the ordinary setting.
+const gapOf = (from: number, to: number) => ((to - from + 540) % 360) - 180;
+
 test.describe("a reader who has not asked for reduced motion", () => {
   test.use({ reducedMotion: "no-preference" });
 
-  test("the emblem turns by itself when the page opens, and Stop, turn=0 and an angle in the address hold it", async ({ page }) => {
+  test("the emblem waits still when the page opens, turns while the mouse is over it, and stops where it leaves", async ({ page, hasTouch }) => {
+    test.skip(hasTouch, "a touch screen has no pointer to hover with: the tap test covers it");
     await page.goto("/");
     await expect(page.locator("#stage > svg")).toBeVisible();
+    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
+    await page.waitForTimeout(700);
+    expect(await yaw(page)).toBe(0);
+    expect(page.url()).not.toMatch(/turn=/);
+    await page.locator("#stage").hover();
     await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
-    await expect.poll(() => yaw(page), { timeout: 5000 }).not.toBe(0);
+    await expect.poll(() => yaw(page), { timeout: 8000 }).not.toBe(0);
+    // The pointer's turn is not the reader's own choice: the address does not say "turn".
+    expect(page.url()).not.toMatch(/turn=/);
+    await page.mouse.move(2, 2);
+    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
+    const stopped = await yaw(page);
+    await page.waitForTimeout(500);
+    expect(await yaw(page)).toBe(stopped);
+    await page.locator("#stage").hover();
+    await expect.poll(() => yaw(page), { timeout: 8000 }).not.toBe(stopped);
+  });
+
+  test("a tap on the stage turns it and a second tap holds it", async ({ page, hasTouch }) => {
+    test.skip(!hasTouch, "needs a touch screen");
+    await page.goto("/");
+    await expect(page.locator("#stage > svg")).toBeVisible();
+    await page.locator("#stage").tap();
+    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+    await expect.poll(() => yaw(page), { timeout: 8000 }).not.toBe(0);
+    await page.locator("#stage").tap();
+    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
+    const stopped = await yaw(page);
+    await page.waitForTimeout(500);
+    expect(await yaw(page)).toBe(stopped);
+  });
+
+  test("?turn=1 starts it with the page, Stop and Auto-turn hold and carry on, and turn=0 and an angle in the address open still", async ({ page }) => {
+    await page.goto("/?turn=1");
+    await expect(page.locator("#stage > svg")).toBeVisible();
+    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+    await expect.poll(() => yaw(page), { timeout: 8000 }).not.toBe(0);
     // The address leaves the angles out while it turns, so that a reload starts the turn again.
     expect(page.url()).not.toMatch(/yaw=/);
     await page.locator("#play").click();
     await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
-    await expect(page).toHaveURL(/turn=0/);
+    await expect(page).not.toHaveURL(/turn=1/);
     const stopped = await yaw(page);
     await page.waitForTimeout(400);
     expect(await yaw(page)).toBe(stopped);
+    await page.locator("#play").click();
+    await expect(page).toHaveURL(/turn=1/);
+    await expect.poll(() => yaw(page), { timeout: 8000 }).not.toBe(stopped);
     await page.goto("/?turn=0");
     await page.waitForTimeout(500);
     expect(await yaw(page)).toBe(0);
-    await page.goto("/?yaw=70");
+    await page.goto("/?turn=1&yaw=70");
     await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
     await page.waitForTimeout(400);
     expect(await yaw(page)).toBe(70);
   });
 
+  test("Reverse turns it the other way, from where it was, at the same speed, and the address keeps it", async ({ page }) => {
+    await page.goto("/?turn=1&speed=90");
+    await expect(page.locator("#stage > svg")).toBeVisible();
+    const reverse = page.locator("#direction");
+    await expect(reverse).toHaveAttribute("aria-pressed", "false");
+    const start = await yaw(page);
+    await expect.poll(async () => gapOf(start, await yaw(page)), { timeout: 8000 }).toBeGreaterThan(5);
+    await reverse.click();
+    await expect(reverse).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+    await expect(page).toHaveURL(/dir=cw/);
+    const turned = await yaw(page);
+    await expect.poll(async () => gapOf(turned, await yaw(page)), { timeout: 8000 }).toBeLessThan(-5);
+    await reverse.click();
+    await expect(page).not.toHaveURL(/dir=/);
+    await page.goto("/?turn=1&speed=90&dir=cw");
+    await expect(page.locator("#direction")).toHaveAttribute("aria-pressed", "true");
+    const first = await yaw(page);
+    await expect.poll(async () => gapOf(first, await yaw(page)), { timeout: 8000 }).toBeLessThan(-5);
+  });
+
   test("the stage, the quick picks and the turn controls are in the first screen, and a change while it turns leaves the turn going", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/?turn=1");
     await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
     const height = page.viewportSize()!.height;
-    for (const selector of ["#stage", "#picks button", "#play", "#yaw"]) {
+    for (const selector of ["#stage", "#picks button", "#play", "#direction", "#yaw"]) {
       const box = (await page.locator(selector).first().boundingBox())!;
       expect(box, selector).not.toBeNull();
       expect(box.y + box.height, `${selector} is in the first screen`).toBeLessThanOrEqual(height);
     }
-    await expect.poll(() => yaw(page), { timeout: 5000 }).not.toBe(0);
+    await expect.poll(() => yaw(page), { timeout: 8000 }).not.toBe(0);
     const gap = (a: number, b: number) => Math.min(Math.abs(a - b), 360 - Math.abs(a - b));
     const changes = [
       () => page.locator('#style button[data-value="line"]').click(),
@@ -279,17 +341,46 @@ test.describe("a reader who has not asked for reduced motion", () => {
       await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
       const after = await yaw(page);
       expect(gap(before, after), "the angle was not reset").toBeLessThan(60);
-      await expect.poll(async () => gap(after, await yaw(page)), { timeout: 5000 }).toBeGreaterThan(3);
+      await expect.poll(async () => gap(after, await yaw(page)), { timeout: 8000 }).toBeGreaterThan(2);
     }
   });
 
-  test("the trophy case turns by itself, and each button holds one", async ({ page }) => {
+  test("the trophy case waits still, turns an emblem while the pointer is over it or after a tap, and each button keeps one going", async ({ page, hasTouch }) => {
     await page.goto("/");
-    const first = page.locator("#case li").first();
-    await expect(first.getByTestId("case-play")).toHaveAttribute("aria-pressed", "true");
+    const cells = page.locator("#case li");
+    const first = cells.first();
+    await expect(first.getByTestId("case-play")).toHaveAttribute("aria-pressed", "false");
     const before = await first.locator(".case-stage").innerHTML();
-    await expect.poll(() => first.locator(".case-stage").innerHTML(), { timeout: 5000 }).not.toBe(before);
+    await page.waitForTimeout(500);
+    expect(await first.locator(".case-stage").innerHTML()).toBe(before);
+    if (hasTouch) await first.locator(".case-stage").tap();
+    else await first.locator(".case-stage").hover();
+    await expect(first.getByTestId("case-play")).toHaveAttribute("aria-pressed", "true");
+    await expect.poll(() => first.locator(".case-stage").innerHTML(), { timeout: 8000 }).not.toBe(before);
+    if (hasTouch) await first.locator(".case-stage").tap();
+    else await page.mouse.move(2, 2);
+    await expect(first.getByTestId("case-play")).toHaveAttribute("aria-pressed", "false");
+    // The button keeps it going wherever the pointer is.
+    await first.getByTestId("case-play").click();
+    await expect(first.getByTestId("case-play")).toHaveAttribute("aria-pressed", "true");
+    await page.mouse.move(2, 2);
+    await page.waitForTimeout(300);
+    await expect(first.getByTestId("case-play")).toHaveAttribute("aria-pressed", "true");
     await first.getByTestId("case-play").click();
     await expect(first.getByTestId("case-play")).toHaveAttribute("aria-pressed", "false");
   });
+});
+
+test("a reader who prefers reduced motion is not turned for by the pointer, and Auto-turn still works", async ({ page, hasTouch }) => {
+  await page.goto("/?turn=1");
+  await expect(page.locator("#stage > svg")).toBeVisible();
+  if (!hasTouch) {
+    await page.locator("#stage").hover();
+    await page.waitForTimeout(600);
+    expect(await yaw(page)).toBe(0);
+    await page.mouse.move(2, 2);
+  }
+  await page.locator("#play").click();
+  await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+  await expect.poll(() => yaw(page), { timeout: 8000 }).not.toBe(0);
 });

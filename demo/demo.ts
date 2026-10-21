@@ -14,7 +14,7 @@ declare global {
 const $ = <T extends HTMLElement = HTMLElement>(id: string): T => document.getElementById(id) as T;
 const params = new URLSearchParams(location.search);
 const FIRST: D.EmblemId = "trophy:stanley-cup";
-const DEFAULTS: Record<(typeof CHOICES)[number] | "background", string> = { style: "metal", theme: "inherit", size: "256", tint: "", speed: "36", background: "" };
+const DEFAULTS: Record<(typeof CHOICES)[number] | "background", string> = { style: "metal", theme: "inherit", size: "256", tint: "", speed: "18", background: "" };
 const BACKGROUNDS = [...document.querySelectorAll<HTMLOptionElement>("#background option")].map((o) => o.value);
 const pick = <T extends string>(value: string | null, allowed: readonly T[], fallback: T): T => allowed.find((one) => one === value) ?? fallback;
 const number = (value: string | null, low: number, high: number) => { const n = Number(value); return Number.isFinite(n) ? Math.max(low, Math.min(high, n)) : 0; };
@@ -29,8 +29,10 @@ interface State {
   speed: string;
   background: string;
   engrave: string;
-  /** "1" while it turns by itself (the default), "0" once it has been paused: the address says so. */
+  /** "1" while it turns by itself because the reader asked (`?turn=1`, or Auto-turn), "0" otherwise; the pointer over the stage turns it without changing this. */
   turn: string;
+  /** "cw" for clockwise, "ccw" (the default, how it has always turned) for counterclockwise. */
+  dir: string;
 }
 /** The choices made with a row of buttons. */
 const CHOICES = ["style", "theme", "size", "tint", "speed"] as const;
@@ -40,10 +42,11 @@ const state: State = {
   theme: pick<D.EmblemTheme>(params.get("theme"), ["inherit", "light", "dark", "auto"], "inherit"),
   size: pick(params.get("size"), ["32", "64", "128", "256"], DEFAULTS.size),
   tint: pick(params.get("tint"), ["", "#c8102e", "#1f4e9c", "#0b6e4f"], DEFAULTS.tint),
-  speed: pick(params.get("speed"), ["18", "36", "90"], DEFAULTS.speed),
+  speed: pick(params.get("speed"), ["9", "18", "36", "45", "90"], DEFAULTS.speed),
   background: pick(params.get("background"), BACKGROUNDS, DEFAULTS.background),
   engrave: (params.get("engrave") ?? "").slice(0, 24),
-  turn: params.get("turn") === "0" ? "0" : "1",
+  turn: params.get("turn") === "1" ? "1" : "0",
+  dir: params.get("dir") === "cw" ? "cw" : "ccw",
 };
 
 $("emblem").innerHTML = Object.entries(D.EMBLEM_GROUPS)
@@ -54,10 +57,12 @@ $("emblem").innerHTML = Object.entries(D.EMBLEM_GROUPS)
 /** False until the stage is bound and drawn once: the auto-turn starts inside `bindTurn`, before there is a `turner` to read. */
 let booted = false;
 const locale = () => (document.documentElement.lang === "ja" ? "ja" : "en");
-/** What the stage draws with: the look, and how the turning behaves. The emblem turns by itself when the page opens (not for a reader who prefers reduced motion), unless the address holds an angle or says turn=0. */
+/** True while the stage turns only because the mouse is over it (leaving stops it); Auto-turn and `?turn=1` are the reader's own. */
+let hoverPlay = false;
+/** What the stage draws with: the look, and how the turning behaves. The emblem waits still when the page opens and turns while the mouse is over it; `?turn=1` has it turn by itself from the start (not for a reader who prefers reduced motion), unless the address holds an angle. */
 function turnOptions(): D.TurnControlOptions {
   // A spin and a drag turn many times a second: they follow with a slow address. A choice is written at once.
-  const options: D.TurnControlOptions = { style: state.style, size: Number(state.size), theme: state.theme, speed: Number(state.speed), locale: locale(), onTurn: () => sync(false), onPlayChange: (playing) => { state.turn = playing ? "1" : "0"; if (booted) sync(true); } };
+  const options: D.TurnControlOptions = { style: state.style, size: Number(state.size), theme: state.theme, speed: Number(state.speed), direction: state.dir === "cw" ? "clockwise" : "counterclockwise", locale: locale(), onTurn: () => sync(false), onPlayChange: (playing) => { state.turn = playing && !hoverPlay ? "1" : "0"; if (booted) sync(true); } };
   if (state.tint) options.tint = state.tint;
   if (state.engrave.trim() !== "") options.engrave = state.engrave;
   return options;
@@ -71,13 +76,17 @@ const turner = D.bindTurn($("stage"), state.id, {
   roll: number(params.get("roll"), -180, 180),
 });
 
+// `?turn=1` with an angle in the address, or under reduced motion, opens still: the state says what is happening.
+state.turn = turner.playing ? "1" : "0";
+
 let urlTimer: ReturnType<typeof setTimeout> | undefined;
 /** The address follows, but a spin changes it sixty times a second, and Safari refuses more than a hundred changes in thirty seconds: it is written once things settle. */
 function writeAddress() {
   const next = new URLSearchParams();
   if (state.id !== FIRST) next.set("id", state.id);
   for (const key of [...CHOICES, "background"] as const) if (state[key] !== DEFAULTS[key]) next.set(key, state[key]);
-  if (state.turn === "0") next.set("turn", "0");
+  if (state.turn === "1") next.set("turn", "1");
+  if (state.dir === "cw") next.set("dir", "cw");
   // While it turns by itself the angles change every frame: the address then leaves them out, so a reload starts the turn again.
   const a = turner.angles;
   if (!turner.playing) for (const key of ["yaw", "pitch", "roll"] as const) if (a[key] !== 0) next.set(key, String(a[key]));
@@ -182,7 +191,45 @@ $("engrave").addEventListener("input", () => { state.engrave = $<HTMLInputElemen
 for (const name of ["yaw", "pitch", "roll"]) {
   $(name).addEventListener("input", () => { turner.setAngles({ [name]: Number($<HTMLInputElement>(name).value) }); sync(true); });
 }
-$("play").addEventListener("click", () => { turner.togglePlay(); sync(true); });
+$("play").addEventListener("click", () => { hoverPlay = false; turner.togglePlay(); sync(true); });
+$("direction").setAttribute("aria-pressed", String(state.dir === "cw"));
+$("direction").addEventListener("click", () => {
+  state.dir = state.dir === "cw" ? "ccw" : "cw";
+  $("direction").setAttribute("aria-pressed", String(state.dir === "cw"));
+  turner.setDirection(state.dir === "cw" ? "clockwise" : "counterclockwise");
+  sync(true);
+});
+/**
+ * The mouse over a stage turns it and leaving stops it; a tap (a touch or a pen, not a drag) turns it and a second tap holds it. A reader who prefers reduced motion is never turned for by the pointer.
+ * `hover` says whether the turn it started is the pointer's (and so is undone by leaving).
+ */
+function turnOnHover(stage: HTMLElement, control: { readonly playing: boolean; readonly angles: { yaw: number }; play(): boolean; pause(): void; togglePlay(): boolean }, hover: { on: boolean }) {
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  let lastPointer = "mouse";
+  let downYaw = 0;
+  stage.addEventListener("pointerdown", (event) => { lastPointer = event.pointerType; downYaw = control.angles.yaw; });
+  stage.addEventListener("pointerenter", (event) => {
+    if (event.pointerType !== "mouse" || reduced.matches || control.playing) return;
+    hover.on = true;
+    if (!control.play()) hover.on = false;
+  });
+  stage.addEventListener("pointerleave", (event) => {
+    if (event.pointerType !== "mouse" || !hover.on) return;
+    hover.on = false;
+    control.pause();
+  });
+  stage.addEventListener("click", () => {
+    if (lastPointer === "mouse") return;
+    if (Math.abs(((control.angles.yaw - downYaw + 540) % 360) - 180) > 3) return;
+    hover.on = false;
+    control.togglePlay();
+  });
+}
+{
+  // `hoverPlay` is a module variable the options read, so the stage's flag is a view on it.
+  const hover = { get on() { return hoverPlay; }, set on(value: boolean) { hoverPlay = value; } };
+  turnOnHover($("stage"), turner, hover);
+}
 // The language chooser changes <html lang>; the stage's spoken description follows it.
 new MutationObserver(() => { turner.update(state.id, turnOptions()); drawPicks(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
 
@@ -190,15 +237,18 @@ drawPicks();
 booted = true;
 draw();
 
-// A trophy case: a few emblems that turn by themselves (a reader who prefers reduced motion gets them still), each with its own button to hold or start it.
+// A trophy case: a few emblems that wait still and turn while the pointer is over them (or when tapped), each with its own button to keep it turning or hold it.
 const CASE = ["trophy:hockey-cup", "trophy:tennis-cup", "medal:gold", "ball:rugby"];
 for (const id of CASE) {
   const cell = document.createElement("li");
   cell.innerHTML = `<div class="case-stage" data-testid="case-stage"></div><button type="button" class="fam-button case-play" aria-pressed="false" data-testid="case-play"><span class="when-off" data-say="play">Auto-turn</span><span class="when-on" data-say="stop">Stop</span></button>`;
   $("case").append(cell);
   const button = cell.querySelector("button")!;
-  const control = D.bindTurn(cell.querySelector<HTMLElement>(".case-stage")!, id, { size: 96, speed: 45, autoPlay: true, onPlayChange: (playing) => button.setAttribute("aria-pressed", String(playing)), locale: locale() });
-  button.addEventListener("click", () => control.togglePlay());
+  const hover = { on: false };
+  const stage = cell.querySelector<HTMLElement>(".case-stage")!;
+  const control = D.bindTurn(stage, id, { size: 96, speed: 22, onPlayChange: (playing) => button.setAttribute("aria-pressed", String(playing)), locale: locale() });
+  button.addEventListener("click", () => { hover.on = false; control.togglePlay(); });
+  turnOnHover(stage, control, hover);
 }
 // The words of the buttons just added, in the page's language.
 window.familyPage?.say();
