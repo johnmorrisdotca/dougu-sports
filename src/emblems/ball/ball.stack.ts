@@ -23,6 +23,8 @@ export interface StackSpec {
   grain?: { f: number; a: number };
   /** Lines down the side: how many round the whole slice, on the slices that have `grooved`. */
   grooves?: { count: number; slices: readonly number[]; colour: string; opacity: number };
+  /** A knurled band: diamonds cut across the whole wall of the slices named, `count` of them round the slice, in lines of `colour`. It follows the wall all round and to its crisp lower edge. */
+  knurl?: { count: number; slices: readonly number[]; colour: string; opacity: number };
   /** A ring on the top face: radius as a fraction, colour. */
   topRing?: { r: number; colour: string };
   /** What lies in the bottom face when it faces you: a dish. */
@@ -78,7 +80,6 @@ export function drawStack(c: ObjectContext, spec: StackSpec): { defs: string; bo
     const [x0, y0] = at(s.y0), [x1, y1] = at(s.y1);
     const rb = 46 * radius(s, 0), rt = 46 * radius(s, 1);
     const pts = [[x0 + perp[0] * rb, y0 + perp[1] * rb], [x1 + perp[0] * rt, y1 + perp[1] * rt], [x1 - perp[0] * rt, y1 - perp[1] * rt], [x0 - perp[0] * rb, y0 - perp[1] * rb]];
-    const d4 = `M${pts.map((p) => `${num(p[0], 2)} ${num(p[1], 2)}`).join("L")}Z`;
     if (line) {
       if (s.outline !== true) return "";
       const lines = `M${num(pts[0][0], 2)} ${num(pts[0][1], 2)}L${num(pts[1][0], 2)} ${num(pts[1][1], 2)}M${num(pts[2][0], 2)} ${num(pts[2][1], 2)}L${num(pts[3][0], 2)} ${num(pts[3][1], 2)}`;
@@ -89,9 +90,18 @@ export function drawStack(c: ObjectContext, spec: StackSpec): { defs: string; bo
       const near: 1 | -1 = topVisible ? -1 : 1;
       return `<path d="${lines}${rim(s.y0, radius(s, 0), near)}${i === slices.length - 1 ? "" : rim(s.y1, radius(s, 1), near)}" fill="none"/>`;
     }
-    let out = `<path d="${d4}" fill="url(#${gid})"/>`;
+    // The wall is the band between the two ends and the half of the far end's rim that bulges toward you, so it ends in a crisp curved edge like a real cylinder's, not in the soft edge of its cap.
+    const bulge = (y: number, r: number): string => {
+      const [cx, cy] = at(y);
+      const rad = (perpDeg * Math.PI) / 180;
+      const ex = cx - Math.cos(rad) * 46 * r, ey = cy - Math.sin(rad) * 46 * r;
+      return `A${num(46 * r, 2)} ${num(Math.max(46 * r * Math.abs(nz), 0.02), 2)} ${num(perpDeg, 1)} 0 ${topVisible ? 1 : 0} ${num(ex, 2)} ${num(ey, 2)}`;
+    };
+    const p = (k: number): string => `${num(pts[k][0], 2)} ${num(pts[k][1], 2)}`;
+    const wall = topVisible ? `M${p(1)}L${p(0)}${bulge(s.y0, radius(s, 0))}L${p(2)}Z` : `M${p(0)}L${p(1)}${bulge(s.y1, radius(s, 1))}L${p(3)}Z`;
+    let out = `<path d="${wall}" fill="url(#${gid})"/>`;
     const gr = spec.grooves;
-    if (!line && gr !== undefined && gr.slices.includes(i)) {
+    if (gr !== undefined && gr.slices.includes(i)) {
       let marks = "";
       for (let k = 0; k < gr.count; k++) {
         const t = ((k + 0.5) / gr.count) * Math.PI;
@@ -101,6 +111,33 @@ export function drawStack(c: ObjectContext, spec: StackSpec): { defs: string; bo
         marks += `M${num(x0 + perp[0] * rb * uu, 2)} ${num(y0 + perp[1] * rb * uu, 2)}L${num(x1 + perp[0] * rt * uu, 2)} ${num(y1 + perp[1] * rt * uu, 2)}`;
       }
       out += `<path d="${marks}" stroke="${gr.colour}" stroke-width="${num(Math.max(0.5, c.minWidth * 0.5), 2)}" opacity="${gr.opacity}" fill="none"/>`;
+    }
+    const kn = spec.knurl;
+    if (kn !== undefined && kn.slices.includes(i)) {
+      // Each line of the knurl runs up the wall as it goes round it, one family each way, and is cut where it would leave the half of the wall you can see.
+      const toward = topVisible ? -1 : 1;
+      const point = (theta: number, v: number): string => {
+        const rr = rb + (rt - rb) * v;
+        const cx = x0 + (x1 - x0) * v, cy = y0 + (y1 - y0) * v;
+        return `${num(cx + perp[0] * rr * Math.cos(theta) + toward * d[0] * rr * Math.abs(nz) * Math.sin(theta), 1)} ${num(cy + perp[1] * rr * Math.cos(theta) + toward * d[1] * rr * Math.abs(nz) * Math.sin(theta), 1)}`;
+      };
+      const pitch = (2 * Math.PI) / kn.count;
+      // A turn about the axis slides the knurl round the wall (a positive turn carries its front to the right).
+      const slide = ((((-c.spin * Math.PI) / 180) % pitch) + pitch) % pitch;
+      let marks = "";
+      for (const way of [1, -1]) {
+        for (let k = -2; k <= kn.count / 2 + 2; k++) {
+          let pen = false;
+          for (let j = 0; j <= 4; j++) {
+            const v = j / 4;
+            const theta = k * pitch + slide + way * 2 * pitch * v;
+            if (theta < 0 || theta > Math.PI) { pen = false; continue; }
+            marks += `${pen ? "L" : "M"}${point(theta, v)}`;
+            pen = true;
+          }
+        }
+      }
+      out += `<path d="${marks}" stroke="${kn.colour}" stroke-width="${num(Math.max(0.5, c.minWidth * 0.55), 2)}" opacity="${kn.opacity}" fill="none" stroke-linecap="butt"/>`;
     }
     return out;
   };

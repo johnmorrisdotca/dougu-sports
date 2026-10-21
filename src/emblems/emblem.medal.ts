@@ -33,7 +33,8 @@ export function defineMedal(id: string, en: string, ja: string, metal: Extract<M
     ["M", starPath(32, 43, 9, 3.9)],
     ["l", "M19.2 40a13.4 13.4 0 0 1 9.4-10.4 14 14 0 0 0-6.6 12.6z"],
   ];
-  const back: readonly Shape[] = [...disc, ["E", circlePath(32, 43, 8.4), "1.4"]];
+  // From behind the ribbon is still there (the straps cross the other way, as the turn mirrors them) and the disc is plain, with a ring where a name is cut.
+  const back: readonly Shape[] = [...ribbon(), ...disc, ["E", circlePath(32, 43, 8.4), "1.4"]];
   return defineFlat(id, en, ja, "ours", { metal, front, back, rim: 3, engrave: { front: { x: 32, y: 43, w: 19, h: 15 }, back: { x: 32, y: 43, w: 20, h: 13 } } });
 }
 

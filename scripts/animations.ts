@@ -55,11 +55,11 @@ const trophies = (D: Dist, yaw: number) => {
 const balls = (D: Dist, yaw: number) => {
   const f = (svg: string) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${svg}</figure>`;
   const rest = [20, -30, 35, 0, -25, 40, 15];
-  return ["ball:soccer", "ball:basketball", "ball:baseball", "ball:rugby", "ball:volleyball", "ball:tennis", "ball:golf"].map((id, i) => f(D.emblemFrame(id, { yaw: i === 3 ? yaw : rest[i], pitch: 12, size: 112 }))).join("");
+  return ["ball:soccer", "ball:basketball", "ball:baseball", "ball:pickleball-outdoor", "ball:volleyball", "ball:tennis", "ball:golf"].map((id, i) => f(D.emblemFrame(id, { yaw: i === 3 ? yaw : rest[i], pitch: i === 3 ? 25 : 12, ...(i === 3 ? { roll: -15 } : {}), size: 112 }))).join("");
 };
 const pickleballs = (D: Dist, yaw: number) => {
   const f = (svg: string) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${svg}</figure>`;
-  return ["ball:pickleball-outdoor", "ball:pickleball-indoor", "ball:pickleball-outdoor"].map((id, i) => f(D.emblemFrame(id, { yaw: i === 1 ? yaw : 25, pitch: 15, size: 170 }))).join("");
+  return ["ball:pickleball-outdoor", "ball:pickleball-indoor", "ball:pickleball-outdoor"].map((id, i) => f(D.emblemFrame(id, { yaw: i === 1 ? yaw : 25, pitch: i === 1 ? 25 : 15, ...(i === 1 ? { roll: -15 } : {}), size: 170 }))).join("");
 };
 const slotted = (D: Dist, yaw: number) => {
   const f = (svg: string) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${svg}</figure>`;

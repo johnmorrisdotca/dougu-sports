@@ -75,7 +75,7 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 <p align="center">
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-turn-dark.webp">
-<img alt="Seven balls under floodlights: a soccer ball, a basketball, a baseball, a rugby ball, a volleyball, a tennis ball and a golf ball. Six stand still and only the rugby ball in the centre rolls, so that its stripes and panels travel across it." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-turn-light.webp" width="760">
+<img alt="Seven balls under floodlights: a soccer ball, a basketball, a baseball, an outdoor pickleball, a volleyball, a tennis ball and a golf ball. Six stand still and only the pickleball in the centre rolls, its holes showing the dark inside and the floodlights through as they line up." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/balls-turn-light.webp" width="760">
 </picture>
 </p>
 
@@ -102,7 +102,7 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 <p align="center">
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/flips-turn-dark.webp">
-<img alt="A crest, a hockey skate, a silver medal, a gold medal, a championship banner, a baseball glove and a football helmet on royal purple: six stand still and only the gold medal in the centre flips like a coin, showing its face, then its edge, then its plain back." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/flips-turn-light.webp" width="760">
+<img alt="A crest, a hockey skate, a silver medal, a gold medal, a championship banner, a baseball glove and a football helmet on royal purple: six stand still and only the gold medal in the centre flips like a coin, showing its face, then its solid edge, then its back, with the ribbon still hanging from it." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/flips-turn-light.webp" width="760">
 </picture>
 </p>
 
@@ -140,8 +140,8 @@ Put the string in a page (`element.innerHTML = svg`), write it to a file, or sen
 
 - **Equipment first (道具 is the word for it)**: 118 balls and implements drawn in 3D, from the 32-panel soccer ball to the 26, 18, 14, 12 and 6 panel constructions, vintage leather balls, era-style and shop-wall soccer balls, baseballs of other threads, volleyballs in national colours ([docs/vintage-balls.md](./docs/vintage-balls.md)), futsal, beach soccer and the pucks and stones, each with its official size, 8 printed pucks (a flag, a leaf, stars and stripes, a player's number, a made-up signature, your own picture: [docs/pucks.md](./docs/pucks.md)), and 42 pieces of gear (sticks, rackets, helmets, skates, nets, and the Japanese budo kit) drawn to match; see [docs/gallery.md](./docs/gallery.md).
 - **Three styles** for every emblem: `metal` (polished metal: a gradient, a highlight and a soft rim of reflected light, edged in a darker tone of its own metal, with no heavy outline), `line` (one clean outline in the page's text colour, made to read at 14 pixels) and `color` (flat fills); see [Theming](#theming).
-- **Size, tint, accent and theme** as options: a tint recolours the main part (a medal's metal, a crest's colour, a ball's patches), an accent the second colour (a ribbon, a crest's band, the pennants), a theme sets the ink for light, dark or either.
-- **Turning**: `emblemFrame` and `ballFrame` return the emblem at an angle, in plain SVG: every emblem turns, a ball rolls, a cup keeps its outline and moves its light, and everything flat (gear, a bat, a crown, a sport's icon) flips like a coin; `bindTurn` lets a drag, the arrow keys or an auto-turn do the turning in a page; see [docs/turning.md](./docs/turning.md).
+- **Size, tint, accent and theme** as options: a tint recolours the main part (a medal's metal, a crest's colour, a ball's patches; not the body of a golf ball or a baseball, whose colour the sport fixes), an accent the second colour (a ribbon, a crest's band, the pennants), a theme sets the ink for light, dark or either.
+- **Turning**: `emblemFrame` and `ballFrame` return the emblem at an angle, in plain SVG: every emblem turns, a ball rolls, a cup keeps its outline and moves its light, and everything flat (a medal, a crest, a banner, gear, a bat, a crown, a sport's icon) flips like a coin with a solid edge, a back of its own and its ribbon or pole seen from behind; `bindTurn` lets a drag, the arrow keys or an auto-turn do the turning in a page; see [docs/turning.md](./docs/turning.md).
 - **Engraving**: text cut into a medal, a plaque, the belt, a ring, a banner, a pennant and the plinth of a cup, from `label`, `year` and `rank` or one `engrave` string, in the ink that reads at 4.5 to 1 on the metal, and it turns with the emblem; see [engraving](./docs/engraving.md).
 - **Custom balls**: a baseball, a softball and the classic soccer balls take `paint` (a solid colour, or two: along the seam or in halves, with stitches that still show), `decal` (your own SVG or image as a logo, wrapped onto the sphere so that it turns with the ball), `stamp` (condensed bold text between small stars, with an optional made-up signature), `script` (an original cursive word) and `mark` (a letter in a circle, or an SVG of your own); see [docs/custom-balls.md](./docs/custom-balls.md). The package carries no logo of anyone's: a logo or a mark is the one you pass.
 - **Labels in two languages**: the `<title>` is English or Japanese (`locale`), your own words (`title: "…"`), or left out for an emblem that sits beside text that says the same (`title: false`).
@@ -545,7 +545,7 @@ The metals are `METALS` (gold `#d9a620`, silver `#aeb6c0`, bronze `#b8733a`); ea
 ## Limits
 
 - A turn is drawn in plain SVG, not in 3D: a cup keeps its silhouette and moves its light, handles and seams; a medal is squeezed; a ball is projected from its own geometry, panel by panel, and has no grain while it turns. Gear, icons and pictograms flip like a coin, with the back as a mirror of the front and a thin rim; a pennant's back is its own drawing; one turn (`src/emblems/emblem.flip.ts`) does it for all of them.
-- A tint is one colour, the main one, and an accent a second. The pieces of a trophy that are another metal (the gilt of a plate, the green bands of a globe, the black foot of a cup) keep their own colour.
+- A tint is one colour, the main one, and an accent a second. A golf ball and a baseball are white by the rules of their sports, so they ignore `tint` (a baseball takes `paint`, as the custom balls do); every other ball takes it. The pieces of a trophy that are another metal (the gilt of a plate, the green bands of a globe, the black foot of a cup) keep their own colour.
 - The trophies are generic: each is drawn for this package in a simplified form that a reader knows at a glance, and none is traced from a photograph or carries a name, a mark or an engraving.
 - A trophy in the metal style is about 3 to 4.5 kB of markup, a medal or a crest about 1 to 2 kB, a line drawing about 1 to 2.5 kB; a ball in 3D is 5 to 13 kB, and a piece of gear is 1 to 4 kB, drawn in layers.
 - The size is a number of pixels up to 4096; the drawing is a vector at any size.

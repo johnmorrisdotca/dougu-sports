@@ -138,23 +138,25 @@ function document(title: string, model: FlatModel, r: Resolved, ctx: Ctx, body: 
   return wrap({ title, size: r.size, style: r.style, theme: r.theme, defs: r.style === "metal" ? defsOf(ctx.used) : "", body, box: model.box, edge: model.ink === true ? undefined : mix(ctx.main, -0.5), width: model.ink === true ? undefined : 0.8 });
 }
 
-/** A flat object (a medal, a crest, a plaque): drawn as it is by `svg`; turned about its vertical axis it flips like a coin and shows its back, with its rim for a moment edge on. */
+/**
+ * A flat object (a medal, a crest, a plaque, a banner): drawn as it is by `svg`; turned about its vertical axis it is a slab with a front, a back and a solid edge (`flipSvg`). The edge stays as wide on the screen as the
+ * thickness the model gives (`rim`), so edge on it is a band and never a hairline. The back is the model's `back` shapes (what hangs from it, a ribbon or a pole, is there too) seen from behind, so they are mirrored,
+ * as are the front's plain parts (its metal and its second colour, without the details) when there is no `back`; an engraving on the back is cut to read from behind, so it is not mirrored.
+ */
 export function defineFlat(id: string, en: string, ja: string, source: EmblemSource, model: FlatModel): Emblem<FlatModel> {
   const draw = (o: FrameOptions | undefined, yaw: number, pitch: number): string => {
     const r = resolve(o);
     const ctx = context(model, r);
     ctx.engrave = engravingOf(o);
-    if (yaw === 0 && pitch === 0) return document(en, model, r, ctx, face(model, model.front, ctx, engraved(model, ctx, "front")));
-    const across = Math.cos((yaw * Math.PI) / 180);
-    const tilt = Math.cos((pitch * Math.PI) / 180);
-    const shown = across >= 0 ? model.front : (model.back ?? model.front.filter((x) => x[0] === "m" || x[0] === "o" || x[0] === "s"));
-    const sx = Math.max(Math.abs(across), 0.02);
-    const sy = Math.max(Math.abs(tilt), 0.02);
-    // The rim is on the left for a positive yaw, which carries the front toward the right (as it does for a ball, a cup and a drag to the right).
-    const rim = -(model.rim ?? 0) * Math.sin((yaw * Math.PI) / 180);
-    const [x0, y0, w, h] = (model.box ?? "0 0 64 64").split(" ").map(Number) as [number, number, number, number];
-    const thick = rim === 0 ? "" : `<g transform="translate(${n2(rim)} 0)">${shapesMarkup(model.front.filter((x) => x[0] === "m" || x[0] === "o").map((x) => ["s", x[1]] as const), ctx)}</g>`;
-    return document(en, model, r, ctx, `<g transform="translate(${n2(x0 + w / 2)} ${n2(y0 + h / 2)}) scale(${n2(sx)} ${n2(sy)}) translate(${n2(-x0 - w / 2)} ${n2(-y0 - h / 2)})">${thick}${face(model, shown, ctx, engraved(model, ctx, across >= 0 ? "front" : "back"))}</g>`);
+    const front = document(en, model, r, ctx, face(model, model.front, ctx, engraved(model, ctx, "front")));
+    if (yaw === 0 && pitch === 0) return front;
+    const [x0, , w] = (model.box ?? "0 0 64 64").split(" ").map(Number) as [number, number, number, number];
+    const text = engraved(model, ctx, "back");
+    const shown = (model.back ?? model.front.filter((x) => x[0] === "m" || x[0] === "o" || x[0] === "s" || x[0] === "r")).filter((x) => text === "" || x[0] === x[0].toLowerCase());
+    const plain = { ...model, blank: undefined, letters: undefined };
+    const behind = `<g transform="translate(${n2(2 * x0 + w)} 0) scale(-1 1)">${face(plain, shown, ctx)}</g>${text}`;
+    const back = document(en, model, r, ctx, behind);
+    return flipSvg(front, { yaw, pitch, line: r.style === "line", back, thick: (model.rim ?? 3) / w });
   };
   return { id, en, ja, source, kind: "flat", model, svg: labelled(en, ja, (o?: EmblemOptions) => draw(o, 0, 0)), frame: labelled(en, ja, (o?: FrameOptions) => draw(o, degrees(o?.yaw), degrees(o?.pitch))) };
 }

@@ -40,7 +40,7 @@ export interface Surface {
   /** A raised seam: a shadow, the colour and a highlight along the curve. */
   seam(pts: readonly V3[], colour: string, width: number, o?: { closed?: boolean; light?: string; opacity?: number }): string;
   /** Small round marks lying on the surface (holes, dimples, dots): each is a cap of `radius` radians round its centre. */
-  dots(centres: readonly V3[], radius: number, fill: string, o?: { opacity?: number; ink?: boolean; light?: boolean }): string;
+  dots(centres: readonly V3[], radius: number, fill: string, o?: { opacity?: number; ink?: boolean; light?: boolean; dimple?: string }): string;
   /** The facing of a point: 1 straight at you, 0 on the limb. */
   facing(u: V3): number;
   /** A point of space, in units of the ball's radius from its centre (not on the surface): its screen position and depth (positive is toward you). */
@@ -77,6 +77,8 @@ export interface BallSpec {
   view: { yaw: number; pitch: number; roll: number };
   /** The main colour of the ball (what `tint` replaces). */
   base: string;
+  /** The ball's real colour is fixed (a golf ball, a baseball): `tint` does not recolour it. The ball's own `paint` still does, where it has one. */
+  fixed?: boolean;
   /** The colour the whole ball is filled with before its panels are laid on, where it is not `base` (a soccer ball is white, its pentagons are `base`). */
   ground?: string;
   mat: Material;
@@ -398,6 +400,16 @@ function surfaceOf(g: Geometry, line: boolean, minWidth: number, home: Surface["
       }
       if (d.length === 0) return "";
       const path = d.join("");
+      if (o?.dimple !== undefined && !line) {
+        // A dimple is a shallow bowl lit from the upper left: its upper left wall is in shadow, its lower right wall catches the light. Three layers for all of them: the whole mark in the shadow's colour, the same marks moved a little
+        // toward the lower right and filled with the ball's own colour (which leaves a crisp dark crescent on the upper left), and a bright edge along the lower right.
+        const r = s.radius * sr;
+        const dx = num(r * 0.2, 2), dy = num(r * 0.26, 2);
+        const w = num(Math.max(0.3, Math.min(r * 0.2, 0.9)), 2);
+        const key = `dm${hashOf(path)}`;
+        const at = `transform="translate(${dx} ${dy})"`;
+        return `<defs><path id="${key}" d="${path}"/></defs><use href="#${key}" fill="${fill}" opacity="${o.opacity ?? 0.55}"/><use href="#${key}" fill="${o.dimple}" ${at}/><use href="#${key}" fill="none" stroke="#fff" stroke-width="${w}" opacity=".7" ${at}/>`;
+      }
       const hi = o?.light === false || line ? "" : `<path d="${path}" fill="none" stroke="#fff" stroke-width="${num(Math.max(0.35, minWidth * 0.3), 2)}" opacity=".3" transform="translate(.25 .35)"/>`;
       return `${hi}<path d="${path}" fill="${line ? INK : fill}"${o?.opacity === undefined ? "" : ` opacity="${o.opacity}"`}/>`;
     },
@@ -463,12 +475,13 @@ export function drawBall(title: string, key: string, spec: BallSpec, opts: Resol
   // A ball with a second colour of its own (a soccer ball's panels on a white ground) paints the body as the ground and the second colour as the panels; one with a single colour takes the body as its main colour.
   const paint = opts.paint;
   const two = spec.ground !== undefined;
-  const base = opts.tint ?? (two ? paint?.second : paint?.body) ?? spec.base;
+  const tint = spec.fixed === true ? undefined : opts.tint;
+  const base = tint ?? (two ? paint?.second : paint?.body) ?? spec.base;
   const ground = two ? paint?.body ?? spec.ground : undefined;
   const surface = surfaceOf(g, line, minWidth, homeOf(spec));
   const layers = spec.draw(surface, base, opts.accent, opts.colors, { paint: opts.paint, print: opts.print, printer: opts.printer });
   const sil = silhouette(g);
-  const id = `k${hashOf(`${key}|${opts.style}|${opts.tint ?? ""}|${opts.accent ?? ""}${opts.colors === undefined ? "" : `|${opts.colors.join("")}`}|${sil.tag}${sil.d}${paint === undefined && (opts.print === undefined || opts.printer === undefined) ? "" : `|${JSON.stringify([paint, opts.printer === undefined ? undefined : opts.print])}`}`)}`;
+  const id = `k${hashOf(`${key}|${opts.style}|${tint ?? ""}|${opts.accent ?? ""}${opts.colors === undefined ? "" : `|${opts.colors.join("")}`}|${sil.tag}${sil.d}${paint === undefined && (opts.print === undefined || opts.printer === undefined) ? "" : `|${JSON.stringify([paint, opts.printer === undefined ? undefined : opts.print])}`}`)}`;
   // A long outline (the hull of a pointed ball) is written once, in the definitions, and used wherever the silhouette is.
   const long = sil.d.length > 400;
   const outline = long ? `<path id="${id}s" d="${sil.d}"/>` : "";

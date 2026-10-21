@@ -105,12 +105,13 @@ test("a medal flips like a coin: its back is plain, it is edge on at a quarter t
   const front = D.renderEmblem("medal:gold");
   const back = D.emblemFrame("medal:gold", { yaw: 180 });
   assert.notEqual(front, back);
-  assert.ok((back.match(/<path /g) ?? []).length < (front.match(/<path /g) ?? []).length, "the back has no ribbon and no star");
+  assert.ok(!back.includes("M32 34L34.29 39.84"), "the back has no star");
+  for (const stripe of ["#0085c7", "#f4c300", "#1b1b1b", "#009f3d", "#df0024"]) assert.ok(back.includes(stripe), `the ribbon is there from behind too: ${stripe}`);
   assert.match(D.emblemFrame("medal:gold", { yaw: 90 }), /scale\(0\.02 1\)/);
   assert.match(D.emblemFrame("medal:gold", { pitch: 60 }), /scale\(1 0\.5\)/);
   assert.equal(D.emblemFrame("medal:gold", { yaw: 40 }), D.emblemFrame("medal:gold", { yaw: 400 }));
-  assert.match(D.emblemFrame("medal:gold", { yaw: 45 }), /translate\(-2\.12 0\)/, "the rim shows as it turns, on the left for a positive yaw");
-  assert.match(D.emblemFrame("medal:gold", { yaw: -45 }), /translate\(2\.12 0\)/, "and on the right for a negative one");
+  assert.match(D.emblemFrame("medal:gold", { yaw: 45 }), /<feOffset in="s" dx="-2\.12" dy="0" result="o8"\/>/, "the rim shows as it turns, on the left for a positive yaw");
+  assert.match(D.emblemFrame("medal:gold", { yaw: -45 }), /<feOffset in="s" dx="2\.12" dy="0" result="o8"\/>/, "and on the right for a negative one");
 });
 
 test("the ribbon of a medal has the five stripes of a games and draws no rings", () => {
@@ -191,8 +192,8 @@ test("a turned gear, icon or award squeezes by the cosine, mirrors its back, and
     assert.equal(scale(D.emblemFrame(id, { yaw: 90 })), 0.02, id);
     const rim = (svg: string): number => Math.abs(Number(/<feOffset in="s" dx="(-?[\d.]+)"[^>]*result="o3"/.exec(svg)?.[1]));
     assert.ok(rim(D.emblemFrame(id, { yaw: 90 })) > rim(D.emblemFrame(id, { yaw: 30 })), `${id}: the rim is widest edge on`);
-    assert.match(D.emblemFrame(id, { yaw: 120 }), /<feColorMatrix/, `${id}: the back is a little darker`);
-    assert.doesNotMatch(D.emblemFrame(id, { yaw: 60 }), /<feColorMatrix/, `${id}: the front is not`);
+    assert.match(D.emblemFrame(id, { yaw: 120 }), /<feColorMatrix in="SourceGraphic" values="0\.8 0 0[^>]*result="d"/, `${id}: the back is a little darker`);
+    assert.doesNotMatch(D.emblemFrame(id, { yaw: 60 }), /result="d"/, `${id}: the front is not`);
     assert.match(D.emblemFrame(id, { yaw: 60, style: "line" }), /flood-color="currentColor"/, `${id}: the rim of a line drawing is the page's ink`);
   }
 });
@@ -209,7 +210,9 @@ test("two turned drawings in one page do not share a filter unless they would dr
   // A box of 64 and a box of 960 at the same turn: one filter's region would cut the other to nothing.
   const sheet = (viewBox: string): string => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" width="64" height="64" role="img"><title>x</title><path d="M0 0h10v10z"/></svg>`;
   assert.notEqual(id(flipSvg(sheet("0 0 64 64"), { yaw: 180, pitch: 0 })), id(flipSvg(sheet("0 -960 960 960"), { yaw: 180, pitch: 0 })));
-  assert.equal(id(D.emblemFrame("gear:hurley", { yaw: 180 })), id(D.emblemFrame("gear:hurley", { yaw: 180, size: 20 })));
+  // The edge is never thinner than a few pixels, so a drawing small enough to need that has a filter of its own; two sizes that both clear it share one.
+  assert.equal(id(D.emblemFrame("gear:hurley", { yaw: 120, size: 200 })), id(D.emblemFrame("gear:hurley", { yaw: 120, size: 300 })));
+  assert.notEqual(id(D.emblemFrame("gear:hurley", { yaw: 120, size: 20 })), id(D.emblemFrame("gear:hurley", { yaw: 120, size: 200 })));
   const ids = ["sport:nhl", "award:crown", "gear:hurley"] as const;
   const page = ids.map((ref) => id(D.emblemFrame(ref, { yaw: 180 })));
   const boxes = ids.map(box);

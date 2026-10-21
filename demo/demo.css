@@ -88,7 +88,7 @@ details > pre { margin: 0; padding: 0 14px 14px; overflow-x: auto; font-family: 
 .brand-shirts svg { max-width: 100%; height: auto; }
 
 /* The emblem and its turn controls stay in view while the options scroll past: on a phone the pinned stage sits on top and the panel runs under it; on a desk the stage is on the left and the panel on the right. */
-.play { display: flex; flex-direction: column; overflow: clip; }
+section.play { display: flex; flex-direction: column; overflow: clip; }
 .play .stagebox { display: contents; }
 .play .stagepin { order: -3; position: sticky; top: 0; z-index: 4; display: grid; gap: 4px; padding: 4px 12px 8px; background: var(--surface); border-bottom: 1px solid var(--rule); }
 .play .stagebox > .note { order: -2; margin: 0; }
@@ -108,7 +108,7 @@ details > pre { margin: 0; padding: 0 14px 14px; overflow-x: auto; font-family: 
   .stagepin .range { min-width: 4rem; }
 }
 @media (min-width: 900px) {
-  .play { display: grid; grid-template-columns: minmax(0, 1fr) 28rem; }
+  section.play { display: grid; grid-template-columns: minmax(0, 1fr) 28rem; }
   .play .stagebox { display: grid; align-content: start; }
   .play .stagepin { order: 0; top: 8px; padding: 12px 14px 10px; border-bottom: 0; gap: 8px; }
   .play .stagebox > .note { order: 0; }
@@ -117,3 +117,5 @@ details > pre { margin: 0; padding: 0 14px 14px; overflow-x: auto; font-family: 
   .play .controls { border-left: 1px solid var(--rule); }
 }
 .play .stagepin .fam-button.play { flex: 0 0 auto; }
+/* The button that starts the auto-turn is also called `play`: it is an ordinary button, never the section's flex column. */
+button.play { display: inline-flex; width: auto; }

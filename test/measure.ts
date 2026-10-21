@@ -64,9 +64,9 @@ function silhouette(svg: string): Box {
   return { ...bbox(pts), outline };
 }
 
-/** The size of a puck or a stone, from the side faces (the stack's slices; the caps are flat at an edge-on view and the handle is not part of the stone's height). */
+/** The size of a puck or a stone, from the corners of the side faces (the stack's slices, the curve at the foot of the wall left out: it is flat at the edge-on view; the caps are flat at an edge-on view and the handle is not part of the stone's height). */
 function stack(svg: string): Box {
-  const sides = [...svg.matchAll(/<path d="(M[^"]+Z)" fill="url\(#[^)]*s\d+\)"\/>/g)].map((m) => polygon(m[1]));
+  const sides = [...svg.matchAll(/<path d="(M[^"]+Z)" fill="url\(#[^)]*s\d+\)"\/>/g)].map((m) => [...m[1].matchAll(/[ML](-?[\d.]+) (-?[\d.]+)/g)].map((q): Pt => [Number(q[1]), Number(q[2])]));
   if (sides.length === 0) throw new Error("no side faces");
   return bbox(sides.flat());
 }

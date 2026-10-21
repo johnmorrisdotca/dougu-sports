@@ -7,6 +7,7 @@ export const BALL_BASEBALL = /* @__PURE__ */ seamedBall({
   ja: "野球のボール",
   size: { extentMm: 73.8, diameterMm: 73.8, circumferenceMm: 231.77, massG: [141.75, 148.83], rule: "Official Baseball Rules, Rule 3.01 The Ball", note: "Diameter worked out from the middle of the circumference range." },
   base: "#f4f0e6",
+  fixed: true,
   b: 0.4,
   view: { yaw: 18, pitch: 28, roll: -10 },
   mat: { gloss: 0.3, shade: "#4a3a2a", grain: { f: 1.4, a: 0.12 } },

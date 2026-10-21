@@ -22,7 +22,7 @@ const GOLDEN: Record<string, string> = {
   "ball:racquetball": "00972fe18d27,b12988fb5f33,6e3a3f253872,176858e42b9c,27edc64fbb48",
   "ball:field-hockey": "b7cec9037dc4,1958fc960c4d,9f02a27c1ed0,7565f6e783ad,1d2944f3b5c0",
   "ball:table-tennis": "485b2367709b,25b32a0dd719,f8ba2d8b46e9,9e5f035cba0d,892b3c6b8e3b",
-  "ball:golf": "ec41fe6cce34,b6194495644a,3a35d5419c6c,32442212867f,96b1c2521a3c",
+  // The golf ball is no longer here: its dimples were redrawn in 0.16.2 (see test/golf.test.ts).
 };
 
 const hash = (s: string): string => createHash("sha1").update(s).digest("hex").slice(0, 12);

@@ -81,8 +81,9 @@ test("a drag to the right shows the rim of a medal on its left, the edge that co
   await page.goto("/?id=medal:gold");
   const rimSide = () =>
     page.locator("#stage svg").first().evaluate((svg) => {
-      const rim = svg.querySelector('g[transform^="translate("][transform$=" 0)"]');
-      return rim === null ? undefined : Number(/translate\((-?[\d.]+) 0\)/.exec(rim.getAttribute("transform") ?? "")?.[1]);
+      // The edge is the slices of the face moved along the thickness: the farthest one says which side it lies on (left is negative).
+      const far = svg.querySelector('feOffset[result="o8"]');
+      return far === null ? undefined : Number(far.getAttribute("dx"));
     });
   await dragStage(page, 40);
   await expect.poll(rimSide).toBeLessThan(0);
@@ -383,4 +384,18 @@ test("a reader who prefers reduced motion is not turned for by the pointer, and 
   await page.locator("#play").click();
   await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
   await expect.poll(() => yaw(page), { timeout: 8000 }).not.toBe(0);
+});
+
+test("the Auto-turn button is an ordinary button beside Reverse, before and after it is pressed, and never stretches across the row", async ({ page }) => {
+  await page.goto("/?id=ball:golf");
+  const row = (await page.locator("#spin-row").boundingBox())!;
+  for (const pressed of [false, true]) {
+    const play = (await page.locator("#play").boundingBox())!;
+    const reverse = (await page.locator("#direction").boundingBox())!;
+    expect(play.width, `Auto-turn ${pressed ? "(Stop)" : ""} is ${play.width} px of a row ${row.width} px wide`).toBeLessThan(row.width * 0.5);
+    expect(Math.abs(play.height - reverse.height), "as tall as Reverse").toBeLessThanOrEqual(2);
+    expect(Math.abs(play.y - reverse.y), "on the same line as Reverse").toBeLessThanOrEqual(2);
+    if (!pressed) await page.locator("#play").click();
+  }
+  await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
 });

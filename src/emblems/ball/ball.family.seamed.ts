@@ -18,6 +18,8 @@ export interface SeamedOptions {
   base: string;
   /** The seam's parameter b. */
   b: number;
+  /** The ball's real colour is fixed, so `tint` does not recolour it (see `BallSpec.fixed`). */
+  fixed?: boolean;
   view?: BallSpec["view"];
   mat: BallSpec["mat"];
   /** A strip along the seam: its colour and width. */
@@ -45,6 +47,7 @@ export function seamedBall(o: SeamedOptions): Piece<BallSpec> {
   const spec: BallSpec = {
     view: o.view ?? { yaw: 0, pitch: 0, roll: 0 },
     base: o.base,
+    fixed: o.fixed,
     mat: o.mat,
     home: o.home,
     draw: (s, base, _accent, _colors, custom) => {

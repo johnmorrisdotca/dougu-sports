@@ -6,6 +6,27 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.16.2] - 2026-10-21
+
+Every piece that flips or turns has a body at every angle: a solid edge, a back of its own, and what hangs from it still there.
+
+### Fixed
+
+- **Medals, crests, banners, belts, plaques, pennants, gear and the pictograms are slabs, not sheets** (`flipSvg`, and `defineFlat`, which now turns through it): a solid edge, in the face's own colours darkened, runs behind the squeezed face and stays as wide on the screen as the piece is thick, never under about 2.4 pixels whatever the size, so edge on (a quarter turn, either way) a medal is a band and no longer a hairline. The edge is eight slices of the face made opaque again (a thin part such as a stick or a strap keeps its edge when the squeeze would have thinned it away) and the slab is centred, so it does not slide as it turns; it lies on the other side once the back is toward you.
+- **A medal seen from behind keeps its ribbon** (it lost it), a championship banner its pole and a crest pennant its staff, on the other side, as a real turn mirrors them. The plain parts of a piece with no back of its own (a plaque's board, a belt's strap) are drawn behind it too, so the back is as big as the front.
+- **The hockey puck is a straight cylinder** (`drawStack`): the wall ends in the curve of the lower rim, a crisp edge, and no longer in the soft edge of the bottom cap; its edge is knurled with diamonds all round the wall (it covered only part of it), and the knurl slides round the wall as the puck spins. The curling stone's walls end the same way. Seen from the side the puck is one third as thick as it is wide, at 0, 30, 60 and 90 degrees of tilt.
+- **The golf ball reads as a golf ball at every size and tint**: about 330 dimples (it had 190, faint), each a bowl with a shadow on its upper left wall and a bright edge on the lower right, white by default. **A golf ball and a baseball ignore `tint`** (their colour is fixed by the rules of their sports; a baseball takes `paint`); every other ball takes it. `BallSpec.fixed`, `DottedOptions.fixed` and `SeamedOptions.fixed` say so.
+- **The demo's Auto-turn button** (Stop) is an ordinary button beside Reverse again; a class name it shared with the playground's section had stretched it across the row.
+
+### Changed
+
+- **README pictures**: the balls row's centre ball, the one that rolls, is the outdoor pickleball with its see-through holes (it was the rugby ball); the flips row and the pickleball picture are redrawn (`pnpm animations`), still half speed and only the centre one turning.
+
+### Tests
+
+- `test/thickness.test.ts`: the edge's width in pixels for every flat piece at 24, 64 and 256 pixels, its sides, the back of every flat piece, the puck's wall; `test/golf.test.ts`; `e2e/silhouette.demo.ts` counts real pixels in Chromium (edge on every flat piece is a band at least two pixels wide, from behind it is as solid as its front, the puck is one third as thick as wide at 0, 30, 60 and 90 degrees); an e2e test of the Auto-turn button.
+- Size limits: a medal, a crest or a plaque bundled alone is held to 5.8 kB gzipped (was 4.6), the cost of the one turn they now share.
+
 ## [0.16.1] - 2026-10-21
 
 The turning pictures show one thing moving: in a row, only the centre one turns.

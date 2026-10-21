@@ -16,6 +16,8 @@ export interface ObjectContext {
   turning: boolean;
   /** An id prefix that no other drawing of this piece in the page shares. */
   id: string;
+  /** The turn about the object's own axis, in degrees (its resting view's and the turn's together): what a knurled edge slides by. */
+  spin: number;
   /** The thinnest line that shows at this size, in box units. */
   minWidth: number;
   /** A point of the object in its own space to the box: x, y and depth (positive toward you); one unit is 46 box units. */
@@ -51,7 +53,7 @@ export function defineObject<Model extends object>(def: ObjectDef<Model>): Piece
       const q = apply(rot, [(p[0] - sh[0]) * k, (p[1] - sh[1]) * k, (p[2] - sh[2]) * k]);
       return [50 + 46 * q[0], 50 - 46 * q[1], q[2]];
     };
-    const { defs, body } = def.draw({ rot, opts, turning, id, minWidth: 80 / opts.size, at });
+    const { defs, body } = def.draw({ rot, opts, turning, id, spin: def.view.yaw + finite(o?.yaw), minWidth: 80 / opts.size, at });
     return wrapPiece({ title: escape(def.en), size: opts.size, theme: opts.theme, defs, body });
   };
   return { id: def.id, en: def.en, ja: def.ja, source: "generated", kind: "ball", model: { ...def.model, view: def.view }, size: def.size, svg: labelled(def.en, def.ja, (o?: PieceOptions) => render(o, false)), frame: labelled(def.en, def.ja, (o?: BallFrameOptions) => render(o, true)) };

@@ -17,7 +17,7 @@ export const puckSpec = (extra?: Partial<StackSpec>): StackSpec => ({
   gloss: 0.5,
   shade: "#000",
   grain: { f: 1.6, a: 0.25 },
-  grooves: { count: 30, slices: [0], colour: "#000", opacity: 0.5 },
+  knurl: { count: 44, slices: [0], colour: "#000", opacity: 0.7 },
   topRing: { r: 0.9, colour: "#4a4d56" },
   ...extra,
 });
