@@ -606,6 +606,26 @@ export const NAMED_TROPHIES: readonly NamedTrophy[] = [
     first: "1985-86",
     reference: "From the published description (a gold figure in a layup, the Mikan drill, in a 15-inch crystal net). No freely licensed photograph on Wikimedia Commons (searched 2026-10-23).",
   },
+  {
+    id: "trophy:rozelle-trophy",
+    name: "Pete Rozelle Trophy",
+    sport: "football",
+    competition: "National Football League",
+    kind: "player",
+    honours: "The most valuable player of the championship game.",
+    first: "1990",
+    reference: "From the published description of the current silver football-shaped trophy. No freely licensed photograph of the object on Wikimedia Commons (searched 2026-10-23).",
+  },
+  {
+    id: "trophy:halas-trophy",
+    name: "George Halas Trophy",
+    sport: "football",
+    competition: "National Football League",
+    kind: "champion",
+    honours: "The champion of the National Football Conference.",
+    first: "1984",
+    reference: "From the published description of the 2010 redesign (a hollow silver football on a short three-sided stand). No freely licensed photograph of the object on Wikimedia Commons (searched 2026-10-23).",
+  },
 ];
 
 /** The facts of a named trophy by its emblem id, or `undefined` for a generic trophy. */

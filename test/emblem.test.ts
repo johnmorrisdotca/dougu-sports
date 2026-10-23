@@ -24,10 +24,10 @@ const NAMED_LIMIT = { metal: 9000, line: 4800, color: 7200 } as const;
 const BIG_LIMIT = { metal: 14000, line: 13000, color: 14000 } as const;
 const isPiece = (id: D.EmblemId): boolean => D.emblemInfo(id).kind === "ball" || D.emblemInfo(id).kind === "gear";
 
-test("the ids number 337 in their groups, with no id twice, and the groups hold what they say", () => {
+test("the ids number 339 in their groups, with no id twice, and the groups hold what they say", () => {
   assert.equal(new Set(D.EMBLEM_IDS).size, D.EMBLEM_IDS.length);
-  assert.equal(D.EMBLEM_IDS.length, 337);
-  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 6, trophy: 82, medal: 6, crest: 4, ball: 118, puck: 8, gear: 70, sport: 42, pennant: 1 });
+  assert.equal(D.EMBLEM_IDS.length, 339);
+  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 6, trophy: 84, medal: 6, crest: 4, ball: 118, puck: 8, gear: 70, sport: 42, pennant: 1 });
 });
 
 // The ids of the trophies drawn as a likeness of one real trophy (docs/likeness.md): they may carry the trophy's own name, and so are held to the limits of a detailed drawing.

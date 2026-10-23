@@ -6,6 +6,14 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.19.0] - 2026-10-23
+
+Two National Football League awards that a site still drew as a plain cup.
+
+### Added
+
+- **`trophy:rozelle-trophy`** and **`trophy:halas-trophy`**: the Pete Rozelle Trophy (the championship-game most valuable player; a silver football on a short disc) and the George Halas Trophy (the National Football Conference champion; a hollow silver football on a short three-sided stand, the counterpart of the Lamar Hunt Trophy). Each is this package's own drawing from a published description of the object; Wikimedia Commons had no freely licensed photograph (searched 2026-10-23), so they are marked approximate. No lettering, logo or conference mark. The Associated Press awards have no famous trophy and keep the generic plaque. 339 emblems, 84 trophies, 60 named.
+
 ## [0.18.0] - 2026-10-23
 
 Seven National Basketball Association awards that a site still drew as a plain cup.

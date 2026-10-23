@@ -58,6 +58,8 @@ export const TROPHY_IDS = [
   "trophy:havlicek-trophy",
   "trophy:auerbach-trophy",
   "trophy:mikan-trophy",
+  "trophy:rozelle-trophy",
+  "trophy:halas-trophy",
   "trophy:walter-cup",
   "trophy:wnba-championship-trophy",
   "trophy:lamar-hunt-trophy",

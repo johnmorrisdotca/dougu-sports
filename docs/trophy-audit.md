@@ -64,10 +64,10 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | Award code | Award | Emblem | Photo |
 | --- | --- | --- | --- |
 | `nfl_super_bowl` | Vince Lombardi Trophy | `trophy:lombardi-trophy` | yes |
-| `nfl_super_bowl_mvp` | Pete Rozelle Trophy (Super Bowl MVP) | gap | no: John to supply |
-| `nfl_ap_mvp`, `nfl_ap_offensive_player`, `nfl_ap_defensive_player` | The Associated Press NFL awards | gap (the AP gives no single famous trophy; a generic plaque stands for them) | no |
+| `nfl_super_bowl_mvp` | Pete Rozelle Trophy (Super Bowl MVP) | `trophy:rozelle-trophy` (approximate) | no: drawn from a description |
+| `nfl_ap_mvp`, `nfl_ap_offensive_player`, `nfl_ap_defensive_player` | The Associated Press NFL awards | generic `trophy:plaque` (the AP gives no single famous trophy) | no |
 | not held | Lamar Hunt Trophy (AFC champion) | `trophy:lamar-hunt-trophy` | yes |
-| not held | George Halas Trophy (NFC champion) | gap | no: John to supply |
+| not held | George Halas Trophy (NFC champion) | `trophy:halas-trophy` (approximate) | no: drawn from a description |
 | `afl_championship`, `aafc_championship` | The AFL and AAFC championships | generic `trophy:football` | no |
 
 ## CFL
