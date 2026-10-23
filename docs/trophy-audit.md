@@ -54,10 +54,10 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | `mlb_gold_glove` | Rawlings Gold Glove Award | `trophy:gold-glove-award` | yes |
 | `mlb_silver_slugger` | Silver Slugger Award | `trophy:silver-slugger-award` | yes |
 | `mlb_world_series_mvp` | World Series Most Valuable Player Award | `trophy:world-series-mvp-trophy` (approximate) | yes, at a distance |
-| `mlb_rookie_of_the_year` | Jackie Robinson Rookie of the Year Award | gap | no: John to supply |
-| `mlb_hank_aaron` | Hank Aaron Award | gap | no: John to supply |
-| `mlb_manager_of_the_year` | Manager of the Year Award | gap | no: John to supply |
-| `mlb_rolaids_relief_man` | Rolaids Relief Man Award (now the Reliever of the Year awards) | gap | no: John to supply |
+| `mlb_rookie_of_the_year` | Jackie Robinson Rookie of the Year Award | `trophy:jackie-robinson-award` (approximate) | no: drawn from a description |
+| `mlb_hank_aaron` | Hank Aaron Award | `trophy:hank-aaron-award` (approximate) | no: drawn from a description |
+| `mlb_manager_of_the_year` | Manager of the Year Award | `trophy:mlb-manager-award` (approximate) | no: drawn from a description |
+| `mlb_rolaids_relief_man` | Rolaids Relief Man Award (now the Reliever of the Year awards) | `trophy:relief-man-award` (approximate) | no: drawn from a description |
 
 ## NFL
 

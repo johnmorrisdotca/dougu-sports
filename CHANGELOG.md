@@ -6,6 +6,14 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.17.0] - 2026-10-23
+
+Four Major League Baseball awards that a site still drew as a plain cup.
+
+### Added
+
+- **`trophy:jackie-robinson-award`**, **`trophy:mlb-manager-award`**, **`trophy:relief-man-award`** and **`trophy:hank-aaron-award`**: the Jackie Robinson Award (Rookie of the Year of each league), the Manager of the Year Award, the Relief Man Award (the fireman trophy given 1976 to 2012) and the Hank Aaron Award. Each is this package's own drawing from a public description of the object; Wikimedia Commons had no freely licensed photograph (searched 2026-10-23), so they are marked approximate. No lettering, logo or sponsor name (the Relief Man's id is not the old sponsor's). 330 emblems, 75 trophies, 51 named.
+
 ## [0.16.2] - 2026-10-21
 
 Every piece that flips or turns has a body at every angle: a solid edge, a back of its own, and what hangs from it still there.
