@@ -66,6 +66,13 @@ export { TROPHY_JACKIE_ROBINSON_AWARD } from "./emblems/trophy/jackie-robinson-a
 export { TROPHY_MLB_MANAGER_AWARD } from "./emblems/trophy/mlb-manager-award.ts";
 export { TROPHY_RELIEF_MAN_AWARD } from "./emblems/trophy/relief-man-award.ts";
 export { TROPHY_HANK_AARON_AWARD } from "./emblems/trophy/hank-aaron-award.ts";
+export { TROPHY_MICHAEL_JORDAN_TROPHY } from "./emblems/trophy/michael-jordan-trophy.ts";
+export { TROPHY_BILL_RUSSELL_TROPHY } from "./emblems/trophy/bill-russell-trophy.ts";
+export { TROPHY_OLAJUWON_TROPHY } from "./emblems/trophy/olajuwon-trophy.ts";
+export { TROPHY_CHAMBERLAIN_TROPHY } from "./emblems/trophy/chamberlain-trophy.ts";
+export { TROPHY_HAVLICEK_TROPHY } from "./emblems/trophy/havlicek-trophy.ts";
+export { TROPHY_AUERBACH_TROPHY } from "./emblems/trophy/auerbach-trophy.ts";
+export { TROPHY_MIKAN_TROPHY } from "./emblems/trophy/mikan-trophy.ts";
 export { TROPHY_WALTER_CUP } from "./emblems/trophy/walter-cup.ts";
 export { TROPHY_WNBA_CHAMPIONSHIP_TROPHY } from "./emblems/trophy/wnba-championship-trophy.ts";
 export { TROPHY_LAMAR_HUNT_TROPHY } from "./emblems/trophy/lamar-hunt-trophy.ts";

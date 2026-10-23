@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 330 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 337 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -85,6 +85,13 @@ The folders the art lives in are in [layout.md](layout.md).
 | `trophy:mlb-manager-award` | Manager of the Year | flat | ours | The Manager of the Year Award: a wide dark plaque with a silver baseball cap in profile, a small card and a nameplate. |
 | `trophy:relief-man-award` | Relief Man Award | flat | ours | The Relief Man Award: a gilt pitcher in a fire helmet, mid-throw with the front knee up, on a tapering wooden pedestal. |
 | `trophy:hank-aaron-award` | Hank Aaron Award | flat | ours | The Hank Aaron Award: a silver batter in mid-swing on a dark two-step base with a plate at the front. |
+| `trophy:michael-jordan-trophy` | Michael Jordan Trophy | flat | ours | The Michael Jordan Trophy: a bronze figure reaching out of a rock for a small crystal basketball, on a five-sided base. |
+| `trophy:bill-russell-trophy` | Bill Russell Trophy | lathe | ours | The Bill Russell Trophy: a gold basketball over a hoop and a short net-shaped body on two stacked discs. |
+| `trophy:olajuwon-trophy` | Olajuwon Trophy | flat | ours | The Hakeem Olajuwon Trophy: a gold figure in a defensive stance inside a crystal net on a dark foot. |
+| `trophy:chamberlain-trophy` | Chamberlain Trophy | flat | ours | The Wilt Chamberlain Trophy: a gold figure palming two basketballs inside a crystal net on a dark foot. |
+| `trophy:havlicek-trophy` | Havlicek Trophy | flat | ours | The John Havlicek Trophy: a gold figure in a running jumper inside a crystal net on a dark foot. |
+| `trophy:auerbach-trophy` | Auerbach Trophy | flat | ours | The Red Auerbach Trophy: a bronze coach seated on a bench with a card and a short cigar, on a dark base. |
+| `trophy:mikan-trophy` | Mikan Trophy | flat | ours | The George Mikan Trophy: a gold figure in a layup inside a crystal net on a dark foot. |
 | `trophy:walter-cup` | Walter Cup | lathe | ours | The Walter Cup: a wide shallow silver bowl on a stem between two tall stick-shaped blades, over a heavy round base. |
 | `trophy:wnba-championship-trophy` | WNBA Championship Trophy | lathe | ours | The WNBA Championship Trophy: a silver basketball held on two slanting tubes over a low slab. |
 | `trophy:lamar-hunt-trophy` | Lamar Hunt Trophy | lathe | ours | The Lamar Hunt Trophy: a clear football-shaped ring on a round silver base over a flat black slab. |

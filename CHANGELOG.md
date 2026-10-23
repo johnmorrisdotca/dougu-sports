@@ -6,6 +6,14 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.18.0] - 2026-10-23
+
+Seven National Basketball Association awards that a site still drew as a plain cup.
+
+### Added
+
+- **`trophy:michael-jordan-trophy`**, **`trophy:bill-russell-trophy`**, **`trophy:olajuwon-trophy`**, **`trophy:chamberlain-trophy`**, **`trophy:havlicek-trophy`**, **`trophy:auerbach-trophy`** and **`trophy:mikan-trophy`**: the Michael Jordan Trophy (regular-season most valuable player), the Bill Russell Trophy (championship-series most valuable player), the Hakeem Olajuwon, Wilt Chamberlain, John Havlicek and George Mikan trophies (defensive player, rookie, sixth man and most improved) and the Red Auerbach Trophy (coach of the year). Each is this package's own drawing from a published description of the object; Wikimedia Commons had no freely licensed photograph (searched 2026-10-23), so they are marked approximate. No lettering, logo or sponsor name. The MVP trophy's id is the current name, not the old commissioner's cup. 337 emblems, 82 trophies, 58 named.
+
 ## [0.17.0] - 2026-10-23
 
 Four Major League Baseball awards that a site still drew as a plain cup.

@@ -61,7 +61,7 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 
 ## The best of it
 
-- **51 famous trophies**, each a close likeness (from a photograph where one exists, else a public description) and carrying no lettering, logo or mark: the Stanley Cup, the FIFA World Cup, the Lombardi Trophy, the Larry O'Brien trophy, the Grey Cup and the rest ([famous trophies](./docs/famous-trophies.md)).
+- **58 famous trophies**, each a close likeness (from a photograph where one exists, else a public description) and carrying no lettering, logo or mark: the Stanley Cup, the FIFA World Cup, the Lombardi Trophy, the Larry O'Brien trophy, the Grey Cup and the rest ([famous trophies](./docs/famous-trophies.md)).
 
 <p align="center">
 <picture>
@@ -110,7 +110,7 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 
 - **On a phone**, and **turned by hand**: drag, arrow keys or the automatic turn ([turning](./docs/turning.md)).
 
-> **Status: preview.** 330 emblems: 75 trophies, 6 awards, 6 medals, 4 crests, a pictogram for each of the 42 sports, 118 balls and implements drawn in 3D, 8 printed pucks ([docs/pucks.md](./docs/pucks.md)), 70 pieces of gear (among them the Japanese sports and budo, [docs/japanese-sports.md](./docs/japanese-sports.md)) and a championship pennant; [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
+> **Status: preview.** 337 emblems: 82 trophies, 6 awards, 6 medals, 4 crests, a pictogram for each of the 42 sports, 118 balls and implements drawn in 3D, 8 printed pucks ([docs/pucks.md](./docs/pucks.md)), 70 pieces of gear (among them the Japanese sports and budo, [docs/japanese-sports.md](./docs/japanese-sports.md)) and a championship pennant; [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
 
 ## In 30 seconds
 

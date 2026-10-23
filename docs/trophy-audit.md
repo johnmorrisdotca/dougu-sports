@@ -35,13 +35,13 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | Award code | Award | Emblem | Photo |
 | --- | --- | --- | --- |
 | `nba_larry_obrien` | Larry O'Brien Championship Trophy | `trophy:larry-obrien-trophy` | yes |
-| `nba_mvp` | Maurice Podoloff Trophy (Most Valuable Player) | gap | no: John to supply |
-| `nba_finals_mvp` | Bill Russell NBA Finals Most Valuable Player Award | gap | no: John to supply |
-| `nba_defensive_player` | Hakeem Olajuwon Trophy (Defensive Player of the Year) | gap | no: John to supply |
-| `nba_rookie_of_the_year` | Wilt Chamberlain Trophy (Rookie of the Year) | gap | no: John to supply |
-| `nba_sixth_man` | John Havlicek Trophy (Sixth Man of the Year) | gap | no: John to supply |
-| `nba_coach_of_the_year` | Red Auerbach Trophy (Coach of the Year) | gap | no: John to supply |
-| `nba_most_improved` | George Mikan Trophy (Most Improved Player) | gap | no: John to supply |
+| `nba_mvp` | Michael Jordan Trophy (Most Valuable Player; the old Maurice Podoloff cup is now the best-record trophy) | `trophy:michael-jordan-trophy` (approximate) | no: drawn from a description |
+| `nba_finals_mvp` | Bill Russell NBA Finals Most Valuable Player Award | `trophy:bill-russell-trophy` (approximate) | no: drawn from a description |
+| `nba_defensive_player` | Hakeem Olajuwon Trophy (Defensive Player of the Year) | `trophy:olajuwon-trophy` (approximate) | no: drawn from a description |
+| `nba_rookie_of_the_year` | Wilt Chamberlain Trophy (Rookie of the Year) | `trophy:chamberlain-trophy` (approximate) | no: drawn from a description |
+| `nba_sixth_man` | John Havlicek Trophy (Sixth Man of the Year) | `trophy:havlicek-trophy` (approximate) | no: drawn from a description |
+| `nba_coach_of_the_year` | Red Auerbach Trophy (Coach of the Year) | `trophy:auerbach-trophy` (approximate) | no: drawn from a description |
+| `nba_most_improved` | George Mikan Trophy (Most Improved Player) | `trophy:mikan-trophy` (approximate) | no: drawn from a description |
 | not held | Eastern and Western Conference trophies (Oscar Robertson, Larry Bird), NBA Cup | gap | no: John to supply |
 
 ## MLB
