@@ -16,9 +16,9 @@ function balanced(svg: string): boolean {
 }
 
 describe("the gear", () => {
-  it("has seventy ids, each once, in the form gear:name", () => {
-    expect(GEARS.length).toBe(70);
-    expect(new Set(GEAR_IDS).size).toBe(70);
+  it("has seventy-one ids, each once, in the form gear:name", () => {
+    expect(GEARS.length).toBe(71);
+    expect(new Set(GEAR_IDS).size).toBe(71);
     for (const id of GEAR_IDS) expect(id).toMatch(/^gear:[a-z0-9]+(?:-[a-z0-9]+)*$/);
   });
 

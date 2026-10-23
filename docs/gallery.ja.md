@@ -2,7 +2,7 @@
 
 [README に戻る](../README.md) · 日本語 · [English](gallery.md)
 
-パッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 340 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから `scripts/make-gallery.ts` が生成します（`pnpm gallery`）。
+パッケージに含まれるすべてのエンブレムを、グループごとに並べた一覧です（全 341 点）。画像はデモのギャラリーページで見られます。この一覧はそのテキスト版で、ビルド済みのパッケージから `scripts/make-gallery.ts` が生成します（`pnpm gallery`）。
 
 id は `<グループ>:<名前>` の形です。定数とインポートパスは id から決まるので、行ごとには書いていません。
 
@@ -301,6 +301,7 @@ id は `<グループ>:<名前>` の形です。定数とインポートパス�
 | `gear:basketball-hoop` | バスケットゴール | gear | drawn |  |
 | `gear:baseball-bat` | 野球のバット | gear | drawn |  |
 | `gear:baseball-glove` | 野球のグラブ | gear | drawn |  |
+| `gear:baseball-cap` | 野球帽 | gear | drawn | 野球帽を斜め前から描いています。クラウン、頭頂のボタン、パネルの縫い目、はと目、つばの縁が見えます。 |
 | `gear:football-helmet` | アメフトのヘルメット | gear | drawn | アメリカンフットボールのヘルメット |
 | `gear:goalposts` | ゴールポスト | gear | drawn |  |
 | `gear:hurley` | ハーリングのスティック | gear | drawn | ハーリー（ハーリングのスティック） |

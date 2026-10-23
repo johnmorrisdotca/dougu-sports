@@ -106,11 +106,11 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 </picture>
 </p>
 
-- **70 pieces of gear**, among them the Japanese sports and budo ([Japanese sports](./docs/japanese-sports.md)).
+- **71 pieces of gear**, among them the Japanese sports and budo ([Japanese sports](./docs/japanese-sports.md)).
 
 - **On a phone**, and **turned by hand**: drag, arrow keys or the automatic turn ([turning](./docs/turning.md)).
 
-> **Status: preview.** 340 emblems: 85 trophies, 6 awards, 6 medals, 4 crests, a pictogram for each of the 42 sports, 118 balls and implements drawn in 3D, 8 printed pucks ([docs/pucks.md](./docs/pucks.md)), 70 pieces of gear (among them the Japanese sports and budo, [docs/japanese-sports.md](./docs/japanese-sports.md)) and a championship pennant; [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
+> **Status: preview.** 341 emblems: 85 trophies, 6 awards, 6 medals, 4 crests, a pictogram for each of the 42 sports, 118 balls and implements drawn in 3D, 8 printed pucks ([docs/pucks.md](./docs/pucks.md)), 71 pieces of gear (among them the Japanese sports and budo, [docs/japanese-sports.md](./docs/japanese-sports.md)) and a championship pennant; [docs/layout.md](./docs/layout.md) says where each goes. All of it is drawn for this package: no art is copied from another project.
 
 ## In 30 seconds
 

@@ -6,6 +6,18 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.21.0] - 2026-10-23
+
+A baseball cap. The Canadian and writers' football awards stay the plain cup: no photograph or measured description of those objects was found, so nothing new was drawn for them.
+
+### Added
+
+- **`gear:baseball-cap`**: a baseball cap in three-quarter view (crown, button, panel seams, eyelets and a brim with an edge), in the gear list and with baseball's bat and glove. 341 emblems, 71 pieces of gear.
+
+### Fixed
+
+- **`trophy:gregory-trophy`**: from behind, the three skaters stay on the trophy. The back had kept only the metal, so it was thinner than the front.
+
 ## [0.20.0] - 2026-10-23
 
 The National Hockey League's general-manager award that a site still drew as a plain cup.

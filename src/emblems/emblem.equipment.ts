@@ -25,7 +25,7 @@ const TABLE: Readonly<Record<SportName, Entry>> = {
   ifaf: ["ball:football-ifaf", ["gear:football-helmet", "gear:goalposts"], "trophy:cup"],
   nhl: ["ball:puck", ["gear:hockey-stick", "gear:hockey-skate", "gear:goalie-mask", "gear:goal-net"], "trophy:hockey-cup"],
   nba: ["ball:basketball", ["gear:basketball-hoop"], "trophy:basketball"],
-  mlb: ["ball:baseball", ["gear:baseball-bat", "gear:baseball-glove"], "trophy:baseball"],
+  mlb: ["ball:baseball", ["gear:baseball-bat", "gear:baseball-glove", "gear:baseball-cap"], "trophy:baseball"],
   soccer: ["ball:soccer", ["gear:goal-net"], "trophy:soccer-globe", GOLD],
   curling: ["ball:curling-stone", ["gear:curling-broom"], "trophy:bowl", GOLD],
   tennis: ["ball:tennis", ["gear:tennis-racket"], "trophy:tennis-cup", GOLD],
