@@ -626,6 +626,16 @@ export const NAMED_TROPHIES: readonly NamedTrophy[] = [
     first: "1984",
     reference: "From the published description of the 2010 redesign (a hollow silver football on a short three-sided stand). No freely licensed photograph of the object on Wikimedia Commons (searched 2026-10-23).",
   },
+  {
+    id: "trophy:gregory-trophy",
+    name: "Jim Gregory Trophy",
+    sport: "hockey",
+    competition: "National Hockey League",
+    kind: "executive",
+    honours: "The general manager of the year.",
+    first: "2009-10",
+    reference: "A Hockey Hall of Fame collection photograph of the award (gallery.hhof.com), looked at and measured; licence not ours, so nothing of it is kept. Wikimedia Commons search 2026-10-23 found no photograph.",
+  },
 ];
 
 /** The facts of a named trophy by its emblem id, or `undefined` for a generic trophy. */

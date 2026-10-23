@@ -26,7 +26,7 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | `nhl_presidents_trophy` | Presidents' Trophy | `trophy:presidents-trophy` | yes |
 | `nhl_rocket_richard` | Maurice "Rocket" Richard Trophy | `trophy:rocket-richard-trophy` | yes |
 | `nhl_ted_lindsay` | Ted Lindsay Award | `trophy:ted-lindsay-award` | yes |
-| `nhl_gm_of_the_year` | NHL General Manager of the Year Award (Jim Gregory Trophy) | gap | no: John to supply |
+| `nhl_gm_of_the_year` | NHL General Manager of the Year Award (Jim Gregory Trophy) | `trophy:gregory-trophy` (approximate) | looked at a Hall photograph; no Commons file |
 | not held | Prince of Wales Trophy, Clarence S. Campbell Bowl, Lester Patrick Trophy | `trophy:prince-of-wales-trophy`, `trophy:campbell-bowl`, `trophy:lester-patrick-trophy` | yes |
 | not held | Mark Messier Leadership Award, Willie O'Ree Community Hero Award, NHL Foundation Player Award | gap | no: John to supply |
 

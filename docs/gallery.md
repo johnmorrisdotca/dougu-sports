@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 339 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 340 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -94,6 +94,7 @@ The folders the art lives in are in [layout.md](layout.md).
 | `trophy:mikan-trophy` | Mikan Trophy | flat | ours | The George Mikan Trophy: a gold figure in a layup inside a crystal net on a dark foot. |
 | `trophy:rozelle-trophy` | Rozelle Trophy | lathe | ours | The Pete Rozelle Trophy: a silver football on a short round disc. |
 | `trophy:halas-trophy` | Halas Trophy | lathe | ours | The George Halas Trophy: a hollow silver football outline on a short three-sided stand. |
+| `trophy:gregory-trophy` | Gregory Trophy | flat | ours | The Jim Gregory Trophy: a silver bowl over three bronze skaters on a tall silver block and a dark foot. |
 | `trophy:walter-cup` | Walter Cup | lathe | ours | The Walter Cup: a wide shallow silver bowl on a stem between two tall stick-shaped blades, over a heavy round base. |
 | `trophy:wnba-championship-trophy` | WNBA Championship Trophy | lathe | ours | The WNBA Championship Trophy: a silver basketball held on two slanting tubes over a low slab. |
 | `trophy:lamar-hunt-trophy` | Lamar Hunt Trophy | lathe | ours | The Lamar Hunt Trophy: a clear football-shaped ring on a round silver base over a flat black slab. |

@@ -6,6 +6,14 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.20.0] - 2026-10-23
+
+The National Hockey League's general-manager award that a site still drew as a plain cup.
+
+### Added
+
+- **`trophy:gregory-trophy`**: the Jim Gregory General Manager of the Year Award, a silver bowl over three bronze skaters on a tall silver block. Drawn for this package from a Hockey Hall of Fame collection photograph that was looked at and never copied; Wikimedia Commons had no freely licensed photograph (searched 2026-10-23), so it is marked approximate. No shield, lettering or nameplates. 340 emblems, 85 trophies, 61 named.
+
 ## [0.19.0] - 2026-10-23
 
 Two National Football League awards that a site still drew as a plain cup.

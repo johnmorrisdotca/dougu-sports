@@ -70,6 +70,7 @@ import { TROPHY_AUERBACH_TROPHY } from "./trophy/auerbach-trophy.ts";
 import { TROPHY_MIKAN_TROPHY } from "./trophy/mikan-trophy.ts";
 import { TROPHY_ROZELLE_TROPHY } from "./trophy/rozelle-trophy.ts";
 import { TROPHY_HALAS_TROPHY } from "./trophy/halas-trophy.ts";
+import { TROPHY_GREGORY_TROPHY } from "./trophy/gregory-trophy.ts";
 import { TROPHY_WALTER_CUP } from "./trophy/walter-cup.ts";
 import { TROPHY_WNBA_CHAMPIONSHIP_TROPHY } from "./trophy/wnba-championship-trophy.ts";
 import { TROPHY_LAMAR_HUNT_TROPHY } from "./trophy/lamar-hunt-trophy.ts";
@@ -218,6 +219,7 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}`
   "trophy:mikan-trophy": TROPHY_MIKAN_TROPHY,
   "trophy:rozelle-trophy": TROPHY_ROZELLE_TROPHY,
   "trophy:halas-trophy": TROPHY_HALAS_TROPHY,
+  "trophy:gregory-trophy": TROPHY_GREGORY_TROPHY,
   "trophy:grey-cup": TROPHY_GREY_CUP,
   "trophy:commissioners-trophy": TROPHY_COMMISSIONERS_TROPHY,
   "trophy:larry-obrien-trophy": TROPHY_LARRY_OBRIEN_TROPHY,

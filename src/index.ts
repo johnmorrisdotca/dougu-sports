@@ -75,6 +75,7 @@ export { TROPHY_AUERBACH_TROPHY } from "./emblems/trophy/auerbach-trophy.ts";
 export { TROPHY_MIKAN_TROPHY } from "./emblems/trophy/mikan-trophy.ts";
 export { TROPHY_ROZELLE_TROPHY } from "./emblems/trophy/rozelle-trophy.ts";
 export { TROPHY_HALAS_TROPHY } from "./emblems/trophy/halas-trophy.ts";
+export { TROPHY_GREGORY_TROPHY } from "./emblems/trophy/gregory-trophy.ts";
 export { TROPHY_WALTER_CUP } from "./emblems/trophy/walter-cup.ts";
 export { TROPHY_WNBA_CHAMPIONSHIP_TROPHY } from "./emblems/trophy/wnba-championship-trophy.ts";
 export { TROPHY_LAMAR_HUNT_TROPHY } from "./emblems/trophy/lamar-hunt-trophy.ts";
