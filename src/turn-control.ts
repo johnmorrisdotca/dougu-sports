@@ -171,7 +171,8 @@ const load = (): Promise<TurnRegistry> => {
 /**
  * Binds an emblem to an element so that it can be turned: it draws the emblem's `frame` into `container`, and a drag turns it (left and right are yaw, up and down are pitch, and Shift on a ball is roll), the arrow keys turn
  * it, Home or 0 puts it back, and Space starts and stops an auto-turn. An emblem that cannot turn is drawn as it is, and nothing is listened to. Nothing moves by itself: `autoPlay` is off by default and, under
- * `prefers-reduced-motion`, only starts when it is `"force"`. The element gets `touch-action: none`, `user-select: none`, a grab cursor, a tab stop, a role description and a hint; `destroy()` takes them away.
+ * `prefers-reduced-motion`, only starts when it is `"force"`. A drag up (and Arrow Up) lifts the FRONT of the emblem toward the eye, as if its near edge were held and raised, so the `pitch` (the tilt toward the eye) goes
+ * down; a drag down lowers it. The element gets `touch-action: none`, `user-select: none`, a grab cursor, a tab stop, a role description and a hint; `destroy()` takes them away.
  *
  * Pass the emblem itself (`TROPHY_HOCKEY_CUP`, from its own module) and nothing but the turning and that one emblem is in the bundle. Pass an id (`"trophy:hockey-cup"`) and the registry is loaded on
  * demand: the element is drawn when `ready` resolves, not before. The main entry's `bindTurn` has the registry already and draws an id at once.
@@ -324,8 +325,8 @@ export function bindTurnWith(registry: TurnRegistry | undefined, container: Turn
     drag.x = x;
     drag.y = y;
     if (dx === 0 && dy === 0) return;
-    if (event.shiftKey === true && drawer?.emblem.kind === "ball") place({ roll: angles.roll + dx, pitch: angles.pitch - dy });
-    else place({ yaw: angles.yaw + dx, pitch: angles.pitch - dy });
+    if (event.shiftKey === true && drawer?.emblem.kind === "ball") place({ roll: angles.roll + dx, pitch: angles.pitch + dy });
+    else place({ yaw: angles.yaw + dx, pitch: angles.pitch + dy });
     changed();
   };
   const up = (event: TurnEvent): void => {
@@ -347,10 +348,10 @@ export function bindTurnWith(registry: TurnRegistry | undefined, container: Turn
         place({ yaw: angles.yaw + step });
         break;
       case "ArrowUp":
-        place({ pitch: angles.pitch + step });
+        place({ pitch: angles.pitch - step });
         break;
       case "ArrowDown":
-        place({ pitch: angles.pitch - step });
+        place({ pitch: angles.pitch + step });
         break;
       case "Home":
       case "0":

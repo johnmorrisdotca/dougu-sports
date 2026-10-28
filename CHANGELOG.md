@@ -6,6 +6,10 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- **A drag up (and Arrow Up) in `bindTurn` lifts the FRONT of the emblem**, as if its near edge were held and raised, and a drag down lowers it. It did the opposite (a drag up tipped the front down and showed a cup from above). The `pitch` option and `angles.pitch` keep their meaning and sign (positive is the tilt toward the eye, seen more from above); only what the hand and the arrow keys do to it is reversed, so a drag up now makes `pitch` go down, and a program that read `angles.pitch` to mirror a drag sees the opposite sign. Left and right are unchanged. In the demo the Tilt slider is the opposite sign of `pitch` (its top is a drag up), and the address and the code line still say `pitch`, so `?pitch=` from before means the same thing. Tests: `test/turn-control.test.ts`, `e2e/turn.demo.ts`.
+
 ## [0.25.2] - 2026-10-28
 
 ### Changed

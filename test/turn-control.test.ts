@@ -101,21 +101,21 @@ test("it draws the emblem, at rest as the still drawing (in the box of the turn)
   turner.destroy();
 });
 
-test("a drag turns the yaw by dx, the pitch by -dy, wraps, and clamps the pitch", () => {
+test("a drag turns the yaw by dx, the pitch by dy (up lifts the front: less pitch), wraps, and clamps the pitch", () => {
   const el = new Fake();
   const turns: number[] = [];
   const turner = bindTurn(el, "ball:soccer", { onTurn: (a) => turns.push(a.yaw) });
   drag(el, [100, 100], [120, 90]);
-  assert.deepEqual(turner.angles, { yaw: 30, pitch: 15, roll: 0 }, "20 px at 1.5 degrees a pixel, and up is more pitch");
+  assert.deepEqual(turner.angles, { yaw: 30, pitch: -15, roll: 0 }, "20 px at 1.5 degrees a pixel, and a drag up lifts the front, which is less pitch (the tilt toward the eye)");
   assert.deepEqual(turns, [30]);
   drag(el, [0, 0], [100, 0]);
   assert.equal(turner.angles.yaw, wrapAngle(30 + 150), "150 degrees on from 30 is 180");
   drag(el, [0, 0], [100, 0]);
   assert.equal(turner.angles.yaw, wrapAngle(330), "past 180 it wraps");
   drag(el, [0, 0], [0, -1000]);
-  assert.equal(turner.angles.pitch, 60, "the pitch stops at the top of its range");
+  assert.equal(turner.angles.pitch, -60, "dragging up stops at the end of the range where the front is highest");
   drag(el, [0, 0], [0, 1000]);
-  assert.equal(turner.angles.pitch, -60);
+  assert.equal(turner.angles.pitch, 60);
   assert.deepEqual(el.captured.slice(0, 1), [7]);
   assert.deepEqual(el.released.slice(0, 1), [7]);
   // Each change is drawn on a frame, however many moves there were.
@@ -134,7 +134,7 @@ test("a drag turns the yaw by dx, the pitch by -dy, wraps, and clamps the pitch"
 test("sensitivity and pitchRange are options, and a bad value falls back", () => {
   const el = new Fake();
   const turner = bindTurn(el, "trophy:tennis-cup", { sensitivity: 3, pitchRange: [-10, 10] });
-  drag(el, [0, 0], [10, -100]);
+  drag(el, [0, 0], [10, 100]);
   assert.deepEqual(turner.angles, { yaw: 30, pitch: 10, roll: 0 });
   const odd = bindTurn(new Fake(), "trophy:tennis-cup", { sensitivity: Number.NaN, pitchRange: [Number.NaN, 5] });
   odd.setAngles({ pitch: 99 });
@@ -161,6 +161,25 @@ test("only the primary button drags, and a pointer that is not the dragging one 
   assert.equal(el.style.cursor, "grab");
 });
 
+test("a drag up lifts the front of the emblem (the pitch goes down) and a drag down lowers it, for a ball with Shift as well", () => {
+  const el = new Fake();
+  const turner = bindTurn(el, "trophy:tennis-cup");
+  drag(el, [50, 50], [50, -10]);
+  assert.ok(turner.angles.pitch < 0, "a drag up of 60 pixels lifts the front: the tilt toward the eye is negative");
+  assert.equal(turner.angles.yaw, 0, "a vertical drag leaves the yaw alone");
+  turner.setAngles({ pitch: 0 });
+  drag(el, [50, 50], [50, 110]);
+  assert.ok(turner.angles.pitch > 0, "a drag down lowers it");
+  const ball = new Fake();
+  const b = bindTurn(ball, "ball:soccer");
+  drag(ball, [0, 0], [0, -20], { shiftKey: true });
+  assert.ok(b.angles.pitch < 0, "the same with Shift on a ball");
+  const up = new Fake();
+  const u = bindTurn(up, "trophy:tennis-cup");
+  up.fire("keydown", { key: "ArrowUp" });
+  assert.ok(u.angles.pitch < 0, "Arrow Up is a drag up");
+});
+
 test("on a ball, Shift turns the roll; on a cup it does not", () => {
   const ball = new Fake();
   const b = bindTurn(ball, "ball:soccer");
@@ -184,11 +203,11 @@ test("the arrow keys turn it, Shift takes a bigger step, Home and 0 put it back,
   assert.equal(turner.angles.yaw, -20);
   el.fire("keydown", { key: "ArrowUp" });
   el.fire("keydown", { key: "ArrowUp", shiftKey: true });
-  assert.equal(turner.angles.pitch, 20);
+  assert.equal(turner.angles.pitch, -20, "Arrow Up lifts the front, like a drag up: less pitch");
   for (let i = 0; i < 10; i++) el.fire("keydown", { key: "ArrowUp", shiftKey: true });
-  assert.equal(turner.angles.pitch, 60);
+  assert.equal(turner.angles.pitch, -60);
   el.fire("keydown", { key: "ArrowDown" });
-  assert.equal(turner.angles.pitch, 55);
+  assert.equal(turner.angles.pitch, -55);
   assert.ok(el.fire("keydown", { key: "Home" }).prevented);
   assert.deepEqual(turner.angles, { yaw: 0, pitch: 0, roll: 0 });
   turner.setAngles({ yaw: 40 });

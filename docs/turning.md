@@ -99,9 +99,9 @@ An id is read from the registry, and the registry is the whole package (about 80
 
 | Input | Does |
 | --- | --- |
-| Drag (the primary button, a finger or a pen) | Left and right turn the yaw, up and down tilt the pitch; Shift on a ball turns the roll. The element is `touch-action: none` and `user-select: none`, with a grab cursor, and holds the pointer while it is down. |
+| Drag (the primary button, a finger or a pen) | Left and right turn the yaw, up and down tilt the pitch; Shift on a ball turns the roll. A drag up lifts the FRONT of the emblem toward the eye, as if its near edge were held and raised (the `pitch`, the tilt toward the eye, goes down, so a cup is seen from a little lower); a drag down lowers it. The element is `touch-action: none` and `user-select: none`, with a grab cursor, and holds the pointer while it is down. |
 | Left and Right | Turn the yaw by `keyStep` degrees (5), or three times as much with Shift (15). |
-| Up and Down | Tilt the pitch the same way, within `pitchRange`. |
+| Up and Down | Tilt the pitch the same way as a drag up and down (Up lifts the front), within `pitchRange`. |
 | Home or 0 | Back to the resting view. |
 | Space | Start or stop the auto-turn. |
 

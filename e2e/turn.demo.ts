@@ -30,7 +30,7 @@ test("dragging the emblem turns it and moves the sliders and their readouts", as
   await dragStage(page, 40, -20);
   // The drawing is made on the next animation frame.
   await expect.poll(() => page.locator("#stage").innerHTML()).not.toBe(before);
-  // 40 pixels at 1.5 degrees a pixel, and up is more tilt (the slider steps by 5).
+  // 40 pixels at 1.5 degrees a pixel, and up is more tilt on the slider, whose top lifts the front of the piece (the slider steps by 5).
   expect(await yaw(page)).toBeGreaterThanOrEqual(55);
   expect(await yaw(page)).toBeLessThanOrEqual(65);
   expect(Number(await page.locator("#pitch").inputValue())).toBeGreaterThan(0);
@@ -61,6 +61,33 @@ test("a drag to the right carries the front of a ball to the right, and to the l
   const right = nearestTo(await darkPanels(page), panel);
   await dragStage(page, -20);
   await expect.poll(async () => nearestTo(await darkPanels(page), right).x).toBeLessThan(right.x - 2);
+});
+
+test("a drag up lifts the front of a ball (the slider goes up with it), and a drag down lowers it", async ({ page }) => {
+  await page.goto("/?id=ball:soccer");
+  const panel = nearestTo(await darkPanels(page), { x: 0, y: 0 });
+  await dragStage(page, 0, -10);
+  // The near face goes up with the hand, as if the near edge of a turntable were lifted: the panel in the middle of the view moves up.
+  await expect.poll(async () => nearestTo(await darkPanels(page), panel).y).toBeLessThan(panel.y - 2);
+  await expect.poll(() => page.locator("#pitch").inputValue().then(Number)).toBeGreaterThan(0);
+  await expect(page).toHaveURL(/pitch=-\d+/);
+  const up = nearestTo(await darkPanels(page), panel);
+  await dragStage(page, 0, 20);
+  await expect.poll(async () => nearestTo(await darkPanels(page), up).y).toBeGreaterThan(up.y + 2);
+  await expect.poll(() => page.locator("#pitch").inputValue().then(Number)).toBeLessThan(0);
+});
+
+test("the Tilt slider's top is a drag up: the front of the piece goes up, and the arrow key agrees", async ({ page }) => {
+  await page.goto("/?id=ball:soccer");
+  const panel = nearestTo(await darkPanels(page), { x: 0, y: 0 });
+  await page.locator("#pitch").fill("20");
+  await expect.poll(async () => nearestTo(await darkPanels(page), panel).y).toBeLessThan(panel.y - 2);
+  await expect(page.locator("#pitch-out")).toHaveText("20°");
+  await expect(page).toHaveURL(/pitch=-20/);
+  await page.locator("#pitch").fill("0");
+  await page.locator("#stage").focus();
+  await page.keyboard.press("ArrowUp");
+  await expect(page.locator("#pitch")).toHaveValue("5");
 });
 
 test("a drag to the right carries the face of a cup to the right: its light slides that way", async ({ page }) => {

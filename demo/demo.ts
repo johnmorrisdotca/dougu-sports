@@ -98,6 +98,9 @@ function writeAddress() {
   }
 }
 
+/** The Tilt slider and the package's `pitch` are each other's opposite (and `0 -` keeps zero from reading -0). */
+const sliderOf = (degrees: number): number => 0 - degrees;
+
 /** Brings everything but the drawing in line with the turner: the sliders and readouts, the rows that apply, the button and the call. */
 function sync(settled = true) {
   const a = turner.angles;
@@ -109,8 +112,10 @@ function sync(settled = true) {
   $("roll-row").hidden = !(canTurn && ball);
   $("spin-row").hidden = !canTurn;
   for (const name of ["yaw", "pitch", "roll"] as const) {
-    $<HTMLInputElement>(name).value = String(a[name]);
-    $(`${name}-out`).textContent = `${Math.round(a[name])}°`;
+    // The Tilt slider is the opposite sign of the package's `pitch`: its top lifts the FRONT of the piece, like a drag up (the code below still shows `pitch`).
+    const shown = name === "pitch" ? sliderOf(a.pitch) : a[name];
+    $<HTMLInputElement>(name).value = String(shown);
+    $(`${name}-out`).textContent = `${Math.round(shown)}°`;
   }
   $("play").setAttribute("aria-pressed", String(turner.playing));
   const turned = a.yaw !== 0 || a.pitch !== 0 || a.roll !== 0;
@@ -189,7 +194,7 @@ $<HTMLInputElement>("engrave").value = state.engrave;
 $("engrave").addEventListener("input", () => { state.engrave = $<HTMLInputElement>("engrave").value; draw(); });
 // A slider takes over from the auto-turn: setAngles pauses it.
 for (const name of ["yaw", "pitch", "roll"]) {
-  $(name).addEventListener("input", () => { turner.setAngles({ [name]: Number($<HTMLInputElement>(name).value) }); sync(true); });
+  $(name).addEventListener("input", () => { const value = Number($<HTMLInputElement>(name).value); turner.setAngles({ [name]: name === "pitch" ? sliderOf(value) : value }); sync(true); });
 }
 $("play").addEventListener("click", () => { hoverPlay = false; turner.togglePlay(); sync(true); });
 $("direction").setAttribute("aria-pressed", String(state.dir === "cw"));
