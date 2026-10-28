@@ -103,7 +103,7 @@ export type PuckId = (typeof PUCK_IDS)[number];
 export const GEAR_IDS = [
   "gear:hockey-stick", "gear:goalie-stick", "gear:hockey-skate", "gear:goalie-mask", "gear:goal-net", "gear:field-hockey-stick", "gear:lacrosse-stick", "gear:cricket-bat", "gear:wicket",
   "gear:table-tennis-paddle", "gear:badminton-racket", "gear:tennis-racket", "gear:squash-racket", "gear:racquetball-racket", "gear:padel-racket", "gear:pickleball-paddle",
-  "gear:roundnet-set", "gear:takraw-net", "gear:netball-post", "gear:teqball-table", "gear:volleyball-net", "gear:basketball-hoop", "gear:baseball-bat", "gear:baseball-glove", "gear:football-helmet", "gear:goalposts", "gear:hurley",
+  "gear:roundnet-set", "gear:takraw-net", "gear:netball-post", "gear:teqball-table", "gear:volleyball-net", "gear:basketball-hoop", "gear:baseball-bat", "gear:baseball-glove", "gear:baseball-cap", "gear:football-helmet", "gear:goalposts", "gear:hurley",
   "gear:curling-broom", "gear:figure-skate", "gear:speed-skate", "gear:diving-board", "gear:swim-goggles", "gear:starting-blocks", "gear:relay-baton", "gear:javelin", "gear:hurdles",
   "gear:gunbai", "gear:mawashi", "gear:shinai", "gear:kendo-men", "gear:judogi", "gear:judogi-blue", "gear:judogi-folded", "gear:judogi-blue-folded", "gear:judogi-back", "gear:judogi-blue-back",
   "gear:obi", "gear:obi-white", "gear:obi-yellow", "gear:obi-orange", "gear:obi-green", "gear:obi-blue", "gear:obi-brown", "gear:obi-kohaku", "gear:obi-red", "gear:obi-women", "gear:obi-white-yellow", "gear:obi-yellow-orange", "gear:obi-orange-green", "gear:obi-green-blue", "gear:obi-blue-brown", "gear:obi-step-1", "gear:obi-step-2", "gear:obi-step-3", "gear:obi-step-4", "gear:obi-step-5", "gear:obi-step-6",

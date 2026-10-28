@@ -177,6 +177,7 @@ export { BALL_TEQBALL } from "./emblems/ball/ball.teqball.ts";
 export { BALL_VOLLEYBALL, BALL_VOLLEYBALL_8, BALL_BEACH_VOLLEYBALL } from "./emblems/ball/ball.volleyball.ts";
 export { BALL_WATER_POLO } from "./emblems/ball/ball.waterpolo.ts";
 export { GEAR_BADMINTON_RACKET } from "./emblems/gear/gear.badmintonracket.ts";
+export { GEAR_BASEBALL_CAP } from "./emblems/gear/gear.baseballcap.ts";
 export { GEAR_BASEBALL_GLOVE } from "./emblems/gear/gear.baseballglove.ts";
 export { GEAR_CRICKET_BAT } from "./emblems/gear/gear.cricketbat.ts";
 export { GEAR_BASEBALL_BAT, GEAR_BASKETBALL_HOOP, GEAR_VOLLEYBALL_NET, GEAR_GOALPOSTS, GEAR_WICKET, GEAR_ROUNDNET_SET } from "./emblems/gear/gear.field.ts";

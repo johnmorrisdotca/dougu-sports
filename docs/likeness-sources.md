@@ -54,3 +54,9 @@ What each named trophy was measured on (see [likeness.md](likeness.md)). A photo
 | `trophy:ashes-urn` | The Ashes urn | File:Ashes Urn.jpg (Wikimedia Commons, CC BY 2.0) | Looked at and measured only; not copied | The label on the body is left out |
 | `trophy:webb-ellis-cup` | Webb Ellis Cup | File:Rugby World Cup Trophy.JPG (Wikimedia Commons, public domain) | Looked at and measured only; not copied | The chasing and the lettering are left out |
 | `trophy:champions-league-trophy` | UEFA Champions League trophy | File:Trofeo UEFA Champions League.jpg (Wikimedia Commons, CC BY 2.0) | Looked at and measured only; not copied | The lettering and the roundel on the body are left out |
+
+## Gear measured on a photograph
+
+| Emblem | Piece | Reference looked at | Licence of the reference | Approximate |
+| --- | --- | --- | --- | --- |
+| `gear:baseball-cap` | Baseball cap | File:Baseball-Cap-c.jpg (Wikimedia Commons, CC0) for the three-quarter view, and File:Baseball cap.jpg (public domain) for the crown, seams, eyelets and the brim's stitching | Looked at and measured only; not copied | A plain cap: no team mark, lettering or brand; the colour is the package's navy |

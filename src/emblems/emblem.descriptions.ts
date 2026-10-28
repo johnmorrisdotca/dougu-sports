@@ -81,6 +81,7 @@ export const EMBLEM_DESCRIPTIONS: Readonly<Partial<Record<EmblemId, EmblemDescri
   "gear:table-tennis-paddle": { en: "Table-tennis paddle and ball", ja: "卓球のラケットとボール" },
   "gear:badminton-racket": { en: "Badminton racket and shuttlecock", ja: "バドミントンのラケットとシャトルコック" },
   "gear:football-helmet": { en: "Football helmet", ja: "アメリカンフットボールのヘルメット" },
+  "gear:baseball-cap": { en: "A baseball cap in three-quarter view: a dome crown with a button, a seam and three eyelets, and a curved brim with its edge and rows of stitching.", ja: "野球帽を斜め前から描いています。頭頂のボタン、縫い目、3つのはと目のあるドーム形のクラウンと、縁と何列もの縫い目のある湾曲したつばが見えます。" },
   "gear:hurley": { en: "Hurley", ja: "ハーリー（ハーリングのスティック）" },
   "trophy:sumo-cup": { en: "A tall silver cup on a tall stepped stand, with an ornate phoenix-crested handle on each side", ja: "段のある高い台に載った、背の高い銀の杯。両側の取っ手に鳳凰の飾りが付く" },
   "trophy:paterson-cup": { en: "The Paterson Cup: a wide silver bowl with a straight engraved band at the rim, two scrolled ear handles, a short stem and a dark wooden base. Given to the champion of the Pacific Coast Hockey Association from 1912", ja: "パターソン・カップ。縁にまっすぐな彫刻の帯がある幅広の銀のボウルで、渦巻き形の耳状の取っ手が2つ付き、短い脚と濃い色の木の台座があります。1912年から、パシフィック・コースト・ホッケー協会の優勝チームに贈られました。" },

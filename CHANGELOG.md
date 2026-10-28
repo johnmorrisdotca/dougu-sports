@@ -6,6 +6,14 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.24.0] - 2026-10-28
+
+A baseball cap, redrawn from two photographs of plain caps.
+
+### Added
+
+- **`gear:baseball-cap`**: a baseball cap in three-quarter view, with a dome crown, button, front seam and three eyelets, and a curved brim with its edge and rows of stitching, in the same flat layered style as the package's helmet and glove, with a coin-flip turn. Measured on two public-domain and CC0 photographs of plain caps (looked at, never copied). No team mark, lettering or brand. It is in the gear list and with baseball's bat and glove. 328 emblems, 71 pieces of gear.
+
 ## [0.23.0] - 2026-10-28
 
 The NBA's Finals MVP trophy, redrawn from a photograph of the real one.

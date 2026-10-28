@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 327 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 328 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -288,6 +288,7 @@ The folders the art lives in are in [layout.md](layout.md).
 | `gear:basketball-hoop` | Basketball hoop | gear | drawn |  |
 | `gear:baseball-bat` | Baseball bat | gear | drawn |  |
 | `gear:baseball-glove` | Baseball glove | gear | drawn |  |
+| `gear:baseball-cap` | Baseball cap | gear | drawn | A baseball cap in three-quarter view: a dome crown with a button, a seam and three eyelets, and a curved brim with its edge and rows of stitching. |
 | `gear:football-helmet` | Football helmet | gear | drawn | Football helmet |
 | `gear:goalposts` | Goal posts | gear | drawn |  |
 | `gear:hurley` | Hurley | gear | drawn | Hurley |
