@@ -24,8 +24,7 @@ const one = (constant: string, path: string): Promise<{ text: string; bytes: num
 // The printing itself (the warp onto the sphere, the cursive script, the block lettering, the sanitiser) is its own module, taken by `printed(ball)`: a printed baseball 19.5 kB, held to 21 kB; the balls' own modules carry none of it.
 // Measured 2026-10-21 with the slab turn in (a medal, a crest or a plaque now turns through the one `flipSvg`: a solid edge, a back of its own): a medal 5.6 kB (was 4.6), held to 5.8 kB; an icon or a pictogram grew by about 0.2 kB.
 // Measured 2026-10-21 with the pickleball's real holes in (ball.holes.ts, taken by the pickleballs alone): a pickleball 8.0 kB, held to 8.6 kB; the other balls did not change.
-const LIMITS = { holed: 8.6 * 1024, puck: 12.5 * 1024, ball: 7.6 * 1024, printed: 21 * 1024, twoTone: 9.6 * 1024, flat: 5.8 * 1024, lathe: 7.6 * 1024, icon: 4.3 * 1024, pennant: 3.6 * 1024, turn: 3 * 1024, turned: 10 * 1024 };
-// Measured 2026-10-28 with the lathe's `patch` and `panel` decorations in (a shield on a helmet, a nameplate on a block): a cup 7.3 kB (was 7.0 with the net's rows), held to 7.6 kB.
+const LIMITS = { holed: 8.6 * 1024, puck: 12.5 * 1024, ball: 7.6 * 1024, printed: 21 * 1024, twoTone: 9.6 * 1024, flat: 5.8 * 1024, lathe: 7.1 * 1024, icon: 4.3 * 1024, pennant: 3.6 * 1024, turn: 3 * 1024, turned: 10 * 1024 };
 
 test("one named ball, bundled by itself, stays small and leaves the other emblems out", async () => {
   const b = await one("BALL_SOCCER", "ball/ball.soccer");
@@ -79,6 +78,9 @@ test("one cup, bundled by itself, stays under the limit of a body of revolution 
   }
   const hockey = await one("TROPHY_HOCKEY_CUP", "trophy/hockey-cup");
   assert.ok(!hockey.text.includes("trophy:baseball"), "another cup came along");
+  assert.ok(!hockey.text.includes("\"mesh\"") && !hockey.text.includes("\"patch\""), "the extra decorations came along with a cup that uses none");
+  const russell = await one("TROPHY_BILL_RUSSELL_TROPHY", "trophy/bill-russell-trophy");
+  assert.ok(russell.text.includes("\"mesh\""), "the net of the Bill Russell Trophy is missing");
 });
 
 test("one icon and one pictogram, bundled by themselves, take only their own drawing", async () => {
@@ -138,6 +140,9 @@ test("bindTurn and one cup, bundled from the turn entry, stay under 10 kB gzippe
   }
   const hockey = await turned("TROPHY_HOCKEY_CUP", "trophy/hockey-cup");
   assert.ok(!hockey.text.includes("trophy:baseball"), "another cup came along");
+  assert.ok(!hockey.text.includes("\"mesh\"") && !hockey.text.includes("\"patch\""), "the extra decorations came along with a cup that uses none");
+  const russell = await one("TROPHY_BILL_RUSSELL_TROPHY", "trophy/bill-russell-trophy");
+  assert.ok(russell.text.includes("\"mesh\""), "the net of the Bill Russell Trophy is missing");
   assert.ok(hockey.text.includes("trophy:hockey-cup"), "the cup is not in the bundle");
 });
 

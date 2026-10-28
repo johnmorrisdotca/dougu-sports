@@ -2,9 +2,11 @@
 // package from a photograph of one of the trophies on its base (docs/likeness-sources.md): the helmet is a third of the height, the brim is as wide as the base, the column is narrow and the block is as tall as the helmet
 // and the column together. The helmet's front shield and ridge, the plate on the block and all the lettering and marks are left out, so the helmet is drawn as a round dome.
 import { defineLathe } from "../emblem.lathe.ts";
+import { LATHE_EXTRAS } from "../lathe.extras.ts";
 
 /** The Relief Man Award, given from 1976 to 2012 to the best reliever of each league: a silver fire helmet on a chrome column over a walnut block and base. */
 export const TROPHY_RELIEF_MAN_AWARD = /* @__PURE__ */ defineLathe("trophy:relief-man-award", "Relief Man Award", "リリーフマン賞", "ours", {
+  extras: LATHE_EXTRAS,
   metal: "silver",
   tones: { wood: "#4d2b19", brass: "#cfa94a" },
   tilt: 10,

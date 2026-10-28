@@ -11,17 +11,37 @@ import { type Band, cylinderText, engravingInk, engravingOf, flatText, sideText 
 /** A point of the profile: the height `y` (0 at the top of the 64 unit box), the radius `r` from the axis (x = 32), 1 for a sharp corner (a smooth run of points ends at one), and the tone of the piece that starts here. */
 export type Pt = readonly [y: number, r: number, corner?: 0 | 1, tone?: string];
 
-/** Something drawn on the surface, by height and angle (90 degrees is the right side, 0 faces the eye): a `ring` round the body at a height; `mer`idians from one height to another; `helix` strands that wind `turns` times; a diamond `net` (one row of diamonds, or `rows` of them stacked down the body: strands that wind a column to the side at each row, one way and the other); `dots` (beads) round at a height with a size; a `patch` of a tone on a round body between two angles and two heights (a shield on a helmet), a `panel` of a tone on one flat face of a body with flat sides, from a fraction `u0` to `u1` across the face (a nameplate on a block); on an open top, a `disc` of a tone out to a radius and `pills`, short rounded marks, round a radius. */
+/** Something drawn on the surface, by height and angle (90 degrees is the right side, 0 faces the eye): a `ring` round the body at a height; `mer`idians from one height to another; `helix` strands that wind `turns` times; a diamond `net`; `dots` (beads) round at a height with a size; on an open top, a `disc` of a tone out to a radius and `pills`, short rounded marks, round a radius. */
 export type Decor =
   | readonly ["ring", y: number]
   | readonly ["mer", y0: number, y1: number, n: number, off?: number]
   | readonly ["helix", y0: number, y1: number, n: number, turns: number]
-  | readonly ["net", y0: number, y1: number, n: number, rows?: number]
+  | readonly ["net", y0: number, y1: number, n: number]
   | readonly ["dots", y: number, n: number, size: number, off?: number]
-  | readonly ["patch", y0: number, y1: number, deg0: number, deg1: number, tone: string]
-  | readonly ["panel", face: number, y0: number, y1: number, u0: number, u1: number, tone: string]
   | readonly ["disc", rho: number, tone: string]
-  | readonly ["pills", rho: number, n: number, length: number, width: number, tone: string];
+  | readonly ["pills", rho: number, n: number, length: number, width: number, tone: string]
+  | ExtraDecor;
+
+/**
+ * Decorations that only some bodies use, drawn by the model's own `extras` (`lathe.extras.ts`) so that a body without them carries none of their code: a `mesh` is `rows` rows of diamonds stacked down the body from `y0` to `y1`
+ * with `n` strands round (strands that wind a column to the side at each row, one way and the other: an etched net); a `patch` is a tone laid on a round body between two angles and two heights (a shield on a helmet); a
+ * `panel` is a tone laid on one flat face of a body with flat sides, from a fraction `u0` to `u1` across the face (a nameplate on a block).
+ */
+export type ExtraDecor =
+  | readonly ["mesh", y0: number, y1: number, n: number, rows: number]
+  | readonly ["patch", y0: number, y1: number, deg0: number, deg1: number, tone: string]
+  | readonly ["panel", face: number, y0: number, y1: number, u0: number, u1: number, tone: string];
+
+/** What a drawer of `extras` is given: the solid, the turn and the helpers that place a point of its surface. */
+export interface DecorCtx {
+  p: readonly Pt[];
+  solid: Solid;
+  yaw: number;
+  base: Tone;
+  tone: (name?: string) => Tone;
+  at: (R: number, y: number, deg: number) => readonly [number, number, number];
+  where: (R: number, y: number, deg: number) => string;
+}
 
 /** One solid of revolution: a profile from the top down, whether its top is an open rim, how many flat sides it has (none: round) and what is drawn on it. */
 export interface Solid {
@@ -92,6 +112,8 @@ export interface LatheModel {
   poles?: Poles;
   /** The plinth: the band of the body (heights, the tone it is cut into, and for a body with flat sides which side) that holds an engraving, which turns with the body. */
   plate?: Band;
+  /** Draws the `mesh`, `patch` and `panel` decorations of the solids (`LATHE_EXTRAS` in `lathe.extras.ts`); a body that uses none leaves it out. */
+  extras?: (c: DecorCtx, d: ExtraDecor) => string;
 }
 
 const CX = 32;
@@ -157,7 +179,7 @@ const arc = (y: number, r: number, s: number, toLeft: boolean): string => `Q${pt
 const ellipse = (cx: number, cy: number, rx: number, ry: number, fill: string, extra = ""): string => `<ellipse cx="${f(cx)}" cy="${f(cy)}" rx="${f(rx)}" ry="${f(Math.max(ry, 0.25))}" fill="${fill}"${extra}/>`;
 
 /** One tone: its colour, its fill in the style, and the colours it makes. */
-interface Tone {
+export interface Tone {
   rgb: Rgb;
   fill: string;
   light: string;
@@ -296,59 +318,13 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
           mid.push(`<path d="${m}" transform="translate(.9 -.5)" stroke="${mix(base.rgb, 0.6)}" stroke-width=".8" stroke-opacity=".7"/>`);
         }
       } else if (kind === "net") {
-        const [, y0, y1, n, rows = 1] = d;
+        const [, y0, y1, n] = d;
         let m = "";
-        if (rows > 1) {
-          for (let i = 0; i < n; i++) {
-            for (const way of [1, -1]) {
-              let pen = false;
-              for (let j = 0; j <= rows * 4; j++) {
-                const u = j / (rows * 4);
-                const y = y0 + (y1 - y0) * u;
-                const deg = yaw + (360 * (i + way * rows * u)) / n;
-                if (Math.cos(deg * RAD) <= 0.05) {
-                  pen = false;
-                  continue;
-                }
-                m += `${pen ? "L" : "M"}${where(radiusAt(p, y), y, deg)}`;
-                pen = true;
-              }
-            }
-          }
-        } else {
-          for (let i = 0; i < n; i++) {
-            const deg = yaw + (360 * i) / n;
-            for (const to of [deg + 360 / n, deg - 360 / n]) if (Math.cos(((deg + to) / 2) * RAD) > 0.05) m += `M${where(radiusAt(p, y0), y0, deg)}L${where(radiusAt(p, y1), y1, to)}`;
-          }
+        for (let i = 0; i < n; i++) {
+          const deg = yaw + (360 * i) / n;
+          for (const to of [deg + 360 / n, deg - 360 / n]) if (Math.cos(((deg + to) / 2) * RAD) > 0.05) m += `M${where(radiusAt(p, y0), y0, deg)}L${where(radiusAt(p, y1), y1, to)}`;
         }
-        if (m !== "") mid.push(rows > 1 ? `<path d="${m}" stroke="${mix(base.rgb, 0.55)}" stroke-width=".55" stroke-opacity=".9"/>` : `<path d="${m}" stroke-width=".7"/>`);
-      } else if (kind === "patch") {
-        const [, y0, y1, deg0, deg1, name] = d;
-        const t = tone(name);
-        const top: string[] = [];
-        const bottom: string[] = [];
-        for (let j = 0; j <= 12; j++) {
-          const deg = yaw + deg0 + ((deg1 - deg0) * j) / 12;
-          if (Math.cos(deg * RAD) <= 0.04) continue;
-          top.push(where(radiusAt(p, y0), y0, deg));
-          bottom.unshift(where(radiusAt(p, y1), y1, deg));
-        }
-        if (top.length > 1) mid.push(`<path d="M${top.join("L")}L${bottom.join("L")}z" fill="${t.fill}" stroke="${t.edge}" stroke-width=".5"/>`);
-      } else if (kind === "panel") {
-        const [, face, y0, y1, u0, u1, name] = d;
-        const n = solid.sides ?? 0;
-        const a0 = (360 * face) / (n || 1) + yaw + (solid.turn ?? 0);
-        const a1 = (360 * (face + 1)) / (n || 1) + yaw + (solid.turn ?? 0);
-        if (n > 0 && Math.cos(((a0 + a1) / 2) * RAD) > 0) {
-          const t = tone(name);
-          const corner = (y: number, deg: number): readonly [number, number] => at(radiusAt(p, y), y, deg).slice(0, 2) as unknown as readonly [number, number];
-          const lerp = (y: number, u: number): string => {
-            const c0 = corner(y, a0);
-            const c1 = corner(y, a1);
-            return pt(c0[0] + (c1[0] - c0[0]) * u, c0[1] + (c1[1] - c0[1]) * u);
-          };
-          mid.push(`<path d="M${lerp(y0, u0)}L${lerp(y0, u1)}L${lerp(y1, u1)}L${lerp(y1, u0)}z" fill="${t.fill}" stroke="${t.edge}" stroke-width=".5"/>`);
-        }
+        if (m !== "") mid.push(`<path d="${m}" stroke-width=".7"/>`);
       } else if (kind === "dots") {
         const [, y, n, size, off = 0] = d;
         let m = "";
@@ -369,6 +345,9 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
           m += `M${where(rho, top[0], deg - length / 2)}L${where(rho, top[0], deg + length / 2)}`;
         }
         mid.push(`<path d="${m}" stroke-width="${width}" stroke="${t.edge}"/><path d="${m}" stroke-width="${width - 0.9}" stroke="${t.light}"/>`);
+      } else if (model.extras !== undefined) {
+        const m = model.extras({ p, solid, yaw, base, tone, at, where }, d);
+        if (m !== "") mid.push(m);
       }
     }
     // A solid that stands off the axis is moved to its place, behind the body when it is on the far side and in front of it when it is on the near side.

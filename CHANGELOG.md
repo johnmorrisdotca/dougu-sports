@@ -6,6 +6,12 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.25.2] - 2026-10-28
+
+### Changed
+
+- The lathe's extra decorations, `mesh` (the etched net of many diamonds, which was `net` with a `rows` number), `patch` and `panel`, are drawn by `src/emblems/lathe.extras.ts`, which a model asks for with `extras: LATHE_EXTRAS` (the Bill Russell Trophy and the Relief Man Award do). A cup that uses none of them no longer carries their code: the hockey cup alone bundles to 7213 bytes gzipped again (it was 7450 with them in the renderer, over the 7.1 kB limit, which `pnpm check` caught only in `scripts/check-package.ts`), and `test/size.test.ts` now holds that it leaves them out. The pictures do not change.
+
 ## [0.25.1] - 2026-10-28
 
 ### Fixed
@@ -20,7 +26,7 @@ Two of baseball's awards, redrawn from photographs of the real ones. The earlier
 
 - **`trophy:hank-aaron-award`**: the Hank Aaron Award, a mahogany block in the shape of home plate with a grey metal face, a bat laid across it and two ribbons over the bat, in the flat plaque style of the Cy Young and MLB MVP awards, with a back and a coin-flip turn. Measured on a Wikimedia Commons photograph (CC BY 2.0; looked at, never copied). No lettering, league mark or engraving. 330 emblems, 74 trophies, 50 named with the Relief Man Award.
 - **`trophy:relief-man-award`**: the Relief Man Award (the fireman trophy given from 1976 to 2012), a silver fire helmet with a gilt shield on a short chrome column, over a walnut block with a brass nameplate and a stepped walnut base, built on the lathe like the Stanley Cup. Measured on an auction photograph of a 1981 trophy (looked at, never copied). Approximate: the helmet is drawn round. The shield, the plate and every mark and word are left blank, the plate taking the engraving option. 330 emblems, 74 trophies, 50 named.
-- The lathe's decorations `patch` (a tone laid on a round body between two angles and two heights, a shield on a helmet) and `panel` (a tone laid on one flat face of a body with flat sides, a nameplate on a block). They add 240 bytes gzipped to a cup bundle (7453, was 7213); the bundle limit for a cup is now 7.6 kB.
+- The lathe's decorations `patch` (a tone laid on a round body between two angles and two heights, a shield on a helmet) and `panel` (a tone laid on one flat face of a body with flat sides, a nameplate on a block).
 
 ## [0.24.0] - 2026-10-28
 
