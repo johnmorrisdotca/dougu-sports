@@ -7,7 +7,7 @@ import { wellFormed } from "./helpers.ts";
 
 const JAPANESE = /^[぀-ヿ一-鿿々ー・（）()0-9A-Za-z]+$/;
 const GEAR = ["gear:gunbai", "gear:mawashi", "gear:shinai", "gear:kendo-men", "gear:judogi", "gear:obi", "gear:yumi", "gear:ya", "gear:karate-gi"] as const;
-const LONG_JA = ["trophy:basketball", "ball:squash", "ball:football-ifaf", "sport:afl"];
+const LONG_JA = ["trophy:basketball", "ball:squash", "ball:football-ifaf", "sport:afl", "trophy:bill-russell-trophy"];
 const SPORTS = ["sumo", "kendo", "judo", "kyudo", "karate"] as const;
 
 test("the Japanese sports and their items are in the lists, with the kinds they turn as", () => {

@@ -4,7 +4,7 @@
 import { defineLathe } from "../emblem.lathe.ts";
 
 /** The Bill Russell NBA Finals Most Valuable Player Trophy: a gold basketball on a flared net goblet over a stepped round foot. */
-export const TROPHY_BILL_RUSSELL_TROPHY = /* @__PURE__ */ defineLathe("trophy:bill-russell-trophy", "Bill Russell Trophy", "ラッセル・トロフィー", "ours", {
+export const TROPHY_BILL_RUSSELL_TROPHY = /* @__PURE__ */ defineLathe("trophy:bill-russell-trophy", "Bill Russell Trophy", "ビル・ラッセル・トロフィー", "ours", {
   metal: "gold",
   turnBox: "-3.7 0 71.4 71.4",
   tilt: 8,

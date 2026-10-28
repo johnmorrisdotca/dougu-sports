@@ -1,6 +1,6 @@
 {
   "name": "@johnmorrisdotca/dougu-sports",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "description": "Dougu Sports 道具, sports emblems as SVG strings: trophies, medals, crests, sport icons, and the ball and gear of every sport, in metal, line or flat colour, with optional 3D turning. Light and dark, accessible, tree-shakeable. Zero dependencies.",
   "keywords": [
     "sports",

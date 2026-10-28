@@ -6,6 +6,12 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.25.1] - 2026-10-28
+
+### Fixed
+
+- The Japanese name and description of `trophy:bill-russell-trophy` and the description of `trophy:hank-aaron-award` read as the awards are named in Japanese (the name `ビル・ラッセル・トロフィー`, `NBAファイナル` for the finals, `最優秀打者` for the best hitter); reviewed.
+
 ## [0.25.0] - 2026-10-28
 
 Two of baseball's awards, redrawn from photographs of the real ones. The earlier Hank Aaron Award, a silver batter, was a different object: the real award is a block of mahogany cut as home plate.
