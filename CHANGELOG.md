@@ -6,6 +6,15 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.23.0] - 2026-10-28
+
+The NBA's Finals MVP trophy, redrawn from a photograph of the real one.
+
+### Added
+
+- **`trophy:bill-russell-trophy`**: the Bill Russell NBA Finals Most Valuable Player Trophy, a gold basketball seated on the flared rim of a net-patterned goblet that narrows in a long concave curve to a slim waist, over a round foot of two tiers. Measured on a press photograph of the 2022 design standing beside the championship trophy (looked at, never copied; no freely licensed photograph exists), and built with the same lathe as the Stanley Cup and the Larry O'Brien Trophy. No lettering. 327 emblems, 72 trophies, 48 named.
+- The lathe's `net` decoration takes a fifth number, `rows`: strands that wind a column to the side at each row, one way and the other, make a net of many diamonds down a body (a trophy's etched net) in a pale line. Without it `net` draws one row of diamonds as before.
+
 ## [0.22.0] - 2026-10-28
 
 The award trophies and the cap of 0.17.0 to 0.21.0, which were never published, are taken out. Drawn from written descriptions, they did not match the real objects and were far below the Stanley Cup and the Larry O'Brien Trophy. A site that asks for these awards draws the plain cup, which is honest; each comes back only when it can be drawn from a photograph of the real thing and passes beside the Stanley Cup.

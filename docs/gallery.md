@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 326 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 327 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -81,6 +81,7 @@ The folders the art lives in are in [layout.md](layout.md).
 | `trophy:grey-cup` | Grey Cup | lathe | ours | The Grey Cup: a two-handled silver cup with a swirled stem on a tall flared cone of twelve panels crossed by dark bands. |
 | `trophy:cy-young-award` | Cy Young Award | flat | ours | The Cy Young Award: a dark plaque with a curved silver band, a V and a hand holding a baseball over a nameplate. |
 | `trophy:mlb-mvp-award` | Baseball MVP award | flat | ours | The Most Valuable Player Award: a dark octagonal plaque with a silver ring and diamond, a gilt medallion, a nameplate and crossed bats. |
+| `trophy:bill-russell-trophy` | Bill Russell Trophy | lathe | ours | The Bill Russell Trophy: a gold basketball seated on the flared rim of a net-patterned goblet that narrows to a slim waist, over a round foot of two tiers. |
 | `trophy:walter-cup` | Walter Cup | lathe | ours | The Walter Cup: a wide shallow silver bowl on a stem between two tall stick-shaped blades, over a heavy round base. |
 | `trophy:wnba-championship-trophy` | WNBA Championship Trophy | lathe | ours | The WNBA Championship Trophy: a silver basketball held on two slanting tubes over a low slab. |
 | `trophy:lamar-hunt-trophy` | Lamar Hunt Trophy | lathe | ours | The Lamar Hunt Trophy: a clear football-shaped ring on a round silver base over a flat black slab. |

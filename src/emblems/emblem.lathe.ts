@@ -11,12 +11,12 @@ import { type Band, cylinderText, engravingInk, engravingOf, flatText, sideText 
 /** A point of the profile: the height `y` (0 at the top of the 64 unit box), the radius `r` from the axis (x = 32), 1 for a sharp corner (a smooth run of points ends at one), and the tone of the piece that starts here. */
 export type Pt = readonly [y: number, r: number, corner?: 0 | 1, tone?: string];
 
-/** Something drawn on the surface, by height and angle (90 degrees is the right side, 0 faces the eye): a `ring` round the body at a height; `mer`idians from one height to another; `helix` strands that wind `turns` times; a diamond `net`; `dots` (beads) round at a height with a size; on an open top, a `disc` of a tone out to a radius and `pills`, short rounded marks, round a radius. */
+/** Something drawn on the surface, by height and angle (90 degrees is the right side, 0 faces the eye): a `ring` round the body at a height; `mer`idians from one height to another; `helix` strands that wind `turns` times; a diamond `net` (one row of diamonds, or `rows` of them stacked down the body: strands that wind a column to the side at each row, one way and the other); `dots` (beads) round at a height with a size; on an open top, a `disc` of a tone out to a radius and `pills`, short rounded marks, round a radius. */
 export type Decor =
   | readonly ["ring", y: number]
   | readonly ["mer", y0: number, y1: number, n: number, off?: number]
   | readonly ["helix", y0: number, y1: number, n: number, turns: number]
-  | readonly ["net", y0: number, y1: number, n: number]
+  | readonly ["net", y0: number, y1: number, n: number, rows?: number]
   | readonly ["dots", y: number, n: number, size: number, off?: number]
   | readonly ["disc", rho: number, tone: string]
   | readonly ["pills", rho: number, n: number, length: number, width: number, tone: string];
@@ -294,13 +294,32 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
           mid.push(`<path d="${m}" transform="translate(.9 -.5)" stroke="${mix(base.rgb, 0.6)}" stroke-width=".8" stroke-opacity=".7"/>`);
         }
       } else if (kind === "net") {
-        const [, y0, y1, n] = d;
+        const [, y0, y1, n, rows = 1] = d;
         let m = "";
-        for (let i = 0; i < n; i++) {
-          const deg = yaw + (360 * i) / n;
-          for (const to of [deg + 360 / n, deg - 360 / n]) if (Math.cos(((deg + to) / 2) * RAD) > 0.05) m += `M${where(radiusAt(p, y0), y0, deg)}L${where(radiusAt(p, y1), y1, to)}`;
+        if (rows > 1) {
+          for (let i = 0; i < n; i++) {
+            for (const way of [1, -1]) {
+              let pen = false;
+              for (let j = 0; j <= rows * 4; j++) {
+                const u = j / (rows * 4);
+                const y = y0 + (y1 - y0) * u;
+                const deg = yaw + (360 * (i + way * rows * u)) / n;
+                if (Math.cos(deg * RAD) <= 0.05) {
+                  pen = false;
+                  continue;
+                }
+                m += `${pen ? "L" : "M"}${where(radiusAt(p, y), y, deg)}`;
+                pen = true;
+              }
+            }
+          }
+        } else {
+          for (let i = 0; i < n; i++) {
+            const deg = yaw + (360 * i) / n;
+            for (const to of [deg + 360 / n, deg - 360 / n]) if (Math.cos(((deg + to) / 2) * RAD) > 0.05) m += `M${where(radiusAt(p, y0), y0, deg)}L${where(radiusAt(p, y1), y1, to)}`;
+          }
         }
-        if (m !== "") mid.push(`<path d="${m}" stroke-width=".7"/>`);
+        if (m !== "") mid.push(rows > 1 ? `<path d="${m}" stroke="${mix(base.rgb, 0.55)}" stroke-width=".55" stroke-opacity=".9"/>` : `<path d="${m}" stroke-width=".7"/>`);
       } else if (kind === "dots") {
         const [, y, n, size, off = 0] = d;
         let m = "";

@@ -496,6 +496,16 @@ export const NAMED_TROPHIES: readonly NamedTrophy[] = [
     first: "1955-56",
     reference: "File:Trofeo UEFA Champions League.jpg (Wikimedia Commons, CC BY 2.0)",
   },
+  {
+    id: "trophy:bill-russell-trophy",
+    name: "Bill Russell Trophy",
+    sport: "basketball",
+    competition: "National Basketball Association",
+    kind: "player",
+    honours: "The most valuable player of the championship series.",
+    first: "1969",
+    reference: "A press photograph of the 2022 design standing beside the championship trophy (cbssports.com, 12 May 2022), looked at and measured only; not copied. No freely licensed photograph on Wikimedia Commons (searched 2026-10-27).",
+  },
 ];
 
 /** The facts of a named trophy by its emblem id, or `undefined` for a generic trophy. */

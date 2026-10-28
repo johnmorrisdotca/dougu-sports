@@ -47,6 +47,7 @@ export const TROPHY_IDS = [
   "trophy:grey-cup",
   "trophy:cy-young-award",
   "trophy:mlb-mvp-award",
+  "trophy:bill-russell-trophy",
   "trophy:walter-cup",
   "trophy:wnba-championship-trophy",
   "trophy:lamar-hunt-trophy",

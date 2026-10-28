@@ -57,6 +57,7 @@ import { TROPHY_COMMISSIONERS_TROPHY } from "./trophy/commissioners-trophy.ts";
 import { TROPHY_GREY_CUP } from "./trophy/grey-cup.ts";
 import { TROPHY_CY_YOUNG_AWARD } from "./trophy/cy-young-award.ts";
 import { TROPHY_MLB_MVP_AWARD } from "./trophy/mlb-mvp-award.ts";
+import { TROPHY_BILL_RUSSELL_TROPHY } from "./trophy/bill-russell-trophy.ts";
 import { TROPHY_WALTER_CUP } from "./trophy/walter-cup.ts";
 import { TROPHY_WNBA_CHAMPIONSHIP_TROPHY } from "./trophy/wnba-championship-trophy.ts";
 import { TROPHY_LAMAR_HUNT_TROPHY } from "./trophy/lamar-hunt-trophy.ts";
@@ -192,6 +193,7 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}`
   "trophy:walter-cup": TROPHY_WALTER_CUP,
   "trophy:mlb-mvp-award": TROPHY_MLB_MVP_AWARD,
   "trophy:cy-young-award": TROPHY_CY_YOUNG_AWARD,
+  "trophy:bill-russell-trophy": TROPHY_BILL_RUSSELL_TROPHY,
   "trophy:grey-cup": TROPHY_GREY_CUP,
   "trophy:commissioners-trophy": TROPHY_COMMISSIONERS_TROPHY,
   "trophy:larry-obrien-trophy": TROPHY_LARRY_OBRIEN_TROPHY,
