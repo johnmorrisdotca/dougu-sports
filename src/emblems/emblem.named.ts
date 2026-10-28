@@ -506,6 +506,26 @@ export const NAMED_TROPHIES: readonly NamedTrophy[] = [
     first: "1969",
     reference: "A press photograph of the 2022 design standing beside the championship trophy (cbssports.com, 12 May 2022), looked at and measured only; not copied. No freely licensed photograph on Wikimedia Commons (searched 2026-10-27).",
   },
+  {
+    id: "trophy:hank-aaron-award",
+    name: "Hank Aaron Award",
+    sport: "baseball",
+    competition: "Major League Baseball",
+    kind: "player",
+    honours: "The best offensive performer of each league.",
+    first: "1999",
+    reference: "File:Kris Bryant, Hank Aaron, Rob Manfred and David Ortiz during the Aaron Award ceremony. (29955118983).jpg (Wikimedia Commons, CC BY 2.0), looked at and measured only; not copied.",
+  },
+  {
+    id: "trophy:relief-man-award",
+    name: "Relief Man Award",
+    sport: "baseball",
+    competition: "Major League Baseball",
+    kind: "player",
+    honours: "The top relief pitcher of each league (given 1976 to 2012; the fireman trophy).",
+    first: "1976",
+    reference: "An auction photograph of a 1981 trophy standing on its base (SCP Auctions lot image), looked at and measured only; not copied; not ours to licence. No photograph on Wikimedia Commons (searched 2026-10-27).",
+  },
 ];
 
 /** The facts of a named trophy by its emblem id, or `undefined` for a generic trophy. */

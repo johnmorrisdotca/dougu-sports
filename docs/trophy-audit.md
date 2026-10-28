@@ -36,7 +36,7 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | --- | --- | --- | --- |
 | `nba_larry_obrien` | Larry O'Brien Championship Trophy | `trophy:larry-obrien-trophy` | yes |
 | `nba_mvp` | Michael Jordan Trophy (Most Valuable Player; the old Maurice Podoloff trophy is now the best-record award) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a sculpted gold figure, which the lathe cannot draw as a likeness, so it stays the plain cup |
-| `nba_finals_mvp` | Bill Russell NBA Finals Most Valuable Player Award | gap | no: John to supply |
+| `nba_finals_mvp` | Bill Russell NBA Finals Most Valuable Player Award | `trophy:bill-russell-trophy` | no on Commons; measured on a press photograph (looked at only) |
 | `nba_defensive_player` | Hakeem Olajuwon Trophy (Defensive Player of the Year) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a cut-crystal vessel holding a small gold figure, which identifies it and which the lathe cannot draw, so it stays the plain cup |
 | `nba_rookie_of_the_year` | Wilt Chamberlain Trophy (Rookie of the Year) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a cut-crystal vessel holding a small gold figure, which identifies it and which the lathe cannot draw, so it stays the plain cup |
 | `nba_sixth_man` | John Havlicek Trophy (Sixth Man of the Year) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a cut-crystal vessel holding a small gold figure, which identifies it and which the lathe cannot draw, so it stays the plain cup |
@@ -55,16 +55,16 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | `mlb_silver_slugger` | Silver Slugger Award | `trophy:silver-slugger-award` | yes |
 | `mlb_world_series_mvp` | World Series Most Valuable Player Award | `trophy:world-series-mvp-trophy` (approximate) | yes, at a distance |
 | `mlb_rookie_of_the_year` | Jackie Robinson Rookie of the Year Award | gap (plain cup) | no photograph found; a drawing from a description was rejected (2026-10-27) |
-| `mlb_hank_aaron` | Hank Aaron Award | gap (plain cup) | no: a batter sculpture; no usable photograph; a drawing from a description was rejected (2026-10-27) |
+| `mlb_hank_aaron` | Hank Aaron Award | `trophy:hank-aaron-award` | yes (CC BY 2.0, ceremony photograph) |
 | `mlb_manager_of_the_year` | Manager of the Year Award | gap (plain cup) | no photograph found; a drawing from a description was rejected (2026-10-27) |
-| `mlb_rolaids_relief_man` | Rolaids Relief Man Award (now the Reliever of the Year awards) | gap (plain cup) | no photograph found; a drawing from a description was rejected (2026-10-27) |
+| `mlb_rolaids_relief_man` | Rolaids Relief Man Award (now the Reliever of the Year awards) | `trophy:relief-man-award` (approximate) | no on Commons; measured on an auction photograph (looked at only) |
 
 ## NFL
 
 | Award code | Award | Emblem | Photo |
 | --- | --- | --- | --- |
 | `nfl_super_bowl` | Vince Lombardi Trophy | `trophy:lombardi-trophy` | yes |
-| `nfl_super_bowl_mvp` | Pete Rozelle Trophy (Super Bowl MVP) | gap (plain cup) | no photograph found; a drawing from a description was rejected (2026-10-27) |
+| `nfl_super_bowl_mvp` | Pete Rozelle Trophy (Super Bowl MVP) | gap (plain cup) | only a flat illustration on Commons (a silver football lying on its side with a cut base): the lathe stands a body on its axis and cannot lay a football down, so it stays the plain cup |
 | `nfl_ap_mvp`, `nfl_ap_offensive_player`, `nfl_ap_defensive_player` | The Associated Press NFL awards | gap (the AP gives no single famous trophy; a generic plaque stands for them) | no |
 | not held | Lamar Hunt Trophy (AFC champion) | `trophy:lamar-hunt-trophy` | yes |
 | not held | George Halas Trophy (NFC champion) | gap | no: John to supply |

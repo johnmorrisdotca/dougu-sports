@@ -62,6 +62,8 @@ export { TROPHY_COMMISSIONERS_TROPHY } from "./emblems/trophy/commissioners-trop
 export { TROPHY_GREY_CUP } from "./emblems/trophy/grey-cup.ts";
 export { TROPHY_CY_YOUNG_AWARD } from "./emblems/trophy/cy-young-award.ts";
 export { TROPHY_MLB_MVP_AWARD } from "./emblems/trophy/mlb-mvp-award.ts";
+export { TROPHY_RELIEF_MAN_AWARD } from "./emblems/trophy/relief-man-award.ts";
+export { TROPHY_HANK_AARON_AWARD } from "./emblems/trophy/hank-aaron-award.ts";
 export { TROPHY_BILL_RUSSELL_TROPHY } from "./emblems/trophy/bill-russell-trophy.ts";
 export { TROPHY_WALTER_CUP } from "./emblems/trophy/walter-cup.ts";
 export { TROPHY_WNBA_CHAMPIONSHIP_TROPHY } from "./emblems/trophy/wnba-championship-trophy.ts";
