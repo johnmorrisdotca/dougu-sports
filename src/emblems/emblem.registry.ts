@@ -57,20 +57,6 @@ import { TROPHY_COMMISSIONERS_TROPHY } from "./trophy/commissioners-trophy.ts";
 import { TROPHY_GREY_CUP } from "./trophy/grey-cup.ts";
 import { TROPHY_CY_YOUNG_AWARD } from "./trophy/cy-young-award.ts";
 import { TROPHY_MLB_MVP_AWARD } from "./trophy/mlb-mvp-award.ts";
-import { TROPHY_JACKIE_ROBINSON_AWARD } from "./trophy/jackie-robinson-award.ts";
-import { TROPHY_MLB_MANAGER_AWARD } from "./trophy/mlb-manager-award.ts";
-import { TROPHY_RELIEF_MAN_AWARD } from "./trophy/relief-man-award.ts";
-import { TROPHY_HANK_AARON_AWARD } from "./trophy/hank-aaron-award.ts";
-import { TROPHY_MICHAEL_JORDAN_TROPHY } from "./trophy/michael-jordan-trophy.ts";
-import { TROPHY_BILL_RUSSELL_TROPHY } from "./trophy/bill-russell-trophy.ts";
-import { TROPHY_OLAJUWON_TROPHY } from "./trophy/olajuwon-trophy.ts";
-import { TROPHY_CHAMBERLAIN_TROPHY } from "./trophy/chamberlain-trophy.ts";
-import { TROPHY_HAVLICEK_TROPHY } from "./trophy/havlicek-trophy.ts";
-import { TROPHY_AUERBACH_TROPHY } from "./trophy/auerbach-trophy.ts";
-import { TROPHY_MIKAN_TROPHY } from "./trophy/mikan-trophy.ts";
-import { TROPHY_ROZELLE_TROPHY } from "./trophy/rozelle-trophy.ts";
-import { TROPHY_HALAS_TROPHY } from "./trophy/halas-trophy.ts";
-import { TROPHY_GREGORY_TROPHY } from "./trophy/gregory-trophy.ts";
 import { TROPHY_WALTER_CUP } from "./trophy/walter-cup.ts";
 import { TROPHY_WNBA_CHAMPIONSHIP_TROPHY } from "./trophy/wnba-championship-trophy.ts";
 import { TROPHY_LAMAR_HUNT_TROPHY } from "./trophy/lamar-hunt-trophy.ts";
@@ -206,20 +192,6 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}`
   "trophy:walter-cup": TROPHY_WALTER_CUP,
   "trophy:mlb-mvp-award": TROPHY_MLB_MVP_AWARD,
   "trophy:cy-young-award": TROPHY_CY_YOUNG_AWARD,
-  "trophy:jackie-robinson-award": TROPHY_JACKIE_ROBINSON_AWARD,
-  "trophy:mlb-manager-award": TROPHY_MLB_MANAGER_AWARD,
-  "trophy:relief-man-award": TROPHY_RELIEF_MAN_AWARD,
-  "trophy:hank-aaron-award": TROPHY_HANK_AARON_AWARD,
-  "trophy:michael-jordan-trophy": TROPHY_MICHAEL_JORDAN_TROPHY,
-  "trophy:bill-russell-trophy": TROPHY_BILL_RUSSELL_TROPHY,
-  "trophy:olajuwon-trophy": TROPHY_OLAJUWON_TROPHY,
-  "trophy:chamberlain-trophy": TROPHY_CHAMBERLAIN_TROPHY,
-  "trophy:havlicek-trophy": TROPHY_HAVLICEK_TROPHY,
-  "trophy:auerbach-trophy": TROPHY_AUERBACH_TROPHY,
-  "trophy:mikan-trophy": TROPHY_MIKAN_TROPHY,
-  "trophy:rozelle-trophy": TROPHY_ROZELLE_TROPHY,
-  "trophy:halas-trophy": TROPHY_HALAS_TROPHY,
-  "trophy:gregory-trophy": TROPHY_GREGORY_TROPHY,
   "trophy:grey-cup": TROPHY_GREY_CUP,
   "trophy:commissioners-trophy": TROPHY_COMMISSIONERS_TROPHY,
   "trophy:larry-obrien-trophy": TROPHY_LARRY_OBRIEN_TROPHY,

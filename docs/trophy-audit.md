@@ -26,7 +26,7 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | `nhl_presidents_trophy` | Presidents' Trophy | `trophy:presidents-trophy` | yes |
 | `nhl_rocket_richard` | Maurice "Rocket" Richard Trophy | `trophy:rocket-richard-trophy` | yes |
 | `nhl_ted_lindsay` | Ted Lindsay Award | `trophy:ted-lindsay-award` | yes |
-| `nhl_gm_of_the_year` | NHL General Manager of the Year Award (Jim Gregory Trophy) | `trophy:gregory-trophy` (approximate) | looked at a Hall photograph; no Commons file |
+| `nhl_gm_of_the_year` | NHL General Manager of the Year Award (Jim Gregory Trophy) | gap (plain cup) | no: a drawing from a description was rejected (2026-10-27); a figure group, stays the plain cup until a good photograph is at hand |
 | not held | Prince of Wales Trophy, Clarence S. Campbell Bowl, Lester Patrick Trophy | `trophy:prince-of-wales-trophy`, `trophy:campbell-bowl`, `trophy:lester-patrick-trophy` | yes |
 | not held | Mark Messier Leadership Award, Willie O'Ree Community Hero Award, NHL Foundation Player Award | gap | no: John to supply |
 
@@ -35,13 +35,13 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | Award code | Award | Emblem | Photo |
 | --- | --- | --- | --- |
 | `nba_larry_obrien` | Larry O'Brien Championship Trophy | `trophy:larry-obrien-trophy` | yes |
-| `nba_mvp` | Michael Jordan Trophy (Most Valuable Player; the old Maurice Podoloff cup is now the best-record trophy) | `trophy:michael-jordan-trophy` (approximate) | no: drawn from a description |
-| `nba_finals_mvp` | Bill Russell NBA Finals Most Valuable Player Award | `trophy:bill-russell-trophy` (approximate) | no: drawn from a description |
-| `nba_defensive_player` | Hakeem Olajuwon Trophy (Defensive Player of the Year) | `trophy:olajuwon-trophy` (approximate) | no: drawn from a description |
-| `nba_rookie_of_the_year` | Wilt Chamberlain Trophy (Rookie of the Year) | `trophy:chamberlain-trophy` (approximate) | no: drawn from a description |
-| `nba_sixth_man` | John Havlicek Trophy (Sixth Man of the Year) | `trophy:havlicek-trophy` (approximate) | no: drawn from a description |
-| `nba_coach_of_the_year` | Red Auerbach Trophy (Coach of the Year) | `trophy:auerbach-trophy` (approximate) | no: drawn from a description |
-| `nba_most_improved` | George Mikan Trophy (Most Improved Player) | `trophy:mikan-trophy` (approximate) | no: drawn from a description |
+| `nba_mvp` | Michael Jordan Trophy (Most Valuable Player; the old Maurice Podoloff trophy is now the best-record award) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a sculpted gold figure, which the lathe cannot draw as a likeness, so it stays the plain cup |
+| `nba_finals_mvp` | Bill Russell NBA Finals Most Valuable Player Award | gap | no: John to supply |
+| `nba_defensive_player` | Hakeem Olajuwon Trophy (Defensive Player of the Year) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a cut-crystal vessel holding a small gold figure, which identifies it and which the lathe cannot draw, so it stays the plain cup |
+| `nba_rookie_of_the_year` | Wilt Chamberlain Trophy (Rookie of the Year) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a cut-crystal vessel holding a small gold figure, which identifies it and which the lathe cannot draw, so it stays the plain cup |
+| `nba_sixth_man` | John Havlicek Trophy (Sixth Man of the Year) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a cut-crystal vessel holding a small gold figure, which identifies it and which the lathe cannot draw, so it stays the plain cup |
+| `nba_coach_of_the_year` | Red Auerbach Trophy (Coach of the Year) | gap (plain cup) | no: a seated-coach sculpture; no photograph found; stays the plain cup |
+| `nba_most_improved` | George Mikan Trophy (Most Improved Player) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a cut-crystal vessel holding a small gold figure, which identifies it and which the lathe cannot draw, so it stays the plain cup |
 | not held | Eastern and Western Conference trophies (Oscar Robertson, Larry Bird), NBA Cup | gap | no: John to supply |
 
 ## MLB
@@ -54,20 +54,20 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | `mlb_gold_glove` | Rawlings Gold Glove Award | `trophy:gold-glove-award` | yes |
 | `mlb_silver_slugger` | Silver Slugger Award | `trophy:silver-slugger-award` | yes |
 | `mlb_world_series_mvp` | World Series Most Valuable Player Award | `trophy:world-series-mvp-trophy` (approximate) | yes, at a distance |
-| `mlb_rookie_of_the_year` | Jackie Robinson Rookie of the Year Award | `trophy:jackie-robinson-award` (approximate) | no: drawn from a description |
-| `mlb_hank_aaron` | Hank Aaron Award | `trophy:hank-aaron-award` (approximate) | no: drawn from a description |
-| `mlb_manager_of_the_year` | Manager of the Year Award | `trophy:mlb-manager-award` (approximate) | no: drawn from a description |
-| `mlb_rolaids_relief_man` | Rolaids Relief Man Award (now the Reliever of the Year awards) | `trophy:relief-man-award` (approximate) | no: drawn from a description |
+| `mlb_rookie_of_the_year` | Jackie Robinson Rookie of the Year Award | gap (plain cup) | no photograph found; a drawing from a description was rejected (2026-10-27) |
+| `mlb_hank_aaron` | Hank Aaron Award | gap (plain cup) | no: a batter sculpture; no usable photograph; a drawing from a description was rejected (2026-10-27) |
+| `mlb_manager_of_the_year` | Manager of the Year Award | gap (plain cup) | no photograph found; a drawing from a description was rejected (2026-10-27) |
+| `mlb_rolaids_relief_man` | Rolaids Relief Man Award (now the Reliever of the Year awards) | gap (plain cup) | no photograph found; a drawing from a description was rejected (2026-10-27) |
 
 ## NFL
 
 | Award code | Award | Emblem | Photo |
 | --- | --- | --- | --- |
 | `nfl_super_bowl` | Vince Lombardi Trophy | `trophy:lombardi-trophy` | yes |
-| `nfl_super_bowl_mvp` | Pete Rozelle Trophy (Super Bowl MVP) | `trophy:rozelle-trophy` (approximate) | no: drawn from a description |
-| `nfl_ap_mvp`, `nfl_ap_offensive_player`, `nfl_ap_defensive_player` | The Associated Press NFL awards | generic `trophy:plaque` (the AP gives no single famous trophy) | no |
+| `nfl_super_bowl_mvp` | Pete Rozelle Trophy (Super Bowl MVP) | gap (plain cup) | no photograph found; a drawing from a description was rejected (2026-10-27) |
+| `nfl_ap_mvp`, `nfl_ap_offensive_player`, `nfl_ap_defensive_player` | The Associated Press NFL awards | gap (the AP gives no single famous trophy; a generic plaque stands for them) | no |
 | not held | Lamar Hunt Trophy (AFC champion) | `trophy:lamar-hunt-trophy` | yes |
-| not held | George Halas Trophy (NFC champion) | `trophy:halas-trophy` (approximate) | no: drawn from a description |
+| not held | George Halas Trophy (NFC champion) | gap | no: John to supply |
 | `afl_championship`, `aafc_championship` | The AFL and AAFC championships | generic `trophy:football` | no |
 
 ## CFL

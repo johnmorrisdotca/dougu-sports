@@ -6,6 +6,18 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.22.0] - 2026-10-28
+
+The award trophies and the cap of 0.17.0 to 0.21.0, which were never published, are taken out. Drawn from written descriptions, they did not match the real objects and were far below the Stanley Cup and the Larry O'Brien Trophy. A site that asks for these awards draws the plain cup, which is honest; each comes back only when it can be drawn from a photograph of the real thing and passes beside the Stanley Cup.
+
+### Removed
+
+- The trophies `jackie-robinson-award`, `mlb-manager-award`, `relief-man-award`, `hank-aaron-award`, `michael-jordan-trophy`, `bill-russell-trophy`, `olajuwon-trophy`, `chamberlain-trophy`, `havlicek-trophy`, `auerbach-trophy`, `mikan-trophy`, `rozelle-trophy`, `halas-trophy` and `gregory-trophy`, and `gear:baseball-cap`. None was ever on npm. 326 emblems again: 71 trophies, 70 pieces of gear.
+
+### Changed
+
+- `docs/trophy-audit.md` says, for each of these awards, what the real object is and why it has no emblem yet.
+
 ## [0.21.0] - 2026-10-23
 
 A baseball cap. The Canadian and writers' football awards stay the plain cup: no photograph or measured description of those objects was found, so nothing new was drawn for them.

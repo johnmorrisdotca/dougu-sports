@@ -121,9 +121,9 @@ try {
     ["commissioners-trophy", "Commissioner's"], ["cy-young-award", "Cy Young"], ["gold-glove-award", "Gold Glove"], ["silver-slugger-award", "Silver Slugger"], ["mlb-mvp-award", "MLB MVP"], ["world-series-mvp-trophy", "World Series MVP"], ["wnba-championship-trophy", "WNBA"], ["lamar-hunt-trophy", "Lamar Hunt"],
     ["hart-trophy", "Hart"], ["vezina-trophy", "Vezina"], ["norris-trophy", "Norris"], ["calder-trophy", "Calder"], ["conn-smythe-trophy", "Conn Smythe"], ["art-ross-trophy", "Art Ross"], ["presidents-trophy", "Presidents'"], ["prince-of-wales-trophy", "Prince of Wales"], ["campbell-bowl", "Campbell Bowl"], ["rocket-richard-trophy", "Rocket Richard"], ["walter-cup", "Walter Cup"]] as const)
     .map(([id, name]) => `<figure style="margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center">${D.renderEmblem(`trophy:${id}`, { size: 128 })}<figcaption style="margin-top:-2px;color:${ink.muted}">${name}</figcaption></figure>`).join("");
-  // Gear: thirty-seven of the pieces.
+  // Gear: thirty-six of the pieces.
   const gear = (D: Dist) => ["gear:hockey-stick", "gear:hockey-skate", "gear:goalie-mask", "gear:field-hockey-stick", "gear:lacrosse-stick", "gear:hurley", "gear:cricket-bat", "gear:wicket", "gear:baseball-bat",
-    "gear:baseball-glove", "gear:baseball-cap", "gear:football-helmet", "gear:goalposts", "gear:basketball-hoop", "gear:volleyball-net", "gear:tennis-racket", "gear:badminton-racket", "gear:table-tennis-paddle", "gear:padel-racket",
+    "gear:baseball-glove", "gear:football-helmet", "gear:goalposts", "gear:basketball-hoop", "gear:volleyball-net", "gear:tennis-racket", "gear:badminton-racket", "gear:table-tennis-paddle", "gear:padel-racket",
     "gear:pickleball-paddle", "gear:curling-broom", "gear:figure-skate", "gear:speed-skate", "gear:swim-goggles", "gear:starting-blocks", "gear:relay-baton", "gear:javelin", "gear:hurdles",
     "gear:kendo-men", "gear:shinai", "gear:gunbai", "gear:mawashi", "gear:judogi", "gear:obi", "gear:yumi", "gear:ya", "gear:karate-gi"]
     .map((id) => `<figure style="margin:0;display:flex;align-items:center;justify-content:center">${D.renderEmblem(id, { size: 146 })}</figure>`).join("");
@@ -149,7 +149,7 @@ try {
     await sheet(`vintage-desk-${scheme}`, { width: 1400, cols: 9, rows: [150, 150], scheme, preset: "sunburst" }, vintage);
     await sheet(`hero-desk-${scheme}`, { width: 1400, cols: 9, rows: [152, 152, 132, 160], scheme, preset: "royal", intensity: 0.9 }, trophies);
     await sheet(`famous-desk-${scheme}`, { width: 1400, cols: 9, rows: [160, 160, 160, 160], scheme, preset: "royal", intensity: 0.9 }, famous);
-    await sheet(`gear-desk-${scheme}`, { width: 1400, cols: 9, rows: [150, 150, 150, 150, 150], scheme, preset: scheme === "dark" ? "carbon" : "hardwood", intensity: scheme === "dark" ? 1 : 0.9 }, gear);
+    await sheet(`gear-desk-${scheme}`, { width: 1400, cols: 9, rows: [150, 150, 150, 150], scheme, preset: scheme === "dark" ? "carbon" : "hardwood", intensity: scheme === "dark" ? 1 : 0.9 }, gear);
     await sheet(`phone-${scheme}`, { width: 390, cols: 3, rows: [124, 124, 124, 124], gap: 4, phone: true, scheme, preset: "glow" }, phoneCells);
     await sheet(`judogi-${scheme}`, { width: 1000, cols: 4, rows: [260], gap: 10, pad: 20, scheme, preset: scheme === "dark" ? "carbon" : "hardwood", intensity: scheme === "dark" ? 1 : 0.9 }, judogi);
     await sheet(`obi-steps-${scheme}`, { width: 780, cols: 3, rows: [260, 260], gap: 10, pad: 20, scheme, preset: scheme === "dark" ? "carbon" : "hardwood", intensity: scheme === "dark" ? 1 : 0.9 }, obiSteps);

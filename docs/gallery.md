@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 341 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 326 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -81,20 +81,6 @@ The folders the art lives in are in [layout.md](layout.md).
 | `trophy:grey-cup` | Grey Cup | lathe | ours | The Grey Cup: a two-handled silver cup with a swirled stem on a tall flared cone of twelve panels crossed by dark bands. |
 | `trophy:cy-young-award` | Cy Young Award | flat | ours | The Cy Young Award: a dark plaque with a curved silver band, a V and a hand holding a baseball over a nameplate. |
 | `trophy:mlb-mvp-award` | Baseball MVP award | flat | ours | The Most Valuable Player Award: a dark octagonal plaque with a silver ring and diamond, a gilt medallion, a nameplate and crossed bats. |
-| `trophy:jackie-robinson-award` | Jackie Robinson Award | flat | ours | The Jackie Robinson Award: a tall dark plaque with a silver rim, an oval medallion holding a simplified batter and a nameplate. |
-| `trophy:mlb-manager-award` | Manager of the Year | flat | ours | The Manager of the Year Award: a wide dark plaque with a silver baseball cap in profile, a small card and a nameplate. |
-| `trophy:relief-man-award` | Relief Man Award | flat | ours | The Relief Man Award: a gilt pitcher in a fire helmet, mid-throw with the front knee up, on a tapering wooden pedestal. |
-| `trophy:hank-aaron-award` | Hank Aaron Award | flat | ours | The Hank Aaron Award: a silver batter in mid-swing on a dark two-step base with a plate at the front. |
-| `trophy:michael-jordan-trophy` | Michael Jordan Trophy | flat | ours | The Michael Jordan Trophy: a bronze figure reaching out of a rock for a small crystal basketball, on a five-sided base. |
-| `trophy:bill-russell-trophy` | Bill Russell Trophy | lathe | ours | The Bill Russell Trophy: a gold basketball over a hoop and a short net-shaped body on two stacked discs. |
-| `trophy:olajuwon-trophy` | Olajuwon Trophy | flat | ours | The Hakeem Olajuwon Trophy: a gold figure in a defensive stance inside a crystal net on a dark foot. |
-| `trophy:chamberlain-trophy` | Chamberlain Trophy | flat | ours | The Wilt Chamberlain Trophy: a gold figure palming two basketballs inside a crystal net on a dark foot. |
-| `trophy:havlicek-trophy` | Havlicek Trophy | flat | ours | The John Havlicek Trophy: a gold figure in a running jumper inside a crystal net on a dark foot. |
-| `trophy:auerbach-trophy` | Auerbach Trophy | flat | ours | The Red Auerbach Trophy: a bronze coach seated on a bench with a card and a short cigar, on a dark base. |
-| `trophy:mikan-trophy` | Mikan Trophy | flat | ours | The George Mikan Trophy: a gold figure in a layup inside a crystal net on a dark foot. |
-| `trophy:rozelle-trophy` | Rozelle Trophy | lathe | ours | The Pete Rozelle Trophy: a silver football on a short round disc. |
-| `trophy:halas-trophy` | Halas Trophy | lathe | ours | The George Halas Trophy: a hollow silver football outline on a short three-sided stand. |
-| `trophy:gregory-trophy` | Gregory Trophy | flat | ours | The Jim Gregory Trophy: a silver bowl over three bronze skaters on a tall silver block and a dark foot. |
 | `trophy:walter-cup` | Walter Cup | lathe | ours | The Walter Cup: a wide shallow silver bowl on a stem between two tall stick-shaped blades, over a heavy round base. |
 | `trophy:wnba-championship-trophy` | WNBA Championship Trophy | lathe | ours | The WNBA Championship Trophy: a silver basketball held on two slanting tubes over a low slab. |
 | `trophy:lamar-hunt-trophy` | Lamar Hunt Trophy | lathe | ours | The Lamar Hunt Trophy: a clear football-shaped ring on a round silver base over a flat black slab. |
@@ -301,7 +287,6 @@ The folders the art lives in are in [layout.md](layout.md).
 | `gear:basketball-hoop` | Basketball hoop | gear | drawn |  |
 | `gear:baseball-bat` | Baseball bat | gear | drawn |  |
 | `gear:baseball-glove` | Baseball glove | gear | drawn |  |
-| `gear:baseball-cap` | Baseball cap | gear | drawn | A baseball cap in three-quarter view: crown, button, panel seams, eyelets and a brim with a visible edge. |
 | `gear:football-helmet` | Football helmet | gear | drawn | Football helmet |
 | `gear:goalposts` | Goal posts | gear | drawn |  |
 | `gear:hurley` | Hurley | gear | drawn | Hurley |
