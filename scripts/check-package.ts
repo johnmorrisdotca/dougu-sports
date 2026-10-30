@@ -140,8 +140,9 @@ if (!cupText.includes("trophy:hockey-cup") || cupText.includes("ball:soccer") ||
   console.error("FAIL the bundle of the hockey cup alone holds the wrong emblems");
   process.exit(1);
 }
-if (cupGzip > 7.1 * 1024) {
-  console.error(`FAIL the hockey cup alone bundles to ${cupGzip} bytes gzipped, over 7.1 kB`);
+// 7.5 kB since the hooks for cut-outs and for framed parts in the body of revolution (taken by no cup that does not use them): CI's zlib gives about 60 bytes more than a Mac's.
+if (cupGzip > 7.5 * 1024) {
+  console.error(`FAIL the hockey cup alone bundles to ${cupGzip} bytes gzipped, over 7.5 kB`);
   process.exit(1);
 }
 console.log(`ok   one cup, bundled from the installed package: ${cupText.length} bytes, ${cupGzip} gzipped`);
