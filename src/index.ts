@@ -90,6 +90,7 @@ export { TROPHY_KELLY_CUP } from "./emblems/trophy/kelly-cup.ts";
 export { TROPHY_CFP_TROPHY } from "./emblems/trophy/cfp-trophy.ts";
 export { TROPHY_MLS_CUP } from "./emblems/trophy/mls-cup.ts";
 export { TROPHY_FOUNDATION_PLAYER_AWARD } from "./emblems/trophy/foundation-player-award.ts";
+export { TROPHY_WILLIE_OREE_AWARD } from "./emblems/trophy/willie-oree-award.ts";
 export { TROPHY_MESSIER_LEADERSHIP_AWARD } from "./emblems/trophy/messier-leadership-award.ts";
 export { TROPHY_WEBB_ELLIS_CUP } from "./emblems/trophy/webb-ellis-cup.ts";
 export { TROPHY_FA_CUP } from "./emblems/trophy/fa-cup.ts";

@@ -666,6 +666,16 @@ export const NAMED_TROPHIES: readonly NamedTrophy[] = [
     first: "2006-07",
     reference: "Five photographs of the award (front, three-quarter and dark-ground views, and a render), supplied by John Morris (Dropbox /Projects/Resources/dougu-sports/nhl-mark-messier-leadership/), looked at and measured only; never copied or committed; not ours to licence. No photograph on Wikimedia Commons.",
   },
+  {
+    id: "trophy:willie-oree-award",
+    name: "Willie O'Ree Community Hero Award",
+    sport: "hockey",
+    competition: "National Hockey League",
+    kind: "other",
+    honours: "A person who, through the game of hockey, has positively impacted his or her community, culture or society.",
+    first: "2017-18",
+    reference: "Six photographs of the award (two front views on white and on a dark ground, a large clear front view, a three-quarter view on a table and a display case, which carries a sponsor's branding and was looked at only), supplied by John Morris (Dropbox /Projects/Resources/dougu-sports/nhl-willie-oree/), looked at and measured only; never copied or committed; not ours to licence. No photograph on Wikimedia Commons.",
+  },
 ];
 
 /** The facts of a named trophy by its emblem id, or `undefined` for a generic trophy. */

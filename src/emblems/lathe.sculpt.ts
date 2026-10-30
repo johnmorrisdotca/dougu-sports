@@ -228,7 +228,7 @@ function drawRibbon(c: SculptCtx, r: Ribbon): { z: number; svg: string } {
     const nz = -ty * wx;
     const nl = Math.hypot(nx, ny, nz) || 1;
     const lambert = Math.abs((nx * (L[0] as number) + ny * (L[1] as number) + nz * (L[2] as number)) / (nl * len));
-    const bucket = Math.round(Math.max(-0.5, Math.min(0.6, (lambert - 0.42) * 1.5)) * 8) / 8;
+    const bucket = Math.round(Math.max(-0.45, Math.min(0.5, (lambert - 0.45) * 1.1)) * 10) / 10;
     const colour = mix(base.rgb, bucket);
     quads.push({ z: (p.pz + q.pz) / 2, d: `M${pt(p.px - p.wx, p.py, p.pz - p.wz)}L${pt(p.px + p.wx, p.py, p.pz + p.wz)}L${pt(q.px + q.wx, q.py, q.pz + q.wz)}L${pt(q.px - q.wx, q.py, q.pz - q.wz)}Z`, colour });
   }
