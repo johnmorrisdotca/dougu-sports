@@ -26,6 +26,7 @@ const one = (constant: string, path: string): Promise<{ text: string; bytes: num
 // Measured 2026-10-30 with the hook for a body's own framed 3D parts (`lathe.framed.ts`), the elevation cap and the thin edge in the engine: a cup 7.3 kB (was 6.9), held to 7.5 kB; the parts themselves are in a module of their own, taken only by a model that has them.
 // Measured 2026-10-21 with the pickleball's real holes in (ball.holes.ts, taken by the pickleballs alone): a pickleball 8.0 kB, held to 8.6 kB; the other balls did not change.
 // Measured 2026-10-30 with the hook for cut-outs and ribbons in the body of revolution (its drawing is `lathe.sculpt.ts`, taken only by a model that has parts): a cup 7.3 kB (was 7.1), held to 7.3 kB.
+// Measured 2026-10-30 with the NBA balls' hook in the body of revolution (a ball set forward from the axis and handed to the model's own `ballExtras`, which the cups do not carry): a cup 7.2 to 7.3 kB (was 7.1 to 7.2), held to 7.4 kB.
 const LIMITS = { holed: 8.6 * 1024, puck: 12.5 * 1024, ball: 7.6 * 1024, printed: 21 * 1024, twoTone: 9.6 * 1024, flat: 5.8 * 1024, lathe: 7.5 * 1024, icon: 4.3 * 1024, pennant: 3.6 * 1024, turn: 3 * 1024, turned: 10 * 1024 };
 
 test("one named ball, bundled by itself, stays small and leaves the other emblems out", async () => {

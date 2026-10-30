@@ -24,11 +24,11 @@ export type Decor =
 
 /**
  * Decorations that only some bodies use, drawn by the model's own `extras` (`lathe.extras.ts`) so that a body without them carries none of their code: a `mesh` is `rows` rows of diamonds stacked down the body from `y0` to `y1`
- * with `n` strands round (strands that wind a column to the side at each row, one way and the other: an etched net); a `patch` is a tone laid on a round body between two angles and two heights (a shield on a helmet); a
+ * with `n` strands round (strands that wind a column to the side at each row, one way and the other: an etched net, in a tone of its own and a line `width` when given); a `patch` is a tone laid on a round body between two angles and two heights (a shield on a helmet); a
  * `panel` is a tone laid on one flat face of a body with flat sides, from a fraction `u0` to `u1` across the face (a nameplate on a block).
  */
 export type ExtraDecor =
-  | readonly ["mesh", y0: number, y1: number, n: number, rows: number]
+  | readonly ["mesh", y0: number, y1: number, n: number, rows: number, tone?: string, width?: number]
   | readonly ["patch", y0: number, y1: number, deg0: number, deg1: number, tone: string]
   | readonly ["panel", face: number, y0: number, y1: number, u0: number, u1: number, tone: string];
 
@@ -65,7 +65,11 @@ export interface Handle {
 }
 
 export type BallKind = "plain" | "basket" | "soccer" | "base" | "globe" | "football" | "pine";
-/** A ball on the body: `cy` its centre, `r` its radius (and `ry` when it is longer than it is wide), `rot` the lean of a football in degrees. */
+/**
+ * A ball on the body: `cy` its centre, `r` its radius (and `ry` when it is longer than it is wide), `rot` the lean of a football in degrees. `fwd` sets the ball that far toward the eye (and so round the axis with the turn).
+ * `nba` gives it the seams of a basketball as grooves, drawn by the model's `ballExtras` (`LATHE_BALL`): in the tone `seam` when given, the ball leaning by `lean` (degrees about the line of sight, then about the horizontal)
+ * and, when `grain` is a number, that many specks of a grained finish.
+ */
 export interface Ball {
   kind: BallKind;
   cx?: number;
@@ -74,6 +78,23 @@ export interface Ball {
   ry?: number;
   rot?: number;
   tone?: string;
+  fwd?: number;
+  nba?: boolean;
+  seam?: string;
+  lean?: readonly [number, number];
+  grain?: number;
+}
+
+/** What a drawer of `ballExtras` is given: the ball, where it is drawn, the turn and the eye's elevation, and the tones. */
+export interface BallCtx {
+  ball: Ball;
+  cx: number;
+  cy: number;
+  yaw: number;
+  elevation: number;
+  line: boolean;
+  flat: boolean;
+  tone: (name?: string) => Tone;
 }
 
 /** A ring of `n` poles that stand from a ring of radius `r0` at `y0` up to a ring of radius `r1`, their tops stepping from the height `top1` down to `top2` once round, each with a pennant `size` tall. */
@@ -188,6 +209,8 @@ export interface LatheModel {
   edgeWidth?: number;
   /** The highest elevation of the eye in degrees that a turn may reach (75 by default): a body that leans far from the axis swings its far end up the page by the sine of the elevation times its depth, so one that is tall and leaning stops short of a view from straight above. */
   maxElevation?: number;
+  /** Draws the seams and the grain of the balls that ask for them (`nba`); `LATHE_BALL` in `lathe.extras.ts`. */
+  ballExtras?: (c: BallCtx) => string;
 }
 
 const CX = 32;
@@ -486,8 +509,8 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
     const t = tone(ball.tone);
     const rx = ball.r;
     const ry = ball.ry ?? ball.r;
-    const cx = ball.cx ?? CX;
-    const cy = ball.cy;
+    const [fx, cy] = at(ball.fwd ?? 0, ball.cy, yaw);
+    const cx = fx + (ball.cx ?? CX) - CX;
     const spherical = line || flat || ball.kind === "pine" ? t.fill : (() => {
       const g = orbGradient(t.rgb);
       grads.push(g);
@@ -502,7 +525,7 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
       const laces = lit ? `M${f(sx)} ${f(-ry * 0.5)}V${f(ry * 0.5)}${[-2, -1, 0, 1, 2].map((i) => `M${f(sx - 1.3)} ${f(i * ry * 0.19)}h2.6`).join("")}` : "";
       parts.push(`<g transform="translate(${f(cx)} ${f(cy)}) rotate(${f(ball.rot ?? 0)})"><path d="${shape}" fill="${spherical}"/>${line || flat ? "" : `<path d="M${f(-rx * 0.62)} ${f(-ry * 0.42)}Q${f(-rx * 0.5)} ${f(-ry * 0.1)} ${f(-rx * 0.54)} ${f(ry * 0.3)}" stroke="#fff" stroke-opacity=".5" stroke-width="1.6" fill="none"/>`}<path d="${laces}" stroke-width="1.1"/></g>`);
     } else {
-      parts.push(ellipse(cx, cy, rx, ry, spherical));
+      parts.push(ellipse(cx, cy, rx, ry, spherical, ball.nba ? own(t) : ""));
       let seams = "";
       const meridian = (lon: number): string => {
         const l = ((((lon + 90) % 360) + 360) % 360) - 90;
@@ -558,6 +581,7 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
         default:
           break;
       }
+      if (ball.nba) parts.push(model.ballExtras?.({ ball, cx, cy, yaw, elevation, line, flat, tone }) ?? "");
       if (patches !== "") parts.push(`<path d="${patches}" fill="${line ? "none" : t.deep}" stroke-width="1"/>`);
       if (seams !== "") {
         if (ball.kind === "base") parts.push(`<path d="${seams}" stroke="${line ? "currentColor" : "#c0392b"}" stroke-width="${line ? 1.6 : 1.1}" stroke-dasharray="${line ? "none" : "1.4 1"}"/>`);
