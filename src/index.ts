@@ -68,6 +68,7 @@ export { TROPHY_BILL_RUSSELL_TROPHY } from "./emblems/trophy/bill-russell-trophy
 export { TROPHY_WALTER_CUP } from "./emblems/trophy/walter-cup.ts";
 export { TROPHY_WNBA_CHAMPIONSHIP_TROPHY } from "./emblems/trophy/wnba-championship-trophy.ts";
 export { TROPHY_LAMAR_HUNT_TROPHY } from "./emblems/trophy/lamar-hunt-trophy.ts";
+export { TROPHY_GEORGE_HALAS_TROPHY } from "./emblems/trophy/george-halas-trophy.ts";
 export { TROPHY_SILVER_SLUGGER_AWARD } from "./emblems/trophy/silver-slugger-award.ts";
 export { TROPHY_WORLD_SERIES_MVP_TROPHY } from "./emblems/trophy/world-series-mvp-trophy.ts";
 export { TROPHY_AVCO_WORLD_TROPHY } from "./emblems/trophy/avco-world-trophy.ts";

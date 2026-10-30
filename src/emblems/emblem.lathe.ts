@@ -89,6 +89,21 @@ export interface Poles {
   tilted?: boolean;
 }
 
+/**
+ * What a model's own `framed` drawer is given: the turn (`yaw`, and `s`, the sine of the elevation of the eye), the style, and the tones of the body. The drawer places a point of its own 3D parts with `yaw` and `s`
+ * the way the body's surface is placed (x grows to the right, z toward the eye, y down) and returns SVG that is drawn over the solids, so a model with swept or framed parts (the open football of a conference
+ * trophy, the rods of a ball held up on three) keeps the body, the light and the turn of the rest.
+ */
+export interface FramedCtx {
+  yaw: number;
+  s: number;
+  line: boolean;
+  flat: boolean;
+  tone: (name?: string) => Tone;
+  /** The fill of a gradient of the model's own: its `url(#id)` in the metal style (the definition goes into the drawing), and the colour `rgb` flat in the `color` style. */
+  paint: (g: Gradient, rgb: Rgb) => string;
+}
+
 /** What a drawer of `parts` is given: the turn, the tilt (the sine of the elevation), the tones and the style. */
 export interface SculptCtx {
   yaw: number;
@@ -165,6 +180,14 @@ export interface LatheModel {
   parts?: readonly Part[];
   /** Draws the `parts` (`LATHE_SCULPT`); a body with no parts leaves it out, and carries none of the code. */
   sculptor?: (c: SculptCtx, parts: readonly Part[]) => { under: string; over: string };
+  /** Draws parts that are not bodies of revolution (see `FramedCtx`, `lathe.framed.ts`), over the solids and under the handles and balls; a body without any leaves it out. */
+  framed?: (c: FramedCtx) => string;
+  /** The stroke of the `line` style when 2.3 is too heavy for the drawing's fine parts. */
+  lineWidth?: number;
+  /** The thin edge of the metal and colour styles (0.6) when that is too heavy for a polished one. */
+  edgeWidth?: number;
+  /** The highest elevation of the eye in degrees that a turn may reach (75 by default): a body that leans far from the axis swings its far end up the page by the sine of the elevation times its depth, so one that is tall and leaning stops short of a view from straight above. */
+  maxElevation?: number;
 }
 
 const CX = 32;
@@ -242,7 +265,7 @@ export interface Tone {
 function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw: number, pitch: number): { body: string; defs: string; edge: string } {
   const line = r.style === "line";
   const flat = r.style === "color";
-  const elevation = Math.max(0, Math.min(75, (model.tilt ?? 12) + pitch));
+  const elevation = Math.max(0, Math.min(model.maxElevation ?? 75, (model.tilt ?? 12) + pitch));
   const s = Math.sin(elevation * RAD);
   const spin = Math.sin(yaw * RAD);
   const shift = 0.2 * spin;
@@ -408,6 +431,8 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
       (Math.cos(deg * RAD) >= 0 ? front : back).push(`<g transform="translate(${f(solid.at[0] * Math.sin(deg * RAD))} ${f(s * solid.at[0] * Math.cos(deg * RAD))})">${piece.join("")}</g>`);
     }
   }
+
+  if (model.framed !== undefined) mid.push(model.framed({ yaw, s, line, flat, tone, paint: (g, rgb) => (line ? "none" : flat ? hexOf(rgb) : (grads.push(g), g.fill)) }));
 
   // Handles: a tube through the points of its plane, behind the body when it is on the far side.
   for (const h of model.handles ?? []) {
@@ -590,7 +615,7 @@ export function defineLathe(id: string, en: string, ja: string, source: EmblemSo
     const pitch = typeof o?.pitch === "number" && Number.isFinite(o.pitch) ? Math.max(-40, Math.min(60, o.pitch)) : 0;
     const d = draw(model, r, o, yaw, pitch);
     const box = (o?.turnBox ?? turned) ? turn : rest;
-    return wrap({ title: en, size: r.size, style: r.style, theme: r.theme, defs: d.defs, body: d.body, box, edge: d.edge, width: r.style === "line" ? 2.3 : 0.6 });
+    return wrap({ title: en, size: r.size, style: r.style, theme: r.theme, defs: d.defs, body: d.body, box, edge: d.edge, width: r.style === "line" ? (model.lineWidth ?? 2.3) : (model.edgeWidth ?? 0.6) });
   };
   const still = labelled(en, ja, (o?: EmblemOptions) => make(o, false));
   return { id, en, ja, source, kind: "lathe", model, svg: still, frame: labelled(en, ja, (o?: FrameOptions) => make(o, true)) };

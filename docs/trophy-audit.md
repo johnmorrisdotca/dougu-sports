@@ -67,8 +67,7 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | `nfl_super_bowl` | Vince Lombardi Trophy | `trophy:lombardi-trophy` | yes |
 | `nfl_super_bowl_mvp` | Pete Rozelle Trophy (Super Bowl MVP) | gap (plain cup) | only a flat illustration on Commons (a silver football lying on its side with a cut base): the lathe stands a body on its axis and cannot lay a football down, so it stays the plain cup |
 | `nfl_ap_mvp`, `nfl_ap_offensive_player`, `nfl_ap_defensive_player` | The Associated Press NFL awards | gap (the AP gives no single famous trophy; a generic plaque stands for them) | no |
-| not held | Lamar Hunt Trophy (AFC champion) | `trophy:lamar-hunt-trophy` | yes |
-| not held | George Halas Trophy (NFC champion) | gap | no: John to supply |
+| not held | Lamar Hunt Trophy (AFC champion) and George Halas Trophy (NFC champion) | `trophy:lamar-hunt-trophy`, `trophy:george-halas-trophy` (one drawing: the two trophies are one design) | yes, supplied by John (2026-10-30); no freely licensed photograph on Commons |
 | `afl_championship`, `aafc_championship` | The AFL and AAFC championships | generic `trophy:football` | no |
 
 ## CFL

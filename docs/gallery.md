@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 335 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 336 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -86,7 +86,8 @@ The folders the art lives in are in [layout.md](layout.md).
 | `trophy:bill-russell-trophy` | Bill Russell Trophy | lathe | ours | The Bill Russell Trophy: a gold basketball seated on the flared rim of a net-patterned goblet that narrows to a slim waist, over a round foot of two tiers. |
 | `trophy:walter-cup` | Walter Cup | lathe | ours | The Walter Cup: a wide shallow silver bowl on a stem between two tall stick-shaped blades, over a heavy round base. |
 | `trophy:wnba-championship-trophy` | WNBA Championship Trophy | lathe | ours | The WNBA Championship Trophy: a silver basketball held on two slanting tubes over a low slab. |
-| `trophy:lamar-hunt-trophy` | Lamar Hunt Trophy | lathe | ours | The Lamar Hunt Trophy: a clear football-shaped ring on a round silver base over a flat black slab. |
+| `trophy:lamar-hunt-trophy` | Lamar Hunt Trophy | lathe | ours | The Lamar Hunt Trophy: an open football of polished silver, a ribbon with slots for the laces in front and two curved bands behind, standing on its tip, leaning back, on a round flared silver base over a black foot. |
+| `trophy:george-halas-trophy` | George Halas Trophy | lathe | ours | The George Halas Trophy: an open football of polished silver, a ribbon with slots for the laces in front and two curved bands behind, standing on its tip, leaning back, on a round flared silver base over a black foot. |
 | `trophy:silver-slugger-award` | Silver Slugger Award | flat | ours | The Silver Slugger Award: a silver bat across a tall black board with an oval badge and a plate. |
 | `trophy:world-series-mvp-trophy` | World Series MVP Trophy | lathe | ours | The World Series MVP trophy: a twisted silver flame on a wide round base with a dark band. |
 | `trophy:avco-world-trophy` | Avco World Trophy | lathe | ours | The Avco World Trophy: a wide silver bowl on a stem over a glass cylinder with a silver ball in it, a ringed collar, a tall black drum with silver plates and a wide silver foot. |

@@ -23,9 +23,10 @@ const one = (constant: string, path: string): Promise<{ text: string; bytes: num
 // Measured 2026-10-15 with the printing hooks in the engine (a surface can fill its disc and carry a label area, the draw hook takes the paint and the printer): a ball 7.3 kB (was 6.5), so the limit is 7.6 kB.
 // The printing itself (the warp onto the sphere, the cursive script, the block lettering, the sanitiser) is its own module, taken by `printed(ball)`: a printed baseball 19.5 kB, held to 21 kB; the balls' own modules carry none of it.
 // Measured 2026-10-21 with the slab turn in (a medal, a crest or a plaque now turns through the one `flipSvg`: a solid edge, a back of its own): a medal 5.6 kB (was 4.6), held to 5.8 kB; an icon or a pictogram grew by about 0.2 kB.
+// Measured 2026-10-30 with the hook for a body's own framed 3D parts (`lathe.framed.ts`), the elevation cap and the thin edge in the engine: a cup 7.3 kB (was 6.9), held to 7.5 kB; the parts themselves are in a module of their own, taken only by a model that has them.
 // Measured 2026-10-21 with the pickleball's real holes in (ball.holes.ts, taken by the pickleballs alone): a pickleball 8.0 kB, held to 8.6 kB; the other balls did not change.
 // Measured 2026-10-30 with the hook for cut-outs and ribbons in the body of revolution (its drawing is `lathe.sculpt.ts`, taken only by a model that has parts): a cup 7.3 kB (was 7.1), held to 7.3 kB.
-const LIMITS = { holed: 8.6 * 1024, puck: 12.5 * 1024, ball: 7.6 * 1024, printed: 21 * 1024, twoTone: 9.6 * 1024, flat: 5.8 * 1024, lathe: 7.3 * 1024, icon: 4.3 * 1024, pennant: 3.6 * 1024, turn: 3 * 1024, turned: 10 * 1024 };
+const LIMITS = { holed: 8.6 * 1024, puck: 12.5 * 1024, ball: 7.6 * 1024, printed: 21 * 1024, twoTone: 9.6 * 1024, flat: 5.8 * 1024, lathe: 7.5 * 1024, icon: 4.3 * 1024, pennant: 3.6 * 1024, turn: 3 * 1024, turned: 10 * 1024 };
 
 test("one named ball, bundled by itself, stays small and leaves the other emblems out", async () => {
   const b = await one("BALL_SOCCER", "ball/ball.soccer");

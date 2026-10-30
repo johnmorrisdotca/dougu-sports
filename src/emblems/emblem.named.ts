@@ -314,7 +314,17 @@ export const NAMED_TROPHIES: readonly NamedTrophy[] = [
     kind: "team",
     honours: "The champion of the American Football Conference.",
     first: "1970",
-    reference: "File:Lamar Hunt Trophy - AFC Championship.jpg (Wikimedia Commons, CC BY 2.0)",
+    reference: "Photographs supplied by John Morris (2026-10-30) of the George Halas Trophy, which is the same design; looked at and measured only, not copied",
+  },
+  {
+    id: "trophy:george-halas-trophy",
+    name: "George Halas Trophy",
+    sport: "football",
+    competition: "National Football League",
+    kind: "team",
+    honours: "The champion of the National Football Conference.",
+    first: "1970",
+    reference: "Photographs supplied by John Morris (2026-10-30), three-quarter and front; looked at and measured only, not copied",
   },
   {
     id: "trophy:silver-slugger-award",

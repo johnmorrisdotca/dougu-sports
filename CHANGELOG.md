@@ -6,6 +6,15 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- **`trophy:george-halas-trophy`**: the George Halas Trophy of the NFC champion, an open football of polished silver that stands on its tip leaning back, on a round flared base with a black foot and a bright flat cut at its front. The football is a front plate with seven slots where the laces are, a narrower neck below them with a satin point, and two curved bands that make the ring. It is drawn in 3D parts, so it turns: the plate in front, the bands curving away behind it, a side profile, a back. Line, metal and colour styles, light and dark. Measured on John's photographs (looked at, never copied or traced); no shield, conference letters or engraving. The base takes the `engrave` option.
+
+### Changed
+
+- **`trophy:lamar-hunt-trophy`** is redrawn as the same drawing as the Halas Trophy, because the two trophies are one design. It was a clear ring on a slab, drawn from a photograph of another object.
+- A body of revolution can carry parts that are not bodies of revolution (`parts` in its model, `lathe.parts.ts`: a point turned and placed like the body's surface, polished-metal shading read off a small room, a smooth curve through a table of measurements), a thin edge (`edgeWidth`) and a cap on how far a turn may look from above (`maxElevation`). A cup that uses none carries none of it, and every other cup draws as before. The bundle of a cup grew by about 0.2 kB gzipped for the hook, and the two conference trophies add about 6.3 kB minified (2.6 kB gzipped) over a plain cup, because their facets are computed when drawn and not stored. Their markup is 11.9 kB in the metal style, 2.8 kB in line and 10.9 kB in colour (`FRAMED_LIMIT` in `test/emblem.test.ts`).
+
 ## [0.27.0] - 2026-10-30
 
 A new NHL award, and two of the new cups redrawn closer to the photographs.

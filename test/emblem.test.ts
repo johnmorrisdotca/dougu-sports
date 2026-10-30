@@ -22,12 +22,15 @@ const COLOR_LIMIT = 3200;
 // A trophy drawn as a likeness of one real trophy has more parts than a generic one (handles, bands, figures, tiers), and is held to limits of its own.
 const NAMED_LIMIT = { metal: 9000, line: 4800, color: 7200 } as const;
 const BIG_LIMIT = { metal: 14000, line: 13000, color: 14000 } as const;
+// A trophy drawn with swept parts of its own (the open football of a conference trophy: bands and a slotted plate placed in 3D) has hundreds of facets to shade and is held to limits of its own.
+const FRAMED_LIMIT = { metal: 16000, line: 5200, color: 14000 } as const;
+const isFramed = (id: D.EmblemId): boolean => (D.emblemModel(id) as { framed?: unknown } | null)?.framed !== undefined;
 const isPiece = (id: D.EmblemId): boolean => D.emblemInfo(id).kind === "ball" || D.emblemInfo(id).kind === "gear";
 
-test("the ids number 335 in their groups, with no id twice, and the groups hold what they say", () => {
+test("the ids number 336 in their groups, with no id twice, and the groups hold what they say", () => {
   assert.equal(new Set(D.EMBLEM_IDS).size, D.EMBLEM_IDS.length);
-  assert.equal(D.EMBLEM_IDS.length, 335);
-  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 6, trophy: 79, medal: 6, crest: 4, ball: 118, puck: 8, gear: 71, sport: 42, pennant: 1 });
+  assert.equal(D.EMBLEM_IDS.length, 336);
+  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 6, trophy: 80, medal: 6, crest: 4, ball: 118, puck: 8, gear: 71, sport: 42, pennant: 1 });
 });
 
 // The ids of the trophies drawn as a likeness of one real trophy (docs/likeness.md): they may carry the trophy's own name, and so are held to the limits of a detailed drawing.
@@ -87,7 +90,7 @@ test("every emblem draws well-formed, titled, safe SVG in every style and theme,
         assert.doesNotMatch(svg, /NaN|undefined|Infinity|null/, where);
       }
       const size = D.renderEmblem(id, { style }).length;
-      assert.ok(size < (isPiece(id) ? BIG_LIMIT[style] : NAMED.has(id) ? NAMED_LIMIT[style] : style === "metal" ? METAL_LIMIT : style === "line" ? LINE_LIMIT : COLOR_LIMIT), `${id} ${style} is ${size} bytes`);
+      assert.ok(size < (isFramed(id) ? FRAMED_LIMIT[style] : isPiece(id) ? BIG_LIMIT[style] : NAMED.has(id) ? NAMED_LIMIT[style] : style === "metal" ? METAL_LIMIT : style === "line" ? LINE_LIMIT : COLOR_LIMIT), `${id} ${style} is ${size} bytes`);
     }
   }
 });

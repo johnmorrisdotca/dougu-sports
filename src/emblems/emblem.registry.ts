@@ -63,6 +63,7 @@ import { TROPHY_BILL_RUSSELL_TROPHY } from "./trophy/bill-russell-trophy.ts";
 import { TROPHY_WALTER_CUP } from "./trophy/walter-cup.ts";
 import { TROPHY_WNBA_CHAMPIONSHIP_TROPHY } from "./trophy/wnba-championship-trophy.ts";
 import { TROPHY_LAMAR_HUNT_TROPHY } from "./trophy/lamar-hunt-trophy.ts";
+import { TROPHY_GEORGE_HALAS_TROPHY } from "./trophy/george-halas-trophy.ts";
 import { TROPHY_SILVER_SLUGGER_AWARD } from "./trophy/silver-slugger-award.ts";
 import { TROPHY_WORLD_SERIES_MVP_TROPHY } from "./trophy/world-series-mvp-trophy.ts";
 import { TROPHY_AVCO_WORLD_TROPHY } from "./trophy/avco-world-trophy.ts";
@@ -201,6 +202,7 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}`
   "trophy:world-series-mvp-trophy": TROPHY_WORLD_SERIES_MVP_TROPHY,
   "trophy:silver-slugger-award": TROPHY_SILVER_SLUGGER_AWARD,
   "trophy:lamar-hunt-trophy": TROPHY_LAMAR_HUNT_TROPHY,
+  "trophy:george-halas-trophy": TROPHY_GEORGE_HALAS_TROPHY,
   "trophy:wnba-championship-trophy": TROPHY_WNBA_CHAMPIONSHIP_TROPHY,
   "trophy:walter-cup": TROPHY_WALTER_CUP,
   "trophy:mlb-mvp-award": TROPHY_MLB_MVP_AWARD,
