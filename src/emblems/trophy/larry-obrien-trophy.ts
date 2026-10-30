@@ -12,15 +12,15 @@ export const TROPHY_LARRY_OBRIEN_TROPHY = /* @__PURE__ */ defineLathe("trophy:la
   metal: "gold",
   tones: { silver: "#cfd3d8" },
   box: "-0.7 0 65.2 65.2",
-  turnBox: "-6.2 0 76.1 76.1",
+  turnBox: "-9.3 -4.5 82.4 82.4",
   tilt: 10,
   solids: [
     {
+      lean: [0.083, 90, 52.4],
       p: [[25.2, 7.3, 1], [25.5, 8.3], [26.3, 8.3, 1], [26.3, 8], [52.4, 5.9, 1], [52.4, 12, 1], [55.4, 12.2, 1], [55.4, 14, 1], [61.4, 14.1, 1]],
-      decor: [["mesh", 27.5, 51, 8, 5, "silver", 0.3]],
+      decor: [["mesh", 27.5, 51, 7, 4, "silver", 0.28]],
     },
-    { p: [[23.2, 1.8, 1], [26.2, 1.8, 1]] },
   ],
-  balls: [{ kind: "plain", nba: true, cy: 15.4, r: 10.6, fwd: 3.6, seam: "silver", lean: [-18, 24] }],
+  balls: [{ kind: "plain", nba: true, cy: 14.5, r: 10.6, fwd: 7.4, dir: 90, seam: "silver", lean: [-18, 24] }],
   plate: { y0: 55.8, y1: 61 },
 });

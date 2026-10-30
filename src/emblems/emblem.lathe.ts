@@ -52,6 +52,8 @@ export interface Solid {
   turn?: number;
   /** Stands off the axis: at the distance `r` from it, at the angle `deg` (90 is the right side, 0 faces the eye), and turns round the axis with the rest. Its own profile is about its own axis. */
   at?: readonly [r: number, deg: number];
+  /** Leans the body: at the height `y0` it stands on the axis, and each unit above that its centre is `k` units further toward the angle `deg` (90 is the right side, 0 faces the eye), so a tapering vase can stand oblique, its mouth forward of its foot. The slant turns with the rest, and what is drawn on the body leans with it. */
+  lean?: readonly [k: number, deg: number, y0: number];
   tone?: string;
   decor?: readonly Decor[];
 }
@@ -66,7 +68,7 @@ export interface Handle {
 
 export type BallKind = "plain" | "basket" | "soccer" | "base" | "globe" | "football" | "pine";
 /**
- * A ball on the body: `cy` its centre, `r` its radius (and `ry` when it is longer than it is wide), `rot` the lean of a football in degrees. `fwd` sets the ball that far toward the eye (and so round the axis with the turn).
+ * A ball on the body: `cy` its centre, `r` its radius (and `ry` when it is longer than it is wide), `rot` the lean of a football in degrees. `fwd` sets the ball that far from the axis, toward the eye or, with `dir`, toward that angle (and so round the axis with the turn).
  * `nba` gives it the seams of a basketball as grooves, drawn by the model's `ballExtras` (`LATHE_BALL`): in the tone `seam` when given, the ball leaning by `lean` (degrees about the line of sight, then about the horizontal)
  * and, when `grain` is a number, that many specks of a grained finish.
  */
@@ -79,6 +81,7 @@ export interface Ball {
   rot?: number;
   tone?: string;
   fwd?: number;
+  dir?: number;
   nba?: boolean;
   seam?: string;
   lean?: readonly [number, number];
@@ -472,6 +475,14 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
         if (m !== "") mid.push(m);
       }
     }
+    if (solid.lean !== undefined) {
+      const [k, a, y0] = solid.lean;
+      const th = (a + yaw) * RAD;
+      const c = -k * Math.sin(th);
+      const d = 1 - s * k * Math.cos(th);
+      const g = (n: number): string => String(Math.round(n * 1e3) / 1e3);
+      mid.push(`<g transform="matrix(1 0 ${g(c)} ${g(d)} ${g(-c * y0)} ${g(y0 * (1 - d))})">${mid.splice(mark).join("")}</g>`);
+    }
     // A solid that stands off the axis is moved to its place, behind the body when it is on the far side and in front of it when it is on the near side.
     if (solid.at !== undefined) {
       const deg = solid.at[1] + yaw;
@@ -534,7 +545,7 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
     const t = tone(ball.tone);
     const rx = ball.r;
     const ry = ball.ry ?? ball.r;
-    const [fx, cy] = at(ball.fwd ?? 0, ball.cy, yaw);
+    const [fx, cy] = at(ball.fwd ?? 0, ball.cy, yaw + (ball.dir ?? 0));
     const cx = fx + (ball.cx ?? CX) - CX;
     const spherical = line || flat || ball.kind === "pine" ? t.fill : (() => {
       const g = orbGradient(t.rgb);

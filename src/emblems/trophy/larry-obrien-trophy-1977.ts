@@ -9,16 +9,16 @@ export const TROPHY_LARRY_OBRIEN_TROPHY_1977 = /* @__PURE__ */ defineLathe("trop
   extras: LATHE_EXTRAS,
   metal: "gold",
   tones: { dark: "#16171b" },
-  turnBox: "-6 0 76 76",
+  turnBox: "-8.6 -5.2 81.2 81.2",
   tilt: 10,
   solids: [
     {
+      lean: [0.09, 90, 52],
       p: [[25.2, 9.4, 1], [25.5, 10.6], [26.3, 10.6, 1], [26.3, 10.3], [52, 6.1, 1], [52, 7.6, 1, "dark"], [54, 7.6, 1, "dark"]],
       decor: [["mesh", 37, 51.4, 7, 3]],
     },
-    { p: [[23.2, 1.8, 1], [26.2, 1.8, 1]] },
     { sides: 4, turn: -45, p: [[54, 17, 1], [58.6, 17, 1]] },
   ],
-  balls: [{ kind: "plain", cy: 15.4, r: 10.6, fwd: 3.6 }],
+  balls: [{ kind: "plain", cy: 14.5, r: 10.6, fwd: 8.2, dir: 90 }],
   plate: { y0: 54.4, y1: 58.2, face: 0 },
 });
