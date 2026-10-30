@@ -85,7 +85,7 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 
 | Award code | Award | Emblem | Photo |
 | --- | --- | --- | --- |
-| `wnba_championship` | WNBA Championship Trophy | `trophy:wnba-championship-trophy` (approximate) | yes, carried |
+| `wnba_championship` | WNBA Championship Trophy | `trophy:wnba-championship-trophy` (the 2023 design: a sphere on three leaning rods over a triangular plinth, drawn in 3D parts) | yes, carried and tilted; John sent a description from his photographs (2026-10-30) |
 | `pwhl_walter_cup` | Walter Cup | `trophy:walter-cup` (approximate) | yes, at a distance |
 | `nwsl_championship` | NWSL Championship trophy | gap (plain cup) | no: the only photographs on Commons (checked 2026-10-30) show it far off on a stage, and one from 2025 shows a silver ball on twisted strands that is not the object in the 2022 photographs, so no drawing was made; John to supply a clear photograph of the whole trophy from the front |
 

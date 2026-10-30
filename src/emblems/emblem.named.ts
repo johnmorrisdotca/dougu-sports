@@ -304,7 +304,7 @@ export const NAMED_TROPHIES: readonly NamedTrophy[] = [
     kind: "champion",
     honours: "The winner of the WNBA Finals.",
     first: "1997",
-    reference: "File:Jaylyn Sharrrod (cropped).jpg (Wikimedia Commons, CC BY-SA 4.0)",
+    reference: "File:Jaylyn Sharrrod.jpg and File:Sloot Trophy.png (Wikimedia Commons, CC BY-SA 4.0), with a description sent by John Morris (2026-10-30); looked at and measured only, not copied",
   },
   {
     id: "trophy:lamar-hunt-trophy",

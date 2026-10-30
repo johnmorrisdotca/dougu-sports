@@ -123,6 +123,9 @@ export interface FramedCtx {
   tone: (name?: string) => Tone;
   /** The fill of a gradient of the model's own: its `url(#id)` in the metal style (the definition goes into the drawing), and the colour `rgb` flat in the `color` style. */
   paint: (g: Gradient, rgb: Rgb) => string;
+  /** The engraving asked for, as one line (empty when none): a drawer that has its own plinth sets it on one flat side with `sideText`, in `ink`. */
+  engrave: string;
+  ink: string;
 }
 
 /** What a drawer of `parts` is given: the turn, the tilt (the sine of the elevation), the tones and the style. */
@@ -477,7 +480,7 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
     }
   }
 
-  if (model.framed !== undefined) mid.push(model.framed({ yaw, s, line, flat, tone, paint: (g, rgb) => (line ? "none" : flat ? hexOf(rgb) : (grads.push(g), g.fill)) }));
+  if (model.framed !== undefined) mid.push(model.framed({ yaw, s, line, flat, tone, paint: (g, rgb) => (line ? "none" : flat ? hexOf(rgb) : (grads.push(g), g.fill)), engrave: model.plate === undefined ? flatText(engravingOf(o)) : "", ink: engravingInk(r.style, main.rgb) }));
 
   // Handles: a tube through the points of its plane, behind the body when it is on the far side.
   for (const h of model.handles ?? []) {
