@@ -655,7 +655,9 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
     }
   }
 
-  return { body: back.join("") + mid.join("") + front.join(""), defs: line || flat ? "" : defsOf(grads), edge: main.edge };
+  // A tone that was only asked for its colour (a box, a shade) has a gradient nothing paints with: it is left out of the definitions.
+  const body = back.join("") + mid.join("") + front.join("");
+  return { body, defs: line || flat ? "" : defsOf(grads.filter((g) => body.includes(g.id))), edge: main.edge };
 }
 
 /** The twelve pentagons of a ball, as the centres of a sphere's faces: the poles and two rings of five. */
