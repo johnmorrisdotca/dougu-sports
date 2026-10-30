@@ -85,6 +85,7 @@ export { TROPHY_FIFA_WORLD_CUP } from "./emblems/trophy/fifa-world-cup.ts";
 export { TROPHY_WOODLAWN_VASE } from "./emblems/trophy/woodlawn-vase.ts";
 export { TROPHY_DFB_POKAL } from "./emblems/trophy/dfb-pokal.ts";
 export { TROPHY_CHAMPIONS_LEAGUE_TROPHY } from "./emblems/trophy/champions-league-trophy.ts";
+export { TROPHY_JACKIE_ROBINSON_AWARD } from "./emblems/trophy/jackie-robinson-award.ts";
 export { TROPHY_CALDER_CUP } from "./emblems/trophy/calder-cup.ts";
 export { TROPHY_KELLY_CUP } from "./emblems/trophy/kelly-cup.ts";
 export { TROPHY_CFP_TROPHY } from "./emblems/trophy/cfp-trophy.ts";

@@ -79,6 +79,7 @@ export const TROPHY_IDS = [
   "trophy:ashes-urn",
   "trophy:borg-warner-trophy",
   "trophy:americas-cup",
+  "trophy:jackie-robinson-award",
   "trophy:calder-cup",
   "trophy:kelly-cup",
   "trophy:cfp-trophy",

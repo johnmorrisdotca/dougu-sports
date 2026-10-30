@@ -59,7 +59,7 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | `mlb_gold_glove` | Rawlings Gold Glove Award | `trophy:gold-glove-award` | yes |
 | `mlb_silver_slugger` | Silver Slugger Award | `trophy:silver-slugger-award` | yes |
 | `mlb_world_series_mvp` | World Series Most Valuable Player Award | `trophy:world-series-mvp-trophy` (approximate) | yes, at a distance |
-| `mlb_rookie_of_the_year` | Jackie Robinson Rookie of the Year Award | gap (plain cup) | no photograph found; a drawing from a description was rejected (2026-10-27) |
+| `mlb_rookie_of_the_year` | Jackie Robinson Rookie of the Year Award | `trophy:jackie-robinson-award` (the plaque used since at least 1989; the 1940s shield-shaped plaque is not drawn) | no on Commons; drawn from photographs John supplied (looked at only) |
 | `mlb_hank_aaron` | Hank Aaron Award | `trophy:hank-aaron-award` | yes (CC BY 2.0, ceremony photograph) |
 | `mlb_manager_of_the_year` | Manager of the Year Award | gap (plain cup) | no photograph found; a drawing from a description was rejected (2026-10-27) |
 | `mlb_rolaids_relief_man` | Rolaids Relief Man Award (now the Reliever of the Year awards) | `trophy:relief-man-award` (approximate) | no on Commons; measured on an auction photograph (looked at only) |

@@ -676,6 +676,16 @@ export const NAMED_TROPHIES: readonly NamedTrophy[] = [
     first: "2017-18",
     reference: "Six photographs of the award (two front views on white and on a dark ground, a large clear front view, a three-quarter view on a table and a display case, which carries a sponsor's branding and was looked at only), supplied by John Morris (Dropbox /Projects/Resources/dougu-sports/nhl-willie-oree/), looked at and measured only; never copied or committed; not ours to licence. No photograph on Wikimedia Commons.",
   },
+  {
+    id: "trophy:jackie-robinson-award",
+    name: "Jackie Robinson Rookie of the Year Award",
+    sport: "baseball",
+    competition: "Major League Baseball",
+    kind: "player",
+    honours: "The best rookie of each league (the Rookie of the Year Award, named for Jackie Robinson, with this plaque since at least 1989).",
+    first: "1947",
+    reference: "Photographs of the plaques of 1989 and 1992, a close photograph of the bronze relief and one of the nameplate and emblem, supplied by John (looked at and measured only; not copied; a Getty photograph and a 1940s plaque looked at only, not used). No freely licensed photograph on Wikimedia Commons.",
+  },
 ];
 
 /** The facts of a named trophy by its emblem id, or `undefined` for a generic trophy. */
