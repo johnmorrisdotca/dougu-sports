@@ -129,10 +129,10 @@ function brightGradient(rgb: Rgb, shift: number): Gradient {
 
 /** The flat cut on the front of the base: a bright facet wide at the rim and running down to a point, where a plane that leans out more steeply than the cone meets the cone's surface. */
 const BASE_TOP = 47.4;
-const BASE_FOOT = 56.2;
-const coneR = (y: number): number => 14.5 + ((18.3 - 14.5) * (y - BASE_TOP)) / (BASE_FOOT - BASE_TOP);
+const BASE_FOOT = 59.2;
+const coneR = (y: number): number => 14.5 + ((19.6 - 14.5) * (y - BASE_TOP)) / (BASE_FOOT - BASE_TOP);
 function facet(): V3[] {
-  return [[-11.6, BASE_TOP, 8.7], [0, BASE_TOP, 8.4], [11.6, BASE_TOP, 8.7], [0, 55.8, coneR(55.8) + 0.1]];
+  return [[-11.6, BASE_TOP, 8.7], [0, BASE_TOP, 8.4], [11.6, BASE_TOP, 8.7], [0, 58.6, coneR(58.6) + 0.1]];
 }
 
 /** The parts of the trophy that are not bodies of revolution, turned and drawn from the back to the front. */
@@ -208,16 +208,16 @@ function framed(c: FramedCtx): string {
 
 export const NFL_CONFERENCE: LatheModel = {
   metal: "silver",
-  box: "0 0 64 64",
-  turnBox: "-12.5 -18.9 89 89",
+  box: "-0.8 0 65.5 65.5",
+  turnBox: "-14.2 -18.6 92.4 92.4",
   tones: { dark: "#17181c" },
   tilt: 7,
   lineWidth: 1.1,
   edgeWidth: 0.35,
   maxElevation: 34,
   solids: [
-    { p: [[46.4, 13.6, 1], [47.4, 14.5], [56.2, 18.3, 1], [56.2, 18.3, 1, "dark"], [59.2, 17.7, 1]] },
+    { p: [[46.4, 13.6, 1], [47.4, 14.5], [59.2, 19.6, 1], [59.2, 19.6, 1, "dark"], [62.4, 18.9, 1]] },
   ],
-  plate: { y0: 50, y1: 54.5, at: 62 },
+  plate: { y0: 52, y1: 57.5, at: 62 },
   framed,
 };

@@ -7,26 +7,29 @@ import type { FramedCtx, LatheModel } from "./emblem.lathe.ts";
 import { type V3, chrome, cross, line, normalOf, shadeOf, sub, unit, viewOf } from "./lathe.framed.ts";
 
 const RAD = Math.PI / 180;
-/** The rods lean this far from the upright, toward `D` (left and a little toward the eye); `E` lies across the lean. */
+/** The whole tripod leans forward by this much from the upright, toward `D` (the eye, a little to the left), so the ball sits forward of the plinth's centre. */
 const LEAN = 18;
-const D: V3 = [-0.87, 0, 0.5];
-const E: V3 = [0.5, 0, 0.87];
+const D: V3 = [-0.26, 0, 0.966];
+const E: V3 = [D[2], 0, -D[0]];
 const AXIS: V3 = [Math.sin(LEAN * RAD) * D[0], -Math.cos(LEAN * RAD), Math.sin(LEAN * RAD) * D[2]];
-const BALL = 9.6;
-const ROD = 38;
-const TOP = 54.6;
+/** The ball (a ball and a half-width across the plinth, two and a bit across the rods) and the rods: from the top of the plinth to the ball's underside is two and a fifth ball widths. */
+const BALL = 7.6;
+const RISE = 2.2 * 2 * BALL;
+const TOP = 57;
 const add = (a: V3, b: V3, k = 1): V3 => [a[0] + k * b[0], a[1] + k * b[1], a[2] + k * b[2]];
-const FOOT = add([0, TOP, 0], D, 1);
-const CENTRE = add(FOOT, AXIS, ROD);
-const SEAT = add(CENTRE, AXIS, -(BALL - 0.6));
-/** Where each rod stands on the plinth (across, along) and where it meets the ball: the outer rods splay, the middle one stands behind. */
-const FEET: readonly (readonly [number, number])[] = [[-4.8, 0.8], [0, -3.6], [4.8, 0.8]];
-const rods = FEET.map(([v, u]) => ({ from: add(add(FOOT, E, v), D, u), to: add(add(SEAT, E, 0.3 * v), D, 0.2 * u) }));
+const FOOT: V3 = [0, TOP, 0];
+const SEAT = add(FOOT, AXIS, RISE / Math.cos(LEAN * RAD));
+const CENTRE = add(SEAT, AXIS, BALL - 0.6);
+/** The plinth is a rounded triangle in plan: its corners are arcs round the points of a small triangle (a flat side faces the eye at rest). Each rod stands in its own collar near a corner (two at the front, one at the back) and they lean together to a point under the ball. */
+const CORE = 7.6;
+const CORNER = 3.8;
+const WALL = TOP + 4.3;
+const RIM = TOP + 2.2;
+const corner = (i: number): V3 => [0.8 * CORE * Math.sin((60 + 120 * i) * RAD), TOP, 0.8 * CORE * Math.cos((60 + 120 * i) * RAD)];
+const rods = [0, 1, 2].map((i) => ({ from: corner(i), to: add(SEAT, [corner(i)[0], 0, corner(i)[2]], 0.13) }));
 
-/** The plinth: a triangle with rounded corners in plan (straight sides, a flat one facing the eye at rest), a wall, a bevel and a top. Each corner is an arc of 16 steps round a point of a small triangle. */
+/** The plinth: a wall, a bevel and a top on the rounded triangle; each corner is an arc of 16 steps round a point of the small triangle. */
 const SIDES = 51;
-const CORE = 10.5;
-const CORNER = 5;
 const ring = (k: number, inset: number, y: number): V3 => {
   const i = ((k % SIDES) + SIDES) % SIDES;
   const vertex = Math.floor(i / 17);
@@ -65,15 +68,15 @@ function framed(c: FramedCtx): string {
   // The plinth: every facet that faces the eye, grouped by shade (they do not overlap), then the top.
   const wall: V3[][] = [];
   for (let k = 0; k < SIDES; k++) {
-    wall.push([ring(k, 0, 58.9), ring(k + 1, 0, 58.9), ring(k + 1, 0, 56.8), ring(k, 0, 56.8)]);
-    wall.push([ring(k, 0, 56.8), ring(k + 1, 0, 56.8), ring(k + 1, 1.7, TOP), ring(k, 1.7, TOP)]);
+    wall.push([ring(k, 0, WALL), ring(k + 1, 0, WALL), ring(k + 1, 0, RIM), ring(k, 0, RIM)]);
+    wall.push([ring(k, 0, RIM), ring(k + 1, 0, RIM), ring(k + 1, 1.4, TOP), ring(k, 1.4, TOP)]);
   }
   const groups = new Map<string, string>();
   for (const q of wall) {
     if (c.line) break;
     const mid = q.reduce((m, p) => [m[0] + p[0] / 4, m[1] + p[1] / 4, m[2] + p[2] / 4] as V3, [0, 0, 0] as V3);
     let n = unit(normalOf(q));
-    const bevel = (q[0] as V3)[1] === 56.8;
+    const bevel = (q[0] as V3)[1] === RIM;
     const away: V3 = [mid[0], bevel ? -1.4 : 0, mid[2]];
     if (n[0] * away[0] + n[1] * away[1] + n[2] * away[2] < 0) n = [-n[0], -n[1], -n[2]];
     const turned = v.rot(n);
@@ -83,19 +86,19 @@ function framed(c: FramedCtx): string {
   }
   out += `<g stroke="none">${[...groups].map(([colour, d]) => `<path d="${d}" fill="${colour}"/>`).join("")}</g>`;
   const rim = (inset: number, y: number): (readonly [number, number])[] => Array.from({ length: SIDES }, (_, k) => at(ring(k, inset, y)));
-  out += `<path d="${line(rim(1.7, TOP), true)}" fill="${c.line ? "none" : c.flat ? mix(main.rgb, 0.45) : mix(main.rgb, 0.7)}"/>`;
-  const foot = rim(0, 58.9);
+  out += `<path d="${line(rim(1.4, TOP), true)}" fill="${c.line ? "none" : c.flat ? mix(main.rgb, 0.45) : mix(main.rgb, 0.7)}"/>`;
+  const foot = rim(0, WALL);
   out += `<path d="${line(foot, true)}"${c.line ? "" : ' stroke-opacity=".6"'}/>`;
   if (c.line) {
-    const side = rim(0, 56.8);
+    const side = rim(0, RIM);
     const lo = foot.reduce((m, p, i) => (p[0] < (foot[m] as readonly [number, number])[0] ? i : m), 0);
     const hi = foot.reduce((m, p, i) => (p[0] > (foot[m] as readonly [number, number])[0] ? i : m), 0);
     out += `<path d="${line([foot[lo] as readonly [number, number], side[lo] as readonly [number, number]], false)}${line([foot[hi] as readonly [number, number], side[hi] as readonly [number, number]], false)}"/>`;
   }
   if (c.engrave !== "") {
-    const p0 = at(ring(50, 0, 57.85));
-    const p1 = at(ring(0, 0, 57.85));
-    out += sideText(c.engrave, 14, 2.1, c.ink, p0, p1, Math.cos((c.yaw * Math.PI) / 180));
+    const p0 = at(ring(50, 0, (WALL + RIM) / 2));
+    const p1 = at(ring(0, 0, (WALL + RIM) / 2));
+    out += sideText(c.engrave, 11, 1.9, c.ink, p0, p1, Math.cos((c.yaw * Math.PI) / 180));
   }
 
   // The rods and the ball, back to front: a rod that meets the ball on the near side is drawn after it.
@@ -110,8 +113,8 @@ function framed(c: FramedCtx): string {
     return `<path d="${d}" stroke-width="${w + 0.9}"/><path d="${d}" stroke="${c.flat ? main.fill : mix(main.rgb, 0.3)}" stroke-width="${w}"/>${c.flat ? "" : `<path d="${d}" transform="translate(-.45 -.35)" stroke="#fff" stroke-opacity=".7" stroke-width=".5"/>`}`;
   };
   for (const { from, to } of rods) {
-    const collar = tube(from, add(from, AXIS, 0.9), 3);
-    const body = tube(add(from, AXIS, 0.9), to, 2.5);
+    const collar = tube(from, add(from, AXIS, 0.8), 2.8);
+    const body = tube(add(from, AXIS, 0.8), to, 1.9);
     items.push({ depth: ballDepth + (v.depth(v.rot(to)) > ballDepth ? 0.5 : -0.5) + v.depth(v.rot(from)) * 1e-4, svg: body + collar });
   }
   const R = BALL;
@@ -148,7 +151,7 @@ function framed(c: FramedCtx): string {
 export const BALL_ON_RODS: LatheModel = {
   metal: "silver",
   box: "0 0 64 64",
-  turnBox: "-9.1 -7.8 82.2 82.2",
+  turnBox: "-7.8 -6.8 79.7 79.7",
   tilt: 12,
   edgeWidth: 0.4,
   lineWidth: 1.1,
