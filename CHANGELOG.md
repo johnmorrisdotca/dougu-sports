@@ -6,6 +6,12 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- **`trophy:foundation-player-award`**: the NHL Foundation Player Award, a tall block of clear crystal a little more than twice as tall as it is wide, with two long V-cut facets from its top corners down to a point near the bottom centre, drawn as two bright reflecting triangles, with the thin bright strips of the glass edges. Measured on photographs John supplied (looked at, never copied, not committed). The text is left off: plain glass. 2.6 kB of markup in the metal style, 0.5 kB in line, 1.2 kB in colour; the block turns with a solid glass edge and its depth, and shows its back mirrored.
+- **Cut-outs and ribbons for a body of revolution** (`src/emblems/lathe.sculpt.ts`, `parts` and `sculptor` in a lathe model): a flat silhouette drawn from an original path and extruded, standing in a plane that turns with the body (it squeezes with the turn, shows its back and a solid edge, and clear glass is a convex slab), and a ribbon that twists as it rises. A model with no parts carries none of the code; a cup's bundle grows by about 20 bytes gzipped for the hook (the `lathe` size limit is 7.3 kB, was 7.1). No new runtime dependency.
+- 335 emblems, 79 trophies, 55 named.
+
 ## [0.26.0] - 2026-10-30
 
 Four league championship trophies, each measured on a photograph of the real one, for the big-game cards of a results site.

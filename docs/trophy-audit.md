@@ -28,7 +28,8 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | `nhl_ted_lindsay` | Ted Lindsay Award | `trophy:ted-lindsay-award` | yes |
 | `nhl_gm_of_the_year` | NHL General Manager of the Year Award (Jim Gregory Trophy) | gap (plain cup) | no: a drawing from a description was rejected (2026-10-27); a figure group, stays the plain cup until a good photograph is at hand |
 | not held | Prince of Wales Trophy, Clarence S. Campbell Bowl, Lester Patrick Trophy | `trophy:prince-of-wales-trophy`, `trophy:campbell-bowl`, `trophy:lester-patrick-trophy` | yes |
-| not held | Mark Messier Leadership Award, Willie O'Ree Community Hero Award, NHL Foundation Player Award | gap | no: John to supply |
+| not held | Mark Messier Leadership Award, Willie O'Ree Community Hero Award | gap | no: John supplied photographs (2026-10-30); in hand |
+| not held | NHL Foundation Player Award | `trophy:foundation-player-award` | no on Commons; John supplied three photographs (2026-10-30), looked at only |
 
 ## NBA
 

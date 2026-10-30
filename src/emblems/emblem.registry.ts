@@ -76,6 +76,7 @@ import { TROPHY_CALDER_CUP } from "./trophy/calder-cup.ts";
 import { TROPHY_KELLY_CUP } from "./trophy/kelly-cup.ts";
 import { TROPHY_CFP_TROPHY } from "./trophy/cfp-trophy.ts";
 import { TROPHY_MLS_CUP } from "./trophy/mls-cup.ts";
+import { TROPHY_FOUNDATION_PLAYER_AWARD } from "./trophy/foundation-player-award.ts";
 import { TROPHY_WEBB_ELLIS_CUP } from "./trophy/webb-ellis-cup.ts";
 import { TROPHY_FA_CUP } from "./trophy/fa-cup.ts";
 import { TROPHY_CRICKET_WORLD_CUP } from "./trophy/cricket-world-cup.ts";
@@ -190,6 +191,7 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}`
   "trophy:kelly-cup": TROPHY_KELLY_CUP,
   "trophy:cfp-trophy": TROPHY_CFP_TROPHY,
   "trophy:mls-cup": TROPHY_MLS_CUP,
+  "trophy:foundation-player-award": TROPHY_FOUNDATION_PLAYER_AWARD,
   "trophy:dfb-pokal": TROPHY_DFB_POKAL,
   "trophy:woodlawn-vase": TROPHY_WOODLAWN_VASE,
   "trophy:fifa-world-cup": TROPHY_FIFA_WORLD_CUP,

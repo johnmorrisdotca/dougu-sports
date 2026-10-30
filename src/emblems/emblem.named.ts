@@ -566,6 +566,16 @@ export const NAMED_TROPHIES: readonly NamedTrophy[] = [
     first: "1996",
     reference: "File:KC Ballet & Sporting KC (11232058043).jpg (Wikimedia Commons, CC BY 2.0), looked at and measured only; not copied.",
   },
+  {
+    id: "trophy:foundation-player-award",
+    name: "NHL Foundation Player Award",
+    sport: "hockey",
+    competition: "National Hockey League",
+    kind: "player",
+    honours: "The player who best applies hockey's core values of commitment, perseverance and teamwork to enrich the lives of people in his community.",
+    first: "2003-04",
+    reference: "Photographs of the 2022 and 2020 award on a dark ground, supplied by John Morris (Dropbox /Projects/Resources/dougu-sports/nhl-foundation-player/), looked at and measured only; never copied or committed; not ours to licence. No photograph on Wikimedia Commons.",
+  },
 ];
 
 /** The facts of a named trophy by its emblem id, or `undefined` for a generic trophy. */

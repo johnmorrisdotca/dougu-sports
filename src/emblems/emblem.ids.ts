@@ -75,6 +75,7 @@ export const TROPHY_IDS = [
   "trophy:kelly-cup",
   "trophy:cfp-trophy",
   "trophy:mls-cup",
+  "trophy:foundation-player-award",
 ] as const;
 export type TrophyId = (typeof TROPHY_IDS)[number];
 

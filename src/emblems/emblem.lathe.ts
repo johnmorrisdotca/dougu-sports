@@ -89,6 +89,53 @@ export interface Poles {
   tilted?: boolean;
 }
 
+/** What a drawer of `parts` is given: the turn, the tilt (the sine of the elevation), the tones and the style. */
+export interface SculptCtx {
+  yaw: number;
+  s: number;
+  tone: (name?: string) => Tone;
+  line: boolean;
+  flat: boolean;
+}
+
+/**
+ * One layer of a cut-out: a tone, a path (absolute `M L H V C Q Z` in the 64 unit box) and how it is painted: by default the tone's own metal shading with an edge; `dk` and `lt` a darker and a lighter
+ * shade laid over it (a fold, a highlight); `ln` a thin line; `gl` clear glass; `rf` a bright reflection; `sh` a white shine. The first layer is the silhouette, and the thickness of the cut-out is the extrusion of it.
+ */
+export type Layer = readonly [tone: string, d: string, mode?: "dk" | "lt" | "ln" | "gl" | "rf" | "sh"];
+
+/**
+ * A flat cut-out with thickness that stands in a plane and turns with the body: a silhouette (a player, a jersey, a plate of glass) drawn as original paths, extruded `t` thick. `at` is where its plane stands (`x`
+ * to the right and `z` toward the eye, from the axis), `y` moves it down, `rot` turns the way it faces (90 faces the right side), `copies` stand more of it at other places (`[x, z, y]`). A `decal` is on a
+ * face of a body and is not drawn when it faces away; a cut-out that is `under` is drawn before the bodies (a clear arc behind a cup). `n` is how many steps of edge a thick one is given at most.
+ */
+export interface Cut {
+  kind: "cut";
+  layers: readonly Layer[];
+  at?: readonly [x: number, z: number];
+  y?: number;
+  rot?: number;
+  t?: number;
+  decal?: boolean;
+  under?: boolean;
+  copies?: readonly (readonly [x: number, z: number, y?: number])[];
+  n?: number;
+}
+
+/**
+ * A ribbon of metal that twists as it rises: a centre line through points `[x, y, z, phi, w]` (a place in the 3D of the body, the way the width lies in the horizontal plane in degrees, and the half width),
+ * drawn as a strip of quadrilaterals, each shaded by which way it faces.
+ */
+export interface Ribbon {
+  kind: "ribbon";
+  pts: readonly (readonly [x: number, y: number, z: number, phi: number, w: number])[];
+  tone?: string;
+  steps?: number;
+  under?: boolean;
+}
+
+export type Part = Cut | Ribbon;
+
 /** What a body of revolution is made of. All of it is in the 64 by 64 box with the axis at x = 32. */
 export interface LatheModel {
   metal: Metal;
@@ -114,6 +161,10 @@ export interface LatheModel {
   plate?: Band;
   /** Draws the `mesh`, `patch` and `panel` decorations of the solids (`LATHE_EXTRAS` in `lathe.extras.ts`); a body that uses none leaves it out. */
   extras?: (c: DecorCtx, d: ExtraDecor) => string;
+  /** Cut-outs and ribbons that stand beside the solids and turn with them (`lathe.sculpt.ts`): a player, a plate of glass, a twisting ribbon. */
+  parts?: readonly Part[];
+  /** Draws the `parts` (`LATHE_SCULPT`); a body with no parts leaves it out, and carries none of the code. */
+  sculptor?: (c: SculptCtx, parts: readonly Part[]) => { under: string; over: string };
 }
 
 const CX = 32;
@@ -490,6 +541,13 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
       if (!line && !flat && ball.kind !== "pine") parts.push(`<ellipse cx="${f(cx - rx * 0.36)}" cy="${f(cy - ry * 0.4)}" rx="${f(rx * 0.3)}" ry="${f(ry * 0.2)}" fill="#fff" fill-opacity=".38" stroke="none" transform="rotate(-30 ${f(cx - rx * 0.36)} ${f(cy - ry * 0.4)})"/>`);
     }
     mid.push(...parts);
+  }
+
+  // Cut-outs and ribbons: the ones behind the bodies first, then the rest in front of them.
+  if (model.parts !== undefined && model.sculptor !== undefined) {
+    const made = model.sculptor({ yaw, s, tone, line, flat }, model.parts);
+    if (made.under !== "") back.unshift(made.under);
+    if (made.over !== "") mid.push(made.over);
   }
 
   // The engraving on the plinth: letters set round the body (or along one flat side), foreshortened and hidden as they turn away.
