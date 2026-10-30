@@ -6,6 +6,8 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.26.0] - 2026-10-30
+
 Four league championship trophies, each measured on a photograph of the real one, for the big-game cards of a results site.
 
 ### Added
