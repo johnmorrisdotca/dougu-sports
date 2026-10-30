@@ -48,7 +48,7 @@ export function LATHE_EXTRAS(c: DecorCtx, d: ExtraDecor): string {
   const n = solid.sides ?? 0;
   const a0 = (360 * face) / (n || 1) + yaw + (solid.turn ?? 0);
   const a1 = (360 * (face + 1)) / (n || 1) + yaw + (solid.turn ?? 0);
-  if (n === 0 || Math.cos(((a0 + a1) / 2) * RAD) <= 0) return "";
+  if (n === 0 || Math.cos(((a0 + a1) / 2) * RAD) <= 1e-9) return "";
   const t = c.tone(name);
   const lerp = (y: number, u: number): string => {
     const c0 = at(radiusAt(p, y), y, a0);

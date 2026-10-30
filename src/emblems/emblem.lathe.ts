@@ -258,7 +258,7 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
           const a0 = (360 * face) / n + yaw + (solid.turn ?? 0);
           const a1 = (360 * (face + 1)) / n + yaw + (solid.turn ?? 0);
           const m = (a0 + a1) / 2;
-          if (Math.cos(m * RAD) <= 0) continue;
+          if (Math.cos(m * RAD) <= 1e-9) continue;
           const lit = -Math.sin(m * RAD);
           const colour = line ? "none" : mix(t.rgb, 0.18 + 0.36 * lit);
           mid.push(`<path d="M${where(a[1], a[0], a0)}L${where(a[1], a[0], a1)}L${where(b[1], b[0], a1)}L${where(b[1], b[0], a0)}z" fill="${colour}"${own(t)}/>`);

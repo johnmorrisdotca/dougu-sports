@@ -108,7 +108,7 @@ The folders the art lives in are in [layout.md](layout.md).
 | `trophy:calder-cup` | Calder Cup | lathe | ours | The Calder Cup: a two-handled silver bowl with a band of laurel leaves round its rim, on a knobbed stem that flares to a bell, over a black round plinth and two stepped black blocks with plates. |
 | `trophy:kelly-cup` | Kelly Cup | lathe | ours | The Kelly Cup: a small two-handled silver cup with two thin rings under its lip, on a stack of three black drums with silver-edged plate bands, the lowest the widest. |
 | `trophy:cfp-trophy` | CFP Trophy | lathe | ours | The College Football Playoff trophy: an upright dark football with a gilt rim on a tall slim gold column that narrows to a small collar, over a black drum with a plate band. |
-| `trophy:mls-cup` | MLS Cup | lathe | ours | The MLS Cup: a tall silver goblet with a gilt rim on a flared round pedestal with one dark groove, and four fluted blades that rise from its stem and lean out past the rim. |
+| `trophy:mls-cup` | MLS Cup | lathe | ours | The MLS Cup: a tall silver goblet with a gilt rim whose bowl narrows steadily to a slim stem, on a flared round pedestal with one dark groove, with four fluted blades that sweep up and out from the stem, past the rim, and curl in over it. |
 
 ## medal
 
