@@ -71,6 +71,10 @@ export const TROPHY_IDS = [
   "trophy:ashes-urn",
   "trophy:borg-warner-trophy",
   "trophy:americas-cup",
+  "trophy:calder-cup",
+  "trophy:kelly-cup",
+  "trophy:cfp-trophy",
+  "trophy:mls-cup",
 ] as const;
 export type TrophyId = (typeof TROPHY_IDS)[number];
 

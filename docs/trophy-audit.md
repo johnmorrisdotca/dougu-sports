@@ -83,7 +83,17 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 | --- | --- | --- | --- |
 | `wnba_championship` | WNBA Championship Trophy | `trophy:wnba-championship-trophy` (approximate) | yes, carried |
 | `pwhl_walter_cup` | Walter Cup | `trophy:walter-cup` (approximate) | yes, at a distance |
-| `nwsl_championship` | NWSL Championship trophy | gap | only a small crystal trophy at a distance: John to supply |
+| `nwsl_championship` | NWSL Championship trophy | gap (plain cup) | no: the only photographs on Commons (checked 2026-10-30) show it far off on a stage, and one from 2025 shows a silver ball on twisted strands that is not the object in the 2022 photographs, so no drawing was made; John to supply a clear photograph of the whole trophy from the front |
+
+## The leagues added since the audit (the big-game cards, 2026-10-30)
+
+| Award code | Award | Emblem | Photo |
+| --- | --- | --- | --- |
+| `ahl_calder_cup` | Calder Cup (AHL) | `trophy:calder-cup` | yes (CC BY 2.0, a studio photograph) |
+| `echl_kelly_cup` | Kelly Cup (ECHL; the Riley Cup before 1996-97 has no emblem) | `trophy:kelly-cup` | yes (CC BY-SA 3.0) |
+| `ncaaf_championship` | College Football Playoff national championship trophy (from 2014; the older trophies of the poll and the BCS are not drawn) | `trophy:cfp-trophy` (approximate) | one photograph at a distance (CC BY-SA 4.0) |
+| MLS (`soccer_awards`) | MLS Cup (Philip F. Anschutz Trophy) | `trophy:mls-cup` (approximate) | yes (CC BY 2.0); the earlier trophy is not drawn |
+| `mlb_pennant_*`, `mlb_early_championship` | The pennants of the National Association, the American Association, the Union Association, the Players' League, the Federal League and the early National and American Leagues | gap (generic `trophy:baseball`; no single trophy has been identified) | no |
 
 ## The earlier hockey leagues
 

@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 330 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 334 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -105,6 +105,10 @@ The folders the art lives in are in [layout.md](layout.md).
 | `trophy:ashes-urn` | The Ashes urn | lathe | ours | The Ashes urn: a small terracotta urn with square handles on a turned wooden base. |
 | `trophy:borg-warner-trophy` | Borg-Warner Trophy | lathe | ours | The Borg-Warner Trophy: a very tall tapering silver body of relief faces under a figure with a chequered flag, on a drum base. |
 | `trophy:americas-cup` | America's Cup | lathe | ours | The America's Cup: a tall silver ewer with a spout, a broad rounded belly and a great spiral handle, on a stepped foot. |
+| `trophy:calder-cup` | Calder Cup | lathe | ours | The Calder Cup: a two-handled silver bowl with a band of laurel leaves round its rim, on a knobbed stem that flares to a bell, over a black round plinth and two stepped black blocks with plates. |
+| `trophy:kelly-cup` | Kelly Cup | lathe | ours | The Kelly Cup: a small two-handled silver cup with two thin rings under its lip, on a stack of three black drums with silver-edged plate bands, the lowest the widest. |
+| `trophy:cfp-trophy` | CFP Trophy | lathe | ours | The College Football Playoff trophy: an upright dark football with a gilt rim on a tall slim gold column that narrows to a small collar, over a black drum with a plate band. |
+| `trophy:mls-cup` | MLS Cup | lathe | ours | The MLS Cup: a tall silver goblet with a gilt rim on a flared round pedestal with one dark groove, and four fluted blades that rise from its stem and lean out past the rim. |
 
 ## medal
 

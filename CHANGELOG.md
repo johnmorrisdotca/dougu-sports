@@ -6,6 +6,17 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+Four league championship trophies, each measured on a photograph of the real one, for the big-game cards of a results site.
+
+### Added
+
+- **`trophy:calder-cup`**: the Calder Cup of the American Hockey League, a two-handled silver bowl with a band of laurel leaves round its rim, on a knobbed stem that flares to a bell, over a black round plinth and two stepped black blocks with plates. The handles are the thin S-shaped straps of the real cup. Measured on File:LAM 8801 (Wikimedia Commons, CC BY 2.0), with two more photographs (looked at, never copied).
+- **`trophy:kelly-cup`**: the Kelly Cup of the ECHL, a small two-handled silver cup with two thin rings under its lip, on a stack of three black drums with silver-edged plate bands over a flat black disc. Measured on File:Kelly Cup.jpg (CC BY-SA 3.0). The bands are left plain, for the `engrave` option.
+- **`trophy:mls-cup`**: the MLS Cup (the Philip F. Anschutz Trophy), a tall silver goblet with a gilt rim on a flared pedestal with a dark groove, with four fluted blades leaning out from its stem. Measured on File:KC Ballet & Sporting KC (11232058043).jpg (CC BY 2.0). Approximate: the real blades curl over the rim and cross in front of the cup, which a body of revolution with handles in one plane cannot draw; here they are straight bundles of three strips.
+- **`trophy:cfp-trophy`**: the College Football Playoff national championship trophy, an upright dark football with a gilt rim and four laces on a tall slim gold column that narrows to a collar, over a black drum with a plate band. Approximate: the only freely licensed photograph (File:2019 CFP - trophy on the sidelines (crop).jpg, CC BY-SA 4.0) shows it at a distance.
+- Their facts are in `NAMED_TROPHIES`, their references in `docs/likeness-sources.md`, and the four join the famous-trophies picture. Japanese names and descriptions were reviewed. 334 emblems, 78 trophies, 54 named. No lettering, league mark or sponsor mark on any of them; no new runtime dependency.
+- The NWSL Championship trophy is not drawn: the only photographs on Wikimedia Commons show it far off, and two of them show different objects, so the plain cup stays for it (docs/trophy-audit.md).
+
 ## [0.25.3] - 2026-10-28
 
 ### Fixed
