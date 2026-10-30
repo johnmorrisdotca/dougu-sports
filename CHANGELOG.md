@@ -24,6 +24,8 @@ All notable changes to this project are written here. The format follows
 - **`trophy:larry-obrien-trophy`** is now the 2022 redesign: silver seams on the gold ball, which is set forward and touches the vase's rim, a silver net over the whole vase, and a base of two stacked round discs (the base was far too narrow before). Choose `trophy:larry-obrien-trophy-1977` for a season before 2021-22.
 - The Japanese name of `trophy:larry-obrien-trophy` is now `ラリー・オブライエン・トロフィー` (it lacked the first name); reviewed.
 - **`trophy:bill-russell-trophy`** is redrawn on measurements of a clear photograph of the 2022 trophy: a wider flange, a longer and thinner waist, a stepped foot, silver seams on the ball and a silver net.
+- **`trophy:messier-leadership-award`**: the Mark Messier NHL Leadership Award, a polished silver cut-out of a skater in a skating stance with his stick low to the right, four more of the same cut-out stacked behind it and stepping back in depth, on a black base of a foot, a lip and two tiers with polished rims, a blank silver nameplate on the upper tier and two rows of five small silver jerseys on the front of the lower one (and two rows of three on each side). The player is an original silhouette of the pose, not a trace. Measured on five photographs John supplied (looked at, never copied). The nameplate takes the `engrave` option. 8.6 kB of markup in the metal style, 2.1 kB in line, 6.6 kB in colour; it turns, the cut-outs show as thin plates edge on, and the base is a set of boxes with lit faces.
+- **A box part** (`kind: "box"`, `rim`), **decals** (`decal`, `fine`, `plate` for engraved text on a face) and the flat `fl` fill for the cut-outs of a lathe model. 344 emblems, 88 trophies, 64 named.
 
 ## [0.27.0] - 2026-10-30
 
@@ -33,7 +35,6 @@ A new NHL award, and two of the new cups redrawn closer to the photographs.
 
 - **`trophy:foundation-player-award`**: the NHL Foundation Player Award, a tall block of clear crystal a little more than twice as tall as it is wide, with two long V-cut facets from its top corners down to a point near the bottom centre, drawn as two bright reflecting triangles, with the thin bright strips of the glass edges. Measured on photographs John supplied (looked at, never copied, not committed). The text is left off: plain glass. 2.6 kB of markup in the metal style, 0.5 kB in line, 1.2 kB in colour; the block turns with a solid glass edge and its depth, and shows its back mirrored.
 - **Cut-outs and ribbons for a body of revolution** (`src/emblems/lathe.sculpt.ts`, `parts` and `sculptor` in a lathe model): a flat silhouette drawn from an original path and extruded, standing in a plane that turns with the body (it squeezes with the turn, shows its back and a solid edge, and clear glass is a convex slab), and a ribbon that twists as it rises. A model with no parts carries none of the code; a cup's bundle grows by about 20 bytes gzipped for the hook (the `lathe` size limit is 7.3 kB, was 7.1). No new runtime dependency.
-- 335 emblems, 79 trophies, 55 named.
 
 ### Fixed
 

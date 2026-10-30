@@ -3,7 +3,8 @@
 // as a solid edge, widest when it is edge on. A ribbon is a centre line with a width that turns about it, drawn as a strip of shaded quadrilaterals. A model that wants them sets `sculptor: LATHE_SCULPT`;
 // one that does not never imports this file, so its bundle carries none of the code. Plain SVG.
 import { mix } from "./emblem.core.ts";
-import type { Cut, Layer, Part, Ribbon, SculptCtx } from "./emblem.lathe.ts";
+import { engravingInk, sideText } from "./emblem.engrave.ts";
+import type { Block, Cut, Layer, Part, Ribbon, SculptCtx } from "./emblem.lathe.ts";
 
 const CX = 32;
 const RAD = Math.PI / 180;
@@ -89,8 +90,8 @@ interface Stand {
   dy: number;
 }
 
-function drawCut(c: SculptCtx, stand: Stand): { z: number; svg: string } | undefined {
-  const { cut, ax, az, dy } = stand;
+function drawCut(c: SculptCtx, stands: readonly Stand[]): { z: number; svg: string } | undefined {
+  const { cut, ax, az, dy } = stands[0] as Stand;
   const { yaw, s, tone, line, flat } = c;
   const th = yaw * RAD;
   const phi = ((cut.rot ?? 0) + yaw) * RAD;
@@ -98,22 +99,27 @@ function drawCut(c: SculptCtx, stand: Stand): { z: number; svg: string } | undef
   const sinP = Math.sin(phi);
   const A = ax * Math.cos(th) + az * Math.sin(th);
   const B = az * Math.cos(th) - ax * Math.sin(th);
-  if (cut.decal === true && cosP <= 0.03) return undefined;
+  if ((cut.decal === true && cosP <= 0.03) || (line && cut.fine === true)) return undefined;
   const t = cut.t ?? 1;
   const sign = cosP >= 0 ? 1 : -1;
-  const at = (px: number, py: number, d: number): string => `${f(CX + A + (px - CX) * cosP + d * sinP)} ${f(py + dy + s * (B - (px - CX) * sinP + d * cosP))}`;
   const path = (d: string, depth: number): string => {
     let out = "";
-    for (const poly of polys(d)) out += `M${poly.map(([px, py]) => at(px, py, depth)).join("L")}Z`;
+    for (const st of stands) {
+      const sa = st.ax * Math.cos(th) + st.az * Math.sin(th);
+      const sb = st.az * Math.cos(th) - st.ax * Math.sin(th);
+      for (const poly of polys(d)) out += `M${poly.map(([px, py]) => `${f(CX + sa + (px - CX) * cosP + depth * sinP)} ${f(py + st.dy + s * (sb - (px - CX) * sinP + depth * cosP))}`).join("L")}Z`;
+    }
     return out;
   };
   const near = (sign * t) / 2;
-  const first = cut.layers[0] as Layer;
+  const first = cut.layers[0] ?? (["main", ""] as Layer);
   const base = tone(first[0]);
   let svg = "";
   const reach = t * Math.hypot(sinP, s * cosP);
   const glass = first[2] === "gl";
-  if (line) {
+  if (first[1] === "") {
+    // A text only: nothing is drawn but the engraving.
+  } else if (line) {
     if (reach > 1.3 && Math.abs(sinP) > 0.3) svg += `<path d="${path(first[1], -near)}" stroke-opacity=".6"/>`;
   } else if (glass) {
     // Clear glass: its sides are the hull of the front and the back (a block of glass is convex), with the far edges faint inside it.
@@ -129,20 +135,27 @@ function drawCut(c: SculptCtx, stand: Stand): { z: number; svg: string } | undef
   for (const [name, d, mode] of cut.layers) {
     const q = tone(name);
     if (line) {
-      if (mode === undefined || mode === "gl" || mode === "rf") svg += `<path d="${path(d, near)}"/>`;
+      if (mode === undefined || mode === "gl" || mode === "rf" || mode === "fl") svg += `<path d="${path(d, near)}"/>`;
       else if (mode === "ln") svg += `<path d="${path(d, near)}" stroke-width="1.1"/>`;
       continue;
     }
     const p = path(d, near);
-    if (mode === undefined) svg += `<path d="${p}" fill="${q.fill}" stroke="${q.edge}"/>`;
+    if (mode === undefined) svg += `<path d="${p}" fill="${q.fill}" stroke="${q.edge}" stroke-width=".3"/>`;
     else if (mode === "dk") svg += `<path d="${p}" fill="${mix(q.rgb, -0.55)}" fill-opacity=".5" stroke="none"/>`;
     else if (mode === "lt") svg += `<path d="${p}" fill="${mix(q.rgb, 0.55)}" fill-opacity=".55" stroke="none"/>`;
     else if (mode === "ln") svg += `<path d="${p}" stroke="${q.edge}" stroke-width=".5"/>`;
     else if (mode === "gl") svg += `<path d="${p}" fill="${mix(q.rgb, 0.35)}" fill-opacity=".3" stroke="${q.edge}" stroke-width=".45"/>`;
-    else if (mode === "rf") svg += `<path d="${p}" fill="${q.fill}" fill-opacity=".8" stroke="${q.edge}" stroke-width=".4"/>`;
+    else if (mode === "fl") svg += `<path d="${p}" fill="${mix(q.rgb, 0.08)}" stroke="${q.edge}" stroke-width=".3"/>`;
+    else if (mode === "rf") svg += `<path d="${p}" fill="${q.fill}" fill-opacity=".8" stroke="${q.edge}" stroke-width=".3"/>`;
     else svg += `<path d="${p}" fill="#fff" fill-opacity=".6" stroke="none"/>`;
   }
-  if (sign < 0 && !line) svg += `<path d="${path(first[1], near)}" fill="#000" fill-opacity=".22" stroke="none"/>`;
+  if (sign < 0 && !line && first[1] !== "") svg += `<path d="${path(first[1], near)}" fill="#000" fill-opacity=".22" stroke="none"/>`;
+  if (cut.plate !== undefined && c.words !== "") {
+    const [x0, x1, y0, y1] = cut.plate;
+    const y = (y0 + y1) / 2;
+    const end = (px: number): [number, number] => [CX + A + (px - CX) * cosP + near * sinP, y + dy + s * (B - (px - CX) * sinP + near * cosP)];
+    svg += sideText(c.words, x1 - x0, y1 - y0, engravingInk(line ? "line" : flat ? "color" : "metal", base.rgb), end(x0), end(x1), cosP);
+  }
   return { z: B, svg };
 }
 
@@ -235,22 +248,57 @@ function drawRibbon(c: SculptCtx, r: Ribbon): { z: number; svg: string } {
   return { z: turned.reduce((m, p) => m + p.pz, 0) / turned.length, svg };
 }
 
+function drawBlock(c: SculptCtx, b: Block): string {
+  const { yaw, s, tone, line } = c;
+  const th = yaw * RAD;
+  const cos = Math.cos(th);
+  const sin = Math.sin(th);
+  const t = tone(b.tone);
+  const up = tone(b.top ?? b.tone);
+  const [x0, x1] = b.x;
+  const [y0, y1] = b.y;
+  const [z0, z1] = b.z;
+  const at = (x: number, y: number, z: number): string => `${f(CX + x * cos + z * sin)} ${f(y + s * (z * cos - x * sin))}`;
+  let svg = "";
+  // The four sides, each by the way it faces: the ones that look toward the eye, lit from the left.
+  const faces: readonly (readonly [nx: number, nz: number, a: readonly [number, number], b: readonly [number, number]])[] = [
+    [0, 1, [x0, z1], [x1, z1]],
+    [1, 0, [x1, z1], [x1, z0]],
+    [0, -1, [x1, z0], [x0, z0]],
+    [-1, 0, [x0, z0], [x0, z1]],
+  ];
+  for (const [nx, nz, a, e] of faces) {
+    const facing = nz * cos - nx * sin;
+    if (facing <= 0.01) continue;
+    const lit = -(nx * cos + nz * sin);
+    svg += `<path d="M${at(a[0], y0, a[1])}L${at(e[0], y0, e[1])}L${at(e[0], y1, e[1])}L${at(a[0], y1, a[1])}Z" fill="${line ? "none" : mix(t.rgb, 0.05 + 0.27 * lit)}" stroke="${line ? "currentColor" : t.edge}"/>`;
+  }
+  if (s > 0.02) svg += `<path d="M${at(x0, y0, z0)}L${at(x1, y0, z0)}L${at(x1, y0, z1)}L${at(x0, y0, z1)}Z" fill="${line ? "none" : mix(up.rgb, 0.3)}" stroke="${line ? "currentColor" : b.rim === undefined ? up.edge : mix(tone(b.rim).rgb, 0.2)}"${b.rim === undefined || line ? "" : ' stroke-width=".8"'}/>`;
+  return svg;
+}
+
 /** Draws the parts of a model: the ones that are `under` the bodies, and the rest, each group from far to near. */
 export function LATHE_SCULPT(c: SculptCtx, parts: readonly Part[]): { under: string; over: string } {
   const under: { z: number; svg: string }[] = [];
   const over: { z: number; svg: string }[] = [];
+  const boxes: string[] = [];
   for (const part of parts) {
+    if (part.kind === "box") {
+      boxes.push(drawBlock(c, part));
+      continue;
+    }
     if (part.kind === "ribbon") {
       (part.under === true ? under : over).push(drawRibbon(c, part));
       continue;
     }
     const [x, z] = part.at ?? [0, 0];
     const stands: Stand[] = [{ cut: part, ax: x, az: z, dy: part.y ?? 0 }, ...(part.copies ?? []).map(([cx, cz, cy]) => ({ cut: part, ax: x + cx, az: z + cz, dy: (part.y ?? 0) + (cy ?? 0) }))];
-    for (const stand of stands) {
-      const made = drawCut(c, stand);
+    // The copies of a decal are one path (they lie on one face and cannot hide each other); those of a cut-out are drawn one by one, far to near.
+    for (const group of part.decal === true ? [stands] : stands.map((st) => [st])) {
+      const made = drawCut(c, group);
       if (made !== undefined) (part.under === true ? under : over).push(made);
     }
   }
   const join = (list: { z: number; svg: string }[]): string => list.sort((a, b) => a.z - b.z).map((p) => p.svg).join("");
-  return { under: join(under), over: join(over) };
+  return { under: join(under), over: boxes.join("") + join(over) };
 }

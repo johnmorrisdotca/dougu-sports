@@ -26,5 +26,7 @@ export const TROPHY_FOUNDATION_PLAYER_AWARD = /* @__PURE__ */ defineLathe("troph
         ["glass", "M19.2 61.8L20.6 60.4H43.4L44.8 61.8Z", "sh"],
       ],
     },
+    // The text the `engrave` option cuts into the clear middle of the glass; plain glass without it.
+    { kind: "cut", at: [0, 4.3], t: 0.1, decal: true, plate: [25.4, 38.6, 24, 38], layers: [] },
   ],
 });

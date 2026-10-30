@@ -132,18 +132,20 @@ export interface SculptCtx {
   tone: (name?: string) => Tone;
   line: boolean;
   flat: boolean;
+  /** The text of the engraving the options ask for, on one line ("" when none). */
+  words: string;
 }
 
 /**
  * One layer of a cut-out: a tone, a path (absolute `M L H V C Q Z` in the 64 unit box) and how it is painted: by default the tone's own metal shading with an edge; `dk` and `lt` a darker and a lighter
- * shade laid over it (a fold, a highlight); `ln` a thin line; `gl` clear glass; `rf` a bright reflection; `sh` a white shine. The first layer is the silhouette, and the thickness of the cut-out is the extrusion of it.
+ * shade laid over it (a fold, a highlight); `ln` a thin line; `gl` clear glass; `rf` a bright reflection; `fl` a flat fill; `sh` a white shine. The first layer is the silhouette, and the thickness of the cut-out is the extrusion of it.
  */
-export type Layer = readonly [tone: string, d: string, mode?: "dk" | "lt" | "ln" | "gl" | "rf" | "sh"];
+export type Layer = readonly [tone: string, d: string, mode?: "dk" | "lt" | "ln" | "gl" | "rf" | "fl" | "sh"];
 
 /**
  * A flat cut-out with thickness that stands in a plane and turns with the body: a silhouette (a player, a jersey, a plate of glass) drawn as original paths, extruded `t` thick. `at` is where its plane stands (`x`
  * to the right and `z` toward the eye, from the axis), `y` moves it down, `rot` turns the way it faces (90 faces the right side), `copies` stand more of it at other places (`[x, z, y]`). A `decal` is on a
- * face of a body and is not drawn when it faces away; a cut-out that is `under` is drawn before the bodies (a clear arc behind a cup). `n` is how many steps of edge a thick one is given at most.
+ * face of a body and is not drawn when it faces away; a cut-out that is `under` is drawn before the bodies (a clear arc behind a cup). `n` is how many steps of edge a thick one is given at most; `fine` is left out of the line style.
  */
 export interface Cut {
   kind: "cut";
@@ -153,6 +155,10 @@ export interface Cut {
   rot?: number;
   t?: number;
   decal?: boolean;
+  /** Left out of the line style, where small things only crowd the outline. */
+  fine?: boolean;
+  /** Where a text cut into the face goes, as the box's `[x0, x1, y0, y1]` (a nameplate); a decal with no layers carries only this. */
+  plate?: readonly [x0: number, x1: number, y0: number, y1: number];
   under?: boolean;
   copies?: readonly (readonly [x: number, z: number, y?: number])[];
   n?: number;
@@ -170,7 +176,23 @@ export interface Ribbon {
   under?: boolean;
 }
 
-export type Part = Cut | Ribbon;
+/**
+ * A box with flat faces, wider than it is deep when the model says so (a body of revolution with flat sides is square): `x`, `y` and `z` are the faces' places (from the axis to the right, from the top of the
+ * box down, and from the back toward the eye), in `tone` with `top` for its upper face. Boxes are drawn in the order they are given, before the cut-outs and ribbons, so a base is listed from the bottom up.
+ */
+export interface Block {
+  kind: "box";
+  x: readonly [number, number];
+  y: readonly [number, number];
+  z: readonly [number, number];
+  tone?: string;
+  top?: string;
+  /** A tone for the edge of the upper face: a polished rim round the top of a tier. */
+  rim?: string;
+  under?: boolean;
+}
+
+export type Part = Cut | Ribbon | Block;
 
 /** What a body of revolution is made of. All of it is in the 64 by 64 box with the axis at x = 32. */
 export interface LatheModel {
@@ -594,7 +616,7 @@ function draw(model: LatheModel, r: Resolved, o: EmblemOptions | undefined, yaw:
 
   // Cut-outs and ribbons: the ones behind the bodies first, then the rest in front of them.
   if (model.parts !== undefined && model.sculptor !== undefined) {
-    const made = model.sculptor({ yaw, s, tone, line, flat }, model.parts);
+    const made = model.sculptor({ yaw, s, tone, line, flat, words: flatText(engravingOf(o)) }, model.parts);
     if (made.under !== "") back.unshift(made.under);
     if (made.over !== "") mid.push(made.over);
   }

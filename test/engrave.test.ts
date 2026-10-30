@@ -16,9 +16,7 @@ const texts = (svg: string): string[] => [...new Set([...svg.matchAll(/<text[^>]
 /** The ink of the engraving: the fill of the last group of text. */
 const ink = (svg: string): string => [...svg.matchAll(/<g font-family="[^"]*"[^>]*fill="(#[0-9a-f]{6})"[^>]*>(?:<text)/g)].at(-1)?.[1] as string;
 const ENGRAVED = ["medal:gold", "medal:silver", "medal:bronze", "medal:place-1", "medal:place-2", "medal:place-3", "trophy:plaque", "trophy:belt", "trophy:ring", "trophy:banner"] as const;
-// Plain glass and plain ribbons carry no plinth to engrave: the crystal of the Foundation Player Award is a block with nothing cut into it.
-const NO_PLINTH: readonly string[] = ["trophy:foundation-player-award"];
-const CUPS = D.TROPHY_IDS.filter((id) => D.emblemInfo(id).kind === "lathe" && !NO_PLINTH.includes(id));
+const CUPS = D.TROPHY_IDS.filter((id) => D.emblemInfo(id).kind === "lathe");
 
 test("engraving is asked for by label, year and rank, or by one free string, and nothing is engraved when none is asked for", () => {
   for (const id of ENGRAVED) {

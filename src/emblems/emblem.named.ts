@@ -656,6 +656,16 @@ export const NAMED_TROPHIES: readonly NamedTrophy[] = [
     first: "2003-04",
     reference: "Photographs of the 2022 and 2020 award on a dark ground, supplied by John Morris (Dropbox /Projects/Resources/dougu-sports/nhl-foundation-player/), looked at and measured only; never copied or committed; not ours to licence. No photograph on Wikimedia Commons.",
   },
+  {
+    id: "trophy:messier-leadership-award",
+    name: "Mark Messier NHL Leadership Award",
+    sport: "hockey",
+    competition: "National Hockey League",
+    kind: "player",
+    honours: "The player who best exemplifies leadership on and off the ice, including his charitable and community work.",
+    first: "2006-07",
+    reference: "Five photographs of the award (front, three-quarter and dark-ground views, and a render), supplied by John Morris (Dropbox /Projects/Resources/dougu-sports/nhl-mark-messier-leadership/), looked at and measured only; never copied or committed; not ours to licence. No photograph on Wikimedia Commons.",
+  },
 ];
 
 /** The facts of a named trophy by its emblem id, or `undefined` for a generic trophy. */
