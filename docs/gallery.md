@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 336 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 343 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -76,14 +76,21 @@ The folders the art lives in are in [layout.md](layout.md).
 | `trophy:ted-lindsay-award` | Ted Lindsay Award | lathe | ours | The Ted Lindsay Award: a bronze skater with a stick on a pin, over a tall black hexagonal pillar and a flared silver base. |
 | `trophy:lester-patrick-trophy` | Lester Patrick Trophy | lathe | ours | The Lester Patrick Trophy: a bronze figure of a man standing at ease on a tall square pedestal of reddish wood. |
 | `trophy:lombardi-trophy` | Lombardi Trophy | lathe | ours | The Vince Lombardi Trophy: a silver football tilted over a tall three-sided pylon that widens to its foot. |
-| `trophy:larry-obrien-trophy` | Larry O'Brien Trophy | lathe | ours | The Larry O'Brien Championship Trophy: a gold basketball over a hoop and a tapering net-shaped body on a round foot. |
+| `trophy:larry-obrien-trophy` | Larry O'Brien Trophy | lathe | ours | The Larry O'Brien Championship Trophy as redrawn for 2022: a gold basketball with grooved silver seams set forward on the rim of a tall gold vase that tapers outward to the top, etched with a silver net of diamonds, on two stacked round gold discs. |
 | `trophy:commissioners-trophy` | Commissioner's Trophy | lathe | ours | The Commissioner's Trophy: thirty slender poles with gilt pennants in a ring whose tops are higher at the back than at the front, over a wide round silver base. |
 | `trophy:grey-cup` | Grey Cup | lathe | ours | The Grey Cup: a two-handled silver cup with a swirled stem on a tall flared cone of twelve panels crossed by dark bands. |
 | `trophy:cy-young-award` | Cy Young Award | flat | ours | The Cy Young Award: a dark plaque with a curved silver band, a V and a hand holding a baseball over a nameplate. |
 | `trophy:mlb-mvp-award` | Baseball MVP award | flat | ours | The Most Valuable Player Award: a dark octagonal plaque with a silver ring and diamond, a gilt medallion, a nameplate and crossed bats. |
 | `trophy:relief-man-award` | Relief Man Award | lathe | ours | The Relief Man Award: a silver fire helmet with a gilt shield, on a short chrome column over a walnut block with a brass nameplate and a stepped walnut base. |
 | `trophy:hank-aaron-award` | Hank Aaron Award | flat | ours | The Hank Aaron Award: a mahogany block cut in the shape of home plate, with a grey metal face, a bat laid across it from the upper left and two ribbons over the bat. |
-| `trophy:bill-russell-trophy` | Bill Russell Trophy | lathe | ours | The Bill Russell Trophy: a gold basketball seated on the flared rim of a net-patterned goblet that narrows to a slim waist, over a round foot of two tiers. |
+| `trophy:bill-russell-trophy` | Bill Russell Trophy | lathe | ours | The Bill Russell Trophy: a gold basketball with grooved silver seams seated in the mouth of a tall gold trumpet etched with a silver net, which narrows to a slim waist and flares into a round foot of two tiers. |
+| `trophy:nba-western-conference-2001` | Western Conference Trophy | lathe | ours | The Western Conference champions' trophy of 2001 to 2021: a grained silver basketball with grooved seams in crossed gold bands, on a round base that is black above a flared skirt of polished silver. |
+| `trophy:nba-eastern-conference-2001` | Eastern Conference Trophy | lathe | ours | The Eastern Conference champions' trophy of 2001 to 2021: a pale frosted, grained silver basketball with grooved seams on three slim gold posts, on a round black base with a polished silver plate and drum. |
+| `trophy:oscar-robertson-trophy` | Oscar Robertson Trophy | lathe | ours | The Oscar Robertson Trophy: a large silver basketball with grooved seams held in a cradle of crossed gold bands over a small gold dome, on a round base of a black ring, a thin gold band, a flared black drum, a tall gold skirt and a black foot. |
+| `trophy:bob-cousy-trophy` | Bob Cousy Trophy | lathe | ours | The Bob Cousy Trophy: a large silver basketball with grooved seams on three slim gold posts over a small gold dish, on a round base of a gold plate, three black tiers, a tall gold drum and a black foot. |
+| `trophy:magic-johnson-trophy` | Magic Johnson Trophy | lathe | ours | The Magic Johnson Trophy: a silver basketball with grooved seams in a small gold cradle of crossed bands, over a tall flared gold trumpet etched with a diamond net, on a black ring, a gold band and a black foot. |
+| `trophy:larry-bird-trophy` | Larry Bird Trophy | lathe | ours | The Larry Bird Trophy: a silver basketball with grooved seams on three slim gold posts over a small gold dish, over a tall flared gold trumpet etched with a diamond net, on a black ring, a gold band and a black foot. |
+| `trophy:larry-obrien-trophy-1977` | Larry O'Brien Trophy 1977 | lathe | ours | The Larry O'Brien Championship Trophy as given up to 2021: a smooth gold basketball set forward on the rim of a gold vase that tapers outward to the top and is etched with a net on its lower half, on a black ring and a flat square gold plinth. |
 | `trophy:walter-cup` | Walter Cup | lathe | ours | The Walter Cup: a wide shallow silver bowl on a stem between two tall stick-shaped blades, over a heavy round base. |
 | `trophy:wnba-championship-trophy` | WNBA Championship Trophy | lathe | ours | The WNBA Championship Trophy: a silver basketball held on two slanting tubes over a low slab. |
 | `trophy:lamar-hunt-trophy` | Lamar Hunt Trophy | lathe | ours | The Lamar Hunt Trophy: an open football of polished silver, a ribbon with slots for the laces in front and two curved bands behind, standing on its tip, leaning back, on a round flared silver base over a black foot. |

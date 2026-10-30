@@ -60,6 +60,13 @@ import { TROPHY_MLB_MVP_AWARD } from "./trophy/mlb-mvp-award.ts";
 import { TROPHY_RELIEF_MAN_AWARD } from "./trophy/relief-man-award.ts";
 import { TROPHY_HANK_AARON_AWARD } from "./trophy/hank-aaron-award.ts";
 import { TROPHY_BILL_RUSSELL_TROPHY } from "./trophy/bill-russell-trophy.ts";
+import { TROPHY_NBA_WESTERN_CONFERENCE_2001 } from "./trophy/nba-western-conference-2001.ts";
+import { TROPHY_NBA_EASTERN_CONFERENCE_2001 } from "./trophy/nba-eastern-conference-2001.ts";
+import { TROPHY_OSCAR_ROBERTSON_TROPHY } from "./trophy/oscar-robertson-trophy.ts";
+import { TROPHY_BOB_COUSY_TROPHY } from "./trophy/bob-cousy-trophy.ts";
+import { TROPHY_MAGIC_JOHNSON_TROPHY } from "./trophy/magic-johnson-trophy.ts";
+import { TROPHY_LARRY_BIRD_TROPHY } from "./trophy/larry-bird-trophy.ts";
+import { TROPHY_LARRY_OBRIEN_TROPHY_1977 } from "./trophy/larry-obrien-trophy-1977.ts";
 import { TROPHY_WALTER_CUP } from "./trophy/walter-cup.ts";
 import { TROPHY_WNBA_CHAMPIONSHIP_TROPHY } from "./trophy/wnba-championship-trophy.ts";
 import { TROPHY_LAMAR_HUNT_TROPHY } from "./trophy/lamar-hunt-trophy.ts";
@@ -210,6 +217,13 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}`
   "trophy:relief-man-award": TROPHY_RELIEF_MAN_AWARD,
   "trophy:hank-aaron-award": TROPHY_HANK_AARON_AWARD,
   "trophy:bill-russell-trophy": TROPHY_BILL_RUSSELL_TROPHY,
+  "trophy:nba-western-conference-2001": TROPHY_NBA_WESTERN_CONFERENCE_2001,
+  "trophy:nba-eastern-conference-2001": TROPHY_NBA_EASTERN_CONFERENCE_2001,
+  "trophy:oscar-robertson-trophy": TROPHY_OSCAR_ROBERTSON_TROPHY,
+  "trophy:bob-cousy-trophy": TROPHY_BOB_COUSY_TROPHY,
+  "trophy:magic-johnson-trophy": TROPHY_MAGIC_JOHNSON_TROPHY,
+  "trophy:larry-bird-trophy": TROPHY_LARRY_BIRD_TROPHY,
+  "trophy:larry-obrien-trophy-1977": TROPHY_LARRY_OBRIEN_TROPHY_1977,
   "trophy:grey-cup": TROPHY_GREY_CUP,
   "trophy:commissioners-trophy": TROPHY_COMMISSIONERS_TROPHY,
   "trophy:larry-obrien-trophy": TROPHY_LARRY_OBRIEN_TROPHY,

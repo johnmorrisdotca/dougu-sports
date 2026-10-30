@@ -27,10 +27,10 @@ const FRAMED_LIMIT = { metal: 16000, line: 5200, color: 14000 } as const;
 const isFramed = (id: D.EmblemId): boolean => (D.emblemModel(id) as { framed?: unknown } | null)?.framed !== undefined;
 const isPiece = (id: D.EmblemId): boolean => D.emblemInfo(id).kind === "ball" || D.emblemInfo(id).kind === "gear";
 
-test("the ids number 336 in their groups, with no id twice, and the groups hold what they say", () => {
+test("the ids number 343 in their groups, with no id twice, and the groups hold what they say", () => {
   assert.equal(new Set(D.EMBLEM_IDS).size, D.EMBLEM_IDS.length);
-  assert.equal(D.EMBLEM_IDS.length, 336);
-  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 6, trophy: 80, medal: 6, crest: 4, ball: 118, puck: 8, gear: 71, sport: 42, pennant: 1 });
+  assert.equal(D.EMBLEM_IDS.length, 343);
+  assert.deepEqual(Object.fromEntries(Object.entries(D.EMBLEM_GROUPS).map(([group, ids]) => [group, ids.length])), { award: 6, trophy: 87, medal: 6, crest: 4, ball: 118, puck: 8, gear: 71, sport: 42, pennant: 1 });
 });
 
 // The ids of the trophies drawn as a likeness of one real trophy (docs/likeness.md): they may carry the trophy's own name, and so are held to the limits of a detailed drawing.

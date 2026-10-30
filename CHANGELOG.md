@@ -9,11 +9,21 @@ All notable changes to this project are written here. The format follows
 ### Added
 
 - **`trophy:george-halas-trophy`**: the George Halas Trophy of the NFC champion, an open football of polished silver that stands on its tip leaning back, on a round flared base with a black foot and a bright flat cut at its front. The football is a front plate with seven slots where the laces are, a narrower neck below them with a satin point, and two curved bands that make the ring. It is drawn in 3D parts, so it turns: the plate in front, the bands curving away behind it, a side profile, a back. Line, metal and colour styles, light and dark. Measured on John's photographs (looked at, never copied or traced); no shield, conference letters or engraving. The base takes the `engrave` option.
+- **The NBA's postseason trophies of 2022, and the ones they replaced**, each measured on photographs of the real ones (looked at, never copied; no freely licensed photograph exists), with a basketball whose seams are grooves and whose finish can be grained, and a body that sets its ball forward from the axis. No lettering, logo or name on any drawing.
+  - **`trophy:oscar-robertson-trophy`** and **`trophy:bob-cousy-trophy`**: the Western and Eastern Conference champions' trophies, a large silver ball in crossed gold bands over a gold dome, or on three gold posts over a dish, on a round stepped black and gold base.
+  - **`trophy:magic-johnson-trophy`** and **`trophy:larry-bird-trophy`**: the Western and Eastern Conference finals MVP trophies (given from 2022), twins of the two above on a tall flared gold trumpet etched with a diamond net.
+  - **`trophy:larry-obrien-trophy-1977`**: the Larry O'Brien Championship Trophy as given from 1977-78 to 2020-21, a smooth gold ball set forward on a tapering gold vase with a net over its lower half, on a black ring and a square plinth.
+  - **`trophy:nba-western-conference-2001`** and **`trophy:nba-eastern-conference-2001`**: the conference champions' trophies as given from 2001 to 2021, before they were named, with a grained ball and a black and polished silver base.
+  - `docs/trophy-audit.md` says which years each trophy covers, so a site can choose by season.
+  - New in the model: `nba`, `seam`, `lean`, `grain` and `fwd` on a ball (drawn by `LATHE_BALL`, taken only by the models that use them), and a tone and a line width on `mesh`. 343 emblems, 87 trophies.
 
 ### Changed
 
 - **`trophy:lamar-hunt-trophy`** is redrawn as the same drawing as the Halas Trophy, because the two trophies are one design. It was a clear ring on a slab, drawn from a photograph of another object.
 - A body of revolution can carry parts that are not bodies of revolution (`parts` in its model, `lathe.parts.ts`: a point turned and placed like the body's surface, polished-metal shading read off a small room, a smooth curve through a table of measurements), a thin edge (`edgeWidth`) and a cap on how far a turn may look from above (`maxElevation`). A cup that uses none carries none of it, and every other cup draws as before. The bundle of a cup grew by about 0.2 kB gzipped for the hook, and the two conference trophies add about 6.3 kB minified (2.6 kB gzipped) over a plain cup, because their facets are computed when drawn and not stored. Their markup is 11.9 kB in the metal style, 2.8 kB in line and 10.9 kB in colour (`FRAMED_LIMIT` in `test/emblem.test.ts`).
+- **`trophy:larry-obrien-trophy`** is now the 2022 redesign: silver seams on the gold ball, which is set forward and touches the vase's rim, a silver net over the whole vase, and a base of two stacked round discs (the base was far too narrow before). Choose `trophy:larry-obrien-trophy-1977` for a season before 2021-22.
+- The Japanese name of `trophy:larry-obrien-trophy` is now `ラリー・オブライエン・トロフィー` (it lacked the first name); reviewed.
+- **`trophy:bill-russell-trophy`** is redrawn on measurements of a clear photograph of the 2022 trophy: a wider flange, a longer and thinner waist, a stepped foot, silver seams on the ball and a silver net.
 
 ## [0.27.0] - 2026-10-30
 

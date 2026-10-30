@@ -35,15 +35,18 @@ How to read **Emblem**: `trophy:x` is the named emblem; a generic emblem (`troph
 
 | Award code | Award | Emblem | Photo |
 | --- | --- | --- | --- |
-| `nba_larry_obrien` | Larry O'Brien Championship Trophy | `trophy:larry-obrien-trophy` | yes |
+| `nba_larry_obrien` | Larry O'Brien Championship Trophy | `trophy:larry-obrien-trophy` for the redesign of 2022 (the 2021-22 season, the Finals of June 2022, on); `trophy:larry-obrien-trophy-1977` for the design given from 1977-78 to 2020-21 (a smooth gold ball, a net over the lower half of the vase, a square plinth). Choose by season. The Walter A. Brown Trophy of 1946-47 to 1976-77 is not drawn | the earlier design: one small press photograph of the row and John's before-and-after graphic (approximate); the 2022 design: John's photographs (2026-10-30) |
 | `nba_mvp` | Michael Jordan Trophy (Most Valuable Player; the old Maurice Podoloff trophy is now the best-record award) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a sculpted gold figure, which the lathe cannot draw as a likeness, so it stays the plain cup |
-| `nba_finals_mvp` | Bill Russell NBA Finals Most Valuable Player Award | `trophy:bill-russell-trophy` | no on Commons; measured on a press photograph (looked at only) |
+| `nba_finals_mvp` | Bill Russell NBA Finals Most Valuable Player Award | `trophy:bill-russell-trophy` (the 2022 design, redrawn 2026-10-30 from a clean press photograph and John's lineup; the award's trophy before 2022 was a different design and is not drawn) | no on Commons; measured on press photographs (looked at only) |
 | `nba_defensive_player` | Hakeem Olajuwon Trophy (Defensive Player of the Year) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a cut-crystal vessel holding a small gold figure, which identifies it and which the lathe cannot draw, so it stays the plain cup |
 | `nba_rookie_of_the_year` | Wilt Chamberlain Trophy (Rookie of the Year) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a cut-crystal vessel holding a small gold figure, which identifies it and which the lathe cannot draw, so it stays the plain cup |
 | `nba_sixth_man` | John Havlicek Trophy (Sixth Man of the Year) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a cut-crystal vessel holding a small gold figure, which identifies it and which the lathe cannot draw, so it stays the plain cup |
 | `nba_coach_of_the_year` | Red Auerbach Trophy (Coach of the Year) | gap (plain cup) | no: a seated-coach sculpture; no photograph found; stays the plain cup |
 | `nba_most_improved` | George Mikan Trophy (Most Improved Player) | gap (plain cup) | no on Commons; looked at in press photographs (2026-10-27): a cut-crystal vessel holding a small gold figure, which identifies it and which the lathe cannot draw, so it stays the plain cup |
-| not held | Eastern and Western Conference trophies (Oscar Robertson, Larry Bird), NBA Cup | gap | no: John to supply |
+| not held | Western Conference champions' trophy | `trophy:oscar-robertson-trophy` from the 2021-22 playoffs on (named in 2022); `trophy:nba-western-conference-2001` for 2001 to 2021 (the unnamed trophy, a grained ball and a black and polished silver base) | John's photographs of the 2022 pair (2026-10-30); the earlier design from a description (approximate) |
+| not held | Eastern Conference champions' trophy | `trophy:bob-cousy-trophy` from the 2021-22 playoffs on (named in 2022); `trophy:nba-eastern-conference-2001` for 2001 to 2021 (a frosted grained ball on three posts, a black and polished silver base) | John's photographs of the 2022 pair (2026-10-30); the earlier design from a description (approximate) |
+| not held | Conference finals MVP awards (given from 2022 only) | `trophy:magic-johnson-trophy` (Western), `trophy:larry-bird-trophy` (Eastern) | John's photographs (2026-10-30) |
+| not held | NBA Cup | gap | no: John to supply |
 
 ## MLB
 

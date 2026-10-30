@@ -1,19 +1,26 @@
-// A gold basketball over a net, on a body that is a gold hoop that narrows and flares like a net seen from the side, with a long smooth taper to a round foot. Drawn for this package from a photograph of the trophy on a table
-// (docs/likeness.md); the ball is a quarter of the height, the body is wide at the hoop and narrows to a little over two thirds of that width at the foot, and the lettering and the net's strands are left out (the strands are a
-// diamond net in the model).
+// The Larry O'Brien Championship Trophy as redrawn for 2022: a gold basketball with grooved silver seams, set forward so that it touches the front of the vase's rim, over a tall gold vase that tapers outward to the top and is etched
+// with a net of silver diamonds over its whole height, on a gold base of two stacked round discs. Drawn for this package from photographs of the 2022 design (docs/likeness.md): the ball is a little over a quarter of the height,
+// the vase's rim is about three quarters of the ball's width and its foot about three quarters of its rim, and the discs' lettering (the champions' names) and the ball's valve are left out (the lower disc is a plain band that
+// takes the engraving option). The trophy given up to 2021, with a smooth ball and a square plinth, is `trophy:larry-obrien-trophy-1977`.
 import { defineLathe } from "../emblem.lathe.ts";
+import { LATHE_BALL, LATHE_EXTRAS } from "../lathe.extras.ts";
 
-/** The Larry O'Brien Championship Trophy: a gold basketball over a hoop and a tapering net-shaped body on a round foot. */
-export const TROPHY_LARRY_OBRIEN_TROPHY = /* @__PURE__ */ defineLathe("trophy:larry-obrien-trophy", "Larry O'Brien Trophy", "オブライエン・トロフィー", "ours", {
+/** The Larry O'Brien Championship Trophy (2022 design): a gold ball with silver seams over a tapering gold vase with a silver net, on two round discs. */
+export const TROPHY_LARRY_OBRIEN_TROPHY = /* @__PURE__ */ defineLathe("trophy:larry-obrien-trophy", "Larry O'Brien Trophy", "ラリー・オブライエン・トロフィー", "ours", {
+  extras: LATHE_EXTRAS,
+  ballExtras: LATHE_BALL,
   metal: "gold",
-  turnBox: "-3.2 0 70.4 70.4",
-  tilt: 8,
+  tones: { silver: "#cfd3d8" },
+  box: "-0.7 0 65.2 65.2",
+  turnBox: "-6.2 0 76.1 76.1",
+  tilt: 10,
   solids: [
     {
-      p: [[24.2, 3.2, 1], [26.4, 4.4], [28, 10.2, 1], [28.7, 10.4, 1], [29.6, 9.9], [44, 7.9], [57.6, 6.1, 1], [58.3, 7.4, 1], [61, 7.8, 1]],
-      decor: [["net", 30, 56, 8]],
+      p: [[25.2, 7.3, 1], [25.5, 8.3], [26.3, 8.3, 1], [26.3, 8], [52.4, 5.9, 1], [52.4, 12, 1], [55.4, 12.2, 1], [55.4, 14, 1], [61.4, 14.1, 1]],
+      decor: [["mesh", 27.5, 51, 8, 5, "silver", 0.3]],
     },
+    { p: [[23.2, 1.8, 1], [26.2, 1.8, 1]] },
   ],
-  balls: [{ kind: "basket", cy: 13.9, r: 10.7 }],
-  plate: { y0: 53, y1: 58, face: 0 },
+  balls: [{ kind: "plain", nba: true, cy: 15.4, r: 10.6, fwd: 3.6, seam: "silver", lean: [-18, 24] }],
+  plate: { y0: 55.8, y1: 61 },
 });
