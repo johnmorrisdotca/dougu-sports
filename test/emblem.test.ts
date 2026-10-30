@@ -21,6 +21,9 @@ const COLOR_LIMIT = 3200;
 // A ball is drawn in 3D with its own panels, seams and shading, and a piece of gear is a detailed drawing in layers: they are bigger, and are held to limits of their own.
 // A trophy drawn as a likeness of one real trophy has more parts than a generic one (handles, bands, figures, tiers), and is held to limits of its own.
 const NAMED_LIMIT = { metal: 9000, line: 4800, color: 7200 } as const;
+// A likeness with a cut-out figure and many small parts (the Mark Messier award: a smooth silhouette, five plates stacked behind it, a base of boxes with 16 jerseys) is held to a larger limit of its own.
+const FIGURED = new Set<string>(["trophy:messier-leadership-award"]);
+const FIGURED_LIMIT = { metal: 10500, line: 4800, color: 9500 } as const;
 const BIG_LIMIT = { metal: 14000, line: 13000, color: 14000 } as const;
 // A trophy drawn with swept parts of its own (the open football of a conference trophy: bands and a slotted plate placed in 3D) has hundreds of facets to shade and is held to limits of its own.
 const FRAMED_LIMIT = { metal: 16000, line: 5200, color: 14000 } as const;
@@ -90,7 +93,7 @@ test("every emblem draws well-formed, titled, safe SVG in every style and theme,
         assert.doesNotMatch(svg, /NaN|undefined|Infinity|null/, where);
       }
       const size = D.renderEmblem(id, { style }).length;
-      assert.ok(size < (isFramed(id) ? FRAMED_LIMIT[style] : isPiece(id) ? BIG_LIMIT[style] : NAMED.has(id) ? NAMED_LIMIT[style] : style === "metal" ? METAL_LIMIT : style === "line" ? LINE_LIMIT : COLOR_LIMIT), `${id} ${style} is ${size} bytes`);
+      assert.ok(size < (isFramed(id) ? FRAMED_LIMIT[style] : isPiece(id) ? BIG_LIMIT[style] : FIGURED.has(id) ? FIGURED_LIMIT[style] : NAMED.has(id) ? NAMED_LIMIT[style] : style === "metal" ? METAL_LIMIT : style === "line" ? LINE_LIMIT : COLOR_LIMIT), `${id} ${style} is ${size} bytes`);
     }
   }
 });

@@ -55,16 +55,18 @@ function polys(d: string): P[][] {
       cur.push([x, y]);
     } else if (cmd === "Q") {
       const [x1, y1, x2, y2] = [num(), num(), num(), num()];
-      for (let k = 1; k <= 4; k++) {
-        const u = k / 4;
+      const qn = Math.max(2, Math.min(5, Math.ceil(Math.hypot(x2 - x, y2 - y) / 3.4)));
+      for (let k = 1; k <= qn; k++) {
+        const u = k / qn;
         cur.push([(1 - u) ** 2 * x + 2 * (1 - u) * u * x1 + u * u * x2, (1 - u) ** 2 * y + 2 * (1 - u) * u * y1 + u * u * y2]);
       }
       x = x2;
       y = y2;
     } else if (cmd === "C") {
       const [x1, y1, x2, y2, x3, y3] = [num(), num(), num(), num(), num(), num()];
-      for (let k = 1; k <= 5; k++) {
-        const u = k / 5;
+      const cn = Math.max(2, Math.min(6, Math.ceil(Math.hypot(x3 - x, y3 - y) / 3.3)));
+      for (let k = 1; k <= cn; k++) {
+        const u = k / cn;
         const a = (1 - u) ** 3;
         const b = 3 * (1 - u) ** 2 * u;
         const c = 3 * (1 - u) * u * u;
