@@ -250,3 +250,14 @@ test("the header's language picker and theme switch answer, and keep their choic
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await expect(page.locator("#unreviewed")).toBeHidden();
 });
+
+// John, 2026-11-02 (MODULES-112): the playground opened three folds of code before the next demo. Each demo has one fold beside it, closed.
+test("the playground page has one closed fold for the call beside each demo, and none open", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("#stage > svg")).toBeVisible();
+  expect(await page.locator("details").count()).toBe(3);
+  expect(await page.locator("details[open]").count()).toBe(0);
+  // The playground's own fold is right under the playground, not at the foot of the page.
+  const where = await page.evaluate(() => ({ fold: document.getElementById("code-box")!.getBoundingClientRect().top, puck: document.getElementById("puck-h")!.getBoundingClientRect().top }));
+  expect(where.fold).toBeLessThan(where.puck);
+});

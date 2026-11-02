@@ -133,3 +133,26 @@ test("a sprite draws what the inline emblem draws, and costs a fraction of the n
   // PNG bytes of the same drawing agree to within a hair; a sprite whose gradients failed would not.
   for (const [a, b] of [[useBall, inlineBall], [useMedal, inlineMedal]]) expect(Math.abs(a.length - b.length)).toBeLessThan(a.length * 0.08);
 });
+
+// John, 2026-11-02 (MODULES-112): no fold in every card. One panel shows the call of the card whose button was pressed.
+test("no card holds a fold: one panel shows the call of the card chosen, follows a change, and closes", async ({ page }) => {
+  await page.goto("/compose.html");
+  await expect(page.getByTestId("podium")).toBeVisible();
+  expect(await page.locator("details, summary, [aria-expanded]").count()).toBe(0);
+  await expect(page.getByTestId("call-panel")).toBeHidden();
+  await page.getByTestId("case").getByRole("button", { name: /Show the call/ }).click();
+  const panel = page.getByTestId("call-panel");
+  await expect(panel).toBeVisible();
+  await expect(panel).toContainText("awardCase([");
+  // The panel sits over the window's foot, and the card pressed is still on screen.
+  await expect(page.getByTestId("case")).toBeInViewport();
+  await page.getByTestId("podium").getByRole("button", { name: /Show the call/ }).click();
+  await expect(panel).toContainText("podium([");
+  // A change of look draws the cards again; the panel stays on the same card with its new call.
+  await page.locator('#look button[data-value="dark"]').click();
+  await expect(panel).toContainText('theme: "dark"');
+  await panel.getByRole("button", { name: "Copy it" }).click();
+  await expect(panel.getByRole("button", { name: "Copied" })).toBeVisible();
+  await panel.getByRole("button", { name: "Close" }).click();
+  await expect(panel).toBeHidden();
+});

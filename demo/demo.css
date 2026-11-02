@@ -119,3 +119,11 @@ section.play { display: flex; flex-direction: column; overflow: clip; }
 .play .stagepin .fam-button.play { flex: 0 0 auto; }
 /* The button that starts the auto-turn is also called `play`: it is an ordinary button, never the section's flex column. */
 button.play { display: inline-flex; width: auto; }
+
+/* One panel for the call of the card chosen on the composing and brands pages, in place of a fold in every card. */
+.compose-card .copies, .brand-card .copies { display: flex; flex-wrap: wrap; gap: 8px; }
+.call-panel { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; max-height: 45vh; overflow: auto; padding: 10px 16px 14px; background: var(--surface); color: var(--ink); border-top: 2px solid var(--ink); box-shadow: 0 -6px 18px #0003; }
+.call-panel[hidden] { display: none; }
+.call-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.call-actions { display: flex; gap: 8px; }
+.call-panel pre { margin: 8px 0 0; overflow-x: auto; font-family: var(--mono); font-size: .8rem; }

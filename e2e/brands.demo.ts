@@ -43,3 +43,19 @@ test("a card's call is copied", async ({ page }) => {
   await card.getByRole("button", { name: /Copy the call/ }).click();
   await expect(card.getByRole("button", { name: /Copy the call/ })).toHaveText("Copied");
 });
+
+// John, 2026-11-02 (MODULES-112): twenty-three folds, one in every card, were a long page of them. One panel shows the call of the card chosen.
+test("no card holds a fold: one panel shows the call of the maker or team chosen", async ({ page }) => {
+  await page.goto("/brands.html");
+  await expect(page.getByTestId("maker-ostrel")).toBeVisible();
+  expect(await page.locator("details, summary, [aria-expanded]").count()).toBe(0);
+  const panel = page.getByTestId("call-panel");
+  await expect(panel).toBeHidden();
+  await page.getByTestId("maker-ostrel").getByRole("button", { name: /Show the call/ }).click();
+  await expect(panel).toBeVisible();
+  await expect(panel).toContainText('makerLogo("ostrel"');
+  await page.getByTestId("team-saltmere").getByRole("button", { name: /Show the call/ }).click();
+  await expect(panel).toContainText('teamLogo("saltmere"');
+  await page.keyboard.press("Escape");
+  await expect(panel).toBeHidden();
+});

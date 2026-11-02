@@ -6,6 +6,10 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- The demo (not the package): no long pages of folds (MODULES-112). The playground's three "The call that draws it" folds, open by default, are closed, and the playground's own sits right under the playground instead of at the foot of the page. The composing and brands pages had a fold in every card (five, and twenty-three); each card now has a "Show the call" button that puts its call in one panel at the foot of the window (it follows a change of look and closes with Close or Escape) and the "Copy the call" button it already had. Tests in `e2e/demo.demo.ts`, `e2e/compose.demo.ts` and `e2e/brands.demo.ts`.
+
 ## [0.28.1] - 2026-11-02
 
 ### Changed

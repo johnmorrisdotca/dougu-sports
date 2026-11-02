@@ -1,8 +1,9 @@
 // The composing API on one page: a podium, an award case, a sprite sheet, a data address in an <img>, a CSS background and a canvas, and a sport's equipment. Every card draws from the built package and shows
-// the call that made it, with a button that copies it.
+// the call that made it: a button shows it in one panel, another copies it.
 // The package is imported from ../src here so that the editor and `pnpm typecheck` see its types; the build of the demo (scripts/page.ts) turns the import into ./dist/index.js, the built package.
 import { createAddressState } from "@johnmorrisdotca/kazoku-ui/address-state";
 import * as D from "../src/index.ts";
+import { callButtons, refreshCall, showCalls } from "./callpanel.ts";
 import { FLAGS as HATA } from "./flags-data.ts";
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string): T => document.getElementById(id) as T;
@@ -20,7 +21,7 @@ const address = createAddressState({ defaults: { look: "inherit", sport: "nhl" }
 const FLAGS = { jp: HATA.JP, fr: HATA.FR, it: HATA.IT };
 
 const card = (id: string, title: string, art: string, code: string, extra = "") =>
-  `<article class="compose-card" id="${id}" data-testid="${id}"><h3>${esc(title)}</h3><div class="art" data-look="${state.look === "inherit" ? "page" : state.look}">${art}</div>${extra}<details><summary>The call</summary><pre><code>${esc(code)}</code></pre></details><p class="copies"><button type="button" class="fam-button copy" data-code="${esc(code)}" aria-label="Copy the call for ${esc(title)}">Copy the call</button></p></article>`;
+  `<article class="compose-card" id="${id}" data-testid="${id}"><h3>${esc(title)}</h3><div class="art" data-look="${state.look === "inherit" ? "page" : state.look}">${art}</div>${extra}${callButtons(id, title, code, title, esc)}</article>`;
 
 function podiumCard() {
   const options = { theme: state.look, locale: state.locale, width: 340 };
@@ -88,8 +89,10 @@ function render() {
   for (const b of $("look").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state.look));
   for (const b of $("locale").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state.locale));
   address.setMany({ look: state.look, sport: state.sport });
+  refreshCall();
 }
 
+showCalls();
 $("look").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { state.look = b.dataset.value as Look; render(); } });
 $("locale").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { state.locale = b.dataset.value as "en" | "ja"; render(); } });
 document.addEventListener("change", (event) => { const field = event.target as HTMLSelectElement; if (field.id === "sport") { state.sport = field.value as D.SportName; render(); $("sport").focus(); } });

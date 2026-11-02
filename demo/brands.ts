@@ -1,8 +1,9 @@
 // The contact sheet of the fictional logos: twelve makers and ten teams, each in colour, in one colour and small, with its note; a maker on a ball; and a logo placed inside a drawing of a T-shirt. Every picture is drawn from the built
-// package, and every card shows the call that made it with a button that copies it.
+// package, and every card has a button that shows the call that made it in one panel, and one that copies it.
 // The package is imported from ../src here so that the editor and `pnpm typecheck` see its types; the build of the demo (scripts/page.ts) turns the import into ./dist/brands-entry.js.
 import { createAddressState } from "@johnmorrisdotca/kazoku-ui/address-state";
 import * as B from "../src/brands-entry.ts";
+import { callButtons, refreshCall, showCalls } from "./callpanel.ts";
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string): T => document.getElementById(id) as T;
 const esc = (text: unknown) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -29,7 +30,7 @@ function makerCard(id: B.MakerId): string {
   const small = SIZES.map((size) => B.makerLogo(id, { theme, size, title: false })).join("");
   const mono = [B.makerLogo(id, { color: "mono", size: 48, title: false }), B.makerLogo(id, { color: "mono", layout: "horizontal", size: 40, title: false })].join("");
   const code = `import { makerLogo } from "@johnmorrisdotca/dougu-sports/brands";\n\nconst svg = makerLogo("${id}", { layout: "${layout}", theme: "${theme}" });\nconst oneColour = makerLogo("${id}", { color: "mono", ink: "#111827" });\n`;
-  return `<article class="brand-card" id="maker-${id}" data-testid="maker-${id}"><h3>${esc(data.name)} <span>${esc(data.genre)}</span></h3><div class="brand-art" data-look="${theme}"><div class="big">${big}</div><div class="small" aria-hidden="true">${small}</div><div class="mono" aria-hidden="true">${mono}</div></div><p class="brand-note">${esc(data.note)}</p><details><summary>The call</summary><pre><code>${esc(code)}</code></pre></details><p class="copies"><button type="button" class="fam-button copy" data-code="${esc(code)}" aria-label="Copy the call for ${esc(data.name)}">Copy the call</button></p></article>`;
+  return `<article class="brand-card" id="maker-${id}" data-testid="maker-${id}"><h3>${esc(data.name)} <span>${esc(data.genre)}</span></h3><div class="brand-art" data-look="${theme}"><div class="big">${big}</div><div class="small" aria-hidden="true">${small}</div><div class="mono" aria-hidden="true">${mono}</div></div><p class="brand-note">${esc(data.note)}</p>${callButtons(`maker-${id}`, data.name, code, data.name, esc)}</article>`;
 }
 
 function teamCard(id: B.TeamId): string {
@@ -39,7 +40,7 @@ function teamCard(id: B.TeamId): string {
   const small = SIZES.map((size) => B.teamLogo(id, { theme, size, title: false })).join("");
   const mono = B.teamLogo(id, { color: "mono", size: 48, title: false });
   const code = `import { teamLogo } from "@johnmorrisdotca/dougu-sports/brands";\n\nconst svg = teamLogo("${id}", { theme: "${theme}" });\n`;
-  return `<article class="brand-card" id="team-${id}" data-testid="team-${id}"><h3>${esc(data.city)} ${esc(data.nickname)} <span>${esc(data.genre)}</span></h3><div class="brand-art" data-look="${theme}"><div class="big">${big}</div><div class="small" aria-hidden="true">${small}</div><div class="mono" aria-hidden="true">${mono}</div></div><p class="brand-note">${esc(data.note)}</p><details><summary>The call</summary><pre><code>${esc(code)}</code></pre></details><p class="copies"><button type="button" class="fam-button copy" data-code="${esc(code)}" aria-label="Copy the call for ${esc(data.city)} ${esc(data.nickname)}">Copy the call</button></p></article>`;
+  return `<article class="brand-card" id="team-${id}" data-testid="team-${id}"><h3>${esc(data.city)} ${esc(data.nickname)} <span>${esc(data.genre)}</span></h3><div class="brand-art" data-look="${theme}"><div class="big">${big}</div><div class="small" aria-hidden="true">${small}</div><div class="mono" aria-hidden="true">${mono}</div></div><p class="brand-note">${esc(data.note)}</p>${callButtons(`team-${id}`, `${data.city} ${data.nickname}`, code, `${data.city} ${data.nickname}`, esc)}</article>`;
 }
 
 function balls(): string {
@@ -48,7 +49,7 @@ function balls(): string {
   const pictures = layouts.map((layout) => `<figure>${B.renderMakerBall(state.ball, id, { layout, theme: "light" }, { size: 200, title: `${B.MAKERS[id].name}${layout === "mark" ? "" : " with its name"} on a ball` })}<figcaption>${layout === "mark" ? "Mark" : "Mark and name"}</figcaption></figure>`).join("");
   const spread = B.MAKER_IDS.map((other) => `<figure>${B.renderMakerBall(state.ball, other, {}, { size: 96, title: `${B.MAKERS[other].name} on a ball` })}<figcaption>${esc(B.MAKERS[other].name)}</figcaption></figure>`).join("");
   const code = `import { renderMakerBall, makerBall } from "@johnmorrisdotca/dougu-sports/brands";\nimport { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";\n\nconst ball = renderMakerBall("${state.ball}", "${id}", { layout: "mark" }, { size: 320 });\n// or spread the print into any other call:\nconst same = renderEmblem("${state.ball}", { size: 320, ...makerBall("${id}") });\n`;
-  return `<div class="compose-card"><div class="brand-ball-row">${pictures}</div><div class="brand-ball-row small">${spread}</div><details><summary>The call</summary><pre><code>${esc(code)}</code></pre></details><p class="copies"><button type="button" class="fam-button copy" data-code="${esc(code)}">Copy the call</button></p></div>`;
+  return `<div class="compose-card"><div class="brand-ball-row">${pictures}</div><div class="brand-ball-row small">${spread}</div>${callButtons("ball", "A maker on a ball", code, "the maker on a ball", esc)}</div>`;
 }
 
 const TEE = "M62 18 L88 10 Q100 30 112 10 L138 18 L186 44 L168 82 L142 70 L142 188 L58 188 L58 70 L32 82 L14 44 Z";
@@ -76,11 +77,13 @@ function render() {
   for (const b of $("look").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state.look));
   for (const b of $("layout").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state.layout));
   address.setMany({ look: state.look, layout: state.layout, maker: state.maker, ball: state.ball });
+  refreshCall();
 }
 
 $("ball-maker").innerHTML = B.MAKER_IDS.map((id) => `<option value="${id}">${esc(B.MAKERS[id].name)}</option>`).join("");
 ($("ball-maker") as HTMLSelectElement).value = state.maker;
 ($("ball-kind") as HTMLSelectElement).value = state.ball;
+showCalls();
 $("look").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { state.look = b.dataset.value as Look; render(); } });
 $("layout").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { state.layout = b.dataset.value as B.LogoLayout; render(); } });
 $("ball-maker").addEventListener("change", (event) => { state.maker = (event.target as HTMLSelectElement).value as B.MakerId; render(); });
