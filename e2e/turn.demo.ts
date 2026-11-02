@@ -199,7 +199,7 @@ test("changing the emblem, the style, the tint or the look keeps the angles", as
   expect(await yaw(page)).toBe(60);
   await page.getByRole("button", { name: "Line", exact: true }).click();
   await page.getByRole("button", { name: "Red", exact: true }).click();
-  await page.getByRole("button", { name: "Dark", exact: true }).click();
+  await page.locator('button[data-value="dark"]').click();
   expect(await yaw(page)).toBe(60);
   await expect(page.locator("#stage > svg")).toHaveAttribute("color", "#eef1f3");
   expect(await page.locator("#stage").innerHTML()).toContain("<title>Gold medal</title>");

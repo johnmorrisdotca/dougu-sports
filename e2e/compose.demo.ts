@@ -20,7 +20,7 @@ test("the cards draw, with a button that copies the call, and the page does not 
 
 test("the look and the words change the cards, and a sport's equipment follows the choice", async ({ page }) => {
   await page.goto("/compose.html");
-  await page.getByRole("button", { name: "Dark", exact: true }).click();
+  await page.locator('button[data-value="dark"]').click();
   await expect(page.getByTestId("podium").locator("svg[role=img]").first()).toHaveAttribute("color", "#eef1f3");
   await page.getByTestId("locale").getByRole("button", { name: "日本語" }).click();
   await expect(page.getByTestId("podium").locator("svg[role=img] > title").first()).toHaveText("表彰台");

@@ -1,6 +1,7 @@
 // The playground: choose an emblem, a style, a look, a size and a tint, engrave it, and turn it (drag it, use the sliders or the arrow keys, or press the auto-turn); the drawing and the call that makes it are redrawn.
 // The turning is `bindTurn`: the stage is the element it draws into, and the sliders and their readouts follow it both ways.
 // The package is imported from ../src here so that the editor and `pnpm typecheck` see its types; the build of the demo (scripts/page.ts) turns the import into ./dist/index.js, the built package.
+import { createAddressState } from "@johnmorrisdotca/kazoku-ui/address-state";
 import * as D from "../src/index.ts";
 import type { BackgroundPresetName } from "../scripts/family-backgrounds.ts";
 
@@ -61,8 +62,7 @@ const locale = () => (document.documentElement.lang === "ja" ? "ja" : "en");
 let hoverPlay = false;
 /** What the stage draws with: the look, and how the turning behaves. The emblem waits still when the page opens and turns while the mouse is over it; `?turn=1` has it turn by itself from the start (not for a reader who prefers reduced motion), unless the address holds an angle. */
 function turnOptions(): D.TurnControlOptions {
-  // A spin and a drag turn many times a second: they follow with a slow address. A choice is written at once.
-  const options: D.TurnControlOptions = { style: state.style, size: Number(state.size), theme: state.theme, speed: Number(state.speed), direction: state.dir === "cw" ? "clockwise" : "counterclockwise", locale: locale(), onTurn: () => sync(false), onPlayChange: (playing) => { state.turn = playing && !hoverPlay ? "1" : "0"; if (booted) sync(true); } };
+  const options: D.TurnControlOptions = { style: state.style, size: Number(state.size), theme: state.theme, speed: Number(state.speed), direction: state.dir === "cw" ? "clockwise" : "counterclockwise", locale: locale(), onTurn: () => sync(), onPlayChange: (playing) => { state.turn = playing && !hoverPlay ? "1" : "0"; if (booted) sync(); } };
   if (state.tint) options.tint = state.tint;
   if (state.engrave.trim() !== "") options.engrave = state.engrave;
   return options;
@@ -79,30 +79,22 @@ const turner = D.bindTurn($("stage"), state.id, {
 // `?turn=1` with an angle in the address, or under reduced motion, opens still: the state says what is happening.
 state.turn = turner.playing ? "1" : "0";
 
-let urlTimer: ReturnType<typeof setTimeout> | undefined;
-/** The address follows, but a spin changes it sixty times a second, and Safari refuses more than a hundred changes in thirty seconds: it is written once things settle. */
+const address = createAddressState({ defaults: { ...DEFAULTS, id: FIRST, dir: "ccw" } });
+/** The address follows. A spin changes it sixty times a second: the shared address state writes it once things settle. */
 function writeAddress() {
-  const next = new URLSearchParams();
-  if (state.id !== FIRST) next.set("id", state.id);
-  for (const key of [...CHOICES, "background"] as const) if (state[key] !== DEFAULTS[key]) next.set(key, state[key]);
-  if (state.turn === "1") next.set("turn", "1");
-  if (state.dir === "cw") next.set("dir", "cw");
+  const next: Record<string, string | null> = { id: state.id, turn: state.turn === "1" ? "1" : null, dir: state.dir, engrave: state.engrave.trim() === "" ? null : state.engrave };
+  for (const key of [...CHOICES, "background"] as const) next[key] = state[key];
   // While it turns by itself the angles change every frame: the address then leaves them out, so a reload starts the turn again.
   const a = turner.angles;
-  if (!turner.playing) for (const key of ["yaw", "pitch", "roll"] as const) if (a[key] !== 0) next.set(key, String(a[key]));
-  if (state.engrave.trim() !== "") next.set("engrave", state.engrave);
-  try {
-    history.replaceState(null, "", next.size === 0 ? location.pathname : `?${next}`);
-  } catch {
-    /* the address stays where it was */
-  }
+  for (const key of ["yaw", "pitch", "roll"] as const) next[key] = !turner.playing && a[key] !== 0 ? String(a[key]) : null;
+  address.setMany(next);
 }
 
 /** The Tilt slider and the package's `pitch` are each other's opposite (and `0 -` keeps zero from reading -0). */
 const sliderOf = (degrees: number): number => 0 - degrees;
 
 /** Brings everything but the drawing in line with the turner: the sliders and readouts, the rows that apply, the button and the call. */
-function sync(settled = true) {
+function sync() {
   const a = turner.angles;
   const info = D.emblemInfo(state.id);
   const canTurn = turner.turnable;
@@ -127,9 +119,7 @@ function sync(settled = true) {
   $("code").firstChild!.textContent = turned && canTurn
     ? `import { emblemFrame } from "@johnmorrisdotca/dougu-sports/turn";\n\nconst svg = emblemFrame("${state.id}", { ${shown.slice(2, -2)}, ${angles} });\n`
     : `import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";\n\nconst svg = renderEmblem("${state.id}", ${shown});\n`;
-  clearTimeout(urlTimer);
-  if (settled) writeAddress();
-  else urlTimer = setTimeout(writeAddress, 250);
+  writeAddress();
 }
 
 let backgrounds: typeof import("../scripts/family-backgrounds.ts") | undefined;
@@ -194,15 +184,15 @@ $<HTMLInputElement>("engrave").value = state.engrave;
 $("engrave").addEventListener("input", () => { state.engrave = $<HTMLInputElement>("engrave").value; draw(); });
 // A slider takes over from the auto-turn: setAngles pauses it.
 for (const name of ["yaw", "pitch", "roll"]) {
-  $(name).addEventListener("input", () => { const value = Number($<HTMLInputElement>(name).value); turner.setAngles({ [name]: name === "pitch" ? sliderOf(value) : value }); sync(true); });
+  $(name).addEventListener("input", () => { const value = Number($<HTMLInputElement>(name).value); turner.setAngles({ [name]: name === "pitch" ? sliderOf(value) : value }); sync(); });
 }
-$("play").addEventListener("click", () => { hoverPlay = false; turner.togglePlay(); sync(true); });
+$("play").addEventListener("click", () => { hoverPlay = false; turner.togglePlay(); sync(); });
 $("direction").setAttribute("aria-pressed", String(state.dir === "cw"));
 $("direction").addEventListener("click", () => {
   state.dir = state.dir === "cw" ? "ccw" : "cw";
   $("direction").setAttribute("aria-pressed", String(state.dir === "cw"));
   turner.setDirection(state.dir === "cw" ? "clockwise" : "counterclockwise");
-  sync(true);
+  sync();
 });
 /**
  * The mouse over a stage turns it and leaving stops it; a tap (a touch or a pen, not a drag) turns it and a second tap holds it. A reader who prefers reduced motion is never turned for by the pointer.

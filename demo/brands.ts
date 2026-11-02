@@ -1,6 +1,7 @@
 // The contact sheet of the fictional logos: twelve makers and ten teams, each in colour, in one colour and small, with its note; a maker on a ball; and a logo placed inside a drawing of a T-shirt. Every picture is drawn from the built
 // package, and every card shows the call that made it with a button that copies it.
 // The package is imported from ../src here so that the editor and `pnpm typecheck` see its types; the build of the demo (scripts/page.ts) turns the import into ./dist/brands-entry.js.
+import { createAddressState } from "@johnmorrisdotca/kazoku-ui/address-state";
 import * as B from "../src/brands-entry.ts";
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string): T => document.getElementById(id) as T;
@@ -18,6 +19,7 @@ const state: { look: Look; layout: B.LogoLayout; maker: B.MakerId; ball: string 
 };
 
 const SIZES = [16, 24, 32, 48];
+const address = createAddressState({ defaults: { look: "light", layout: "mark", maker: "arvane", ball: "ball:baseball" } });
 
 function makerCard(id: B.MakerId): string {
   const data = B.MAKERS[id];
@@ -73,16 +75,7 @@ function render() {
   $("shirts").innerHTML = shirts();
   for (const b of $("look").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state.look));
   for (const b of $("layout").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state.layout));
-  const next = new URLSearchParams();
-  if (state.look !== "light") next.set("look", state.look);
-  if (state.layout !== "mark") next.set("layout", state.layout);
-  if (state.maker !== "arvane") next.set("maker", state.maker);
-  if (state.ball !== "ball:baseball") next.set("ball", state.ball);
-  try {
-    history.replaceState(null, "", next.size === 0 ? location.pathname : `?${next}`);
-  } catch {
-    /* the address stays where it was */
-  }
+  address.setMany({ look: state.look, layout: state.layout, maker: state.maker, ball: state.ball });
 }
 
 $("ball-maker").innerHTML = B.MAKER_IDS.map((id) => `<option value="${id}">${esc(B.MAKERS[id].name)}</option>`).join("");

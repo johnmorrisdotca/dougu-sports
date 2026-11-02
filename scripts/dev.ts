@@ -16,7 +16,7 @@ createServer(async (request, response) => {
   const path = decodeURIComponent(new URL(request.url ?? "/", "http://localhost").pathname);
   const rel = normalize(path === "/" ? "/index.html" : path).replace(/^([/\\])+/, "");
   const base = rel.startsWith("dist/") ? root : join(root, "demo");
-  const file = join(base, rel);
+  const file = rel.startsWith("kazoku-ui/") ? join(root, "node_modules", "@johnmorrisdotca", "kazoku-ui", "dist", rel.slice("kazoku-ui/".length)) : join(base, rel);
   if (!file.startsWith(root)) { response.writeHead(403).end("no"); return; }
   try {
     const body = rel === "index.html" ? Buffer.from(renderIndex()) : rel === "gallery.html" ? Buffer.from(await renderGallery()) : rel === "compose.html" ? Buffer.from(renderCompose()) : rel === "brands.html" ? Buffer.from(renderBrands()) : rel === "family-backgrounds.js" ? Buffer.from(backgroundsModule()) : DEMO_SCRIPTS.some((name) => rel === `${name}.js`) ? Buffer.from(await demoScript(rel.slice(0, -3))) : await readFile(file);

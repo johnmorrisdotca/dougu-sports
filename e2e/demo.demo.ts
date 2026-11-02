@@ -39,9 +39,9 @@ test("every emblem draws, in every style, and the address says which", async ({ 
   }
   await page.goto("/");
   await page.locator("#emblem").selectOption("ball:soccer");
-  expect(page.url()).toContain("id=ball%3Asoccer");
+  await expect(page).toHaveURL(/id=ball%3Asoccer/);
   await page.getByRole("button", { name: "Line", exact: true }).click();
-  expect(page.url()).toContain("style=line");
+  await expect(page).toHaveURL(/style=line/);
   await expect(page.locator("#code")).toContainText('renderEmblem("ball:soccer"');
 });
 
@@ -49,7 +49,7 @@ test("the controls change the drawing: size, look and tint", async ({ page }) =>
   await page.goto("/?id=medal:gold");
   await page.getByRole("button", { name: "256", exact: true }).click();
   await expect(page.locator("#stage > svg")).toHaveAttribute("width", "256");
-  await page.getByRole("button", { name: "Dark", exact: true }).click();
+  await page.locator('button[data-value="dark"]').click();
   await expect(page.locator("#stage")).toHaveAttribute("data-look", "dark");
   await expect(page.locator("#stage > svg")).toHaveAttribute("color", "#eef1f3");
   await page.getByRole("button", { name: "Color", exact: true }).click();
@@ -64,7 +64,7 @@ test("the turn slider turns the emblem, and the call says how", async ({ page })
   await page.locator("#yaw").fill("60");
   expect(await page.locator("#stage").innerHTML()).not.toBe(before);
   await expect(page.locator("#code")).toContainText("emblemFrame");
-  expect(page.url()).toContain("yaw=60");
+  await expect(page).toHaveURL(/yaw=60/);
   await page.locator("#yaw").fill("0");
   expect(await page.locator("#stage").innerHTML()).toBe(before);
 });
@@ -82,7 +82,7 @@ test("the engrave field engraves a medal, and the address and the call say so, a
   await page.goto("/?id=medal:gold");
   await page.locator("#engrave").fill("MVP 2026");
   await expect(page.locator("#stage")).toContainText("MVP");
-  expect(page.url()).toContain("engrave=MVP");
+  await expect(page).toHaveURL(/engrave=MVP/);
   await expect(page.locator("#code")).toContainText('engrave: "MVP 2026"');
   await page.locator("#yaw").fill("180");
   expect(await page.locator("#stage").innerHTML()).not.toContain("<text");
@@ -216,9 +216,9 @@ test("the background is off by default, and a chosen one is a picture behind the
   const plain = await page.locator("#stage > svg").evaluate((svg) => svg.outerHTML);
   await page.locator("#background").selectOption("ice");
   await expect.poll(background).toContain("data:image/svg+xml");
-  expect(page.url()).toContain("background=ice");
+  await expect(page).toHaveURL(/background=ice/);
   expect(await page.locator("#stage > svg").evaluate((svg) => svg.outerHTML)).toBe(plain);
-  await page.getByRole("button", { name: "Dark", exact: true }).click();
+  await page.locator('button[data-value="dark"]').click();
   await expect.poll(background).toContain("data:image/svg+xml");
   // The address says which, and None takes it away again.
   await page.goto("/?id=ball:soccer&background=floodlights&theme=dark");
@@ -226,9 +226,27 @@ test("the background is off by default, and a chosen one is a picture behind the
   await expect.poll(background).toContain("data:image/svg+xml");
   await page.locator("#background").selectOption("");
   await expect.poll(background).toBe("");
-  expect(page.url()).not.toContain("background");
+  await expect(page).not.toHaveURL(/background/);
   await page.goto("/?background=nope");
   await expect(page.locator("#background")).toHaveValue("");
   expect(await noSideways(page)).toBe(true);
   expect(errors).toEqual([]);
+});
+
+test("the header's language picker and theme switch answer, and keep their choice in the address", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await page.locator('kazoku-language-picker [data-v="ja"]').click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "ja");
+  await expect(page.locator("#unreviewed")).toBeVisible();
+  await expect(page).toHaveURL(/lang=ja/);
+  await page.locator('kazoku-theme-switch [data-v="dark"]').click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect(page).toHaveURL(/theme=dark/);
+  await page.goto(page.url());
+  await expect(page.locator("html")).toHaveAttribute("lang", "ja");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await page.locator('kazoku-language-picker [data-v="en"]').click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.locator("#unreviewed")).toBeHidden();
 });

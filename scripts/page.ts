@@ -61,7 +61,7 @@ function withFamily(html: string, { title, description }: { title: string; descr
     .replace("<!--family:footer-->", familyFooter({ id }))
     .replace(
       /<!--family:scripts ([\w.-]+)-->/,
-      (_: string, script: string) => `<script>${FAMILY_SCRIPT}</script>\n<script>var familyPage = familyLanguage({ id: ${JSON.stringify(id)}, words: ${JSON.stringify(WORDS)} });</script>${script === "none" ? "" : `\n<script type="module" src="${script}"></script>`}`,
+      (_: string, script: string) => `<script>${FAMILY_SCRIPT}</script>\n<script>var familyPage = familyLanguage({ id: ${JSON.stringify(id)}, words: ${JSON.stringify(WORDS)} });</script>\n<script type="module">import "./kazoku-ui/language-picker/define.js"; import "./kazoku-ui/theme-switch/define.js";</script>${script === "none" ? "" : `\n<script type="module" src="${script}"></script>`}`,
     );
 }
 
@@ -167,6 +167,8 @@ const asBuilt: Plugin = {
       const target = AS_BUILT[args.path.slice(3)];
       return target === undefined ? undefined : { path: target, external: true };
     });
+    // The shared parts (a dev dependency, used only by the demo) are served beside the pages, so the header's parts and the page share one copy of each.
+    b.onResolve({ filter: /^@johnmorrisdotca\/kazoku-ui\// }, (args) => ({ path: `./kazoku-ui/${args.path.slice("@johnmorrisdotca/kazoku-ui/".length)}/index.js`, external: true }));
   },
 };
 

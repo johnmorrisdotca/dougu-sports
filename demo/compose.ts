@@ -1,6 +1,7 @@
 // The composing API on one page: a podium, an award case, a sprite sheet, a data address in an <img>, a CSS background and a canvas, and a sport's equipment. Every card draws from the built package and shows
 // the call that made it, with a button that copies it.
 // The package is imported from ../src here so that the editor and `pnpm typecheck` see its types; the build of the demo (scripts/page.ts) turns the import into ./dist/index.js, the built package.
+import { createAddressState } from "@johnmorrisdotca/kazoku-ui/address-state";
 import * as D from "../src/index.ts";
 import { FLAGS as HATA } from "./flags-data.ts";
 
@@ -12,6 +13,8 @@ const looks: readonly string[] = ["inherit", "light", "dark"];
 const lookAsked = params.get("look") ?? "";
 const sportAsked = params.get("sport") ?? "";
 const state: { look: Look; sport: D.SportName; locale: "en" | "ja" } = { look: looks.includes(lookAsked) ? (lookAsked as Look) : "inherit", sport: D.SPORT_NAMES.find((name) => name === sportAsked) ?? "nhl", locale: "en" };
+
+const address = createAddressState({ defaults: { look: "inherit", sport: "nhl" } });
 
 // Three round flags from Hata (demo/flags-data.ts, made by `pnpm flags`); the podium takes SVG markup or a URL for a flag, and draws it as an image.
 const FLAGS = { jp: HATA.JP, fr: HATA.FR, it: HATA.IT };
@@ -84,14 +87,7 @@ function render() {
   $("cards").innerHTML = [podiumCard(), caseCard(), spriteCard(), uriCard(), equipmentCard()].join("");
   for (const b of $("look").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state.look));
   for (const b of $("locale").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === state.locale));
-  const next = new URLSearchParams();
-  if (state.look !== "inherit") next.set("look", state.look);
-  if (state.sport !== "nhl") next.set("sport", state.sport);
-  try {
-    history.replaceState(null, "", next.size === 0 ? location.pathname : `?${next}`);
-  } catch {
-    /* the address stays where it was */
-  }
+  address.setMany({ look: state.look, sport: state.sport });
 }
 
 $("look").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { state.look = b.dataset.value as Look; render(); } });
