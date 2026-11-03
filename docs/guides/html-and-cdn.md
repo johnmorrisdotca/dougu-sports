@@ -26,7 +26,7 @@ jsDelivr bundles the package into one module when an address ends in `/+esm`, so
 </html>
 ```
 
-The address names the package's entry point: `.../dougu-sports/element/+esm` is the `./element` entry, which registers `<dougu-emblem>`. With no version in the address you get the latest; pin one for a page that must not change under you, as in `@johnmorrisdotca/dougu-sports@0.29.0/element/+esm`.
+The address names the package's entry point: `.../dougu-sports/element/+esm` is the `./element` entry, which registers `<dougu-emblem>`. With no version in the address you get the latest; pin one for a page that must not change under you, as in `@johnmorrisdotca/dougu-sports@0.30.0/element/+esm`.
 
 ## From unpkg
 
@@ -68,7 +68,7 @@ Change an attribute with script and the emblem is drawn again.
 
 ## Choosing a CDN version
 
-A CDN address without a version follows the latest release. Write an exact version (`@0.29.0`) in anything you publish, and read [upgrading](upgrading.md) before you move it.
+A CDN address without a version follows the latest release. Write an exact version (`@0.30.0`) in anything you publish, and read [upgrading](upgrading.md) before you move it.
 
 ## Content-Security-Policy
 

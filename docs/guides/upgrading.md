@@ -5,7 +5,11 @@ order: 9
 description: What changed between versions and what to do about it. The package is 0.x: read this before a minor version.
 ---
 
-The package is at 0.x, so a minor version (0.28 to 0.29) may change behaviour. Each release's notes are in the [changelog](../../CHANGELOG.md); this page lists what needs your action.
+The package is at 0.x, so a minor version (0.29 to 0.30) may change behaviour. Each release's notes are in the [changelog](../../CHANGELOG.md); this page lists what needs your action.
+
+## To 0.30: the playground's Centre button, and the practice balls
+
+Nothing you have changes. The package's code is the same except for the three practice baseballs (`ball:plastic-baseball-practice`, `-white`, `-orange`), which now have six large oval slots to a half in place of two rings of thin ones: a page that drew them looks different, and the slots are fewer and larger. The demo's playground takes kazoku-ui 0.11 (a Centre button, a pan that cannot lose the emblem, and exact grab on round balls); that is the demo and not the package.
 
 ## To 0.29: the element and the embed page
 

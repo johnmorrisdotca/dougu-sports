@@ -6,6 +6,20 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.30.0] - 2026-11-03
+
+The practice baseball like the real one, and the playground's view controls with kazoku-ui 0.11.
+
+### Changed
+
+- **The three practice baseballs have fewer, larger, rounder slots** (`ball:plastic-baseball-practice`, `-white`, `-orange`; MODULES-244). Each half had two rings of six thin slits (twenty-four in all); it now has one ring of six large oval slots running toward its pole, the two rings turned half a step apart, so about four or five show on a face, as on the ball in John's photographs. A slot is about 22 by 14 mm, an oval and not a slit. The descriptions say "large oval slots". The ids, the colours and the registry count are unchanged.
+- **The playground takes kazoku-ui 0.11** (MODULES-236). A **Centre** button comes into the bar once the emblem is zoomed or moved and puts it back in the middle at Fit and the resting angle (the Home key does too); `object-size` is set from the emblem's drawn size so a pan always keeps a quarter of it in view; and a round ball sets `grab-radius`, so a drag keeps the touched point under the pointer (a drag of 30 pixels moves a soccer ball's ground by about 30). Pucks, discs, shuttlecocks, the oval footballs and everything that is not a ball keep the fixed turn. The playground follows the drag rule: a drag right moves the surface right, a drag up moves it up, and the arrow keys agree.
+
+### Added
+
+- **`e2e/centre.demo.ts`**: Centre hidden at Fit, then shown after a zoom and a drag, and putting the emblem back in the middle; a drag far off (thousands of pixels, every direction) never loses the emblem; the Home key; the shared drag-rule check (`e2e/ground.mjs`, kazoku-ui's `templates/e2e-ground.mjs`, copied unchanged) on a soccer ball; and exact grab on two balls.
+- **`practice-light.webp` and `practice-dark.webp`**, the three practice balls from four sides, in the README and `docs/slotted-ball.md`.
+
 ## [0.29.0] - 2026-11-03
 
 Put it anywhere: a tag, an embed page and the code for both. A practice baseball with slots all over. The playground's turning is the family's view controls. And the family's must-have list: a documentation site in English and Japanese, usage that is tested, and a check that holds it.
