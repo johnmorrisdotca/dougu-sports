@@ -2,11 +2,14 @@
 // and dark), the printed pucks, the judo suits from behind and the six steps of tying the belt (each light and dark) and four emblems turned. Every sheet stands on one of the family's shared backgrounds (scripts/family-backgrounds.ts, drawn in code, copied from taisen-brackets
 // and never edited here), in the dark or the light variant, and its labels take the ink the background returns, so they read. The grid runs edge to edge and every row is full.
 // It serves the demo on port 7210, or TEST_PORT (this package's own block, tests and tools from 7211 up) and stops the server it started. IMAGES_OUT writes somewhere else than docs/images; ONLY=name,name takes some.
+// It also takes the family's thumbnail, dark thumbnail and icon (docs/images/thumbnail.png, thumbnail-dark.png, icon.png; scripts/family-thumbnail.mjs): `--thumbnail` (or ONLY=thumbnail) takes only those three.
 import { spawn } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { chromium } from "@playwright/test";
+
+import { captureDrawing, composeThumbnails } from "./family-thumbnail.mjs";
 
 import { backgroundSvg } from "./family-backgrounds.ts";
 import type { BackgroundInk, BackgroundPresetName } from "./family-backgrounds.ts";
@@ -32,7 +35,7 @@ interface SheetOptions {
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const out = process.env.IMAGES_OUT ?? `${root}docs/images`;
-const only = process.env.ONLY ? process.env.ONLY.split(",") : null;
+const only = process.argv.includes("--thumbnail") ? ["thumbnail"] : process.env.ONLY ? process.env.ONLY.split(",") : null;
 mkdirSync(out, { recursive: true });
 const port = Number(process.env.TEST_PORT ?? 7210);
 const server = spawn(process.execPath, ["scripts/dev.ts"], { cwd: root, env: { ...process.env, PORT: String(port) }, stdio: "ignore" });
@@ -161,6 +164,31 @@ try {
     await sheet(`pucks-${scheme}`, { width: 1000, cols: 4, rows: [250, 250], gap: 10, pad: 20, scheme, preset: "ice" }, pucks);
   }
   await sheet("turn-desk", { width: 1280, cols: 7, rows: [176, 176, 176, 176], scheme: "dark", preset: "royal", intensity: 0.9 }, turned);
+  // The family's thumbnail: a row of the package's own emblems with no background (a soccer ball, a baseball glove, the gold cup biggest, a basketball
+  // and a tennis racket), laid by scripts/family-thumbnail.mjs on the family's paper and its black cloth; the icon is the gold cup alone.
+  const thumbnailRow = async (scheme: "light" | "dark", items: [string, number][]) => {
+    const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2, colorScheme: scheme, reducedMotion: "reduce" });
+    await page.goto(`http://127.0.0.1:${port}/`);
+    await page.waitForSelector("#stage svg");
+    await page.evaluate(async (items) => {
+      const dist = "/dist/index.js";
+      const D = await import(dist);
+      const row = document.createElement("div");
+      row.id = "thumbnail-stage";
+      row.style.cssText = "display:flex;align-items:center;gap:10px;padding:8px;width:max-content";
+      row.innerHTML = items.map(([id, size]) => D.renderEmblem(id, { size })).join("");
+      document.body.replaceChildren(row);
+    }, items);
+    return { page, drawing: await captureDrawing(page, "#thumbnail-stage") };
+  };
+  if (!only || only.includes("thumbnail")) {
+    const row: [string, number][] = [["ball:soccer", 210], ["gear:baseball-glove", 220], ["trophy:tennis-cup", 340], ["ball:basketball", 210], ["gear:tennis-racket", 220]];
+    const light = await thumbnailRow("light", row);
+    const dark = await thumbnailRow("dark", row);
+    const icon = await thumbnailRow("light", [["trophy:tennis-cup", 460]]);
+    for (const picture of await composeThumbnails({ page: icon.page, root, light: light.drawing, dark: dark.drawing, icon: icon.drawing, label: "Dougu Sports 道具" })) console.log(picture.file, `${Math.round(picture.bytes / 1024)} KB`);
+    for (const one of [light, dark, icon]) await one.page.close();
+  }
   await browser.close();
   console.log(`pictures written to ${out}`);
 } finally {

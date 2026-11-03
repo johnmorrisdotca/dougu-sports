@@ -1,3 +1,5 @@
+<p align="center"><a href="https://johnmorrisdotca.github.io/dougu-sports/"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/thumbnail-dark.png"><img src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/thumbnail.png" alt="Dougu Sports: a soccer ball, a baseball glove, a gold cup with two handles, a basketball and a tennis racket, drawn as SVG." width="1200"></picture></a></p>
+
 <h1 align="center">Dougu Sports <sub>道具</sub></h1>
 
 <p align="center"><strong>Sports emblems as SVG strings, with optional 3D turning.</strong><br>

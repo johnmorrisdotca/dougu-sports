@@ -1,9 +1,13 @@
 // Builds the static demo for GitHub Pages into ./site: the page (made by page.ts from the family's shared header and footer), its scripts and styles, the gallery, and the compiled library beside them.
-import { cpSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 
 import { build } from "esbuild";
 
+import { publishThumbnails, thumbnailHead } from "./family-thumbnail.mjs";
 import { DEMO_SCRIPTS, backgroundsModule, demoScript, renderBrands, renderCompose, renderGallery, renderIndex } from "./page.ts";
+
+/** What the family's card shows (scripts/screenshots.ts makes it): the words of og:image:alt and of the README's top picture. */
+const ALT = "Dougu Sports: a soccer ball, a baseball glove, a gold cup with two handles, a basketball and a tennis racket, drawn as SVG.";
 
 rmSync("site", { recursive: true, force: true });
 mkdirSync("site", { recursive: true });
@@ -17,7 +21,10 @@ cpSync("node_modules/@johnmorrisdotca/kazoku-ui/dist", "site/kazoku-ui", { recur
 writeFileSync("site/kazoku-parts.src.js", `import "@johnmorrisdotca/kazoku-ui/language-picker/define";\nimport "@johnmorrisdotca/kazoku-ui/theme-switch/define";\n`);
 await build({ entryPoints: ["site/kazoku-parts.src.js"], outfile: "site/kazoku-parts.js", bundle: true, format: "esm", minify: true, logLevel: "silent", absWorkingDir: process.cwd() });
 rmSync("site/kazoku-parts.src.js");
-writeFileSync("site/index.html", renderIndex());
+// The demo's page carries the family's card in its <head> (og:image, twitter:image, the icon); the three pictures are published beside it.
+const pkg = JSON.parse(readFileSync("package.json", "utf8"));
+writeFileSync("site/index.html", renderIndex().replace("</head>", `  ${thumbnailHead(pkg, { alt: ALT })}\n</head>`));
+publishThumbnails(".", "site");
 writeFileSync("site/gallery.html", await renderGallery());
 writeFileSync("site/compose.html", renderCompose());
 writeFileSync("site/brands.html", renderBrands());
