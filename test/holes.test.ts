@@ -6,7 +6,7 @@ import { describe, expect, it } from "./vitest-shim.ts";
 import { BALLS, ballOf } from "../src/emblems/ball/ball.index.ts";
 import { rotation, spread } from "../src/emblems/ball/ball.math.ts";
 import { BALL_PICKLEBALL_INDOOR, BALL_PICKLEBALL_OUTDOOR } from "../src/emblems/ball/ball.pickleball.ts";
-import { BALL_PLASTIC_BASEBALL_SLOTTED as SLOTTED } from "../src/emblems/ball/ball.plastic.ts";
+import { BALL_PLASTIC_BASEBALL_PRACTICE as PRACTICE, BALL_PLASTIC_BASEBALL_PRACTICE_ORANGE as PRACTICE_ORANGE, BALL_PLASTIC_BASEBALL_PRACTICE_WHITE as PRACTICE_WHITE, BALL_PLASTIC_BASEBALL_SLOTTED as SLOTTED } from "../src/emblems/ball/ball.plastic.ts";
 import { slotRing } from "../src/emblems/ball/ball.holes.ts";
 
 const GOLDEN: Record<string, string> = {
@@ -43,7 +43,7 @@ describe("the balls with marks that are not holes", () => {
 
   it("carry no mask and no inside, which only a ball with holes has", () => {
     for (const b of BALLS) {
-      if (b.id.startsWith("ball:pickleball") || b.id === "ball:plastic-baseball-slotted") continue;
+      if (b.id.startsWith("ball:pickleball") || b.id.startsWith("ball:plastic-baseball")) continue;
       expect(b.svg({ size: 64 }), b.id).not.toContain("<mask");
     }
   });
@@ -141,6 +141,51 @@ describe("the slotted plastic practice baseball", () => {
 
   it("keeps the line style as outlines of the slots, and cuts nothing out in it", () => {
     const line = SLOTTED.svg({ size: 64, style: "line" });
+    expect(line).not.toContain("<mask");
+    expect(line).toContain("currentColor");
+  });
+});
+
+describe("the plastic practice baseball with slots all over", () => {
+  const cuts = (svg: string): number => {
+    const m = /<path id="([^"]*f[^"]*)" d="([^"]*)"\/><mask/.exec(svg);
+    return m === null ? 0 : (m[2].match(/M/g) ?? []).length;
+  };
+
+  it("has slots on both halves: from either pole the near ones are cut out, and slots are never all on one side", () => {
+    const nearPole = cuts(PRACTICE.frame({ size: 100, yaw: 0, pitch: 0 }));
+    const farPole = cuts(PRACTICE.frame({ size: 100, yaw: 180, pitch: 0 }));
+    expect(nearPole).toBeGreaterThanOrEqual(8);
+    expect(farPole).toBeGreaterThanOrEqual(8);
+    // The one-sided ball shows no slot at all from its solid half; this one never does.
+    expect(cuts(SLOTTED.frame({ size: 100, yaw: 180 + 22, pitch: -22 }))).toBe(0);
+  });
+
+  it("is two-tone yellow and black along the seam, and the white and orange balls are one colour", () => {
+    const two = PRACTICE.svg({ size: 100 });
+    expect(two).toContain("#d4ee1a");
+    expect(two).toContain("#1d1f24");
+    expect(PRACTICE_WHITE.svg({ size: 100 })).not.toContain("#1d1f24");
+    expect(PRACTICE_ORANGE.svg({ size: 100 })).toContain("#f07a1c");
+    expect(PRACTICE_WHITE.svg({ size: 100 })).toContain("<mask");
+  });
+
+  it("takes a tint for the second half and paints the first with `paint.body`", () => {
+    expect(PRACTICE.svg({ size: 100, tint: "#2040c0" })).toContain("#2040c0");
+    expect(PRACTICE.svg({ size: 100, paint: { body: "#ffffff" } })).toContain("#ffffff");
+  });
+
+  it("is a generic ball with no maker's name, and has its own ids and names in both languages", () => {
+    for (const ball of [PRACTICE, PRACTICE_WHITE, PRACTICE_ORANGE]) {
+      expect(ball.id.startsWith("ball:plastic-baseball-practice")).toBe(true);
+      expect(ball.en).toMatch(/Practice ball/);
+      expect(ball.ja).toMatch(/練習球/);
+      expect([ball.id, ball.en, ball.ja].join(" ")).not.toMatch(new RegExp(["wif", "fle"].join("") + "|" + ["ウィ", "ッフル"].join(""), "i"));
+    }
+  });
+
+  it("keeps the line style as outlines of the slots", () => {
+    const line = PRACTICE.svg({ size: 64, style: "line" });
     expect(line).not.toContain("<mask");
     expect(line).toContain("currentColor");
   });

@@ -1,20 +1,59 @@
 // The ids of the emblems, in their groups, and the types they make. Nothing is imported: this file is only names, so it costs nothing to read. An id is `<group>:<name>`.
 // Each list below holds the emblems that exist. The art for the rest arrives group by group (docs/layout.md), and each arrival adds its names here and its entry to emblem.registry.ts.
 
-/** The forty-two sports the emblems are made for (the five Japanese ones, sumo, kendo, judo, kyudo and karate, have a pictogram and their gear, and no ball; the four combat sports, MMA, boxing, wrestling and professional wrestling, have a pictogram and no ball or gear yet): the names that `ball:<sport>`, `gear:<sport>` and `sport:<sport>` use. */
+/**
+ * The forty-two sports the emblems are made for (the five Japanese ones, sumo, kendo, judo, kyudo and karate, have a pictogram and their gear, and no ball; the four combat sports, MMA, boxing, wrestling and professional wrestling, have a pictogram and no ball or gear yet): the names that `ball:<sport>`, `gear:<sport>` and `sport:<sport>` use.
+ * @example
+ * ```ts
+ * import { SPORT_NAMES } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(SPORT_NAMES.length, SPORT_NAMES[0]);
+ * ```
+ */
 export const SPORT_NAMES = [
   "nfl", "cfl", "ifaf", "nhl", "nba", "mlb", "soccer", "curling", "tennis", "volleyball", "badminton", "pickleball", "tabletennis", "padel", "squash", "racquetball", "sepaktakraw", "teqball", "roundnet", "netball",
   "swimming", "waterpolo", "diving", "artisticswimming", "lacrosse", "rugby", "afl", "gaelic", "cricket", "fieldhockey", "handball", "athletics", "skating",
   "sumo", "kendo", "judo", "kyudo", "karate",
   "mma", "boxing", "wrestling", "prowrestling",
 ] as const;
+/**
+ * The name of a sport, such as `nhl` or `judo`.
+ * @example
+ * ```ts
+ * import type { SportName } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const sport: SportName = "judo";
+ * console.log(sport);
+ * ```
+ */
 export type SportName = (typeof SPORT_NAMES)[number];
 
-/** The awards: a medal on a ribbon, a badge, a crown, a star and a shield. */
+/**
+ * The awards: a medal on a ribbon, a badge, a crown, a star and a shield.
+ * @example
+ * ```ts
+ * import { AWARD_IDS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(AWARD_IDS.length, AWARD_IDS[0]);
+ * ```
+ */
 export const AWARD_IDS = ["award:medal", "award:badge", "award:crown", "award:star", "award:shield", "award:ribbon"] as const;
+/**
+ * The id of an award emblem.
+ * @example
+ * ```ts
+ * import type { AwardId } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const id: AwardId = "award:medal";
+ * console.log(id);
+ * ```
+ */
 export type AwardId = (typeof AWARD_IDS)[number];
 
-/** The trophies: a cup for each league's champion in a descriptive, generic form, the plain cups and dishes, and the flat plaque, belt, wreath and rosette. */
+/**
+ * The trophies: a cup for each league's champion in a descriptive, generic form, the plain cups and dishes, and the flat plaque, belt, wreath and rosette.
+ * @example
+ * ```ts
+ * import { TROPHY_IDS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(TROPHY_IDS.length, TROPHY_IDS[0]);
+ * ```
+ */
 export const TROPHY_IDS = [
   "trophy:cup", "trophy:lidded-cup", "trophy:bowl", "trophy:salver", "trophy:globe",
   "trophy:hockey-cup", "trophy:basketball", "trophy:baseball", "trophy:football", "trophy:canadian-bowl", "trophy:soccer-ball", "trophy:soccer-globe",
@@ -88,36 +127,150 @@ export const TROPHY_IDS = [
   "trophy:willie-oree-award",
   "trophy:messier-leadership-award",
 ] as const;
+/**
+ * The id of a trophy.
+ * @example
+ * ```ts
+ * import type { TrophyId } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const id: TrophyId = "trophy:cup";
+ * console.log(id);
+ * ```
+ */
 export type TrophyId = (typeof TROPHY_IDS)[number];
 
-/** The medals on a ribbon, and the badges for the first three places. */
+/**
+ * The medals on a ribbon, and the badges for the first three places.
+ * @example
+ * ```ts
+ * import { MEDAL_KINDS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(MEDAL_KINDS.length, MEDAL_KINDS[0]);
+ * ```
+ */
 export const MEDAL_KINDS = ["gold", "silver", "bronze"] as const;
+/**
+ * The kind of a medal: `gold`, `silver` or `bronze`.
+ * @example
+ * ```ts
+ * import type { MedalKind } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const kind: MedalKind = "bronze";
+ * console.log(kind);
+ * ```
+ */
 export type MedalKind = (typeof MEDAL_KINDS)[number];
+/**
+ * The ids of the medals.
+ * @example
+ * ```ts
+ * import { MEDAL_IDS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(MEDAL_IDS.length, MEDAL_IDS[0]);
+ * ```
+ */
 export const MEDAL_IDS = ["medal:gold", "medal:silver", "medal:bronze", "medal:place-1", "medal:place-2", "medal:place-3"] as const;
+/**
+ * The id of a medal.
+ * @example
+ * ```ts
+ * import type { MedalId } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const id: MedalId = "medal:gold";
+ * console.log(id);
+ * ```
+ */
 export type MedalId = (typeof MEDAL_IDS)[number];
 
-/** The generic crests: tinted by a team's colours, with the team's letters on them when it has any. */
+/**
+ * The generic crests: tinted by a team's colours, with the team's letters on them when it has any.
+ * @example
+ * ```ts
+ * import { CREST_SHAPES } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(CREST_SHAPES.length, CREST_SHAPES[0]);
+ * ```
+ */
 export const CREST_SHAPES = ["shield", "roundel", "diamond", "pennant"] as const;
+/**
+ * The shape of a crest: `shield`, `roundel`, `diamond` or `pennant`.
+ * @example
+ * ```ts
+ * import type { CrestShape } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const shape: CrestShape = "diamond";
+ * console.log(shape);
+ * ```
+ */
 export type CrestShape = (typeof CREST_SHAPES)[number];
+/**
+ * The ids of the generic crests.
+ * @example
+ * ```ts
+ * import { CREST_IDS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(CREST_IDS.length, CREST_IDS[0]);
+ * ```
+ */
 export const CREST_IDS = ["crest:shield", "crest:roundel", "crest:diamond", "crest:pennant"] as const;
+/**
+ * The id of a generic crest.
+ * @example
+ * ```ts
+ * import type { CrestId } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const id: CrestId = "crest:shield";
+ * console.log(id);
+ * ```
+ */
 export type CrestId = (typeof CREST_IDS)[number];
 
-/** The balls: one for each ball and implement the sports use, in 3D, with the official size it comes from. The balls of one family (the three crickets, the five squash balls) share a module. */
+/**
+ * The balls: one for each ball and implement the sports use, in 3D, with the official size it comes from. The balls of one family (the three crickets, the five squash balls) share a module.
+ * @example
+ * ```ts
+ * import { BALL_IDS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(BALL_IDS.length, BALL_IDS[0]);
+ * ```
+ */
 export const BALL_IDS = [
   "ball:soccer", "ball:soccer-colour", "ball:soccer-26", "ball:soccer-18", "ball:soccer-14", "ball:soccer-12", "ball:soccer-6", "ball:soccer-orange", "ball:soccer-26-orange", "ball:soccer-18-orange", "ball:soccer-14-orange", "ball:soccer-12-orange", "ball:soccer-6-orange", "ball:soccer-yellow", "ball:soccer-26-yellow", "ball:soccer-18-yellow", "ball:soccer-14-yellow", "ball:soccer-12-yellow", "ball:soccer-6-yellow", "ball:futsal", "ball:beach-soccer",
   "ball:soccer-1870-hand-stitched", "ball:soccer-1900-laced", "ball:soccer-1930-18-panel", "ball:soccer-1950-12-panel", "ball:soccer-1960-32-panel-leather", "ball:soccer-retro-pentagons", "ball:soccer-retro-leaves", "ball:soccer-retro-rosette", "ball:soccer-retro-star", "ball:soccer-retro-pinwheel", "ball:soccer-retro-kites", "ball:soccer-14-panel-double-border", "ball:soccer-8-panel-plain", "ball:soccer-6-panel-bands", "ball:soccer-6-panel-diamonds", "ball:soccer-20-panel-dots", "ball:soccer-training-high-vis", "ball:soccer-stars-blue", "ball:soccer-stars-red", "ball:soccer-stars-night", "ball:soccer-hexagons-cyan", "ball:soccer-hexagons-magenta", "ball:soccer-hexagons-lime", "ball:soccer-flames-fire", "ball:soccer-flames-ice", "ball:soccer-flames-toxic", "ball:soccer-chevrons-red", "ball:soccer-chevrons-green", "ball:soccer-chevrons-blue", "ball:soccer-swirl-blue", "ball:soccer-swirl-red", "ball:soccer-swirl-teal", "ball:soccer-metallic-gold", "ball:soccer-metallic-silver", "ball:soccer-metallic-cobalt", "ball:teqball", "ball:basketball", "ball:basketball-6", "ball:basketball-3x3", "ball:baseball", "ball:softball", "ball:baseball-lemon-peel", "ball:baseball-red-blue", "ball:baseball-black-red", "ball:baseball-vintage-leather", "ball:softball-11-optic", "ball:tennis", "ball:padel",
   "ball:sliotar", "ball:volleyball", "ball:volleyball-8", "ball:beach-volleyball", "ball:volleyball-colours", "ball:volleyball-brazil", "ball:volleyball-japan", "ball:volleyball-canada", "ball:volleyball-usa", "ball:volleyball-italy", "ball:volleyball-poland", "ball:volleyball-france", "ball:volleyball-serbia", "ball:volleyball-netherlands", "ball:volleyball-germany", "ball:cricket-red", "ball:cricket-white", "ball:cricket-pink", "ball:football", "ball:football-cfl",
-  "ball:football-ifaf", "ball:rugby", "ball:afl", "ball:gaelic-football", "ball:netball", "ball:pickleball-outdoor", "ball:pickleball-indoor", "ball:plastic-baseball-slotted", "ball:squash", "ball:squash-yellow",
+  "ball:football-ifaf", "ball:rugby", "ball:afl", "ball:gaelic-football", "ball:netball", "ball:pickleball-outdoor", "ball:pickleball-indoor", "ball:plastic-baseball-slotted", "ball:plastic-baseball-practice", "ball:plastic-baseball-practice-white", "ball:plastic-baseball-practice-orange", "ball:squash", "ball:squash-yellow",
   "ball:squash-green", "ball:squash-red", "ball:squash-blue", "ball:racquetball", "ball:lacrosse", "ball:field-hockey", "ball:table-tennis", "ball:handball", "ball:water-polo", "ball:golf",
   "ball:puck", "ball:curling-stone", "ball:shot", "ball:discus", "ball:hammer", "ball:sepak-takraw", "ball:roundnet", "ball:shuttlecock-feather", "ball:shuttlecock-nylon"
 ] as const;
+/**
+ * The id of a ball.
+ * @example
+ * ```ts
+ * import type { BallId } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const id: BallId = "ball:soccer";
+ * console.log(id);
+ * ```
+ */
 export type BallId = (typeof BALL_IDS)[number];
 
-/** The printed pucks: the same puck as `ball:puck` with a print on its top face (a flag, a leaf, stars and stripes, a player's name and number, a made-up signature, a souvenir's ring of words). All drawn here, none a team's or a league's own. */
+/**
+ * The printed pucks: the same puck as `ball:puck` with a print on its top face (a flag, a leaf, stars and stripes, a player's name and number, a made-up signature, a souvenir's ring of words). All drawn here, none a team's or a league's own.
+ * @example
+ * ```ts
+ * import { PUCK_IDS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(PUCK_IDS.length, PUCK_IDS[0]);
+ * ```
+ */
 export const PUCK_IDS = ["puck:canada", "puck:canada-red", "puck:canada-white", "puck:usa", "puck:usa-navy", "puck:player", "puck:signed", "puck:souvenir"] as const;
+/**
+ * The id of a printed puck.
+ * @example
+ * ```ts
+ * import type { PuckId } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const id: PuckId = "puck:canada";
+ * console.log(id);
+ * ```
+ */
 export type PuckId = (typeof PUCK_IDS)[number];
 
-/** The pieces of gear: a piece of equipment for each sport, flat, drawn for this package, turning like a coin. */
+/**
+ * The pieces of gear: a piece of equipment for each sport, flat, drawn for this package, turning like a coin.
+ * @example
+ * ```ts
+ * import { GEAR_IDS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(GEAR_IDS.length, GEAR_IDS[0]);
+ * ```
+ */
 export const GEAR_IDS = [
   "gear:hockey-stick", "gear:goalie-stick", "gear:hockey-skate", "gear:goalie-mask", "gear:goal-net", "gear:field-hockey-stick", "gear:lacrosse-stick", "gear:cricket-bat", "gear:wicket",
   "gear:table-tennis-paddle", "gear:badminton-racket", "gear:tennis-racket", "gear:squash-racket", "gear:racquetball-racket", "gear:padel-racket", "gear:pickleball-paddle",
@@ -127,9 +280,25 @@ export const GEAR_IDS = [
   "gear:obi", "gear:obi-white", "gear:obi-yellow", "gear:obi-orange", "gear:obi-green", "gear:obi-blue", "gear:obi-brown", "gear:obi-kohaku", "gear:obi-red", "gear:obi-women", "gear:obi-white-yellow", "gear:obi-yellow-orange", "gear:obi-orange-green", "gear:obi-green-blue", "gear:obi-blue-brown", "gear:obi-step-1", "gear:obi-step-2", "gear:obi-step-3", "gear:obi-step-4", "gear:obi-step-5", "gear:obi-step-6",
   "gear:yumi", "gear:ya", "gear:karate-gi"
 ] as const;
+/**
+ * The id of a piece of gear.
+ * @example
+ * ```ts
+ * import type { GearId } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const id: GearId = "gear:hockey-stick";
+ * console.log(id);
+ * ```
+ */
 export type GearId = (typeof GEAR_IDS)[number];
 
-/** The Japanese sports and budo: sumo, kendo, judo, kyudo and karate, with the trophies and the gear that belong to them. Every one is also in its own group; this list is for showing them together. */
+/**
+ * The Japanese sports and budo: sumo, kendo, judo, kyudo and karate, with the trophies and the gear that belong to them. Every one is also in its own group; this list is for showing them together.
+ * @example
+ * ```ts
+ * import { JAPANESE_IDS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(JAPANESE_IDS.length, JAPANESE_IDS[0]);
+ * ```
+ */
 export const JAPANESE_IDS = [
   "sport:sumo", "trophy:sumo-cup", "gear:gunbai", "gear:mawashi",
   "trophy:championship-banner",
@@ -139,20 +308,76 @@ export const JAPANESE_IDS = [
   "sport:kyudo", "gear:yumi", "gear:ya",
   "sport:karate", "gear:karate-gi",
 ] as const;
+/**
+ * The id of an emblem of a Japanese sport.
+ * @example
+ * ```ts
+ * import type { JapaneseId } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const id: JapaneseId = "sport:sumo";
+ * console.log(id);
+ * ```
+ */
 export type JapaneseId = (typeof JAPANESE_IDS)[number];
 
-/** The pennants: a felt championship pennant with a stitched edge. */
+/**
+ * The pennants: a felt championship pennant with a stitched edge.
+ * @example
+ * ```ts
+ * import { PENNANT_IDS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(PENNANT_IDS.length, PENNANT_IDS[0]);
+ * ```
+ */
 export const PENNANT_IDS = ["pennant:championship"] as const;
+/**
+ * The id of a pennant.
+ * @example
+ * ```ts
+ * import type { PennantId } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const id: PennantId = "pennant:championship";
+ * console.log(id);
+ * ```
+ */
 export type PennantId = (typeof PENNANT_IDS)[number];
 
-/** The sports' own emblems: one pictogram for each of the forty-two. */
+/**
+ * The sports' own emblems: one pictogram for each of the forty-two.
+ * @example
+ * ```ts
+ * import type { SportEmblemId } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const id: SportEmblemId = "sport:nhl";
+ * console.log(id);
+ * ```
+ */
 export type SportEmblemId = `sport:${SportName}`;
+/**
+ * The ids of the sports' own emblems, one pictogram for each sport.
+ * @example
+ * ```ts
+ * import { SPORT_IDS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(SPORT_IDS.length, SPORT_IDS[0]);
+ * ```
+ */
 export const SPORT_IDS: readonly SportEmblemId[] = SPORT_NAMES.map((name) => `sport:${name}` as const);
 
-/** Every emblem id. */
+/**
+ * Every emblem id.
+ * @example
+ * ```ts
+ * import type { EmblemId } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const id: EmblemId = "trophy:cup";
+ * console.log(id);
+ * ```
+ */
 export type EmblemId = AwardId | TrophyId | MedalId | CrestId | BallId | PuckId | GearId | SportEmblemId | PennantId;
 
-/** The groups of ids, in the order a gallery shows them. */
+/**
+ * The groups of ids, in the order a gallery shows them.
+ * @example
+ * ```ts
+ * import { EMBLEM_GROUPS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(Object.keys(EMBLEM_GROUPS).length);
+ * ```
+ */
 export const EMBLEM_GROUPS = {
   award: AWARD_IDS,
   trophy: TROPHY_IDS,
@@ -164,12 +389,35 @@ export const EMBLEM_GROUPS = {
   sport: SPORT_IDS,
   pennant: PENNANT_IDS,
 } as const satisfies Record<string, readonly EmblemId[]>;
+/**
+ * A group of emblems: `award`, `trophy`, `medal`, `crest`, `ball`, `puck`, `gear`, `sport` or `pennant`.
+ * @example
+ * ```ts
+ * import type { EmblemGroup } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const group: EmblemGroup = "trophy";
+ * console.log(group);
+ * ```
+ */
 export type EmblemGroup = keyof typeof EMBLEM_GROUPS;
 
-/** Every id, in group order. */
+/**
+ * Every id, in group order.
+ * @example
+ * ```ts
+ * import { EMBLEM_IDS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(EMBLEM_IDS.length, EMBLEM_IDS[0]);
+ * ```
+ */
 export const EMBLEM_IDS: readonly EmblemId[] = Object.values(EMBLEM_GROUPS).flat();
 
-/** The folder under `src/emblems/` that holds a group's art, one module per item named by the id's last part: `trophy:hockey-cup` is `trophy/hockey-cup.ts`, `ball:soccer` is `ball/soccer.ts`. Each group has a folder of its own, so no two ids share a file name. */
+/**
+ * The folder under `src/emblems/` that holds a group's art, one module per item named by the id's last part: `trophy:hockey-cup` is `trophy/hockey-cup.ts`, `ball:soccer` is `ball/soccer.ts`. Each group has a folder of its own, so no two ids share a file name.
+ * @example
+ * ```ts
+ * import { EMBLEM_FOLDERS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(Object.keys(EMBLEM_FOLDERS).length);
+ * ```
+ */
 export const EMBLEM_FOLDERS = { award: "award", trophy: "trophy", medal: "medal", crest: "crest", ball: "ball", puck: "ball", gear: "gear", sport: "sport", pennant: "pennant" } as const satisfies Record<EmblemGroup, string>;
 
 /** The ids that early versions published for era balls, now under neutral names: each still reads as the ball that replaced it. */
@@ -186,5 +434,12 @@ const RENAMED_BALLS = {
   "ball:soccer-2022-speed-shell": "ball:soccer-20-panel-dots",
 } as const satisfies Record<string, EmblemId>;
 
-/** The short names of the trophies and awards that stand for a full id (`"cup"` is `"trophy:cup"`, `"crown"` is `"award:crown"`), and the old ids of the era balls that were renamed. */
+/**
+ * The short names of the trophies and awards that stand for a full id (`"cup"` is `"trophy:cup"`, `"crown"` is `"award:crown"`), and the old ids of the era balls that were renamed.
+ * @example
+ * ```ts
+ * import { EMBLEM_ALIASES } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(Object.keys(EMBLEM_ALIASES).length);
+ * ```
+ */
 export const EMBLEM_ALIASES: Readonly<Record<string, EmblemId>> = { ...Object.fromEntries([...TROPHY_IDS, ...AWARD_IDS].map((id) => [id.slice(id.indexOf(":") + 1), id])), ...RENAMED_BALLS };

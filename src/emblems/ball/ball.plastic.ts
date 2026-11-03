@@ -5,6 +5,10 @@
 import { defineBall } from "./ball.engine.ts";
 import type { V3 } from "./ball.math.ts";
 import { holeLayers, slotRing } from "./ball.holes.ts";
+import { greatCircle } from "./ball.math.ts";
+import { region } from "./ball.region.ts";
+import type { Piece } from "./ball.core.ts";
+import type { BallSpec } from "./ball.engine.ts";
 
 /** The axis of the perforated half: its pole, the middle of the solid-free half's ring of slots. */
 const POLE: V3 = [0, 0, 1];
@@ -21,6 +25,14 @@ const CENTRES: readonly V3[] = Array.from({ length: SLOTS }, (_, i) => {
 });
 const DIRS: readonly V3[] = CENTRES.map((m) => [POLE[0] - m[0] * m[2], POLE[1] - m[1] * m[2], POLE[2] - m[2] * m[2]] as const);
 
+/**
+ * The Plastic baseball, slotted emblem (野球の穴あき練習球 in Japanese): id `ball:plastic-baseball-slotted`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_PLASTIC_BASEBALL_SLOTTED } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_PLASTIC_BASEBALL_SLOTTED.id, BALL_PLASTIC_BASEBALL_SLOTTED.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_PLASTIC_BASEBALL_SLOTTED = /* @__PURE__ */ defineBall({
   id: "ball:plastic-baseball-slotted",
   en: "Plastic baseball, slotted",
@@ -34,3 +46,76 @@ export const BALL_PLASTIC_BASEBALL_SLOTTED = /* @__PURE__ */ defineBall({
     holes: (s, id, base, shape, minWidth) => holeLayers(s, id, { centres: CENTRES, radius: HALF_WIDTH, long: HALF_LONG, dirs: DIRS }, base, shape, minWidth),
   },
 });
+
+/**
+ * The common hollow plastic practice baseball with slots all over it (the other, the one-sided ball above, is the first): two rings of slots on each half, six slots running toward the pole near it and six running round
+ * the ball further out, between them and the seam, and often two-tone, the halves split along the seam. The slots are 19 mm long on a ball of the size of a baseball; the figures are the same facts as above, and
+ * the number and the layout of the slots are drawn from photographs looked at and never copied. No maker's name is in this package.
+ */
+const RINGS: ReadonlyArray<{ colatitude: number; count: number; offset: number; radial: boolean }> = [
+  { colatitude: 32, count: 6, offset: 0, radial: true },
+  { colatitude: 64, count: 6, offset: 30, radial: false },
+];
+const ALL = ([1, -1] as const).flatMap((sign) =>
+  RINGS.flatMap((ring) =>
+    Array.from({ length: ring.count }, (_, i) => {
+      const a = ((ring.offset + (i / ring.count) * 360) * Math.PI) / 180;
+      const t = (ring.colatitude * Math.PI) / 180;
+      const m: V3 = [Math.sin(t) * Math.cos(a), Math.sin(t) * Math.sin(a), sign * Math.cos(t)];
+      const along: V3 = ring.radial ? [-m[0] * m[2] * sign, -m[1] * m[2] * sign, sign - m[2] * m[2] * sign] : [-m[1], m[0], 0];
+      return { m, dir: along };
+    }),
+  ),
+);
+const PRACTICE_CENTRES: readonly V3[] = ALL.map((one) => one.m);
+const PRACTICE_DIRS: readonly V3[] = ALL.map((one) => one.dir);
+
+function practice(id: string, en: string, ja: string, colours: { first: string; second?: string }): Piece<BallSpec> {
+  const seam = greatCircle([0, 0, 1], 120).reverse();
+  return defineBall({
+    id,
+    en,
+    ja,
+    size: { extentMm: 73.8, diameterMm: 73.8, rule: "English Wikipedia, the article on the perforated plastic practice ball (accessed 2026-10-21): hollow plastic, wall at most 3.2 mm, slots of 19 mm; size taken from Official Baseball Rules, Rule 3.01 (the middle of the circumference range). The count and layout of the slots are drawn from photographs looked at, not copied.", note: "The width of a slot is not given: it is drawn a third of its length. The mass is not stated." },
+    spec: {
+      view: { yaw: -22, pitch: 26, roll: 0 },
+      base: colours.second ?? colours.first,
+      ...(colours.second === undefined ? {} : { ground: colours.first }),
+      mat: { gloss: 0.5, shade: "#2b2e36", grain: { f: 1.4, a: 0.08 } },
+      draw: (s, base) =>
+        (colours.second === undefined ? "" : region(s, seam, base)) +
+        (s.line ? s.strokes(PRACTICE_CENTRES.map((m, i) => slotRing(m, PRACTICE_DIRS[i] as V3, HALF_WIDTH, HALF_LONG)), "#000", 1, { closed: true }) : ""),
+      holes: (s, hid, base, shape, minWidth) => holeLayers(s, hid, { centres: PRACTICE_CENTRES, radius: HALF_WIDTH, long: HALF_LONG, dirs: PRACTICE_DIRS }, base, shape, minWidth),
+    },
+  });
+}
+
+/**
+ * The Practice ball, two-tone emblem (穴あき練習球(二色)): id `ball:plastic-baseball-practice`, the high-visibility yellow and black two-tone ball with slots on both halves, turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_PLASTIC_BASEBALL_PRACTICE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_PLASTIC_BASEBALL_PRACTICE.id, BALL_PLASTIC_BASEBALL_PRACTICE.svg({ size: 48 }).includes("<mask"));
+ * ```
+ */
+export const BALL_PLASTIC_BASEBALL_PRACTICE = /* @__PURE__ */ practice("ball:plastic-baseball-practice", "Practice ball, two-tone", "穴あき練習球(二色)", { first: "#d4ee1a", second: "#1d1f24" });
+
+/**
+ * The Practice ball, white emblem (穴あき練習球(白)): id `ball:plastic-baseball-practice-white`, one colour, with slots on both halves, turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_PLASTIC_BASEBALL_PRACTICE_WHITE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_PLASTIC_BASEBALL_PRACTICE_WHITE.id, BALL_PLASTIC_BASEBALL_PRACTICE_WHITE.svg({ size: 48 }).includes("<mask"));
+ * ```
+ */
+export const BALL_PLASTIC_BASEBALL_PRACTICE_WHITE = /* @__PURE__ */ practice("ball:plastic-baseball-practice-white", "Practice ball, white", "穴あき練習球(白)", { first: "#f4f4f0" });
+
+/**
+ * The Practice ball, orange emblem (穴あき練習球(橙)): id `ball:plastic-baseball-practice-orange`, one colour, with slots on both halves, turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_PLASTIC_BASEBALL_PRACTICE_ORANGE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_PLASTIC_BASEBALL_PRACTICE_ORANGE.id, BALL_PLASTIC_BASEBALL_PRACTICE_ORANGE.svg({ size: 48 }).includes("<mask"));
+ * ```
+ */
+export const BALL_PLASTIC_BASEBALL_PRACTICE_ORANGE = /* @__PURE__ */ practice("ball:plastic-baseball-practice-orange", "Practice ball, orange", "穴あき練習球(橙)", { first: "#f07a1c" });

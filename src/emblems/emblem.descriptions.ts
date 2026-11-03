@@ -2,7 +2,15 @@
 // a screen reader reads), so what does not fit in a short name is here. An emblem with no entry is described well enough by its name.
 import type { EmblemId } from "./emblem.ids.ts";
 
-/** An emblem's description in the two languages. */
+/**
+ * An emblem's description in the two languages.
+ * @example
+ * ```ts
+ * import type { EmblemDescription } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const description: EmblemDescription = { en: "A cup on a plinth", ja: "台座の上のカップ" };
+ * console.log(description.en);
+ * ```
+ */
 export interface EmblemDescription {
   readonly en: string;
   readonly ja: string;
@@ -31,6 +39,14 @@ function soccerColourways(): Partial<Record<EmblemId, EmblemDescription>> {
   return out;
 }
 
+/**
+ * What each emblem draws, in more words than its name, in English and Japanese. Not every emblem has one.
+ * @example
+ * ```ts
+ * import { EMBLEM_DESCRIPTIONS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(Object.keys(EMBLEM_DESCRIPTIONS).length);
+ * ```
+ */
 export const EMBLEM_DESCRIPTIONS: Readonly<Partial<Record<EmblemId, EmblemDescription>>> = {
   "trophy:hockey-cup": { en: "Tall banded silver cup", ja: "帯を何段も重ねた背の高い銀のカップ" },
   "trophy:basketball": { en: "Basketball trophy", ja: "バスケットボールのトロフィー" },
@@ -58,6 +74,9 @@ export const EMBLEM_DESCRIPTIONS: Readonly<Partial<Record<EmblemId, EmblemDescri
   "ball:afl": { en: "Australian football", ja: "オーストラリアンフットボールのボール" },
   "ball:gaelic-football": { en: "Gaelic football", ja: "ゲーリックフットボールのボール" },
   "ball:plastic-baseball-slotted": { en: "A hollow white plastic practice baseball with eight oblong slots on one half and the other half solid", ja: "中空の白いプラスチック製の野球練習球。半球の一方に細長い穴が8つ並び、もう一方には穴がない" },
+  "ball:plastic-baseball-practice": { en: "A hollow plastic practice baseball in two tones, high-visibility yellow and black, with oblong slots on both halves", ja: "中空のプラスチック製の野球練習球。蛍光の黄色と黒の二色で、両方の半球に細長い穴が並ぶ" },
+  "ball:plastic-baseball-practice-white": { en: "A hollow white plastic practice baseball with oblong slots on both halves", ja: "中空の白いプラスチック製の野球練習球。両方の半球に細長い穴が並ぶ" },
+  "ball:plastic-baseball-practice-orange": { en: "A hollow orange plastic practice baseball with oblong slots on both halves", ja: "中空の橙色のプラスチック製の野球練習球。両方の半球に細長い穴が並ぶ" },
   "ball:squash": { en: "Squash ball, double yellow dot", ja: "スカッシュボール（ダブルイエロードット）" },
   "ball:squash-yellow": { en: "Squash ball, yellow dot", ja: "スカッシュボール（イエロードット）" },
   "ball:squash-green": { en: "Squash ball, green dot", ja: "スカッシュボール（グリーンドット）" },

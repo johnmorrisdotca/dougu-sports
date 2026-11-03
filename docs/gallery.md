@@ -2,7 +2,7 @@
 
 [Back to the README](../README.md) · [日本語](gallery.ja.md) · English
 
-Every emblem in the package, by group: 346 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
+Every emblem in the package, by group: 349 of them. The pictures are on the demo's gallery page; this list is the text of it, made by `scripts/make-gallery.ts` from the built package (`pnpm gallery`).
 
 Ids are `<group>:<name>`. The constant and the import follow from the id, so they are not repeated in every row:
 
@@ -243,6 +243,9 @@ The folders the art lives in are in [layout.md](layout.md).
 | `ball:pickleball-outdoor` | Pickleball, outdoor | ball | generated |  |
 | `ball:pickleball-indoor` | Pickleball, indoor | ball | generated |  |
 | `ball:plastic-baseball-slotted` | Plastic baseball, slotted | ball | generated | A hollow white plastic practice baseball with eight oblong slots on one half and the other half solid |
+| `ball:plastic-baseball-practice` | Practice ball, two-tone | ball | generated | A hollow plastic practice baseball in two tones, high-visibility yellow and black, with oblong slots on both halves |
+| `ball:plastic-baseball-practice-white` | Practice ball, white | ball | generated | A hollow white plastic practice baseball with oblong slots on both halves |
+| `ball:plastic-baseball-practice-orange` | Practice ball, orange | ball | generated | A hollow orange plastic practice baseball with oblong slots on both halves |
 | `ball:squash` | Squash ball, 2 yellow dots | ball | generated | Squash ball, double yellow dot |
 | `ball:squash-yellow` | Squash ball, yellow dot | ball | generated | Squash ball, yellow dot |
 | `ball:squash-green` | Squash ball, green dot | ball | generated | Squash ball, green dot |
