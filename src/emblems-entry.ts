@@ -25,3 +25,5 @@ export { awardCase, podium } from "./emblems/emblem.display.ts";
 export type { AwardCaseOptions, AwardItem, DisplayOptions, PodiumOptions, PodiumPlace } from "./emblems/emblem.display.ts";
 export type { BallDecal, BallMark, BallPaint, BallScript, BallSpots, BallStamp, Spot } from "./emblems/ball/ball.print.ts";
 export type { FaceColors, FlagRenderer, FlagRequest, FlagShape, PuckDesign, PuckFace } from "./emblems/ball/ball.face.ts";
+export { emblemEmbedCode } from "./emblems/emblem.embed.ts";
+export type { EmbedCode, EmbedOptions } from "./emblems/emblem.embed.ts";

@@ -127,3 +127,6 @@ button.play { display: inline-flex; width: auto; }
 .call-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
 .call-actions { display: flex; gap: 8px; }
 .call-panel pre { margin: 8px 0 0; overflow-x: auto; font-family: var(--mono); font-size: .8rem; }
+
+#embed-code { max-height: 18rem; overflow: auto; white-space: pre-wrap; word-break: break-all; }
+#embed-stage iframe { max-width: 100%; }

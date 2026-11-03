@@ -50,6 +50,26 @@
       <div class="fam-row" id="roll-row"><label class="fam-label" for="roll">Roll</label><input class="range" type="range" id="roll" min="-180" max="180" step="5" value="0" aria-label="Roll about the line of sight, in degrees (balls)" data-testid="roll" /><output id="roll-out" for="roll">0°</output></div>
     </div>
   </section>
+  <section class="more" aria-labelledby="embed-h">
+    <h2 id="embed-h" data-say="embedHeading">Put it in your page</h2>
+    <p class="fam-fine" data-say="embedNote">The emblem you set up above, as code to paste: a tag, an iframe, an ES module, an image address or the SVG itself. What is drawn beside the code is that code, running.</p>
+    <div class="fam-panels">
+      <div class="fam-panel controls">
+        <div class="fam-row"><span class="fam-label" data-say="embedWay">How</span>
+          <div class="fam-seg" role="group" aria-label="How to put it in a page" data-say-label="embedWayLabel" id="embed-way" data-testid="embed-way">
+            <button type="button" data-value="element">Element</button><button type="button" data-value="iframe">iframe</button><button type="button" data-value="module">ES module</button><button type="button" data-value="img" data-say="embedImg">Image</button><button type="button" data-value="svg">SVG</button>
+          </div></div>
+        <div class="fam-row"><span class="fam-label" data-say="embedTurn">Turning</span>
+          <div class="fam-seg" role="group" aria-label="Whether the embedded emblem turns" data-say-label="embedTurnLabel" id="embed-turn" data-testid="embed-turn">
+            <button type="button" data-value="still" data-say="embedStill">Still</button><button type="button" data-value="turnable" data-say="embedHand">By hand</button><button type="button" data-value="autoplay" data-say="embedSelf">By itself</button>
+          </div></div>
+        <pre id="embed-code" data-testid="embed-code"><code></code></pre>
+        <div class="fam-row"><button type="button" class="fam-button" id="embed-copy" data-testid="embed-copy" data-say="embedCopy">Copy it</button><button type="button" class="fam-button" id="embed-download" data-testid="embed-download" data-say="embedDownload">Download the SVG</button></div>
+      </div>
+      <div class="stage" id="embed-stage" data-testid="embed-stage" role="region" aria-label="The code, running" data-say-label="embedStageLabel"></div>
+    </div>
+  </section>
+
   <details id="code-box"><summary>The call that draws it</summary><pre id="code"><code></code></pre></details>
 
   <section class="more" aria-labelledby="case-h">

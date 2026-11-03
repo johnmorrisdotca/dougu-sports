@@ -3,6 +3,7 @@
 // The package is imported from ../src here so that the editor and `pnpm typecheck` see its types; the build of the demo (scripts/page.ts) turns the import into ./dist/index.js, the built package.
 import { createAddressState } from "@johnmorrisdotca/kazoku-ui/address-state";
 import * as D from "../src/index.ts";
+import "../src/element.ts";
 import type { BackgroundPresetName } from "../scripts/family-backgrounds.ts";
 
 declare global {
@@ -68,6 +69,10 @@ function turnOptions(): D.TurnControlOptions {
   return options;
 }
 
+/** The "Put it in your page" panel: which way, and whether the embedded emblem turns. */
+const embedState = { way: pick(params.get("embed"), ["element", "iframe", "module", "img", "svg"] as const, "element"), turn: pick(params.get("eturn"), ["still", "turnable", "autoplay"] as const, "still") };
+
+let embedKey = "";
 const turner = D.bindTurn($("stage"), state.id, {
   ...turnOptions(),
   autoPlay: state.turn === "1" && !["yaw", "pitch", "roll"].some((key) => params.has(key)),
@@ -79,7 +84,7 @@ const turner = D.bindTurn($("stage"), state.id, {
 // `?turn=1` with an angle in the address, or under reduced motion, opens still: the state says what is happening.
 state.turn = turner.playing ? "1" : "0";
 
-const address = createAddressState({ defaults: { ...DEFAULTS, id: FIRST, dir: "ccw" } });
+const address = createAddressState({ defaults: { ...DEFAULTS, id: FIRST, dir: "ccw", embed: "element", eturn: "still" } });
 /** The address follows. A spin changes it sixty times a second: the shared address state writes it once things settle. */
 function writeAddress() {
   const next: Record<string, string | null> = { id: state.id, turn: state.turn === "1" ? "1" : null, dir: state.dir, engrave: state.engrave.trim() === "" ? null : state.engrave };
@@ -87,6 +92,8 @@ function writeAddress() {
   // While it turns by itself the angles change every frame: the address then leaves them out, so a reload starts the turn again.
   const a = turner.angles;
   for (const key of ["yaw", "pitch", "roll"] as const) next[key] = !turner.playing && a[key] !== 0 ? String(a[key]) : null;
+  next["embed"] = embedState.way;
+  next["eturn"] = embedState.turn;
   address.setMany(next);
 }
 
@@ -119,8 +126,40 @@ function sync() {
   $("code").firstChild!.textContent = turned && canTurn
     ? `import { emblemFrame } from "@johnmorrisdotca/dougu-sports/turn";\n\nconst svg = emblemFrame("${state.id}", { ${shown.slice(2, -2)}, ${angles} });\n`
     : `import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";\n\nconst svg = renderEmblem("${state.id}", ${shown});\n`;
+  drawEmbed();
   writeAddress();
 }
+
+/** The "Put it in your page" panel: the same emblem as the stage, as the code for the way chosen, and that code running beside it. */
+function drawEmbed() {
+  const a = turner.angles;
+  const still = embedState.turn === "still" && !turner.playing;
+  const options: D.EmbedOptions = { style: state.style, size: Number(state.size), theme: state.theme, locale: locale() };
+  if (state.tint) options.tint = state.tint;
+  if (still && turner.turnable) Object.assign(options, a.yaw !== 0 ? { yaw: Math.round(a.yaw) } : {}, a.pitch !== 0 ? { pitch: Math.round(a.pitch) } : {});
+  if (embedState.turn !== "still") options.turnable = true;
+  if (embedState.turn === "autoplay") options.autoplay = true;
+  const shown = D.emblemEmbedCode(state.id, options);
+  const key = JSON.stringify([embedState, state.id, options]);
+  for (const b of $("embed-way").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === embedState.way));
+  for (const b of $("embed-turn").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === embedState.turn));
+  if (key === embedKey) return;
+  embedKey = key;
+  const code = { element: shown.html, iframe: shown.iframe, module: shown.module, img: shown.img, svg: shown.svg }[embedState.way];
+  $("embed-code").firstChild!.textContent = code;
+  const here = D.emblemEmbedCode(state.id, { ...options, site: new URL(".", location.href).href });
+  $("embed-stage").innerHTML = { element: here.element, iframe: here.iframe, module: here.element, img: here.img, svg: here.svg }[embedState.way];
+}
+$("embed-way").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { embedState.way = b.dataset.value as typeof embedState.way; drawEmbed(); writeAddress(); } });
+$("embed-turn").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { embedState.turn = b.dataset.value as typeof embedState.turn; drawEmbed(); writeAddress(); } });
+$("embed-copy").addEventListener("click", () => { void navigator.clipboard?.writeText($("embed-code").textContent ?? ""); });
+$("embed-download").addEventListener("click", () => {
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(new Blob([D.renderEmblem(state.id, { style: state.style, size: Number(state.size), theme: state.theme, ...(state.tint ? { tint: state.tint } : {}) })], { type: "image/svg+xml" }));
+  link.download = `${state.id.replace(":", "-")}.svg`;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+});
 
 let backgrounds: typeof import("../scripts/family-backgrounds.ts") | undefined;
 const dark = matchMedia("(prefers-color-scheme: dark)");

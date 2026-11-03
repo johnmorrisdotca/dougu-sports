@@ -31,6 +31,19 @@ const WORDS = {
     caseHeading: "A trophy case",
     caseNote: "Each one turns while the pointer is over it, or when you tap it. Press its button to keep it turning, or drag it.",
     picks: "Try one",
+    embedHeading: "Put it in your page",
+    embedNote: "The emblem you set up above, as code to paste: a tag, an iframe, an ES module, an image address or the SVG itself. What is drawn beside the code is that code, running.",
+    embedWay: "How",
+    embedWayLabel: "How to put it in a page",
+    embedImg: "Image",
+    embedTurn: "Turning",
+    embedTurnLabel: "Whether the embedded emblem turns",
+    embedStill: "Still",
+    embedHand: "By hand",
+    embedSelf: "By itself",
+    embedCopy: "Copy it",
+    embedDownload: "Download the SVG",
+    embedStageLabel: "The code, running",
   },
   ja: {
     pitch: "トロフィー、メダル、紋章、ボールや用具など、スポーツのエンブレムをSVGで描きます。",
@@ -49,6 +62,19 @@ const WORDS = {
     caseHeading: "トロフィーケース",
     caseNote: "それぞれ、ポインターを重ねている間か、タップすると回ります。ボタンで回し続けたり、ドラッグで回したりできます。",
     picks: "選んでみる",
+    embedHeading: "ページに入れる",
+    embedNote: "上で作ったエンブレムを、貼り付けるコードにします。タグ、iframe、ESモジュール、画像のアドレス、SVGそのものから選べます。コードの横の絵は、そのコードを動かしたものです。",
+    embedWay: "方法",
+    embedWayLabel: "ページへの入れ方",
+    embedImg: "画像",
+    embedTurn: "回転",
+    embedTurnLabel: "入れたエンブレムを回すかどうか",
+    embedStill: "止める",
+    embedHand: "手で回す",
+    embedSelf: "自動で回す",
+    embedCopy: "コピー",
+    embedDownload: "SVGを保存",
+    embedStageLabel: "動いているコード",
   },
 };
 
@@ -153,13 +179,13 @@ export function renderBrands() {
 }
 
 /** The scripts of the demo's pages: demo/<name>.ts, served and published as <name>.js. */
-export const DEMO_SCRIPTS = ["demo", "compose", "gallery", "brands"];
+export const DEMO_SCRIPTS = ["demo", "compose", "gallery", "brands", "embed"];
 
 /**
  * The files a demo script imports for their types, and the files the browser loads in their place: the script imports ../src/index.ts, so that the editor and `pnpm typecheck` see the package's types,
  * and the page imports ./dist/index.js, the package as it is built and published. esbuild leaves the import in place and only changes its address.
  */
-const AS_BUILT: Record<string, string> = { "src/index.ts": "./dist/index.js", "src/brands-entry.ts": "./dist/brands-entry.js", "scripts/family-backgrounds.ts": "./family-backgrounds.js" };
+const AS_BUILT: Record<string, string> = { "src/index.ts": "./dist/index.js", "src/brands-entry.ts": "./dist/brands-entry.js", "src/element.ts": "./dist/element.js", "scripts/family-backgrounds.ts": "./family-backgrounds.js" };
 const asBuilt: Plugin = {
   name: "as-built",
   setup(b) {
