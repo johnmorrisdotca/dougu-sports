@@ -6,6 +6,8 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+- Demo: the bar's Auto-turn speeds are the family's speed buttons, 0.5×, 1× and 2× (`<kazoku-speed-buttons>`, kazoku-ui 0.14, `^0.14.0`), in place of Slow, Medium and Fast; the choice is kept in the address as `pace` (the key was `speed`). The trophy case, whose four Auto-turn buttons had no speed to choose, has the same three buttons above it (`?casepace=2`), which set each emblem's speed with `update`. The package is unchanged. Browser tests hold the bar's three buttons and the speed each sets, and that 2× in the case for half the time is the same turn as 1×.
+
 - Test only: the family's shared drag check (`e2e/ground.mjs`) now also runs on a textured emblem at a desk's size with the arrow keys and Auto-turn, beside the drag and the exact grab it already ran: the ground follows the hand, Arrow Right and Arrow Up agree, and Auto-turn swings the front to the viewer's right.
 
 ## [0.31.0] - 2026-11-03

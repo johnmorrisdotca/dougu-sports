@@ -115,6 +115,8 @@ The bar's zoom and pan are the page's to draw: the demo moves the stage with a C
 
 Nothing moves by itself. `autoPlay` is off by default, `play()`, `pause()` and `togglePlay()` start and stop it, and `speed` is degrees of yaw a second (36, at most 720; a negative speed turns the other way too).
 
+**How fast, in the demo.** The playground's bar and the trophy case use the family's speed buttons (`<kazoku-speed-buttons>`, kazoku-ui 0.14): 0.5×, 1× and 2× times the base speed, kept in the address as `pace` (the bar) and `casepace` (the case). The case sets each emblem's `speed` again with `controller.update(ref, { speed })`, which keeps the angle.
+
 **Which way: `direction`.** Seen from above, `"counterclockwise"` (the default, and how it has always turned) swings the front to the viewer's right; `"clockwise"` swings the front to the viewer's left. `controller.setDirection("clockwise")` changes it while it turns, without stopping it, `controller.direction()` says which it is, and `turnDirection(value)` is the check the option goes through (anything but `"clockwise"` is counterclockwise). `update` keeps the direction unless it names one. A drag, the arrow keys and `setAngles` are not reversed: a drag to the right always swings the front to the right. The demo has a Reverse button for it, kept in the address as `dir=cw`; it waits still, turns while the pointer is over the stage (a tap on a phone turns it and a second tap holds it) and runs at 18 degrees a second, and `?turn=1` starts it with the page.
 
 - It runs on `requestAnimationFrame` with the elapsed time, clamped to 0.1 s so that a slow frame is not a jump, stops asking for frames while the page is hidden, and calls `onTurn` on every frame so that a slider follows.

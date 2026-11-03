@@ -7,6 +7,10 @@ description: What changed between versions and what to do about it. The package 
 
 The package is at 0.x, so a minor version (0.30 to 0.31) may change behaviour. Each release's notes are in the [changelog](../../CHANGELOG.md); this page lists what needs your action.
 
+## To 0.32: speed buttons in the demo
+
+Nothing in the package changed. The demo takes kazoku-ui 0.14: the bar's Auto-turn speeds are the family's speed buttons, 0.5×, 1× and 2× (Slow, Medium and Fast are gone), kept in the address as `pace` (`?pace=2`) and not `speed`; the trophy case has the same three buttons for its four emblems (`?casepace=2`). The bar's base `speed="18"` is what the buttons multiply.
+
 ## To 0.31: the playground's zoom slider
 
 Nothing in the package changed. The demo's playground takes kazoku-ui 0.12: the zoom is a slider with marks, in the bar's horizontal layout on a desk (a phone keeps the classic bar).

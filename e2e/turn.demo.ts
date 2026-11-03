@@ -226,6 +226,70 @@ test("the hint and the bar say it in English and in Japanese", async ({ page }) 
   await expect(play(page)).toContainText(/[\u3040-\u30ff\u4e00-\u9fff]/);
 });
 
+/** The numbers in a drawing, in order: two frames of one emblem at the same angle have the same ones, to a rounding. */
+const numbers = (html: string) => (html.match(/-?\d+(?:\.\d+)?/g) ?? []).map(Number);
+
+test("the bar's speed buttons are the family's 0.5×, 1× and 2×: they multiply the turn's speed and the address keeps them as pace", async ({ page }) => {
+  await page.goto("/?id=trophy:tennis-cup");
+  const bar = page.locator("#view-bar");
+  const more = bar.locator('[data-b="more"]');
+  if ((await more.getAttribute("aria-expanded")) === "false") await more.click();
+  const buttons = bar.locator("kazoku-speed-buttons button");
+  await expect(buttons).toHaveText(["0.5×", "1×", "2×"]);
+  await expect(buttons.nth(1)).toHaveAttribute("aria-pressed", "true");
+  // degrees a second the bar turns it at: the base speed (18) times the button
+  const speed = () => bar.evaluate((el) => (el as unknown as { controller: { speed: number } }).controller.speed);
+  expect(await speed()).toBe(18);
+  await buttons.nth(2).click();
+  await expect(buttons.nth(2)).toHaveAttribute("aria-pressed", "true");
+  expect(await speed()).toBe(36);
+  await expect(page).toHaveURL(/pace=2/);
+  expect(page.url()).not.toMatch(/[?&]speed=/);
+  await buttons.nth(0).click();
+  expect(await speed()).toBe(9);
+  await expect(page).toHaveURL(/pace=0\.5/);
+  await buttons.nth(1).click();
+  await expect(page).not.toHaveURL(/pace=/);
+  // an address opens at its speed
+  await page.goto("/?id=trophy:tennis-cup&pace=2");
+  expect(await speed()).toBe(36);
+});
+
+test("the trophy case has the same speed buttons, kept as casepace: twice as fast at 2× for all four", async ({ page, context }) => {
+  // each run is on a page of its own, and the page's clock is the test's, so a second is a second however busy the machine is
+  const turnedFor = async (url: string, ms: number) => {
+    const tab = await context.newPage();
+    await tab.clock.install({ time: new Date("2026-01-01T00:00:00Z") });
+    await tab.goto(url);
+    await tab.clock.pauseAt(new Date("2026-01-01T00:00:01Z"));
+    const first = tab.locator("#case li").first();
+    await first.getByTestId("case-play").click();
+    await tab.clock.runFor(ms);
+    const html = await first.locator(".case-stage").innerHTML();
+    await tab.close();
+    return html;
+  };
+  await page.goto("/");
+  const buttons = page.getByTestId("case-pace").locator("button");
+  await expect(buttons).toHaveText(["0.5×", "1×", "2×"]);
+  await expect(buttons.nth(1)).toHaveAttribute("aria-pressed", "true");
+  // 3.2 seconds at 1× and 1.6 at 2× are the same turn
+  const slow = numbers(await turnedFor("/", 3200));
+  const fast = numbers(await turnedFor("/?casepace=2", 1600));
+  expect(fast.length).toBe(slow.length);
+  fast.forEach((n, i) => expect(Math.abs(n - slow[i]), `number ${i}`).toBeLessThan(0.15));
+  const once = numbers(await turnedFor("/", 1600));
+  const apart = once.reduce((sum, n, i) => sum + Math.abs(n - (fast[i] ?? 0)), 0);
+  expect(apart, "one speed is not the other").toBeGreaterThan(5);
+  // pressing a button in the page sets the speed and the address
+  await page.goto("/?casepace=2");
+  await expect(buttons.nth(2)).toHaveAttribute("aria-pressed", "true");
+  await buttons.nth(1).click();
+  await expect(page).not.toHaveURL(/casepace=/);
+  await buttons.nth(2).click();
+  await expect(page).toHaveURL(/casepace=2/);
+});
+
 test("the trophy case turns each emblem on its own button, and nothing moves before", async ({ page }) => {
   await page.goto("/");
   const cells = page.locator("#case li");

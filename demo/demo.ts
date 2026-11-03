@@ -5,6 +5,8 @@ import { createAddressState } from "@johnmorrisdotca/kazoku-ui/address-state";
 import * as D from "../src/index.ts";
 import "../src/element.ts";
 import "@johnmorrisdotca/kazoku-ui/view-controls/define";
+import "@johnmorrisdotca/kazoku-ui/speed-buttons/define";
+import type { SpeedButtonsElement } from "@johnmorrisdotca/kazoku-ui/speed-buttons/element";
 import type { ViewControlsElement } from "@johnmorrisdotca/kazoku-ui/view-controls/element";
 import type { ViewState } from "@johnmorrisdotca/kazoku-ui/view-controls";
 import type { BackgroundPresetName } from "../scripts/family-backgrounds.ts";
@@ -284,6 +286,9 @@ if (state.turn === "1" && !["yaw", "tilt"].some((key) => params.has(key)) && !ma
 
 // A trophy case: a few emblems that wait still and turn while the pointer is over them (or when tapped), each with its own button to keep it turning or hold it.
 const CASE = ["trophy:hockey-cup", "trophy:tennis-cup", "medal:gold", "ball:rugby"];
+/** Degrees a second at 1×; the speed buttons above the case (0.5×, 1×, 2×) multiply it for all four. */
+const CASE_SPEED = 22;
+const casePace = $("case-pace") as SpeedButtonsElement;
 for (const id of CASE) {
   const cell = document.createElement("li");
   cell.innerHTML = `<div class="case-stage" data-testid="case-stage"></div><button type="button" class="fam-button case-play" aria-pressed="false" data-testid="case-play"><span class="when-off" data-say="play">Auto-turn</span><span class="when-on" data-say="stop">Stop</span></button>`;
@@ -291,9 +296,11 @@ for (const id of CASE) {
   const button = cell.querySelector("button")!;
   const hover = { on: false };
   const stage = cell.querySelector<HTMLElement>(".case-stage")!;
-  const control = D.bindTurn(stage, id, { size: 96, speed: 22, onPlayChange: (playing) => button.setAttribute("aria-pressed", String(playing)), locale: locale() });
+  const options = (): D.TurnControlOptions => ({ size: 96, speed: CASE_SPEED * casePace.value, onPlayChange: (playing: boolean) => button.setAttribute("aria-pressed", String(playing)), locale: locale() });
+  const control = D.bindTurn(stage, id, options());
   button.addEventListener("click", () => { hover.on = false; control.togglePlay(); });
   turnOnHover(stage, control, hover);
+  casePace.addEventListener("kazoku-speedchange", (event) => { if ((event as CustomEvent<{ reason: string }>).detail.reason !== "init") control.update(id, options()); });
 }
 // The words of the buttons just added, in the page's language.
 window.familyPage?.say();
