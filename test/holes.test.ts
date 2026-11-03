@@ -155,10 +155,14 @@ describe("the plastic practice baseball with slots all over", () => {
   it("has slots on both halves: from either pole the near ones are cut out, and slots are never all on one side", () => {
     const nearPole = cuts(PRACTICE.frame({ size: 100, yaw: 0, pitch: 0 }));
     const farPole = cuts(PRACTICE.frame({ size: 100, yaw: 180, pitch: 0 }));
-    expect(nearPole).toBeGreaterThanOrEqual(8);
-    expect(farPole).toBeGreaterThanOrEqual(8);
+    expect(nearPole).toBeGreaterThanOrEqual(5);
+    expect(farPole).toBeGreaterThanOrEqual(5);
     // The one-sided ball shows no slot at all from its solid half; this one never does.
     expect(cuts(SLOTTED.frame({ size: 100, yaw: 180 + 22, pitch: -22 }))).toBe(0);
+  });
+
+  it("has few, large, round slots like the real ball: six to a half, never the two dozen thin slits it had", () => {
+    for (const yaw of [0, 60, 120, 180, 240, 300]) for (const pitch of [-40, 0, 40]) expect(cuts(PRACTICE.frame({ size: 100, yaw, pitch })), `yaw ${yaw}, pitch ${pitch}`).toBeLessThanOrEqual(9);
   });
 
   it("is two-tone yellow and black along the seam, and the white and orange balls are one colour", () => {

@@ -48,24 +48,22 @@ export const BALL_PLASTIC_BASEBALL_SLOTTED = /* @__PURE__ */ defineBall({
 });
 
 /**
- * The common hollow plastic practice baseball with slots all over it (the other, the one-sided ball above, is the first): two rings of slots on each half, six slots running toward the pole near it and six running round
- * the ball further out, between them and the seam, and often two-tone, the halves split along the seam. The slots are 19 mm long on a ball of the size of a baseball; the figures are the same facts as above, and
- * the number and the layout of the slots are drawn from photographs looked at and never copied. No maker's name is in this package.
+ * The common hollow plastic practice baseball with slots all over it (the other, the one-sided ball above, is the first): one ring of five large oval slots on each half, running toward the pole, the two rings
+ * turned half a step apart so that no slot faces another across the seam, and often two-tone, the halves split along the seam. A slot is about 22 mm long and 14 mm wide on a ball of the size of a baseball, an oval
+ * and not a slit (larger than the 19 mm of the one-sided ball, as the photographs show); the other figures are the same facts as above, and the number and the layout of the slots are drawn from photographs looked at and never copied. No maker's name is in this package.
  */
-const RINGS: ReadonlyArray<{ colatitude: number; count: number; offset: number; radial: boolean }> = [
-  { colatitude: 32, count: 6, offset: 0, radial: true },
-  { colatitude: 64, count: 6, offset: 30, radial: false },
-];
+const PRACTICE_HALF_LONG = 0.3;
+const PRACTICE_HALF_WIDTH = 0.19;
+const PRACTICE_PER_HALF = 6;
+const PRACTICE_COLATITUDE = 56;
 const ALL = ([1, -1] as const).flatMap((sign) =>
-  RINGS.flatMap((ring) =>
-    Array.from({ length: ring.count }, (_, i) => {
-      const a = ((ring.offset + (i / ring.count) * 360) * Math.PI) / 180;
-      const t = (ring.colatitude * Math.PI) / 180;
-      const m: V3 = [Math.sin(t) * Math.cos(a), Math.sin(t) * Math.sin(a), sign * Math.cos(t)];
-      const along: V3 = ring.radial ? [-m[0] * m[2] * sign, -m[1] * m[2] * sign, sign - m[2] * m[2] * sign] : [-m[1], m[0], 0];
-      return { m, dir: along };
-    }),
-  ),
+  Array.from({ length: PRACTICE_PER_HALF }, (_, i) => {
+    const a = (((sign === 1 ? 0 : 180 / PRACTICE_PER_HALF) + (i / PRACTICE_PER_HALF) * 360) * Math.PI) / 180;
+    const t = (PRACTICE_COLATITUDE * Math.PI) / 180;
+    const m: V3 = [Math.sin(t) * Math.cos(a), Math.sin(t) * Math.sin(a), sign * Math.cos(t)];
+    const along: V3 = [-m[0] * m[2] * sign, -m[1] * m[2] * sign, sign - m[2] * m[2] * sign];
+    return { m, dir: along };
+  }),
 );
 const PRACTICE_CENTRES: readonly V3[] = ALL.map((one) => one.m);
 const PRACTICE_DIRS: readonly V3[] = ALL.map((one) => one.dir);
@@ -76,7 +74,7 @@ function practice(id: string, en: string, ja: string, colours: { first: string; 
     id,
     en,
     ja,
-    size: { extentMm: 73.8, diameterMm: 73.8, rule: "English Wikipedia, the article on the perforated plastic practice ball (accessed 2026-10-21): hollow plastic, wall at most 3.2 mm, slots of 19 mm; size taken from Official Baseball Rules, Rule 3.01 (the middle of the circumference range). The count and layout of the slots are drawn from photographs looked at, not copied.", note: "The width of a slot is not given: it is drawn a third of its length. The mass is not stated." },
+    size: { extentMm: 73.8, diameterMm: 73.8, rule: "English Wikipedia, the article on the perforated plastic practice ball (accessed 2026-10-21): hollow plastic, wall at most 3.2 mm; size taken from Official Baseball Rules, Rule 3.01 (the middle of the circumference range). The count and layout of the slots are drawn from photographs looked at, not copied.", note: "The size of a slot on this ball is not given by the article (19 mm is the one-sided ball's): it is drawn about 22 by 14 mm, an oval, to match the photographs. The mass is not stated. " },
     spec: {
       view: { yaw: -22, pitch: 26, roll: 0 },
       base: colours.second ?? colours.first,
@@ -84,8 +82,8 @@ function practice(id: string, en: string, ja: string, colours: { first: string; 
       mat: { gloss: 0.5, shade: "#2b2e36", grain: { f: 1.4, a: 0.08 } },
       draw: (s, base) =>
         (colours.second === undefined ? "" : region(s, seam, base)) +
-        (s.line ? s.strokes(PRACTICE_CENTRES.map((m, i) => slotRing(m, PRACTICE_DIRS[i] as V3, HALF_WIDTH, HALF_LONG)), "#000", 1, { closed: true }) : ""),
-      holes: (s, hid, base, shape, minWidth) => holeLayers(s, hid, { centres: PRACTICE_CENTRES, radius: HALF_WIDTH, long: HALF_LONG, dirs: PRACTICE_DIRS }, base, shape, minWidth),
+        (s.line ? s.strokes(PRACTICE_CENTRES.map((m, i) => slotRing(m, PRACTICE_DIRS[i] as V3, PRACTICE_HALF_WIDTH, PRACTICE_HALF_LONG)), "#000", 1, { closed: true }) : ""),
+      holes: (s, hid, base, shape, minWidth) => holeLayers(s, hid, { centres: PRACTICE_CENTRES, radius: PRACTICE_HALF_WIDTH, long: PRACTICE_HALF_LONG, dirs: PRACTICE_DIRS }, base, shape, minWidth),
     },
   });
 }

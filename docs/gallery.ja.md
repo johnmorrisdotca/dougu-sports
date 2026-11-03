@@ -243,9 +243,9 @@ id は `<グループ>:<名前>` の形です。定数とインポートパス�
 | `ball:pickleball-outdoor` | ピックルボール（屋外用） | ball | generated |  |
 | `ball:pickleball-indoor` | ピックルボール（屋内用） | ball | generated |  |
 | `ball:plastic-baseball-slotted` | 野球の穴あき練習球 | ball | generated | 中空の白いプラスチック製の野球練習球。半球の一方に細長い穴が8つ並び、もう一方には穴がない |
-| `ball:plastic-baseball-practice` | 穴あき練習球(二色) | ball | generated | 中空のプラスチック製の野球練習球。蛍光の黄色と黒の二色で、両方の半球に細長い穴が並ぶ |
-| `ball:plastic-baseball-practice-white` | 穴あき練習球(白) | ball | generated | 中空の白いプラスチック製の野球練習球。両方の半球に細長い穴が並ぶ |
-| `ball:plastic-baseball-practice-orange` | 穴あき練習球(橙) | ball | generated | 中空の橙色のプラスチック製の野球練習球。両方の半球に細長い穴が並ぶ |
+| `ball:plastic-baseball-practice` | 穴あき練習球(二色) | ball | generated | 中空のプラスチック製の野球練習球。蛍光の黄色と黒の二色で、両方の半球に大きな楕円の穴が並ぶ |
+| `ball:plastic-baseball-practice-white` | 穴あき練習球(白) | ball | generated | 中空の白いプラスチック製の野球練習球。両方の半球に大きな楕円の穴が並ぶ |
+| `ball:plastic-baseball-practice-orange` | 穴あき練習球(橙) | ball | generated | 中空の橙色のプラスチック製の野球練習球。両方の半球に大きな楕円の穴が並ぶ |
 | `ball:squash` | スカッシュ球（ダブルイエロー） | ball | generated | スカッシュボール（ダブルイエロードット） |
 | `ball:squash-yellow` | スカッシュ球（黄色） | ball | generated | スカッシュボール（イエロードット） |
 | `ball:squash-green` | スカッシュ球（緑） | ball | generated | スカッシュボール（グリーンドット） |

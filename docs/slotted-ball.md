@@ -51,7 +51,14 @@ The other common hollow plastic practice baseball has slots on **both** halves, 
 | `ball:plastic-baseball-practice-white` | Practice ball, white | white |
 | `ball:plastic-baseball-practice-orange` | Practice ball, orange | orange |
 
-Each half has two rings of six slots: the slots of the inner ring run toward the pole of that half and the slots of the outer ring run round the ball, a ring between the first and the seam, turned half a step so that no slot lines up with another. A slot is 19 mm long on a ball 73.8 mm across, the figures of the one-sided ball above; the width of a slot is drawn a third of its length. The count of slots and their layout are drawn from product photographs that were looked at and never copied, and no maker's name or mark is on the ball.
+Each half has one ring of six large oval slots, each running toward the pole of that half; the two rings are turned half a step apart so that no slot lines up with another across the seam. A slot is about 22 mm long and 14 mm wide on a ball 73.8 mm across, a round-ended oval and not a slit: the one-sided ball above has the 19 mm slots the article gives, and the common all-over ball is drawn with larger, rounder ones as the photographs show. The count of slots and their layout are drawn from product photographs that were looked at and never copied, and no maker's name or mark is on the ball.
+
+<p align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/practice-dark.webp">
+<img alt="The three practice baseballs with slots on both halves, in rows: yellow and black two-tone, white and orange, each at rest and from three other sides, with six large oval slots to a half." src="https://raw.githubusercontent.com/johnmorrisdotca/dougu-sports/main/docs/images/practice-light.webp" width="760">
+</picture>
+</p>
 
 ```js
 import { renderEmblem } from "@johnmorrisdotca/dougu-sports";

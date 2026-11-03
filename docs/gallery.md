@@ -243,9 +243,9 @@ The folders the art lives in are in [layout.md](layout.md).
 | `ball:pickleball-outdoor` | Pickleball, outdoor | ball | generated |  |
 | `ball:pickleball-indoor` | Pickleball, indoor | ball | generated |  |
 | `ball:plastic-baseball-slotted` | Plastic baseball, slotted | ball | generated | A hollow white plastic practice baseball with eight oblong slots on one half and the other half solid |
-| `ball:plastic-baseball-practice` | Practice ball, two-tone | ball | generated | A hollow plastic practice baseball in two tones, high-visibility yellow and black, with oblong slots on both halves |
-| `ball:plastic-baseball-practice-white` | Practice ball, white | ball | generated | A hollow white plastic practice baseball with oblong slots on both halves |
-| `ball:plastic-baseball-practice-orange` | Practice ball, orange | ball | generated | A hollow orange plastic practice baseball with oblong slots on both halves |
+| `ball:plastic-baseball-practice` | Practice ball, two-tone | ball | generated | A hollow plastic practice baseball in two tones, high-visibility yellow and black, with large oval slots on both halves |
+| `ball:plastic-baseball-practice-white` | Practice ball, white | ball | generated | A hollow white plastic practice baseball with large oval slots on both halves |
+| `ball:plastic-baseball-practice-orange` | Practice ball, orange | ball | generated | A hollow orange plastic practice baseball with large oval slots on both halves |
 | `ball:squash` | Squash ball, 2 yellow dots | ball | generated | Squash ball, double yellow dot |
 | `ball:squash-yellow` | Squash ball, yellow dot | ball | generated | Squash ball, yellow dot |
 | `ball:squash-green` | Squash ball, green dot | ball | generated | Squash ball, green dot |
