@@ -79,6 +79,12 @@ test("the surface under the pointer follows the pointer: right goes right, up go
   expect((await seen(page)).tilt, "Arrow Up tips the same way as a drag up").toBeGreaterThan(0);
 });
 
+test("on a textured emblem the shared check finds the arrow keys and Auto-turn going the same way as the hand", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium-desk", "the ball is large enough on a desk for one key press to move its ground by a measurable amount");
+  await page.goto("/?id=ball:soccer&size=512");
+  await checkFollowsTheHand(page, { view: "#stage", picture: "#stage-view svg", controls: "#view-bar", keys: true, autoTurn: "right" });
+});
+
 test("a round ball is turned with exact grab: the touched point stays under the pointer", async ({ page }) => {
   for (const id of ["ball:soccer", "ball:plastic-baseball-practice"]) {
     await page.goto(`/?id=${id}&size=256`);

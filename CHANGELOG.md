@@ -6,6 +6,8 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+- Test only: the family's shared drag check (`e2e/ground.mjs`) now also runs on a textured emblem at a desk's size with the arrow keys and Auto-turn, beside the drag and the exact grab it already ran: the ground follows the hand, Arrow Right and Arrow Up agree, and Auto-turn swings the front to the viewer's right.
+
 ## [0.31.0] - 2026-11-03
 
 ### Changed
