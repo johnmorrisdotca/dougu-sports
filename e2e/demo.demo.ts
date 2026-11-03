@@ -7,7 +7,7 @@ test("the playground draws an emblem and does not scroll sideways", async ({ pag
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
-  await expect(page.locator("#stage > svg")).toBeVisible();
+  await expect(page.locator("#stage-view > svg")).toBeVisible();
   expect(await noSideways(page)).toBe(true);
   expect(errors).toEqual([]);
 });
@@ -23,7 +23,7 @@ test("every emblem draws, in every style, and the address says which", async ({ 
     await page.locator("#emblem").selectOption(id);
     for (const style of ["metal", "line", "color"]) {
       await page.locator(`#style button[data-value="${style}"]`).click();
-      await expect(page.locator("#stage > svg")).toBeVisible();
+      await expect(page.locator("#stage-view > svg")).toBeVisible();
       // The address follows (it is left out for the first emblem, the default; Safari allows a hundred changes of it in thirty seconds, so it is read for some of the emblems only).
       if ([1, 12, 24].includes(index) && style === "color") await expect(page).toHaveURL(new RegExp(`[?&]id=${encodeURIComponent(id)}(&|$)`));
     }
@@ -33,7 +33,7 @@ test("every emblem draws, in every style, and the address says which", async ({ 
   for (const id of ["trophy:hockey-cup", "medal:gold", "ball:rugby", "gear:hurley", "sport:nhl", "crest:shield"]) {
     for (const style of ["metal", "line", "color"]) {
       await page.goto(`/?id=${id}&style=${style}`);
-      await expect(page.locator("#stage > svg")).toBeVisible();
+      await expect(page.locator("#stage-view > svg")).toBeVisible();
       expect(await noSideways(page)).toBe(true);
     }
   }
@@ -48,34 +48,34 @@ test("every emblem draws, in every style, and the address says which", async ({ 
 test("the controls change the drawing: size, look and tint", async ({ page }) => {
   await page.goto("/?id=medal:gold");
   await page.getByRole("button", { name: "256", exact: true }).click();
-  await expect(page.locator("#stage > svg")).toHaveAttribute("width", "256");
+  await expect(page.locator("#stage-view > svg")).toHaveAttribute("width", "256");
   await page.locator('button[data-value="dark"]').click();
   await expect(page.locator("#stage")).toHaveAttribute("data-look", "dark");
-  await expect(page.locator("#stage > svg")).toHaveAttribute("color", "#eef1f3");
+  await expect(page.locator("#stage-view > svg")).toHaveAttribute("color", "#eef1f3");
   await page.getByRole("button", { name: "Color", exact: true }).click();
   await page.getByRole("button", { name: "Red", exact: true }).click();
-  await expect(page.locator("#stage > svg")).toContainText("Gold medal");
-  expect(await page.locator("#stage").innerHTML()).toContain("#c8102e");
+  await expect(page.locator("#stage-view > svg")).toContainText("Gold medal");
+  expect(await page.locator("#stage-view").innerHTML()).toContain("#c8102e");
 });
 
-test("the turn slider turns the emblem, and the call says how", async ({ page }) => {
+test("the bar's angle slider turns the emblem, and the call says how", async ({ page }) => {
   await page.goto("/?id=ball:soccer");
-  const before = await page.locator("#stage").innerHTML();
-  await page.locator("#yaw").fill("60");
-  expect(await page.locator("#stage").innerHTML()).not.toBe(before);
+  const before = await page.locator("#stage-view").innerHTML();
+  await page.locator("#view-bar #yaw").fill("60");
+  expect(await page.locator("#stage-view").innerHTML()).not.toBe(before);
   await expect(page.locator("#code")).toContainText("emblemFrame");
   await expect(page).toHaveURL(/yaw=60/);
-  await page.locator("#yaw").fill("0");
-  expect(await page.locator("#stage").innerHTML()).toBe(before);
+  await page.locator("#view-bar #yaw").fill("0");
+  expect(await page.locator("#stage-view").innerHTML()).toBe(before);
 });
 
-test("a cup turns with the slider: its handles move, and the call says how", async ({ page }) => {
+test("a cup turns with the bar: its handles move, and the call says how", async ({ page }) => {
   await page.goto("/?id=trophy:tennis-cup");
-  const before = await page.locator("#stage").innerHTML();
-  await page.locator("#yaw").fill("100");
-  expect(await page.locator("#stage").innerHTML()).not.toBe(before);
-  await page.locator("#yaw").fill("0");
-  expect(await page.locator("#stage").innerHTML()).toBe(before);
+  const before = await page.locator("#stage-view").innerHTML();
+  await page.locator("#view-bar #yaw").fill("100");
+  expect(await page.locator("#stage-view").innerHTML()).not.toBe(before);
+  await page.locator("#view-bar #yaw").fill("0");
+  expect(await page.locator("#stage-view").innerHTML()).toBe(before);
 });
 
 test("the engrave field engraves a medal, and the address and the call say so, and a gear piece turns too", async ({ page }) => {
@@ -84,11 +84,11 @@ test("the engrave field engraves a medal, and the address and the call say so, a
   await expect(page.locator("#stage")).toContainText("MVP");
   await expect(page).toHaveURL(/engrave=MVP/);
   await expect(page.locator("#code")).toContainText('engrave: "MVP 2026"');
-  await page.locator("#yaw").fill("180");
-  expect(await page.locator("#stage").innerHTML()).not.toContain("<text");
+  await page.locator("#view-bar #yaw").fill("180");
+  expect(await page.locator("#stage-view").innerHTML()).not.toContain("<text");
   await page.goto("/?id=gear:hurley&yaw=60");
-  await expect(page.locator("#turn-row")).toBeVisible();
-  expect(await page.locator("#stage").innerHTML()).toContain("scale(0.5 1)");
+  await expect(page.locator("#view-bar")).toBeVisible();
+  expect(await page.locator("#stage-view").innerHTML()).toContain("scale(0.5 1)");
   await page.goto("/?id=pennant:championship&engrave=Champions");
   await expect(page.locator("#stage")).toContainText("CHAMPIONS");
 });
@@ -201,7 +201,7 @@ test("44 pixels is the least a control gives a finger", async ({ page }) => {
   await expect(page.locator(".cards li").first()).toBeVisible();
   for (const control of await page.locator(".copy").all().then((all) => all.slice(0, 4))) expect((await control.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
   await page.goto("/");
-  for (const control of await page.locator("#style button, #theme button, #size button, #tint button, #emblem, #engrave, #yaw, #pitch, #puck-design, #puck-ring, #puck-text, #puck-name, #puck-number, #puck-sign button, #puck-seed").all()) {
+  for (const control of await page.locator("#style button, #theme button, #size button, #tint button, #emblem, #engrave, #puck-design, #puck-ring, #puck-text, #puck-name, #puck-number, #puck-sign button, #puck-seed").all()) {
     const box = (await control.boundingBox())!;
     expect(box.height).toBeGreaterThanOrEqual(43.5);
   }
@@ -213,11 +213,11 @@ test("the background is off by default, and a chosen one is a picture behind the
   await page.goto("/?id=trophy:hockey-cup");
   const background = () => page.locator("#stage").evaluate((stage) => stage.style.backgroundImage);
   expect(await background()).toBe("");
-  const plain = await page.locator("#stage > svg").evaluate((svg) => svg.outerHTML);
+  const plain = await page.locator("#stage-view > svg").evaluate((svg) => svg.outerHTML);
   await page.locator("#background").selectOption("ice");
   await expect.poll(background).toContain("data:image/svg+xml");
   await expect(page).toHaveURL(/background=ice/);
-  expect(await page.locator("#stage > svg").evaluate((svg) => svg.outerHTML)).toBe(plain);
+  expect(await page.locator("#stage-view > svg").evaluate((svg) => svg.outerHTML)).toBe(plain);
   await page.locator('button[data-value="dark"]').click();
   await expect.poll(background).toContain("data:image/svg+xml");
   // The address says which, and None takes it away again.
@@ -254,7 +254,7 @@ test("the header's language picker and theme switch answer, and keep their choic
 // John, 2026-11-02 (MODULES-112): the playground opened three folds of code before the next demo. Each demo has one fold beside it, closed.
 test("the playground page has one closed fold for the call beside each demo, and none open", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator("#stage > svg")).toBeVisible();
+  await expect(page.locator("#stage-view > svg")).toBeVisible();
   expect(await page.locator("details").count()).toBe(3);
   expect(await page.locator("details[open]").count()).toBe(0);
   // The playground's own fold is right under the playground, not at the foot of the page.

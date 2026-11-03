@@ -130,3 +130,7 @@ button.play { display: inline-flex; width: auto; }
 
 #embed-code { max-height: 18rem; overflow: auto; white-space: pre-wrap; word-break: break-all; }
 #embed-stage iframe { max-width: 100%; }
+#stage { overflow: hidden; }
+.stage-view { display: grid; justify-items: center; align-items: center; transform-origin: 50% 50%; }
+#view-bar { margin-top: 8px; }
+#view-bar { --kazoku-accent: var(--ink); --kazoku-ink: var(--ink); --kazoku-surface: var(--surface); --kazoku-line: var(--rule); }

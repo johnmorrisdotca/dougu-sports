@@ -4,6 +4,9 @@
 import { createAddressState } from "@johnmorrisdotca/kazoku-ui/address-state";
 import * as D from "../src/index.ts";
 import "../src/element.ts";
+import "@johnmorrisdotca/kazoku-ui/view-controls/define";
+import type { ViewControlsElement } from "@johnmorrisdotca/kazoku-ui/view-controls/element";
+import type { ViewState } from "@johnmorrisdotca/kazoku-ui/view-controls";
 import type { BackgroundPresetName } from "../scripts/family-backgrounds.ts";
 
 declare global {
@@ -16,7 +19,7 @@ declare global {
 const $ = <T extends HTMLElement = HTMLElement>(id: string): T => document.getElementById(id) as T;
 const params = new URLSearchParams(location.search);
 const FIRST: D.EmblemId = "trophy:stanley-cup";
-const DEFAULTS: Record<(typeof CHOICES)[number] | "background", string> = { style: "metal", theme: "inherit", size: "256", tint: "", speed: "18", background: "" };
+const DEFAULTS: Record<(typeof CHOICES)[number] | "background", string> = { style: "metal", theme: "inherit", size: "256", tint: "", background: "" };
 const BACKGROUNDS = [...document.querySelectorAll<HTMLOptionElement>("#background option")].map((o) => o.value);
 const pick = <T extends string>(value: string | null, allowed: readonly T[], fallback: T): T => allowed.find((one) => one === value) ?? fallback;
 const number = (value: string | null, low: number, high: number) => { const n = Number(value); return Number.isFinite(n) ? Math.max(low, Math.min(high, n)) : 0; };
@@ -28,27 +31,22 @@ interface State {
   theme: D.EmblemTheme;
   size: string;
   tint: string;
-  speed: string;
   background: string;
   engrave: string;
   /** "1" while it turns by itself because the reader asked (`?turn=1`, or Auto-turn), "0" otherwise; the pointer over the stage turns it without changing this. */
   turn: string;
-  /** "cw" for clockwise, "ccw" (the default, how it has always turned) for counterclockwise. */
-  dir: string;
 }
 /** The choices made with a row of buttons. */
-const CHOICES = ["style", "theme", "size", "tint", "speed"] as const;
+const CHOICES = ["style", "theme", "size", "tint"] as const;
 const state: State = {
   id: D.isEmblemId(params.get("id")) ? (params.get("id") as D.EmblemId) : FIRST,
   style: pick(params.get("style"), D.EMBLEM_STYLES, DEFAULTS.style as D.EmblemStyle),
   theme: pick<D.EmblemTheme>(params.get("theme"), ["inherit", "light", "dark", "auto"], "inherit"),
   size: pick(params.get("size"), ["32", "64", "128", "256"], DEFAULTS.size),
   tint: pick(params.get("tint"), ["", "#c8102e", "#1f4e9c", "#0b6e4f"], DEFAULTS.tint),
-  speed: pick(params.get("speed"), ["9", "18", "36", "45", "90"], DEFAULTS.speed),
   background: pick(params.get("background"), BACKGROUNDS, DEFAULTS.background),
   engrave: (params.get("engrave") ?? "").slice(0, 24),
   turn: params.get("turn") === "1" ? "1" : "0",
-  dir: params.get("dir") === "cw" ? "cw" : "ccw",
 };
 
 $("emblem").innerHTML = Object.entries(D.EMBLEM_GROUPS)
@@ -56,14 +54,13 @@ $("emblem").innerHTML = Object.entries(D.EMBLEM_GROUPS)
   .map(([group, ids]) => `<optgroup label="${group}">${ids.map((id) => `<option value="${id}">${D.emblemName(id)} (${id})</option>`).join("")}</optgroup>`)
   .join("");
 
-/** False until the stage is bound and drawn once: the auto-turn starts inside `bindTurn`, before there is a `turner` to read. */
-let booted = false;
 const locale = () => (document.documentElement.lang === "ja" ? "ja" : "en");
 /** True while the stage turns only because the mouse is over it (leaving stops it); Auto-turn and `?turn=1` are the reader's own. */
 let hoverPlay = false;
 /** What the stage draws with: the look, and how the turning behaves. The emblem waits still when the page opens and turns while the mouse is over it; `?turn=1` has it turn by itself from the start (not for a reader who prefers reduced motion), unless the address holds an angle. */
 function turnOptions(): D.TurnControlOptions {
-  const options: D.TurnControlOptions = { style: state.style, size: Number(state.size), theme: state.theme, speed: Number(state.speed), direction: state.dir === "cw" ? "clockwise" : "counterclockwise", locale: locale(), onTurn: () => sync(), onPlayChange: (playing) => { state.turn = playing && !hoverPlay ? "1" : "0"; if (booted) sync(); } };
+  // The hands (drag, wheel, pinch, keys, the bar) are the family's <kazoku-view-controls>; the emblem is drawn and turned by `setAngles`.
+  const options: D.TurnControlOptions = { style: state.style, size: Number(state.size), theme: state.theme, locale: locale(), hands: false };
   if (state.tint) options.tint = state.tint;
   if (state.engrave.trim() !== "") options.engrave = state.engrave;
   return options;
@@ -73,50 +70,33 @@ function turnOptions(): D.TurnControlOptions {
 const embedState = { way: pick(params.get("embed"), ["element", "iframe", "module", "img", "svg"] as const, "element"), turn: pick(params.get("eturn"), ["still", "turnable", "autoplay"] as const, "still") };
 
 let embedKey = "";
-const turner = D.bindTurn($("stage"), state.id, {
-  ...turnOptions(),
-  autoPlay: state.turn === "1" && !["yaw", "pitch", "roll"].some((key) => params.has(key)),
-  yaw: number(params.get("yaw"), -180, 180),
-  pitch: number(params.get("pitch"), -60, 60),
-  roll: number(params.get("roll"), -180, 180),
-});
+const view = $("stage-view");
+const turner = D.bindTurn(view, state.id, { ...turnOptions(), roll: number(params.get("roll"), -180, 180) });
+const bar = $<ViewControlsElement>("view-bar");
 
-// `?turn=1` with an angle in the address, or under reduced motion, opens still: the state says what is happening.
-state.turn = turner.playing ? "1" : "0";
-
-const address = createAddressState({ defaults: { ...DEFAULTS, id: FIRST, dir: "ccw", embed: "element", eturn: "still" } });
+const address = createAddressState({ defaults: { ...DEFAULTS, id: FIRST, embed: "element", eturn: "still" } });
 /** The address follows. A spin changes it sixty times a second: the shared address state writes it once things settle. */
 function writeAddress() {
-  const next: Record<string, string | null> = { id: state.id, turn: state.turn === "1" ? "1" : null, dir: state.dir, engrave: state.engrave.trim() === "" ? null : state.engrave };
+  const next: Record<string, string | null> = { id: state.id, turn: state.turn === "1" ? "1" : null, engrave: state.engrave.trim() === "" ? null : state.engrave };
   for (const key of [...CHOICES, "background"] as const) next[key] = state[key];
-  // While it turns by itself the angles change every frame: the address then leaves them out, so a reload starts the turn again.
-  const a = turner.angles;
-  for (const key of ["yaw", "pitch", "roll"] as const) next[key] = !turner.playing && a[key] !== 0 ? String(a[key]) : null;
+  // The angle, the tilt and the zoom are the view controls' own, in the address beside these; the roll of a ball is this page's.
+  next["roll"] = turner.angles.roll !== 0 ? String(turner.angles.roll) : null;
   next["embed"] = embedState.way;
   next["eturn"] = embedState.turn;
   address.setMany(next);
 }
 
-/** The Tilt slider and the package's `pitch` are each other's opposite (and `0 -` keeps zero from reading -0). */
-const sliderOf = (degrees: number): number => 0 - degrees;
-
-/** Brings everything but the drawing in line with the turner: the sliders and readouts, the rows that apply, the button and the call. */
+/** Brings everything but the drawing in line with the turner: the roll slider, the rows that apply, the bar and the call. */
 function sync() {
   const a = turner.angles;
   const info = D.emblemInfo(state.id);
   const canTurn = turner.turnable;
   const ball = info.kind === "ball";
-  $("turn-row").hidden = !canTurn;
-  $("tilt-row").hidden = !canTurn;
   $("roll-row").hidden = !(canTurn && ball);
-  $("spin-row").hidden = !canTurn;
-  for (const name of ["yaw", "pitch", "roll"] as const) {
-    // The Tilt slider is the opposite sign of the package's `pitch`: its top lifts the FRONT of the piece, like a drag up (the code below still shows `pitch`).
-    const shown = name === "pitch" ? sliderOf(a.pitch) : a[name];
-    $<HTMLInputElement>(name).value = String(shown);
-    $(`${name}-out`).textContent = `${Math.round(shown)}°`;
-  }
-  $("play").setAttribute("aria-pressed", String(turner.playing));
+  bar.toggleAttribute("flat", !canTurn);
+  bar.hidden = !canTurn;
+  $<HTMLInputElement>("roll").value = String(a.roll);
+  $("roll-out").textContent = `${Math.round(a.roll)}°`;
   const turned = a.yaw !== 0 || a.pitch !== 0 || a.roll !== 0;
   const options: D.EmblemOptions = { style: state.style, size: Number(state.size), theme: state.theme };
   if (state.tint) options.tint = state.tint;
@@ -133,18 +113,18 @@ function sync() {
 /** The "Put it in your page" panel: the same emblem as the stage, as the code for the way chosen, and that code running beside it. */
 function drawEmbed() {
   const a = turner.angles;
-  const still = embedState.turn === "still" && !turner.playing;
+  const still = embedState.turn === "still" && !bar.state.turning;
   const options: D.EmbedOptions = { style: state.style, size: Number(state.size), theme: state.theme, locale: locale() };
   if (state.tint) options.tint = state.tint;
   if (still && turner.turnable) Object.assign(options, a.yaw !== 0 ? { yaw: Math.round(a.yaw) } : {}, a.pitch !== 0 ? { pitch: Math.round(a.pitch) } : {});
   if (embedState.turn !== "still") options.turnable = true;
   if (embedState.turn === "autoplay") options.autoplay = true;
-  const shown = D.emblemEmbedCode(state.id, options);
   const key = JSON.stringify([embedState, state.id, options]);
   for (const b of $("embed-way").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === embedState.way));
   for (const b of $("embed-turn").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === embedState.turn));
   if (key === embedKey) return;
   embedKey = key;
+  const shown = D.emblemEmbedCode(state.id, options);
   const code = { element: shown.html, iframe: shown.iframe, module: shown.module, img: shown.img, svg: shown.svg }[embedState.way];
   $("embed-code").firstChild!.textContent = code;
   const here = D.emblemEmbedCode(state.id, { ...options, site: new URL(".", location.href).href });
@@ -221,18 +201,23 @@ for (const group of CHOICES) {
 $("background").addEventListener("change", () => { state.background = $<HTMLSelectElement>("background").value; draw(); });
 $<HTMLInputElement>("engrave").value = state.engrave;
 $("engrave").addEventListener("input", () => { state.engrave = $<HTMLInputElement>("engrave").value; draw(); });
-// A slider takes over from the auto-turn: setAngles pauses it.
-for (const name of ["yaw", "pitch", "roll"]) {
-  $(name).addEventListener("input", () => { const value = Number($<HTMLInputElement>(name).value); turner.setAngles({ [name]: name === "pitch" ? sliderOf(value) : value }); sync(); });
-}
-$("play").addEventListener("click", () => { hoverPlay = false; turner.togglePlay(); sync(); });
-$("direction").setAttribute("aria-pressed", String(state.dir === "cw"));
-$("direction").addEventListener("click", () => {
-  state.dir = state.dir === "cw" ? "ccw" : "cw";
-  $("direction").setAttribute("aria-pressed", String(state.dir === "cw"));
-  turner.setDirection(state.dir === "cw" ? "clockwise" : "counterclockwise");
+$("roll").addEventListener("input", () => { turner.setAngles({ roll: Number($<HTMLInputElement>("roll").value) }); sync(); });
+/** What the view bar tells the emblem: its angle and tilt turn it (a tilt up is a drag up, which lifts the front: the package's `pitch` goes down), its zoom and pan move the view. */
+bar.addEventListener("kazoku-viewchange", (event) => {
+  const v = (event as CustomEvent<ViewState>).detail;
+  if (turner.turnable) turner.setAngles({ yaw: v.yaw, pitch: 0 - v.tilt });
+  view.style.transform = v.zoom === 1 && v.panX === 0 && v.panY === 0 ? "" : `translate(${v.panX}px, ${v.panY}px) scale(${v.zoom})`;
+  state.turn = v.turning && !hoverPlay ? "1" : "0";
   sync();
 });
+/** The bar as the thing the pointer over the stage plays and pauses. */
+const barTurn = {
+  get playing() { return bar.state.turning; },
+  get angles() { return { yaw: bar.state.yaw }; },
+  play() { bar.play(); return true; },
+  pause() { bar.pause(); },
+  togglePlay() { if (bar.state.turning) bar.pause(); else bar.play(); return bar.state.turning; },
+};
 /**
  * The mouse over a stage turns it and leaving stops it; a tap (a touch or a pen, not a drag) turns it and a second tap holds it. A reader who prefers reduced motion is never turned for by the pointer.
  * `hover` says whether the turn it started is the pointer's (and so is undone by leaving).
@@ -262,14 +247,15 @@ function turnOnHover(stage: HTMLElement, control: { readonly playing: boolean; r
 {
   // `hoverPlay` is a module variable the options read, so the stage's flag is a view on it.
   const hover = { get on() { return hoverPlay; }, set on(value: boolean) { hoverPlay = value; } };
-  turnOnHover($("stage"), turner, hover);
+  turnOnHover($("stage"), barTurn, hover);
 }
 // The language chooser changes <html lang>; the stage's spoken description follows it.
 new MutationObserver(() => { turner.update(state.id, turnOptions()); drawPicks(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
 
 drawPicks();
-booted = true;
 draw();
+// `?turn=1` has it turn by itself from the start (the bar leaves a reader who prefers reduced motion still).
+if (state.turn === "1" && !["yaw", "tilt"].some((key) => params.has(key)) && !matchMedia("(prefers-reduced-motion: reduce)").matches) bar.play();
 
 // A trophy case: a few emblems that wait still and turn while the pointer is over them (or when tapped), each with its own button to keep it turning or hold it.
 const CASE = ["trophy:hockey-cup", "trophy:tennis-cup", "medal:gold", "ball:rugby"];

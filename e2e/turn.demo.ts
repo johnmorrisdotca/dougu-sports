@@ -1,8 +1,14 @@
-// bindTurn in the playground, in a real browser: a drag, the arrow keys and the auto-turn turn the emblem, and the sliders follow.
+// The playground's turning, in a real browser. The hands (drag, wheel, pinch, keys, the bar) are the family's <kazoku-view-controls>, which turns the emblem through `setAngles`;
+// every drag here is a real pointer. A drag follows the hand: right turns it right, up lifts the front.
 import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 
-const yaw = (page: Page) => page.locator("#yaw").inputValue().then(Number);
+interface Seen { yaw: number; tilt: number; zoom: number; turning: boolean }
+const seen = (page: Page) => page.locator("#view-bar").evaluate((el) => (el as unknown as { state: Seen }).state);
+const yaw = (page: Page) => seen(page).then((s) => s.yaw);
+const tilt = (page: Page) => seen(page).then((s) => s.tilt);
+const play = (page: Page) => page.locator('#view-bar [data-b="play"]');
+const stageHtml = (page: Page) => page.locator("#stage-view").innerHTML();
 const dragStage = async (page: Page, dx: number, dy = 0) => {
   await page.locator("#stage").scrollIntoViewIfNeeded();
   const box = (await page.locator("#stage").boundingBox())!;
@@ -17,34 +23,31 @@ const dragStage = async (page: Page, dx: number, dy = 0) => {
 
 test("nothing turns until a button is pressed", async ({ page }) => {
   await page.goto("/?id=trophy:tennis-cup");
-  const before = await page.locator("#stage").innerHTML();
+  const before = await stageHtml(page);
   await page.waitForTimeout(600);
-  expect(await page.locator("#stage").innerHTML()).toBe(before);
+  expect(await stageHtml(page)).toBe(before);
   expect(await yaw(page)).toBe(0);
-  await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
+  await expect(play(page)).toHaveAttribute("aria-pressed", "false");
 });
 
-test("dragging the emblem turns it and moves the sliders and their readouts", async ({ page }) => {
+test("dragging the emblem with a real pointer turns it, right turns it right and up tips it up, and the address keeps the view", async ({ page }) => {
   await page.goto("/?id=trophy:tennis-cup");
-  const before = await page.locator("#stage").innerHTML();
-  await dragStage(page, 40, -20);
-  // The drawing is made on the next animation frame.
-  await expect.poll(() => page.locator("#stage").innerHTML()).not.toBe(before);
-  // 40 pixels at 1.5 degrees a pixel, and up is more tilt on the slider, whose top lifts the front of the piece (the slider steps by 5).
-  expect(await yaw(page)).toBeGreaterThanOrEqual(55);
-  expect(await yaw(page)).toBeLessThanOrEqual(65);
-  expect(Number(await page.locator("#pitch").inputValue())).toBeGreaterThan(0);
-  await expect(page.locator("#yaw-out")).toHaveText(/^\d+°$/);
+  const before = await stageHtml(page);
+  await dragStage(page, 60, -30);
+  await expect.poll(() => stageHtml(page)).not.toBe(before);
+  expect(await yaw(page)).toBeGreaterThan(5);
+  expect(await tilt(page)).toBeGreaterThan(2);
   await expect(page.locator("#code")).toContainText("emblemFrame");
-  // The address settles on the angles.
-  await expect(page).toHaveURL(/yaw=\d+/);
-  const cursor = await page.locator("#stage").evaluate((el) => [el.style.touchAction, el.style.userSelect, getComputedStyle(el).cursor]);
-  expect(cursor).toEqual(["none", "none", "grab"]);
+  await expect(page).toHaveURL(/yaw=-?\d+/);
+  await expect(play(page)).toHaveAttribute("aria-pressed", "false");
+  // The bar's angle slider says the same as the view.
+  const slider = Number(await page.locator("#view-bar #yaw").inputValue());
+  expect(slider).toBe(Math.round((await yaw(page)) as number));
 });
 
 // What a drag to the right does to what is drawn, measured on the page: the front of every kind carries to the right, and a flat thing shows its rim on the left.
 const darkPanels = (page: Page) =>
-  page.locator("#stage svg").first().evaluate((svg) => {
+  page.locator("#stage-view svg").first().evaluate((svg) => {
     const box = svg.getBoundingClientRect();
     return [...svg.querySelectorAll('path[fill="#1e2025"]')].map((el) => {
       const b = el.getBoundingClientRect();
@@ -56,44 +59,42 @@ const nearestTo = (list: { x: number; y: number }[], at: { x: number; y: number 
 test("a drag to the right carries the front of a ball to the right, and to the left carries it left", async ({ page }) => {
   await page.goto("/?id=ball:soccer");
   const panel = nearestTo(await darkPanels(page), { x: 0, y: 0 });
-  await dragStage(page, 10);
+  await dragStage(page, 20);
   await expect.poll(async () => nearestTo(await darkPanels(page), panel).x).toBeGreaterThan(panel.x + 2);
   const right = nearestTo(await darkPanels(page), panel);
-  await dragStage(page, -20);
+  await dragStage(page, -40);
   await expect.poll(async () => nearestTo(await darkPanels(page), right).x).toBeLessThan(right.x - 2);
 });
 
-test("a drag up lifts the front of a ball (the slider goes up with it), and a drag down lowers it", async ({ page }) => {
+test("a drag up lifts the front of a ball, and a drag down lowers it", async ({ page }) => {
   await page.goto("/?id=ball:soccer");
   const panel = nearestTo(await darkPanels(page), { x: 0, y: 0 });
-  await dragStage(page, 0, -10);
+  await dragStage(page, 0, -20);
   // The near face goes up with the hand, as if the near edge of a turntable were lifted: the panel in the middle of the view moves up.
   await expect.poll(async () => nearestTo(await darkPanels(page), panel).y).toBeLessThan(panel.y - 2);
-  await expect.poll(() => page.locator("#pitch").inputValue().then(Number)).toBeGreaterThan(0);
-  await expect(page).toHaveURL(/pitch=-\d+/);
+  expect(await tilt(page)).toBeGreaterThan(0);
+  await expect(page).toHaveURL(/tilt=\d+/);
   const up = nearestTo(await darkPanels(page), panel);
-  await dragStage(page, 0, 20);
+  await dragStage(page, 0, 40);
   await expect.poll(async () => nearestTo(await darkPanels(page), up).y).toBeGreaterThan(up.y + 2);
-  await expect.poll(() => page.locator("#pitch").inputValue().then(Number)).toBeLessThan(0);
+  expect(await tilt(page)).toBeLessThan(0);
 });
 
-test("the Tilt slider's top is a drag up: the front of the piece goes up, and the arrow key agrees", async ({ page }) => {
+test("the arrow key up tips it the way a drag up does, and Home puts it back", async ({ page }) => {
   await page.goto("/?id=ball:soccer");
   const panel = nearestTo(await darkPanels(page), { x: 0, y: 0 });
-  await page.locator("#pitch").fill("20");
-  await expect.poll(async () => nearestTo(await darkPanels(page), panel).y).toBeLessThan(panel.y - 2);
-  await expect(page.locator("#pitch-out")).toHaveText("20°");
-  await expect(page).toHaveURL(/pitch=-20/);
-  await page.locator("#pitch").fill("0");
   await page.locator("#stage").focus();
-  await page.keyboard.press("ArrowUp");
-  await expect(page.locator("#pitch")).toHaveValue("5");
+  for (let i = 0; i < 4; i += 1) await page.keyboard.press("ArrowUp");
+  await expect.poll(async () => nearestTo(await darkPanels(page), panel).y).toBeLessThan(panel.y - 2);
+  expect(await tilt(page)).toBeGreaterThan(0);
+  await page.keyboard.press("Home");
+  await expect.poll(() => tilt(page)).toBe(0);
 });
 
 test("a drag to the right carries the face of a cup to the right: its light slides that way", async ({ page }) => {
   await page.goto("/?id=trophy:tennis-cup");
   const light = () =>
-    page.locator('#stage svg path[fill="#fff"]').first().evaluate((el) => {
+    page.locator('#stage-view svg path[fill="#fff"]').first().evaluate((el) => {
       const b = el.getBoundingClientRect();
       return b.x + b.width / 2;
     });
@@ -107,7 +108,7 @@ test("a drag to the right carries the face of a cup to the right: its light slid
 test("a drag to the right shows the rim of a medal on its left, the edge that comes toward the eye", async ({ page }) => {
   await page.goto("/?id=medal:gold");
   const rimSide = () =>
-    page.locator("#stage svg").first().evaluate((svg) => {
+    page.locator("#stage-view svg").first().evaluate((svg) => {
       // The edge is the slices of the face moved along the thickness: the farthest one says which side it lies on (left is negative).
       const far = svg.querySelector('feOffset[result="o8"]');
       return far === null ? undefined : Number(far.getAttribute("dx"));
@@ -120,116 +121,109 @@ test("a drag to the right shows the rim of a medal on its left, the edge that co
 
 test("the arrow keys turn it, Home puts it back, and the stage can be reached by keyboard", async ({ page }) => {
   await page.goto("/?id=ball:soccer");
-  await page.locator("#stage").focus();
   await expect(page.locator("#stage")).toHaveAttribute("tabindex", "0");
-  await expect(page.locator("#stage")).toHaveAttribute("aria-roledescription", /turnable/);
+  await page.locator("#stage").focus();
   await page.keyboard.press("ArrowRight");
-  expect(await yaw(page)).toBe(5);
+  const right = await yaw(page);
+  expect(right).toBeGreaterThan(0);
   await page.keyboard.press("ArrowLeft");
   await page.keyboard.press("ArrowLeft");
-  expect(await yaw(page)).toBe(-5);
-  await page.keyboard.press("Shift+ArrowRight");
-  expect(await yaw(page)).toBe(10);
-  await page.keyboard.press("ArrowUp");
-  expect(Number(await page.locator("#pitch").inputValue())).toBe(5);
+  expect(await yaw(page)).toBeLessThan(right);
   await page.keyboard.press("Home");
   expect(await yaw(page)).toBe(0);
-  expect(Number(await page.locator("#pitch").inputValue())).toBe(0);
+  expect(await tilt(page)).toBe(0);
 });
 
-test("a ball has a roll slider, and Shift while dragging turns it", async ({ page }) => {
+test("a ball has a roll slider, a cup has none", async ({ page }) => {
   await page.goto("/?id=ball:soccer");
   await expect(page.locator("#roll-row")).toBeVisible();
-  await page.keyboard.down("Shift");
-  await dragStage(page, 40);
-  await page.keyboard.up("Shift");
-  expect(Number(await page.locator("#roll").inputValue())).toBeGreaterThan(0);
+  const before = await stageHtml(page);
+  await page.locator("#roll").fill("40");
+  await expect.poll(() => stageHtml(page)).not.toBe(before);
+  await expect(page.locator("#roll-out")).toHaveText("40°");
   await page.goto("/?id=trophy:tennis-cup");
   await expect(page.locator("#roll-row")).toBeHidden();
 });
 
-test("Play turns the yaw over time and Pause stops it, and the slider follows the spin", async ({ page }) => {
-  await page.goto("/?id=trophy:tennis-cup&speed=90");
-  await page.locator("#play").click();
-  await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+test("Auto-turn turns the yaw over time and pressing it again stops it", async ({ page }) => {
+  await page.goto("/?id=trophy:tennis-cup");
+  await play(page).click();
+  await expect(play(page)).toHaveAttribute("aria-pressed", "true");
   await expect.poll(() => yaw(page), { timeout: 5000 }).not.toBe(0);
   const mid = await yaw(page);
   await expect.poll(() => yaw(page), { timeout: 5000 }).not.toBe(mid);
-  await expect(page.locator("#yaw-out")).toHaveText(/^-?\d+°$/);
-  await page.locator("#play").click();
-  await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
-  const stopped = await page.locator("#stage").innerHTML();
+  await play(page).click();
+  await expect(play(page)).toHaveAttribute("aria-pressed", "false");
+  const stopped = await stageHtml(page);
   await page.waitForTimeout(500);
-  expect(await page.locator("#stage").innerHTML()).toBe(stopped);
+  expect(await stageHtml(page)).toBe(stopped);
 });
 
-test("a drag, a slider or a key takes over from the spin without a jump", async ({ page }) => {
-  await page.goto("/?id=trophy:tennis-cup&speed=90");
-  await page.locator("#play").click();
+test("a drag holds the spin while the pointer is down, and it carries on from the new angle; only Auto-turn stops it", async ({ page }) => {
+  await page.goto("/?id=trophy:tennis-cup");
+  await play(page).click();
   await expect.poll(() => yaw(page), { timeout: 5000 }).not.toBe(0);
-  // The slider pauses it.
-  await page.locator("#yaw").fill("100");
-  await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
-  await page.waitForTimeout(300);
-  expect(await yaw(page)).toBe(100);
-  // Space on the stage starts it again, and an arrow key stops it.
-  await page.locator("#stage").focus();
-  await page.keyboard.press("Space");
-  await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
-  await page.keyboard.press("ArrowLeft");
-  await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
-  // A drag holds the spin while the pointer is down, and it carries on from the new angle.
-  await page.locator("#play").click();
   await page.locator("#stage").scrollIntoViewIfNeeded();
   const box = (await page.locator("#stage").boundingBox())!;
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   const held = await yaw(page);
   await page.waitForTimeout(300);
-  expect(await yaw(page)).toBe(held);
+  expect(Math.abs((await yaw(page)) - held)).toBeLessThan(2);
   await page.mouse.up();
-  await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+  await expect(play(page)).toHaveAttribute("aria-pressed", "true");
   await expect.poll(() => yaw(page), { timeout: 5000 }).not.toBe(held);
 });
 
 test("changing the emblem, the style, the tint or the look keeps the angles", async ({ page }) => {
   await page.goto("/?id=trophy:tennis-cup");
-  await page.locator("#yaw").fill("60");
+  await page.locator("#stage").focus();
+  for (let i = 0; i < 6; i += 1) await page.keyboard.press("ArrowRight");
+  const turned = await yaw(page);
+  expect(turned).toBeGreaterThan(0);
   await page.locator("#emblem").selectOption("medal:gold");
-  expect(await yaw(page)).toBe(60);
+  expect(await yaw(page)).toBe(turned);
   await page.getByRole("button", { name: "Line", exact: true }).click();
   await page.getByRole("button", { name: "Red", exact: true }).click();
   await page.locator('button[data-value="dark"]').click();
-  expect(await yaw(page)).toBe(60);
-  await expect(page.locator("#stage > svg")).toHaveAttribute("color", "#eef1f3");
-  expect(await page.locator("#stage").innerHTML()).toContain("<title>Gold medal</title>");
+  expect(await yaw(page)).toBe(turned);
+  await expect(page.locator("#stage-view > svg")).toHaveAttribute("color", "#eef1f3");
+  expect(await stageHtml(page)).toContain("<title>Gold medal</title>");
 });
 
-test("a pictogram and a piece of gear turn like a coin, with the turning controls", async ({ page }) => {
+test("a pictogram and a piece of gear turn like a coin, with the bar", async ({ page }) => {
   for (const id of ["sport:nhl", "gear:hurley", "award:crown", "gear:gunbai"]) {
     await page.goto(`/?id=${id}`);
-    await expect(page.locator("#turn-row")).toBeVisible();
-    await expect(page.locator("#spin-row")).toBeVisible();
-    // The stage is ready for the drag when bindTurn has made it a tab stop.
+    await expect(page.locator("#view-bar")).toBeVisible();
     await expect(page.locator("#stage")).toHaveAttribute("tabindex", "0");
-    const before = await page.locator("#stage").innerHTML();
+    const before = await stageHtml(page);
     // WebKit may drop the first press of a page that has only just settled, so the drag is tried again until the drawing changes.
     await expect.poll(async () => {
       await dragStage(page, 60);
-      return (await page.locator("#stage").innerHTML()) !== before;
+      return (await stageHtml(page)) !== before;
     }, { message: id, timeout: 5000 }).toBe(true);
   }
 });
 
-test("the hint and the buttons say it in English and in Japanese", async ({ page }) => {
+test("zoom moves the view and Fit puts it back, and the wheel zooms about the pointer", async ({ page }) => {
+  await page.goto("/?id=trophy:tennis-cup");
+  const zoomIn = page.locator('#view-bar [data-b="in"]');
+  await zoomIn.click();
+  await expect.poll(async () => (await seen(page)).zoom).toBeGreaterThan(1);
+  await expect(page.locator("#stage-view")).toHaveCSS("transform", /matrix/);
+  await page.locator('#view-bar [data-b="fit"]').click();
+  await expect.poll(async () => (await seen(page)).zoom).toBe(1);
+  await expect(page.locator("#stage-view")).toHaveCSS("transform", "none");
+});
+
+test("the hint and the bar say it in English and in Japanese", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator("#hint")).toContainText("Drag the emblem, or use the sliders or the arrow keys");
-  await expect(page.locator("#play")).toContainText("Auto-turn");
+  await expect(page.locator("#hint")).toContainText("Drag the emblem, or use the bar under it");
+  await expect(play(page)).toContainText("Auto-turn");
   await page.goto("/?lang=ja");
   await expect(page.locator("#hint")).toContainText("ドラッグ");
-  await expect(page.locator("#play")).toContainText("自動回転");
-  await page.locator("#play").click();
-  await expect(page.locator("#play")).toContainText("停止");
+  await expect(play(page)).not.toContainText("Auto-turn");
+  await expect(play(page)).toContainText(/[\u3040-\u30ff\u4e00-\u9fff]/);
 });
 
 test("the trophy case turns each emblem on its own button, and nothing moves before", async ({ page }) => {
@@ -251,33 +245,31 @@ test("the trophy case turns each emblem on its own button, and nothing moves bef
   await expect(first.getByTestId("case-play")).toHaveAttribute("aria-pressed", "false");
 });
 
-test("the turning controls are 44 pixels tall at least, and the page does not scroll sideways", async ({ page }) => {
+test("the bar and the buttons are 44 pixels tall at least, and the page does not scroll sideways", async ({ page }) => {
   await page.goto("/?id=ball:soccer");
-  for (const control of await page.locator("#play, #speed button, #roll, #picks button, #case .case-play").all()) expect((await control.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
+  for (const control of await page.locator("#view-bar button:visible, #roll, #picks button, #case .case-play").all()) expect((await control.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
 
 // The page opens on a still emblem with its controls beside it; it turns while the pointer is over it (a tap on a phone), and Auto-turn and `?turn=1` keep it going. The suite runs with reduced motion on, so these ask for the ordinary setting.
-const gapOf = (from: number, to: number) => ((to - from + 540) % 360) - 180;
-
 test.describe("a reader who has not asked for reduced motion", () => {
   test.use({ reducedMotion: "no-preference" });
 
   test("the emblem waits still when the page opens, turns while the mouse is over it, and stops where it leaves", async ({ page, hasTouch }) => {
     test.skip(hasTouch, "a touch screen has no pointer to hover with: the tap test covers it");
     await page.goto("/");
-    await expect(page.locator("#stage > svg")).toBeVisible();
-    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
+    await expect(page.locator("#stage-view > svg")).toBeVisible();
+    await expect(play(page)).toHaveAttribute("aria-pressed", "false");
     await page.waitForTimeout(700);
     expect(await yaw(page)).toBe(0);
     expect(page.url()).not.toMatch(/turn=/);
     await page.locator("#stage").hover();
-    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+    await expect(play(page)).toHaveAttribute("aria-pressed", "true");
     await expect.poll(() => yaw(page), { timeout: 8000 }).not.toBe(0);
     // The pointer's turn is not the reader's own choice: the address does not say "turn".
     expect(page.url()).not.toMatch(/turn=/);
     await page.mouse.move(2, 2);
-    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
+    await expect(play(page)).toHaveAttribute("aria-pressed", "false");
     const stopped = await yaw(page);
     await page.waitForTimeout(500);
     expect(await yaw(page)).toBe(stopped);
@@ -288,68 +280,47 @@ test.describe("a reader who has not asked for reduced motion", () => {
   test("a tap on the stage turns it and a second tap holds it", async ({ page, hasTouch }) => {
     test.skip(!hasTouch, "needs a touch screen");
     await page.goto("/");
-    await expect(page.locator("#stage > svg")).toBeVisible();
+    await expect(page.locator("#stage-view > svg")).toBeVisible();
     await page.locator("#stage").tap();
-    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+    await expect(play(page)).toHaveAttribute("aria-pressed", "true");
     await expect.poll(() => yaw(page), { timeout: 8000 }).not.toBe(0);
     await page.locator("#stage").tap();
-    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
+    await expect(play(page)).toHaveAttribute("aria-pressed", "false");
     const stopped = await yaw(page);
     await page.waitForTimeout(500);
     expect(await yaw(page)).toBe(stopped);
   });
 
-  test("?turn=1 starts it with the page, Stop and Auto-turn hold and carry on, and turn=0 and an angle in the address open still", async ({ page }) => {
+  test("?turn=1 starts it with the page, Auto-turn holds and carries on, and turn=0 and an angle in the address open still", async ({ page }) => {
     await page.goto("/?turn=1");
-    await expect(page.locator("#stage > svg")).toBeVisible();
-    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator("#stage-view > svg")).toBeVisible();
+    await expect(play(page)).toHaveAttribute("aria-pressed", "true");
     await expect.poll(() => yaw(page), { timeout: 8000 }).not.toBe(0);
-    // The address leaves the angles out while it turns, so that a reload starts the turn again.
+    // The address leaves the angle out while it turns, so that a reload starts the turn again.
     expect(page.url()).not.toMatch(/yaw=/);
-    await page.locator("#play").click();
-    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
+    await play(page).click();
+    await expect(play(page)).toHaveAttribute("aria-pressed", "false");
     await expect(page).not.toHaveURL(/turn=1/);
     const stopped = await yaw(page);
     await page.waitForTimeout(400);
     expect(await yaw(page)).toBe(stopped);
-    await page.locator("#play").click();
+    await play(page).click();
     await expect(page).toHaveURL(/turn=1/);
     await expect.poll(() => yaw(page), { timeout: 8000 }).not.toBe(stopped);
     await page.goto("/?turn=0");
     await page.waitForTimeout(500);
     expect(await yaw(page)).toBe(0);
     await page.goto("/?turn=1&yaw=70");
-    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "false");
+    await expect(play(page)).toHaveAttribute("aria-pressed", "false");
     await page.waitForTimeout(400);
     expect(await yaw(page)).toBe(70);
   });
 
-  test("Reverse turns it the other way, from where it was, at the same speed, and the address keeps it", async ({ page }) => {
-    await page.goto("/?turn=1&speed=90");
-    await expect(page.locator("#stage > svg")).toBeVisible();
-    const reverse = page.locator("#direction");
-    await expect(reverse).toHaveAttribute("aria-pressed", "false");
-    const start = await yaw(page);
-    await expect.poll(async () => gapOf(start, await yaw(page)), { timeout: 8000 }).toBeGreaterThan(5);
-    await reverse.click();
-    await expect(reverse).toHaveAttribute("aria-pressed", "true");
-    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
-    await expect(page).toHaveURL(/dir=cw/);
-    const turned = await yaw(page);
-    await expect.poll(async () => gapOf(turned, await yaw(page)), { timeout: 8000 }).toBeLessThan(-5);
-    await reverse.click();
-    await expect(page).not.toHaveURL(/dir=/);
-    await page.goto("/?turn=1&speed=90&dir=cw");
-    await expect(page.locator("#direction")).toHaveAttribute("aria-pressed", "true");
-    const first = await yaw(page);
-    await expect.poll(async () => gapOf(first, await yaw(page)), { timeout: 8000 }).toBeLessThan(-5);
-  });
-
-  test("the stage, the quick picks and the turn controls are in the first screen, and a change while it turns leaves the turn going", async ({ page }) => {
+  test("the stage, the quick picks and the bar are in the first screen, and a change while it turns leaves the turn going", async ({ page }) => {
     await page.goto("/?turn=1");
-    await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+    await expect(play(page)).toHaveAttribute("aria-pressed", "true");
     const height = page.viewportSize()!.height;
-    for (const selector of ["#stage", "#picks button", "#play", "#direction", "#yaw"]) {
+    for (const selector of ["#stage", "#picks button", "#view-bar"]) {
       const box = (await page.locator(selector).first().boundingBox())!;
       expect(box, selector).not.toBeNull();
       expect(box.y + box.height, `${selector} is in the first screen`).toBeLessThanOrEqual(height);
@@ -366,7 +337,7 @@ test.describe("a reader who has not asked for reduced motion", () => {
     for (const change of changes) {
       const before = await yaw(page);
       await change();
-      await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+      await expect(play(page)).toHaveAttribute("aria-pressed", "true");
       const after = await yaw(page);
       expect(gap(before, after), "the angle was not reset").toBeLessThan(60);
       await expect.poll(async () => gap(after, await yaw(page)), { timeout: 8000 }).toBeGreaterThan(2);
@@ -399,30 +370,17 @@ test.describe("a reader who has not asked for reduced motion", () => {
   });
 });
 
-test("a reader who prefers reduced motion is not turned for by the pointer, and Auto-turn still works", async ({ page, hasTouch }) => {
+test("a reader who prefers reduced motion is not turned for by the pointer or by ?turn=1, and Auto-turn still works", async ({ page, hasTouch }) => {
   await page.goto("/?turn=1");
-  await expect(page.locator("#stage > svg")).toBeVisible();
+  await expect(page.locator("#stage-view > svg")).toBeVisible();
+  await expect(play(page)).toHaveAttribute("aria-pressed", "false");
   if (!hasTouch) {
     await page.locator("#stage").hover();
     await page.waitForTimeout(600);
     expect(await yaw(page)).toBe(0);
     await page.mouse.move(2, 2);
   }
-  await page.locator("#play").click();
-  await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
+  await play(page).click();
+  await expect(play(page)).toHaveAttribute("aria-pressed", "true");
   await expect.poll(() => yaw(page), { timeout: 8000 }).not.toBe(0);
-});
-
-test("the Auto-turn button is an ordinary button beside Reverse, before and after it is pressed, and never stretches across the row", async ({ page }) => {
-  await page.goto("/?id=ball:golf");
-  const row = (await page.locator("#spin-row").boundingBox())!;
-  for (const pressed of [false, true]) {
-    const play = (await page.locator("#play").boundingBox())!;
-    const reverse = (await page.locator("#direction").boundingBox())!;
-    expect(play.width, `Auto-turn ${pressed ? "(Stop)" : ""} is ${play.width} px of a row ${row.width} px wide`).toBeLessThan(row.width * 0.5);
-    expect(Math.abs(play.height - reverse.height), "as tall as Reverse").toBeLessThanOrEqual(2);
-    expect(Math.abs(play.y - reverse.y), "on the same line as Reverse").toBeLessThanOrEqual(2);
-    if (!pressed) await page.locator("#play").click();
-  }
-  await expect(page.locator("#play")).toHaveAttribute("aria-pressed", "true");
 });

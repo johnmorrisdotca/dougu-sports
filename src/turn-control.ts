@@ -86,6 +86,11 @@ export interface TurnControlOptions extends FrameOptions {
   pauseOnInteract?: boolean;
   /** Called with `true` when the auto-turn starts and `false` when it stops, whatever stopped it. */
   onPlayChange?: (playing: boolean) => void;
+  /**
+   * `false` leaves the hands to someone else: no pointer, no key, no tab stop and no cursor are bound to the element, and the emblem is turned by `setAngles` and the auto-turn. A shared control that has its own hands
+   * (kazoku-ui's `<kazoku-view-controls>`) turns it that way, so a drag is not heard twice. True by default.
+   */
+  hands?: boolean;
 }
 
 /**
@@ -263,6 +268,7 @@ export function bindTurnWith(registry: TurnRegistry | undefined, container: Turn
   let speed = 36;
   let way: TurnDirection = turnDirection(options.direction);
   let pauseOnInteract = true;
+  let hands = true;
   let locale: "en" | "ja" = "en";
   let onTurn: TurnControlOptions["onTurn"];
   let onPlayChange: TurnControlOptions["onPlayChange"];
@@ -288,11 +294,12 @@ export function bindTurnWith(registry: TurnRegistry | undefined, container: Turn
     speed = clamp(finite(o.speed, 36), -720, 720);
     if (o.direction !== undefined) way = turnDirection(o.direction);
     pauseOnInteract = o.pauseOnInteract !== false;
+    hands = o.hands !== false;
     locale = o.locale === "ja" ? "ja" : "en";
     onTurn = typeof o.onTurn === "function" ? o.onTurn : undefined;
     onPlayChange = typeof o.onPlayChange === "function" ? o.onPlayChange : undefined;
     const rest: Record<string, unknown> = { ...o };
-    for (const name of ["sensitivity", "pitchRange", "keyStep", "onTurn", "autoPlay", "speed", "direction", "pauseOnInteract", "onPlayChange", "yaw", "pitch", "roll"]) delete rest[name];
+    for (const name of ["sensitivity", "pitchRange", "keyStep", "onTurn", "autoPlay", "speed", "direction", "pauseOnInteract", "onPlayChange", "hands", "yaw", "pitch", "roll"]) delete rest[name];
     frame = rest as FrameOptions;
   };
   const place = (partial: Partial<TurnAngles>): void => {
@@ -441,6 +448,10 @@ export function bindTurnWith(registry: TurnRegistry | undefined, container: Turn
   const attach = (): void => {
     if (attached) return;
     attached = true;
+    if (!hands) {
+      globals.document?.addEventListener("visibilitychange", visibility);
+      return;
+    }
     const attributes = new Map<string, string | null>();
     const wanted: [string, string][] = [
       ["tabindex", "0"],

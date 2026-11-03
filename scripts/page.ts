@@ -19,15 +19,9 @@ const WORDS = {
     name: "Dougu (道具, どうぐ) is Japanese for equipment: the things a task is done with.",
     nameLink: "The name",
     foot: "Sports emblems as SVG, with no dependencies.",
-    spin: "Auto-turn",
     play: "Auto-turn",
     stop: "Stop",
-    reverse: "Reverse",
-    reverseLabel: "Turn the other way",
-    slow: "Slow",
-    medium: "Medium",
-    fast: "Fast",
-    hint: "Drag the emblem, or use the sliders or the arrow keys, to turn it. It also turns while the pointer is over it (tap it on a phone).",
+    hint: "Drag the emblem, or use the bar under it or the arrow keys, to turn it; the wheel and a pinch zoom. It also turns while the pointer is over it (tap it on a phone).",
     caseHeading: "A trophy case",
     caseNote: "Each one turns while the pointer is over it, or when you tap it. Press its button to keep it turning, or drag it.",
     picks: "Try one",
@@ -50,15 +44,9 @@ const WORDS = {
     name: "道具（どうぐ）は、何かをするために使うものです。",
     nameLink: "名前について",
     foot: "スポーツのエンブレムをSVGで描きます。依存パッケージはありません。",
-    spin: "自動回転",
     play: "自動回転",
     stop: "停止",
-    reverse: "逆回転",
-    reverseLabel: "逆向きに回す",
-    slow: "遅い",
-    medium: "ふつう",
-    fast: "速い",
-    hint: "エンブレムは、ドラッグするか、スライダーや矢印キーで回せます。ポインターを重ねている間も回ります（スマートフォンではタップ）。",
+    hint: "エンブレムは、ドラッグするか、下のバーや矢印キーで回せます。ホイールやピンチで拡大もできます。ポインターを重ねている間も回ります（スマートフォンではタップ）。",
     caseHeading: "トロフィーケース",
     caseNote: "それぞれ、ポインターを重ねている間か、タップすると回ります。ボタンで回し続けたり、ドラッグで回したりできます。",
     picks: "選んでみる",
@@ -194,7 +182,11 @@ const asBuilt: Plugin = {
       return target === undefined ? undefined : { path: target, external: true };
     });
     // The shared parts (a dev dependency, used only by the demo) are served beside the pages, so the header's parts and the page share one copy of each.
-    b.onResolve({ filter: /^@johnmorrisdotca\/kazoku-ui\// }, (args) => ({ path: `./kazoku-ui/${args.path.slice("@johnmorrisdotca/kazoku-ui/".length)}/index.js`, external: true }));
+    b.onResolve({ filter: /^@johnmorrisdotca\/kazoku-ui\// }, (args) => {
+      const sub = args.path.slice("@johnmorrisdotca/kazoku-ui/".length);
+      // A `define` module is a file beside its folder's index (view-controls/define.js); every other part is its folder's index.js.
+      return { path: sub.endsWith("/define") ? `./kazoku-ui/${sub}.js` : `./kazoku-ui/${sub}/index.js`, external: true };
+    });
   },
 };
 

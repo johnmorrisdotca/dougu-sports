@@ -550,3 +550,18 @@ test("without requestAnimationFrame a change is drawn at once", () => {
     g.requestAnimationFrame = saved;
   }
 });
+
+test("hands: false binds no pointer, no key, no tab stop and no cursor, and setAngles still turns it", () => {
+  const box = new Fake();
+  const turner = bindTurn(box, "ball:soccer", { size: 64, hands: false });
+  assert.equal(box.count(), 0);
+  assert.equal(box.getAttribute("tabindex"), null);
+  assert.equal(box.style.cursor, "");
+  assert.equal(box.style.touchAction, "");
+  assert.ok(turner.turnable);
+  turner.setAngles({ yaw: 40, pitch: -10 });
+  assert.deepEqual(turner.angles, { yaw: 40, pitch: -10, roll: 0 });
+  assert.equal(box.innerHTML, emblemFrame("ball:soccer", { size: 64, yaw: 40, pitch: -10, roll: 0 }));
+  turner.destroy();
+  assert.equal(box.count(), 0);
+});

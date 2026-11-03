@@ -107,6 +107,8 @@ An id is read from the registry, and the registry is the whole package (about 80
 
 The element gets `tabindex="0"` (unless the page set one), a role (`group`, unless it has one), an `aria-roledescription` and an `aria-description` that names the arrow keys and Space, in English or in Japanese (`locale`). `preventDefault()` is called only for the keys it handles. Yaw wraps into -180 (excluded) to 180, as the demo's slider does; pitch is clamped. Each change is drawn once on the next animation frame, however many pointer moves there were. An emblem that cannot turn (a pictogram, today) is drawn as it is and nothing is listened to; turnability is read from the registry's own frames, so an emblem that gains a turn turns here without a change to `bindTurn`.
 
+**Hands of your own: `hands: false`.** A page that has a control with its own hands (the family's `<kazoku-view-controls>` has a drag, the wheel, a pinch, the keys and a bar) passes `hands: false`: nothing is bound to the element, it gets no tab stop, no role and no cursor, and the emblem is drawn and turned by `setAngles` (and the auto-turn, if you start it). The demo's playground does this: the bar's `kazoku-viewchange` event calls `turner.setAngles({ yaw, pitch: 0 - tilt })`, where the minus sign is the one place a drag up (a larger tilt of the bar) lifts the front of the emblem, which is a smaller `pitch`.
+
 ### The auto-turn
 
 Nothing moves by itself. `autoPlay` is off by default, `play()`, `pause()` and `togglePlay()` start and stop it, and `speed` is degrees of yaw a second (36, at most 720; a negative speed turns the other way too).
