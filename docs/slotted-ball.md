@@ -41,6 +41,29 @@ console.log(renderEmblem("ball:plastic-baseball-slotted", { size: 128 }).include
 console.log(ballFrame("ball:plastic-baseball-slotted", { yaw: 202, pitch: -22 }).includes("<g mask=")); // false
 ```
 
+## The practice ball with slots all over
+
+The other common hollow plastic practice baseball has slots on **both** halves, and is often two-tone. It is three more emblems, drawn with the same see-through holes:
+
+| Id | Name | Colours |
+| --- | --- | --- |
+| `ball:plastic-baseball-practice` | Practice ball, two-tone | high-visibility yellow and black, split along the seam between the two halves |
+| `ball:plastic-baseball-practice-white` | Practice ball, white | white |
+| `ball:plastic-baseball-practice-orange` | Practice ball, orange | orange |
+
+Each half has two rings of six slots: the slots of the inner ring run toward the pole of that half and the slots of the outer ring run round the ball, a ring between the first and the seam, turned half a step so that no slot lines up with another. A slot is 19 mm long on a ball 73.8 mm across, the figures of the one-sided ball above; the width of a slot is drawn a third of its length. The count of slots and their layout are drawn from product photographs that were looked at and never copied, and no maker's name or mark is on the ball.
+
+```js
+import { renderEmblem } from "@johnmorrisdotca/dougu-sports";
+import { ballFrame } from "@johnmorrisdotca/dougu-sports/turn";
+
+// Slots on both halves: from either pole the near slots are cut out of the shell.
+console.log(ballFrame("ball:plastic-baseball-practice", { yaw: 0, pitch: 0 }).includes("<mask")); // true
+console.log(ballFrame("ball:plastic-baseball-practice", { yaw: 180, pitch: 0 }).includes("<mask")); // true
+// The two-tone ball takes a tint for its second half; the white ball is one colour.
+console.log(renderEmblem("ball:plastic-baseball-practice", { size: 128, tint: "#2040c0" }).includes("#2040c0")); // true
+```
+
 ## Try it
 
 [The slotted ball in the demo](https://johnmorrisdotca.github.io/dougu-sports/?id=ball:plastic-baseball-slotted&turn=1): move the pointer over it to turn it.

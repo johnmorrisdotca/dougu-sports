@@ -6,9 +6,27 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.29.0] - 2026-11-03
+
+Put it anywhere: a tag, an embed page and the code for both. A practice baseball with slots all over. The playground's turning is the family's view controls. And the family's must-have list: a documentation site in English and Japanese, usage that is tested, and a check that holds it.
+
+### Added
+
+- **`@johnmorrisdotca/dougu-sports/element`: `<dougu-emblem>`**, any emblem as a web component, still or turning. Attributes `emblem`, `variant`, `size`, `tint`, `accent`, `initials`, `theme`, `locale`, `title`, `yaw`, `pitch`, `roll`, `turnable`, `autoplay` and `speed`; change one and it is drawn again. It draws SVG in a shadow root (styles adopted as a constructable stylesheet, so `style-src 'self'` is enough), waits while it is out of sight, and does not start by itself for a reader who prefers reduced motion. One script line from a CDN: `https://cdn.jsdelivr.net/npm/@johnmorrisdotca/dougu-sports/element/+esm`. Importing it on a server is safe and draws nothing.
+- **`embed.html`**, the page for an `<iframe>`: `embed.html?emblem=trophy:cup&variant=line&size=160&turnable=1`, with a small Pause button when it turns by itself, and nothing else on it.
+- **`emblemEmbedCode(ref, options)`** (in `/emblems` and the main entry): the tag, an iframe, an ES module, an `<img>` with a data address and the raw SVG for an emblem, as text.
+- **Three practice baseballs with slots on both halves**: `ball:plastic-baseball-practice` (high-visibility yellow and black, two-tone), `ball:plastic-baseball-practice-white` and `ball:plastic-baseball-practice-orange`. Two rings of six slots on each half, real see-through holes as the one-sided ball has, drawn from photographs looked at and never copied; no maker's name. The registry goes from 346 to 349 emblems.
+- **`hands: false`** for `bindTurn`: nothing is bound to the element, so a control with its own hands turns the emblem through `setAngles`.
+- **A documentation site** at `/docs/` (a page for each export with a TSDoc summary, parameters, what it returns and an example that was run when the site was built), nine guides in English and in Japanese, and `llms.txt`.
+- **Usage that is tested**: `examples/` holds a script tag from jsDelivr and from unpkg, Vite, webpack, React (and a server render of it), Vue, Svelte, Angular, an iframe, TypeScript and Node, and `pnpm test:usage` builds, type-checks or runs each against the package as npm packs it, opens the ones with a page in a browser, and checks that the README and the guides hold the same text.
+- **The family's must-have check** (`scripts/check-standard.mjs`, held to its recorded hash by `test/standard.test.ts`) and CI runs `test:usage`.
+
 ### Changed
 
-- The demo (not the package): no long pages of folds (MODULES-112). The playground's three "The call that draws it" folds, open by default, are closed, and the playground's own sits right under the playground instead of at the foot of the page. The composing and brands pages had a fold in every card (five, and twenty-three); each card now has a "Show the call" button that puts its call in one panel at the foot of the window (it follows a change of look and closes with Close or Escape) and the "Copy the call" button it already had. Tests in `e2e/demo.demo.ts`, `e2e/compose.demo.ts` and `e2e/brands.demo.ts`.
+- **The playground's turning is `<kazoku-view-controls>`** (kazoku-ui 0.10): the angle slider, Auto-turn with Slow, Medium and Fast, tilt, zoom and Fit, and the pan, with the drag, the wheel, a pinch and the arrow keys on the stage. The view is in the address (`yaw`, `tilt`, `zoom`); the old `pitch`, `speed` and `dir` are no longer read, and the Reverse button is gone (the bar has no reverse). A ball keeps its Roll slider. The pointer over the stage still turns it, a tap still turns it on a phone, and `?turn=1` still starts it.
+- `sideEffects` in `package.json` names `./dist/element.js` instead of being `false`, so a bundler keeps the tag's registration. Nothing else has a side effect.
+- Every export has a TSDoc summary, `@param`, `@returns` and an `@example` (the documentation site is made from them).
+- - The demo (not the package): no long pages of folds (MODULES-112). The playground's three "The call that draws it" folds, open by default, are closed, and the playground's own sits right under the playground instead of at the foot of the page. The composing and brands pages had a fold in every card (five, and twenty-three); each card now has a "Show the call" button that puts its call in one panel at the foot of the window (it follows a change of look and closes with Close or Escape) and the "Copy the call" button it already had. Tests in `e2e/demo.demo.ts`, `e2e/compose.demo.ts` and `e2e/brands.demo.ts`.
 
 ## [0.28.1] - 2026-11-02
 
