@@ -6,6 +6,14 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.31.0] - 2026-11-03
+
+### Changed
+
+- **The playground takes kazoku-ui 0.12 and its zoom slider.** On a desk the bar under the stage is now `layout="horizontal"` (a phone keeps the classic bar, which fits its width): the turn on one row and, under it, the zoom as a slider marked at 1x, 2x, 3x and 5x with the readout, zoom out, zoom in and Fit, and the Centre button of 0.11 beside More. The angle, tilt, zoom and pan are kept in the address as before.
+
+### Also in this release
+
 - Docs only (MODULES-247): two more guides, with Japanese twins: architecture (the pipeline from an id to an SVG document, the five rules, the entries and the checks) and podiums, sprites and data addresses; `demo/builder.html`, a page where the group, the emblem, the look, the theme, the size and the tint are chosen and the code that puts the emblem in a page is copied (`emblemEmbedCode`), with `e2e/builder.demo.ts`; the README is under npm's 64,000 characters, its list of releases now the CHANGELOG's.
 - The README opens with the package's thumbnail, and the demo carries it as its link preview (og:image) and publishes the card, a dark card and an icon on Pages at `thumbnail.png`, `thumbnail-dark.png` and `icon.png`.
 

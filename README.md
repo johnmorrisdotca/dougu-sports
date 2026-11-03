@@ -744,7 +744,7 @@ Bug reports and ideas go in the [issues](https://github.com/johnmorrisdotca/doug
 
 ## Changes
 
-See [CHANGELOG.md](./CHANGELOG.md), which has every release from 0.0.1 with its date and what it added. 0.30.0 makes the three practice baseballs' slots fewer, larger and rounder, like the real ball, and takes kazoku-ui 0.11 in the playground. 0.29.0 adds `<dougu-emblem>` and the embed page, three practice baseballs with slots on both halves, and the documentation site. 0.28.0 adds the Jackie Robinson Rookie of the Year plaque (`trophy:jackie-robinson-award`) and the Halas, Messier, O'Ree and NBA postseason trophies (346 emblems).
+See [CHANGELOG.md](./CHANGELOG.md), which has every release from 0.0.1 with its date and what it added. 0.31.0 puts the playground's zoom on kazoku-ui 0.12's slider. 0.30.0 makes the three practice baseballs' slots fewer, larger and rounder, like the real ball, and takes kazoku-ui 0.11 in the playground. 0.29.0 adds `<dougu-emblem>` and the embed page, three practice baseballs with slots on both halves, and the documentation site. 0.28.0 adds the Jackie Robinson Rookie of the Year plaque (`trophy:jackie-robinson-award`) and the Halas, Messier, O'Ree and NBA postseason trophies (346 emblems).
 
 ## Credits
 

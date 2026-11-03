@@ -5,7 +5,11 @@ order: 9
 description: What changed between versions and what to do about it. The package is 0.x: read this before a minor version.
 ---
 
-The package is at 0.x, so a minor version (0.29 to 0.30) may change behaviour. Each release's notes are in the [changelog](../../CHANGELOG.md); this page lists what needs your action.
+The package is at 0.x, so a minor version (0.30 to 0.31) may change behaviour. Each release's notes are in the [changelog](../../CHANGELOG.md); this page lists what needs your action.
+
+## To 0.31: the playground's zoom slider
+
+Nothing in the package changed. The demo's playground takes kazoku-ui 0.12: the zoom is a slider with marks, in the bar's horizontal layout on a desk (a phone keeps the classic bar).
 
 ## To 0.30: the playground's Centre button, and the practice balls
 
