@@ -2,7 +2,14 @@
 // dark wood with copper trim, each faced with rows of plates, and a moulded plinth. Drawn for this package from photographs (docs/likeness.md); the plates are left plain.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Calder Memorial Trophy: a tall two-handled cup on two stacked blocks of dark plated wood. */
+/**
+ * The Calder Memorial Trophy: a tall two-handled cup on two stacked blocks of dark plated wood.
+ * @example
+ * ```ts
+ * import { TROPHY_CALDER_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_CALDER_TROPHY.id, TROPHY_CALDER_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_CALDER_TROPHY = /* @__PURE__ */ defineLathe("trophy:calder-trophy", "Calder Trophy", "カルダー賞", "ours", {
   metal: "silver",
   box: "-0.4 0 64.7 64.7",

@@ -2,7 +2,14 @@
 // The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { bar, defineIcon } from "../emblem.shapes.ts";
 
-/** Judo. */
+/**
+ * Judo.
+ * @example
+ * ```ts
+ * import { SPORT_JUDO } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_JUDO.id, SPORT_JUDO.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_JUDO = /* @__PURE__ */ defineIcon("sport:judo", "Judo", "柔道", "ours", {
   metal: "flat",
   ink: true,

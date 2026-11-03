@@ -2,7 +2,14 @@
 // photographs of the award being carried (docs/likeness.md); the badge and the plate carry no lettering, and the plate takes the engraving option.
 import { bar, defineFlat, ellipsePath } from "../emblem.shapes.ts";
 
-/** The Silver Slugger Award: a silver bat across a tall black board with an oval badge and a plate. */
+/**
+ * The Silver Slugger Award: a silver bat across a tall black board with an oval badge and a plate.
+ * @example
+ * ```ts
+ * import { TROPHY_SILVER_SLUGGER_AWARD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_SILVER_SLUGGER_AWARD.id, TROPHY_SILVER_SLUGGER_AWARD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_SILVER_SLUGGER_AWARD = /* @__PURE__ */ defineFlat("trophy:silver-slugger-award", "Silver Slugger Award", "シルバースラッガー賞", "ours", {
   metal: "silver",
   ribbon: "#17181c",

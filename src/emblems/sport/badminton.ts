@@ -1,7 +1,14 @@
 // Shuttlecock: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { defineIcon } from "../emblem.shapes.ts";
 
-/** Shuttlecock. */
+/**
+ * Shuttlecock.
+ * @example
+ * ```ts
+ * import { SPORT_BADMINTON } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_BADMINTON.id, SPORT_BADMINTON.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_BADMINTON = /* @__PURE__ */ defineIcon("sport:badminton", "Shuttlecock", "シャトルコック", "ours", {
   metal: "flat",
   ink: true,

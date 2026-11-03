@@ -1,7 +1,14 @@
 // Badge: a seal with a star and two tails of ribbon, drawn for this package, in metal, line and flat colour.
 import { circlePath, defineIcon, starPath } from "../emblem.shapes.ts";
 
-/** Badge with a star. */
+/**
+ * Badge with a star.
+ * @example
+ * ```ts
+ * import { AWARD_BADGE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(AWARD_BADGE.id, AWARD_BADGE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const AWARD_BADGE = /* @__PURE__ */ defineIcon("award:badge", "Badge", "バッジ", "ours", {
   metal: "gold",
   ribbon: "#c0392b",

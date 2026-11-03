@@ -2,7 +2,14 @@
 // and straight trousers. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { bar, defineIcon } from "../emblem.shapes.ts";
 
-/** Karate. */
+/**
+ * Karate.
+ * @example
+ * ```ts
+ * import { SPORT_KARATE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_KARATE.id, SPORT_KARATE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_KARATE = /* @__PURE__ */ defineIcon("sport:karate", "Karate", "空手", "ours", {
   metal: "flat",
   ink: true,

@@ -4,7 +4,14 @@
 import { defineLathe } from "../emblem.lathe.ts";
 import { LATHE_EXTRAS } from "../lathe.extras.ts";
 
-/** The Relief Man Award, given from 1976 to 2012 to the best reliever of each league: a silver fire helmet on a chrome column over a walnut block and base. */
+/**
+ * The Relief Man Award, given from 1976 to 2012 to the best reliever of each league: a silver fire helmet on a chrome column over a walnut block and base.
+ * @example
+ * ```ts
+ * import { TROPHY_RELIEF_MAN_AWARD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_RELIEF_MAN_AWARD.id, TROPHY_RELIEF_MAN_AWARD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_RELIEF_MAN_AWARD = /* @__PURE__ */ defineLathe("trophy:relief-man-award", "Relief Man Award", "リリーフマン賞", "ours", {
   extras: LATHE_EXTRAS,
   metal: "silver",

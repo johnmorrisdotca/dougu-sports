@@ -1,6 +1,14 @@
 // A baseball glove with a ball, drawn for this package: a leather mitt of four fingers and a thumb round a deep pocket, a laced web, a wrist strap and a ball in the pocket.
 import { capsule, circle, drawn, ellipse } from "./gear.core.ts";
 
+/**
+ * The Baseball glove emblem (野球のグラブ in Japanese): id `gear:baseball-glove`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_BASEBALL_GLOVE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_BASEBALL_GLOVE.id, GEAR_BASEBALL_GLOVE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_BASEBALL_GLOVE = /* @__PURE__ */ drawn("gear:baseball-glove", "Baseball glove", "野球のグラブ", {
   main: "#b5702f",
   accent: "#e6cfa0",

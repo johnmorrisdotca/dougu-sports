@@ -1,7 +1,14 @@
 // A plain two-handled cup, drawn for this package: a deep bowl with a star, a bevelled handle on each side, a short stem and a flared foot, in polished metal.
 import { defineIcon } from "../emblem.shapes.ts";
 
-/** Cup. */
+/**
+ * Cup.
+ * @example
+ * ```ts
+ * import { TROPHY_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_CUP.id, TROPHY_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_CUP = /* @__PURE__ */ defineIcon("trophy:cup", "Cup", "カップ", "ours", {
   metal: "gold",
   front: [

@@ -1,7 +1,14 @@
 // A broad silver dish on a pedestal, with a raised rim and rings of gilt and rounded panels on its face. Drawn for this package; a generic trophy.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A silver salver with a gilt pattern. */
+/**
+ * A silver salver with a gilt pattern.
+ * @example
+ * ```ts
+ * import { TROPHY_TENNIS_PLATE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_TENNIS_PLATE.id, TROPHY_TENNIS_PLATE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_TENNIS_PLATE = /* @__PURE__ */ defineLathe("trophy:tennis-plate", "Plate on a pedestal", "台付きの大皿", "ours", {
   metal: "silver",
   turnBox: "-5.9 -8.9 75.9 75.9",

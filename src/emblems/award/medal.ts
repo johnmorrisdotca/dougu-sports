@@ -1,7 +1,14 @@
 // Medal: a ribbon with a notched end and a star hanging from it, drawn for this package, in metal, line and flat colour.
 import { defineIcon, starPath } from "../emblem.shapes.ts";
 
-/** Medal on a ribbon. */
+/**
+ * Medal on a ribbon.
+ * @example
+ * ```ts
+ * import { AWARD_MEDAL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(AWARD_MEDAL.id, AWARD_MEDAL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const AWARD_MEDAL = /* @__PURE__ */ defineIcon("award:medal", "Medal", "メダル", "ours", {
   metal: "gold",
   ribbon: "#c0392b",

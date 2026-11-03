@@ -2,7 +2,14 @@
 // a clear rendering and a photograph of the trophy in a showcase (docs/likeness.md); the shield and the lettering on the pylon are left out, and the foot's three arched cut-outs are a plain edge.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Vince Lombardi Trophy: a silver football tilted over a tall three-sided pylon that widens to its foot. */
+/**
+ * The Vince Lombardi Trophy: a silver football tilted over a tall three-sided pylon that widens to its foot.
+ * @example
+ * ```ts
+ * import { TROPHY_LOMBARDI_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_LOMBARDI_TROPHY.id, TROPHY_LOMBARDI_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_LOMBARDI_TROPHY = /* @__PURE__ */ defineLathe("trophy:lombardi-trophy", "Lombardi Trophy", "ロンバルディ・トロフィー", "ours", {
   metal: "silver",
   turnBox: "-4.8 0 73.5 73.5",

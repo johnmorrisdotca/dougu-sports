@@ -1,6 +1,14 @@
 // Squash, racquetball and padel rackets and the pickleball paddle, drawn by us: head up, in a 64 by 64 box.
 import { capsule, circle, drawn, ellipse, rect, seg, strings } from "./gear.core.ts";
 
+/**
+ * The Squash racket emblem (スカッシュのラケット in Japanese): id `gear:squash-racket`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_SQUASH_RACKET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_SQUASH_RACKET.id, GEAR_SQUASH_RACKET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_SQUASH_RACKET = /* @__PURE__ */ drawn("gear:squash-racket", "Squash racket", "スカッシュのラケット", {
   main: "#2b3a52",
   accent: "#e0502a",
@@ -13,6 +21,14 @@ export const GEAR_SQUASH_RACKET = /* @__PURE__ */ drawn("gear:squash-racket", "S
   ],
 });
 
+/**
+ * The Racquetball racket emblem (ラケットボールのラケット in Japanese): id `gear:racquetball-racket`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_RACQUETBALL_RACKET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_RACQUETBALL_RACKET.id, GEAR_RACQUETBALL_RACKET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_RACQUETBALL_RACKET = /* @__PURE__ */ drawn("gear:racquetball-racket", "Racquetball racket", "ラケットボールのラケット", {
   main: "#2a63c8",
   accent: "#1b1f27",
@@ -34,6 +50,14 @@ const holes = (): string => {
   return d;
 };
 
+/**
+ * The Padel racket emblem (パデルのラケット in Japanese): id `gear:padel-racket`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_PADEL_RACKET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_PADEL_RACKET.id, GEAR_PADEL_RACKET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_PADEL_RACKET = /* @__PURE__ */ drawn("gear:padel-racket", "Padel racket", "パデルのラケット", {
   main: "#2a2f38",
   accent: "#f2701d",
@@ -51,6 +75,14 @@ const dimples = (): string => {
   return d;
 };
 
+/**
+ * The Pickleball paddle emblem (ピックルボールのパドル in Japanese): id `gear:pickleball-paddle`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_PICKLEBALL_PADDLE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_PICKLEBALL_PADDLE.id, GEAR_PICKLEBALL_PADDLE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_PICKLEBALL_PADDLE = /* @__PURE__ */ drawn("gear:pickleball-paddle", "Pickleball paddle", "ピックルボールのパドル", {
   main: "#1fa3a8",
   accent: "#f2701d",

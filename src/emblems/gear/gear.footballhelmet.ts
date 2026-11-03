@@ -1,6 +1,14 @@
 // A football helmet, drawn for this package: a glossy shell seen from the side with a stripe over the crown, an ear hole, and a cage of bars across the face opening.
 import { drawn, ellipse } from "./gear.core.ts";
 
+/**
+ * The Football helmet emblem (アメフトのヘルメット in Japanese): id `gear:football-helmet`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_FOOTBALL_HELMET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_FOOTBALL_HELMET.id, GEAR_FOOTBALL_HELMET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_FOOTBALL_HELMET = /* @__PURE__ */ drawn("gear:football-helmet", "Football helmet", "アメフトのヘルメット", {
   main: "#cfd6de",
   accent: "#c8202c",

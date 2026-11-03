@@ -7,10 +7,28 @@ import type { PieceSize } from "./ball/ball.core.ts";
 import { EMBLEM_DESCRIPTIONS, type EmblemDescription } from "./emblem.descriptions.ts";
 import { EMBLEM_TABLE } from "./emblem.registry.ts";
 
-/** What can name an emblem: an id, a short name (`"cup"` for `"trophy:cup"`), either with a style (`"trophy:cup/line"`), or the emblem itself. */
+/**
+ * What can name an emblem: an id, a short name (`"cup"` for `"trophy:cup"`), either with a style (`"trophy:cup/line"`), or the emblem itself.
+ * @example
+ * ```ts
+ * import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { EmblemRef } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const refs: EmblemRef[] = ["trophy:cup", "cup/line", "medal:gold"];
+ * console.log(refs.map((ref) => renderEmblem(ref).length > 0));
+ * ```
+ */
 export type EmblemRef = EmblemId | `${EmblemId}/${EmblemStyle}` | (string & {}) | Emblem;
 
-/** The id and style a string names, or `undefined` when it is not an emblem. An id may end in `/metal`, `/line` or `/color`, and a trophy or an award may be written without its group (`cup`, `crown`). */
+/**
+ * The id and style a string names, or `undefined` when it is not an emblem. An id may end in `/metal`, `/line` or `/color`, and a trophy or an award may be written without its group (`cup`, `crown`).
+ * @param value - Anything; a string may be an id, a short name, or either with a `/metal`, `/line` or `/color` style.
+ * @returns The id and style the string names, or `undefined` when it names no emblem.
+ * @example
+ * ```ts
+ * import { parseEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(parseEmblem("cup/line"), parseEmblem("nothing"));
+ * ```
+ */
 export function parseEmblem(value: unknown): { id: EmblemId; style: EmblemStyle | undefined } | undefined {
   if (typeof value !== "string") return undefined;
   let text = value.trim();
@@ -27,12 +45,31 @@ export function parseEmblem(value: unknown): { id: EmblemId; style: EmblemStyle 
   return Object.hasOwn(EMBLEM_TABLE, id) ? { id: id as EmblemId, style } : undefined;
 }
 
-/** True when the value is the id of an emblem (not a short name, and with no style). */
+/**
+ * True when the value is the id of an emblem (not a short name, and with no style).
+ * @param value - Anything.
+ * @returns True when the value is the id of an emblem, false for anything else.
+ * @example
+ * ```ts
+ * import { isEmblemId } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(isEmblemId("trophy:cup"), isEmblemId("cup"));
+ * ```
+ */
 export function isEmblemId(value: unknown): value is EmblemId {
   return typeof value === "string" && Object.hasOwn(EMBLEM_TABLE, value);
 }
 
-/** The emblem a reference names. An unknown name is an error that says what an id looks like. */
+/**
+ * The emblem a reference names. An unknown name is an error that says what an id looks like.
+ * @param ref - An id, a short name, an id with a style, or an emblem.
+ * @returns The emblem the reference names and the style it asks for (`undefined` when it names none). An unknown name throws.
+ * @example
+ * ```ts
+ * import { emblemOf } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const { emblem, style } = emblemOf("trophy:cup/line");
+ * console.log(emblem.id, style);
+ * ```
+ */
 export function emblemOf(ref: EmblemRef): { emblem: Emblem; style: EmblemStyle | undefined } {
   if (typeof ref !== "string") return { emblem: ref, style: undefined };
   const parsed = parseEmblem(ref);
@@ -60,6 +97,9 @@ function printed(emblem: Emblem, options: FrameOptions | undefined): { emblem: E
 /**
  * An emblem as a document of SVG: `renderEmblem("award:medal")`, `renderEmblem("ball:soccer/line", { size: 20 })`. `style` is `metal` (full colour with gradients, the default), `line` (one outline in the
  * page's text colour) or `color` (flat fills); `tint` replaces the main colour; `theme` is `inherit` (the default), `auto`, `light` or `dark`. A pure function: the same arguments give the same string.
+ * @param ref - An id, a short name, an id with a style, or an emblem.
+ * @param options - The style, size, tint, theme, labels and other emblem options.
+ * @returns The emblem as a document of SVG.
  * @example
  * ```ts
  * import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
@@ -74,14 +114,28 @@ export function renderEmblem(ref: EmblemRef, options?: EmblemOptions): string {
   return p.emblem.svg(p.options);
 }
 
-/** The same as `renderEmblem`. */
+/**
+ * The same as `renderEmblem`.
+ * @param ref - An id, a short name, an id with a style, or an emblem.
+ * @param options - The size, style, tint and the other emblem options.
+ * @returns A document of SVG.
+ * @example
+ * ```ts
+ * import { emblemSvg } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(emblemSvg("medal:gold", { size: 32 }).startsWith("<svg"));
+ * ```
+ */
 export const emblemSvg: typeof renderEmblem = renderEmblem;
 
 /**
  * An emblem turned: `yaw` degrees about its vertical axis and `pitch` degrees of tilt, from its resting view, in plain SVG. A cup, bowl or urn keeps its outline and moves its light, handles and seams; a medal flips like a coin and shows its back; a ball rolls; an icon is not turned.
+ * @param ref - An id, a short name, an id with a style, or an emblem.
+ * @param options - The turn (`yaw`, `pitch`, `roll`) and the emblem options.
+ * @returns The turned emblem as a document of SVG.
  * @example
  * ```ts
- * import { emblemFrame, renderEmblem } from "@johnmorrisdotca/dougu-sports/turn";
+ * import { emblemFrame } from "@johnmorrisdotca/dougu-sports/turn";
+ * import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
  * console.log(emblemFrame("medal:gold", { yaw: 0 }) === renderEmblem("medal:gold"));
  * // true
  * ```
@@ -92,20 +146,55 @@ export function emblemFrame(ref: EmblemRef, options?: FrameOptions): string {
   return p.emblem.frame(p.options);
 }
 
-/** Whether a value is the id of a ball (a printed puck, `puck:canada`, is a ball too). */
+/**
+ * Whether a value is the id of a ball (a printed puck, `puck:canada`, is a ball too).
+ * @param value - Anything.
+ * @returns True when the value is the id of a ball (a printed puck included), false for anything else.
+ * @example
+ * ```ts
+ * import { isBallId } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(isBallId("ball:soccer"), isBallId("trophy:cup"));
+ * ```
+ */
 export const isBallId = (value: unknown): value is BallId | PuckId => typeof value === "string" && ((BALL_IDS as readonly string[]).includes(value) || (PUCK_IDS as readonly string[]).includes(value));
 
-/** A ball rolled: the same as `emblemFrame`, for a ball's id only (a printed puck's too). A value that is not a ball is an error. */
+/**
+ * A ball rolled: the same as `emblemFrame`, for a ball's id only (a printed puck's too). A value that is not a ball is an error.
+ * @param id - A ball id or a printed puck's id.
+ * @param options - The turn (`yaw`, `pitch`, `roll`) and the emblem options.
+ * @returns The turned ball as a document of SVG.
+ * @example
+ * ```ts
+ * import { ballFrame } from "@johnmorrisdotca/dougu-sports/turn";
+ * console.log(ballFrame("ball:soccer", { yaw: 30, roll: 10 }).startsWith("<svg"));
+ * ```
+ */
 export function ballFrame(id: BallId | PuckId, options?: FrameOptions): string {
   if (!isBallId(id)) throw new Error(`"${String(id).slice(0, 60)}" is not a ball: ids look like "ball:soccer" or "puck:canada"; see BALL_IDS and PUCK_IDS.`);
   const p = printed(EMBLEM_TABLE[id], options);
   return p.emblem.frame(p.options);
 }
 
-/** Every emblem as markup in the metal style at 64 pixels, by id. Use `renderEmblem` for another style or size. */
+/**
+ * Every emblem as markup in the metal style at 64 pixels, by id. Use `renderEmblem` for another style or size.
+ * @example
+ * ```ts
+ * import { EMBLEMS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(Object.keys(EMBLEMS).length);
+ * ```
+ */
 export const EMBLEMS: Readonly<Record<EmblemId, string>> = Object.freeze(Object.fromEntries(EMBLEM_IDS.map((id) => [id, EMBLEM_TABLE[id].svg()])) as Record<EmblemId, string>);
 
-/** What an emblem is, without its drawing. */
+/**
+ * What an emblem is, without its drawing.
+ * @example
+ * ```ts
+ * import { emblemInfo } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { EmblemInfo } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const info: EmblemInfo = emblemInfo("medal:gold");
+ * console.log(info.id, info.kind);
+ * ```
+ */
 export interface EmblemInfo {
   id: EmblemId;
   en: string;
@@ -118,7 +207,17 @@ export interface EmblemInfo {
   description?: EmblemDescription;
 }
 
-/** The names, source and kind of an emblem. */
+/**
+ * The names, source and kind of an emblem.
+ * @param id - An emblem id, such as `ball:soccer`.
+ * @returns The emblem's id, names, source and kind, with its official size and description where it has them.
+ * @example
+ * ```ts
+ * import { emblemInfo } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const info = emblemInfo("ball:soccer");
+ * console.log(info.en, info.kind, info.size?.diameterMm);
+ * ```
+ */
 export function emblemInfo(id: EmblemId): EmblemInfo {
   const e = EMBLEM_TABLE[id];
   const size = (e as { size?: PieceSize }).size;
@@ -126,17 +225,46 @@ export function emblemInfo(id: EmblemId): EmblemInfo {
   return { id, en: e.en, ja: e.ja, source: e.source, kind: e.kind, ...(size === undefined ? {} : { size }), ...(description === undefined ? {} : { description }) };
 }
 
-/** An emblem's name in a language. */
+/**
+ * An emblem's name in a language.
+ * @param id - An emblem id.
+ * @param language - `en` (the default) or `ja`.
+ * @returns The emblem's name in that language.
+ * @example
+ * ```ts
+ * import { emblemName } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(emblemName("trophy:cup"), emblemName("trophy:cup", "ja"));
+ * ```
+ */
 export function emblemName(id: EmblemId, language: "en" | "ja" = "en"): string {
   return language === "ja" ? EMBLEM_TABLE[id].ja : EMBLEM_TABLE[id].en;
 }
 
-/** The data an emblem is drawn from: a flat emblem's shapes or a ball's marks, for a view that turns it itself. */
+/**
+ * The data an emblem is drawn from: a flat emblem's shapes or a ball's marks, for a view that turns it itself.
+ * @param id - An emblem id.
+ * @returns The emblem's model: a flat emblem's shapes or a body of revolution's profile, whichever the emblem is made of.
+ * @example
+ * ```ts
+ * import { emblemModel } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const model = emblemModel("medal:gold") as { front: unknown[] };
+ * console.log(model.front.length > 0);
+ * ```
+ */
 export function emblemModel(id: EmblemId): unknown {
   return EMBLEM_TABLE[id].model;
 }
 
-/** What `crest` takes. */
+/**
+ * What `crest` takes.
+ * @example
+ * ```ts
+ * import { crest } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { CrestOptions } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const options: CrestOptions = { shape: "roundel", colors: ["#1f4e8c", "#f2c230"], initials: "AB" };
+ * console.log(crest(options).startsWith("<svg"));
+ * ```
+ */
 export interface CrestOptions {
   /** `shield` (the default), `roundel`, `diamond` or `pennant`. */
   shape?: CrestShape;
@@ -155,6 +283,8 @@ export interface CrestOptions {
 
 /**
  * A generic crest tinted by a team's colours, with its letters if it has any: what a team with no logo gets. The letters are in the ink that reads on the colour.
+ * @param options - The shape, colours and initials; every field is optional.
+ * @returns The crest as a document of SVG.
  * @example
  * ```ts
  * import { crest } from "@johnmorrisdotca/dougu-sports/emblems";
@@ -169,19 +299,48 @@ export function crest(options: CrestOptions = {}): string {
   return EMBLEM_TABLE[`crest:${shape}`].svg({ tint: colors[0], accent: colors[1], initials: options.initials, size: options.size, style: options.style, theme: options.theme, locale: options.locale, title: options.title });
 }
 
-/** A medal on a ribbon: `medal("gold")`, `"silver"` or `"bronze"`; any other kind is the gold one. */
+/**
+ * A medal on a ribbon: `medal("gold")`, `"silver"` or `"bronze"`; any other kind is the gold one.
+ * @param kind - `gold`, `silver` or `bronze`.
+ * @param options - The emblem options.
+ * @returns The medal as a document of SVG.
+ * @example
+ * ```ts
+ * import { medal } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(medal("silver", { size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export function medal(kind: MedalKind, options?: EmblemOptions): string {
   return (EMBLEM_TABLE[`medal:${kind}` as EmblemId] ?? EMBLEM_TABLE["medal:gold"]).svg(options);
 }
 
-/** The icon of a sport, by the names of `SPORT_NAMES`: `sportIcon("nhl")`. An unknown sport is an error. */
+/**
+ * The icon of a sport, by the names of `SPORT_NAMES`: `sportIcon("nhl")`. An unknown sport is an error.
+ * @param sport - A name from `SPORT_NAMES`, such as `nhl`.
+ * @param options - The emblem options.
+ * @returns The sport's icon as a document of SVG.
+ * @example
+ * ```ts
+ * import { sportIcon } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(sportIcon("nhl", { size: 32 }).startsWith("<svg"));
+ * ```
+ */
 export function sportIcon(sport: SportName, options?: EmblemOptions): string {
   const e = Object.hasOwn(EMBLEM_TABLE, `sport:${sport}`) ? EMBLEM_TABLE[`sport:${sport}` as EmblemId] : undefined;
   if (e === undefined) throw new Error(`Unknown sport "${String(sport).slice(0, 40)}": the icons are for the names in SPORT_NAMES.`);
   return e.svg(options);
 }
 
-/** What `pennant` takes. */
+/**
+ * What `pennant` takes.
+ * @example
+ * ```ts
+ * import { pennant } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { PennantOptions } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const options: PennantOptions = { text: "Winners", year: 2026, view: "back" };
+ * console.log(pennant(options).startsWith("<svg"));
+ * ```
+ */
 export interface PennantOptions {
   /** The felt, the stitching, and the lettering (the stitching's colour unless a third is given), as hex colours or `rgb()`. */
   colors?: string | readonly [felt?: string, stitching?: string, lettering?: string];
@@ -204,6 +363,8 @@ export interface PennantOptions {
 
 /**
  * A felt championship pennant with a stitched edge, lettered with its words and its year.
+ * @param options - The colours, words, year and view; every field is optional.
+ * @returns The pennant as a document of SVG.
  * @example
  * ```ts
  * import { pennant } from "@johnmorrisdotca/dougu-sports/emblems";

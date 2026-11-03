@@ -2,7 +2,14 @@
 // and a dark foot; the two handles are flat scrolls that open into a round head by the lid and run down the sides of the body. Drawn for this package from a photograph (docs/likeness.md); the chasing and the lettering are left out and the plinth takes the engraving option.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Wimbledon Gentlemen's Singles Trophy: a gilt lidded two-handled cup with a pineapple on a tall round plinth. */
+/**
+ * The Wimbledon Gentlemen's Singles Trophy: a gilt lidded two-handled cup with a pineapple on a tall round plinth.
+ * @example
+ * ```ts
+ * import { TROPHY_WIMBLEDON_GENTLEMENS_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_WIMBLEDON_GENTLEMENS_TROPHY.id, TROPHY_WIMBLEDON_GENTLEMENS_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_WIMBLEDON_GENTLEMENS_TROPHY = /* @__PURE__ */ defineLathe("trophy:wimbledon-gentlemens-trophy", "Gentlemen's Singles Trophy", "ウィンブルドン男子", "ours", {
   metal: "gold",
   turnBox: "-4.4 -0.8 72.8 72.8",

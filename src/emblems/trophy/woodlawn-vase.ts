@@ -2,7 +2,14 @@
 // a ring of horses standing round the foot of the stem, and a round base on four feet. Drawn for this package from photographs (docs/likeness.md); the chasing, the rider and the horses are left to their mass.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Woodlawn Vase of the Preakness Stakes: a tall tiered silver vase on a waisted stem and a round base. */
+/**
+ * The Woodlawn Vase of the Preakness Stakes: a tall tiered silver vase on a waisted stem and a round base.
+ * @example
+ * ```ts
+ * import { TROPHY_WOODLAWN_VASE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_WOODLAWN_VASE.id, TROPHY_WOODLAWN_VASE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_WOODLAWN_VASE = /* @__PURE__ */ defineLathe("trophy:woodlawn-vase", "Woodlawn Vase", "ウッドローン・ヴェース", "ours", {
   metal: "silver",
   turnBox: "-5.3 0 74.6 74.6",

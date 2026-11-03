@@ -22,6 +22,14 @@ export const puckSpec = (extra?: Partial<StackSpec>): StackSpec => ({
   ...extra,
 });
 
+/**
+ * The Hockey puck emblem (アイスホッケーのパック in Japanese): id `ball:puck`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_PUCK } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_PUCK.id, BALL_PUCK.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_PUCK = /* @__PURE__ */ defineObject({
   id: "ball:puck",
   en: "Hockey puck",

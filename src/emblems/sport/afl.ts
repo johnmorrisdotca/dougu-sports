@@ -1,7 +1,14 @@
 // Oval ball: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { defineIcon, ellipsePath as ell } from "../emblem.shapes.ts";
 
-/** Oval ball. */
+/**
+ * Oval ball.
+ * @example
+ * ```ts
+ * import { SPORT_AFL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_AFL.id, SPORT_AFL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_AFL = /* @__PURE__ */ defineIcon("sport:afl", "Oval ball", "オーストラリアンフットボール", "ours", {
   metal: "flat",
   ink: true,

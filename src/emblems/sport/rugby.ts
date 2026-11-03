@@ -1,7 +1,14 @@
 // Rugby: a pictogram of the ball, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { defineIcon, tiltedEllipse } from "../emblem.shapes.ts";
 
-/** Rugby. */
+/**
+ * Rugby.
+ * @example
+ * ```ts
+ * import { SPORT_RUGBY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_RUGBY.id, SPORT_RUGBY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_RUGBY = /* @__PURE__ */ defineIcon("sport:rugby", "Rugby", "ラグビー", "ours", {
   metal: "flat",
   ink: true,

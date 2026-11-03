@@ -1,6 +1,14 @@
 // Athletics gear drawn by us: starting blocks, a relay baton, a javelin and a hurdle.
 import { capsule, drawn, poly, rect, seg } from "./gear.core.ts";
 
+/**
+ * The Starting blocks emblem (スターティングブロック in Japanese): id `gear:starting-blocks`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_STARTING_BLOCKS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_STARTING_BLOCKS.id, GEAR_STARTING_BLOCKS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_STARTING_BLOCKS = /* @__PURE__ */ drawn("gear:starting-blocks", "Starting blocks", "スターティングブロック", {
   main: "#f08a1c",
   accent: "#3a3f48",
@@ -14,6 +22,14 @@ export const GEAR_STARTING_BLOCKS = /* @__PURE__ */ drawn("gear:starting-blocks"
   ],
 });
 
+/**
+ * The Relay baton emblem (リレーのバトン in Japanese): id `gear:relay-baton`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_RELAY_BATON } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_RELAY_BATON.id, GEAR_RELAY_BATON.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_RELAY_BATON = /* @__PURE__ */ drawn("gear:relay-baton", "Relay baton", "リレーのバトン", {
   main: "#f2a31c",
   accent: "#ffffff",
@@ -23,6 +39,14 @@ export const GEAR_RELAY_BATON = /* @__PURE__ */ drawn("gear:relay-baton", "Relay
   ],
 });
 
+/**
+ * The Javelin emblem (やり投げのやり in Japanese): id `gear:javelin`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_JAVELIN } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_JAVELIN.id, GEAR_JAVELIN.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_JAVELIN = /* @__PURE__ */ drawn("gear:javelin", "Javelin", "やり投げのやり", {
   main: "#e9e6dd",
   accent: "#8a5a2a",
@@ -33,6 +57,14 @@ export const GEAR_JAVELIN = /* @__PURE__ */ drawn("gear:javelin", "Javelin", "�
   ],
 });
 
+/**
+ * The Hurdle emblem (ハードル in Japanese): id `gear:hurdles`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_HURDLES } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_HURDLES.id, GEAR_HURDLES.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_HURDLES = /* @__PURE__ */ drawn("gear:hurdles", "Hurdle", "ハードル", {
   main: "#f4f1ea",
   accent: "#1d1f24",

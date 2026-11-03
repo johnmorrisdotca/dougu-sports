@@ -18,7 +18,14 @@ const STITCHES = ((): string => {
   return d;
 })();
 
-/** Baseball. */
+/**
+ * Baseball.
+ * @example
+ * ```ts
+ * import { SPORT_MLB } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_MLB.id, SPORT_MLB.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_MLB = /* @__PURE__ */ defineIcon("sport:mlb", "Baseball", "野球", "ours", {
   metal: "flat",
   ink: true,

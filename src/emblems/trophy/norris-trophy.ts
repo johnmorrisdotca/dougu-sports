@@ -2,7 +2,14 @@
 // photographs taken from one side and a little below (docs/likeness.md); the proportions are measured across the widest parts, and the plates are left plain.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The James Norris Memorial Trophy: a lidded silver bowl on a knopped stem over a two-tiered octagonal wooden base. */
+/**
+ * The James Norris Memorial Trophy: a lidded silver bowl on a knopped stem over a two-tiered octagonal wooden base.
+ * @example
+ * ```ts
+ * import { TROPHY_NORRIS_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_NORRIS_TROPHY.id, TROPHY_NORRIS_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_NORRIS_TROPHY = /* @__PURE__ */ defineLathe("trophy:norris-trophy", "Norris Trophy", "ノリス賞", "ours", {
   metal: "silver",
   turnBox: "-6.2 0 76.4 76.4",

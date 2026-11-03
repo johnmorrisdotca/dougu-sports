@@ -1,7 +1,14 @@
 // A gold cup with a domed lid and a knob, two small handles, on a stem and a round foot. Drawn for this package.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A cup with a domed lid and a knob. */
+/**
+ * A cup with a domed lid and a knob.
+ * @example
+ * ```ts
+ * import { TROPHY_LIDDED_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_LIDDED_CUP.id, TROPHY_LIDDED_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_LIDDED_CUP = /* @__PURE__ */ defineLathe("trophy:lidded-cup", "Cup with a lid", "ふた付きカップ", "ours", {
   metal: "gold",
   turnBox: "-1.2 0 66.4 66.4",

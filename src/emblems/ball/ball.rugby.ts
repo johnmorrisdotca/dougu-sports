@@ -9,6 +9,14 @@ const GRIP = spread(260, 0.4);
 const QUARTER = Math.PI / 2;
 const WHITE = "#f4f2ec";
 
+/**
+ * The Rugby ball emblem (ラグビーボール in Japanese): id `ball:rugby`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_RUGBY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_RUGBY.id, BALL_RUGBY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_RUGBY = /* @__PURE__ */ defineBall({
   id: "ball:rugby",
   en: "Rugby ball",

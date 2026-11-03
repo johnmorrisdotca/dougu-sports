@@ -2,6 +2,14 @@
 import { dottedBall } from "./ball.family.dotted.ts";
 import { holeLayers } from "./ball.holes.ts";
 
+/**
+ * The Pickleball, outdoor emblem (ピックルボール（屋外用） in Japanese): id `ball:pickleball-outdoor`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_PICKLEBALL_OUTDOOR } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_PICKLEBALL_OUTDOOR.id, BALL_PICKLEBALL_OUTDOOR.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_PICKLEBALL_OUTDOOR = /* @__PURE__ */ dottedBall({
   id: "ball:pickleball-outdoor",
   en: "Pickleball, outdoor",
@@ -16,6 +24,14 @@ export const BALL_PICKLEBALL_OUTDOOR = /* @__PURE__ */ dottedBall({
   hollow: holeLayers,
 });
 
+/**
+ * The Pickleball, indoor emblem (ピックルボール（屋内用） in Japanese): id `ball:pickleball-indoor`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_PICKLEBALL_INDOOR } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_PICKLEBALL_INDOOR.id, BALL_PICKLEBALL_INDOOR.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_PICKLEBALL_INDOOR = /* @__PURE__ */ dottedBall({
   id: "ball:pickleball-indoor",
   en: "Pickleball, indoor",

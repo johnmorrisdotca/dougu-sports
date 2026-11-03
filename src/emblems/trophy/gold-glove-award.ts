@@ -2,7 +2,14 @@
 // Drawn for this package from a photograph (docs/likeness.md); the glove's lacing is a few lines, the maker's marks and the lettering are left out, and the long plate takes the engraving option.
 import { circlePath, defineFlat } from "../emblem.shapes.ts";
 
-/** The Gold Glove Award: a gilt glove between two gilt baseballs on a pedestal over a wooden base. */
+/**
+ * The Gold Glove Award: a gilt glove between two gilt baseballs on a pedestal over a wooden base.
+ * @example
+ * ```ts
+ * import { TROPHY_GOLD_GLOVE_AWARD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_GOLD_GLOVE_AWARD.id, TROPHY_GOLD_GLOVE_AWARD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_GOLD_GLOVE_AWARD = /* @__PURE__ */ defineFlat("trophy:gold-glove-award", "Gold Glove Award", "ゴールデングラブ賞", "ours", {
   metal: "gold",
   ribbon: "#9a6a38",

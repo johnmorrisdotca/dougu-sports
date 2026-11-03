@@ -5,7 +5,14 @@ import { defineLathe } from "../emblem.lathe.ts";
 import { LATHE_BALL } from "../lathe.extras.ts";
 import { NBA_TONES, WEST_BAND, westBase } from "../nba.parts.ts";
 
-/** The Western Conference champions' trophy of 2001 to 2021: a grained silver ball in crossed gold bands on a black and polished silver base. */
+/**
+ * The Western Conference champions' trophy of 2001 to 2021: a grained silver ball in crossed gold bands on a black and polished silver base.
+ * @example
+ * ```ts
+ * import { TROPHY_NBA_WESTERN_CONFERENCE_2001 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_NBA_WESTERN_CONFERENCE_2001.id, TROPHY_NBA_WESTERN_CONFERENCE_2001.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_NBA_WESTERN_CONFERENCE_2001 = /* @__PURE__ */ defineLathe("trophy:nba-western-conference-2001", "Western Conference Trophy", "ウェスタン・カンファレンス・トロフィー", "ours", {
   ballExtras: LATHE_BALL,
   metal: "gold",

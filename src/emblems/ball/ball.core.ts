@@ -57,6 +57,12 @@ export type PrintRenderer = (s: Surface, p: PrintOptions | undefined, word: stri
 /**
  * The back number sewn on the back of a judogi (IJF Sport and Organisation Rules, C1.8): the competitor's family name and the three letters of the National Olympic Committee, on a white patch under a coloured band.
  * Only `gear:judogi-back` and `gear:judogi-blue-back` take it; anything else ignores it.
+ * @example
+ * ```ts
+ * import type { Backnumber } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const back: Backnumber = { name: "AOKI", code: "JPN", band: "gold" };
+ * console.log(back.name);
+ * ```
  */
 export interface Backnumber {
   /** The family name, in capitals: letters, digits, spaces, hyphens and apostrophes, 16 characters at most (accents are drawn as the plain letter). Without it the patch reads `TANAKA`. */
@@ -79,7 +85,16 @@ export type PieceSource = "generated" | "drawn";
 /** `ball` is turned in 3D; `gear` is a flat drawing in a metal, a colour and a line style, which flips like a coin when turned. */
 export type PieceKind = "ball" | "gear";
 
-/** The official size of a ball or an implement, from the rulebook that governs it. Lengths in millimetres, mass in grams. */
+/**
+ * The official size of a ball or an implement, from the rulebook that governs it. Lengths in millimetres, mass in grams.
+ * @example
+ * ```ts
+ * import { emblemInfo } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { PieceSize } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const size: PieceSize | undefined = emblemInfo("ball:soccer").size;
+ * console.log(size?.diameterMm, size?.rule);
+ * ```
+ */
 export interface PieceSize {
   /** The largest extent of the drawing (a ball's diameter, a football's length), in millimetres: the scale `lineup` draws at. */
   extentMm: number;

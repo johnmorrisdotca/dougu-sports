@@ -6,6 +6,14 @@ const YELLOW = "#f3c81c";
 const BLUE = "#1f5fbf";
 const WHITE = "#f6f4ee";
 
+/**
+ * The Volleyball emblem (バレーボール in Japanese): id `ball:volleyball`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_VOLLEYBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_VOLLEYBALL.id, BALL_VOLLEYBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_VOLLEYBALL = /* @__PURE__ */ defineBall({
   id: "ball:volleyball",
   en: "Volleyball",
@@ -31,6 +39,14 @@ export const BALL_VOLLEYBALL = /* @__PURE__ */ defineBall({
   },
 });
 
+/**
+ * The Volleyball, 8 panels emblem (バレーボール（8枚貼り） in Japanese): id `ball:volleyball-8`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_VOLLEYBALL_8 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_VOLLEYBALL_8.id, BALL_VOLLEYBALL_8.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_VOLLEYBALL_8 = /* @__PURE__ */ defineBall({
   id: "ball:volleyball-8",
   en: "Volleyball, 8 panels",
@@ -44,6 +60,14 @@ export const BALL_VOLLEYBALL_8 = /* @__PURE__ */ defineBall({
   },
 });
 
+/**
+ * The Beach volleyball emblem (ビーチバレーボール in Japanese): id `ball:beach-volleyball`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_BEACH_VOLLEYBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_BEACH_VOLLEYBALL.id, BALL_BEACH_VOLLEYBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_BEACH_VOLLEYBALL = /* @__PURE__ */ defineBall({
   id: "ball:beach-volleyball",
   en: "Beach volleyball",

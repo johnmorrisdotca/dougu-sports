@@ -2,7 +2,14 @@
 // (docs/likeness.md), at a distance and from the side, so approximate; the two blades are helix strands on a slim cone, and the lettering on the band is left out.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The World Series Most Valuable Player Award trophy: a twisted silver flame on a round base. */
+/**
+ * The World Series Most Valuable Player Award trophy: a twisted silver flame on a round base.
+ * @example
+ * ```ts
+ * import { TROPHY_WORLD_SERIES_MVP_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_WORLD_SERIES_MVP_TROPHY.id, TROPHY_WORLD_SERIES_MVP_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_WORLD_SERIES_MVP_TROPHY = /* @__PURE__ */ defineLathe("trophy:world-series-mvp-trophy", "World Series MVP Trophy", "ワールドシリーズMVP賞", "ours", {
   metal: "silver",
   box: "-0.5 0 65 65",

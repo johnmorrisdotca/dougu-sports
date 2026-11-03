@@ -3,7 +3,14 @@
 // round medallions beside the block are left out.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Jack Adams Award: a flared silver urn with scroll handles under a framed portrait, on a wide stepped wooden base. */
+/**
+ * The Jack Adams Award: a flared silver urn with scroll handles under a framed portrait, on a wide stepped wooden base.
+ * @example
+ * ```ts
+ * import { TROPHY_JACK_ADAMS_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_JACK_ADAMS_TROPHY.id, TROPHY_JACK_ADAMS_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_JACK_ADAMS_TROPHY = /* @__PURE__ */ defineLathe("trophy:jack-adams-trophy", "Jack Adams Award", "ジャック・アダムス賞", "ours", {
   metal: "silver",
   box: "-1 0 65.9 65.9",

@@ -13,6 +13,14 @@ const HANDLE = "#d4202c";
 const H = 114 / 290.9;
 const y = (t: number): number => t * H;
 
+/**
+ * The Curling stone emblem (カーリングストーン in Japanese): id `ball:curling-stone`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_CURLING_STONE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_CURLING_STONE.id, BALL_CURLING_STONE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_CURLING_STONE = /* @__PURE__ */ defineObject({
   id: "ball:curling-stone",
   en: "Curling stone",

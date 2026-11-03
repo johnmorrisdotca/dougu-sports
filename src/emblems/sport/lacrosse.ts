@@ -1,7 +1,14 @@
 // Lacrosse stick: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
-/** Lacrosse stick. */
+/**
+ * Lacrosse stick.
+ * @example
+ * ```ts
+ * import { SPORT_LACROSSE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_LACROSSE.id, SPORT_LACROSSE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_LACROSSE = /* @__PURE__ */ defineIcon("sport:lacrosse", "Lacrosse stick", "ラクロスのスティック", "ours", {
   metal: "flat",
   ink: true,

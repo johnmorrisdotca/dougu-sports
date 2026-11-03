@@ -2,7 +2,14 @@
 // of the trophy standing on its base (docs/likeness.md), at a distance, so it is approximate: the ball's laces are the engine's, and the lettering and the marks on the drum and the column are left out.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The College Football Playoff national championship trophy: an upright football on a tall gold column that narrows to a collar, over a black drum. */
+/**
+ * The College Football Playoff national championship trophy: an upright football on a tall gold column that narrows to a collar, over a black drum.
+ * @example
+ * ```ts
+ * import { TROPHY_CFP_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_CFP_TROPHY.id, TROPHY_CFP_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_CFP_TROPHY = /* @__PURE__ */ defineLathe("trophy:cfp-trophy", "CFP Trophy", "CFPトロフィー", "ours", {
   metal: "gold",
   box: "-0.4 0 64.7 64.7",

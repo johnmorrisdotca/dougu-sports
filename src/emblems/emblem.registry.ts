@@ -309,5 +309,12 @@ const OWN: Readonly<Record<Exclude<EmblemId, `ball:${string}` | `puck:${string}`
   "sport:prowrestling": SPORT_PROWRESTLING,
 };
 
-/** Every emblem, by id. */
+/**
+ * Every emblem, by id.
+ * @example
+ * ```ts
+ * import { EMBLEM_TABLE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(Object.keys(EMBLEM_TABLE).length);
+ * ```
+ */
 export const EMBLEM_TABLE: Readonly<Record<EmblemId, Emblem>> = { ...OWN, ...PIECES } as Readonly<Record<EmblemId, Emblem>>;

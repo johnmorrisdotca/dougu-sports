@@ -17,6 +17,11 @@ import { defineGear, drawGear, drawn, rect, type Part } from "./gear.core.ts";
 /**
  * The colours of the judo belts, which `tint` takes: the six kyu colours in order, black (1st to 5th dan), `kohaku` (the red of the red-and-white belt of the 6th to 8th dan, whose white panels are the accent) and
  * `red` (9th and 10th dan). The Kodokan's own kyu belts are white and brown only; the colours between are a later, national addition, so a country's order may differ.
+ * @example
+ * ```ts
+ * import { OBI_RANKS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(Object.keys(OBI_RANKS).length);
+ * ```
  */
 export const OBI_RANKS = {
   white: "#f2efe8",
@@ -29,12 +34,36 @@ export const OBI_RANKS = {
   kohaku: "#c4202e",
   red: "#c4202e",
 } as const;
+/**
+ * A belt rank: `white`, `yellow`, `orange`, `green`, `blue`, `brown`, `black`, `kohaku` or `red`.
+ * @example
+ * ```ts
+ * import type { ObiRank } from "@johnmorrisdotca/dougu-sports";
+ * const rank: ObiRank = "brown";
+ * console.log(rank);
+ * ```
+ */
 export type ObiRank = keyof typeof OBI_RANKS;
 
 export type Pt = readonly [number, number];
 
-/** Judogi colours: the IJF white ("snow white") and blue (between Pantone 285M and 286M). */
+/**
+ * Judogi colours: the IJF white ("snow white") and blue (between Pantone 285M and 286M).
+ * @example
+ * ```ts
+ * import { JUDOGI_BLUE, JUDOGI_WHITE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(JUDOGI_WHITE, JUDOGI_BLUE);
+ * ```
+ */
 export const JUDOGI_WHITE = "#f6f4ee";
+/**
+ * The blue of the blue judo suit, a hex colour.
+ * @example
+ * ```ts
+ * import { JUDOGI_BLUE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(JUDOGI_BLUE);
+ * ```
+ */
 export const JUDOGI_BLUE = "#1456b6";
 
 export const f = (n: number): string => String(Math.round(n * 10) / 10);
@@ -315,9 +344,41 @@ function judogiFolded(): Part[] {
   return parts;
 }
 
+/**
+ * The Judo suit emblem (柔道衣 in Japanese): id `gear:judogi`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_JUDOGI } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_JUDOGI.id, GEAR_JUDOGI.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_JUDOGI = /* @__PURE__ */ drawn("gear:judogi", "Judo suit", "柔道衣", { main: JUDOGI_WHITE, accent: OBI_RANKS.black, parts: judogiFlat() });
+/**
+ * The Blue judo suit emblem (青い柔道衣 in Japanese): id `gear:judogi-blue`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_JUDOGI_BLUE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_JUDOGI_BLUE.id, GEAR_JUDOGI_BLUE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_JUDOGI_BLUE = /* @__PURE__ */ drawn("gear:judogi-blue", "Blue judo suit", "青い柔道衣", { main: JUDOGI_BLUE, accent: OBI_RANKS.black, parts: judogiFlat() });
+/**
+ * The Folded judo suit emblem (畳んだ柔道衣 in Japanese): id `gear:judogi-folded`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_JUDOGI_FOLDED } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_JUDOGI_FOLDED.id, GEAR_JUDOGI_FOLDED.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_JUDOGI_FOLDED = /* @__PURE__ */ drawn("gear:judogi-folded", "Folded judo suit", "畳んだ柔道衣", { main: JUDOGI_WHITE, accent: OBI_RANKS.black, parts: judogiFolded() });
+/**
+ * The Folded blue judo suit emblem (畳んだ青い柔道衣 in Japanese): id `gear:judogi-blue-folded`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_JUDOGI_BLUE_FOLDED } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_JUDOGI_BLUE_FOLDED.id, GEAR_JUDOGI_BLUE_FOLDED.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_JUDOGI_BLUE_FOLDED = /* @__PURE__ */ drawn("gear:judogi-blue-folded", "Folded blue judo suit", "畳んだ青い柔道衣", { main: JUDOGI_BLUE, accent: OBI_RANKS.black, parts: judogiFolded() });
 
 // ───────────────────────────── the judogi from behind, with its back number ─────────────────────────────
@@ -421,7 +482,23 @@ const backPiece = (id: string, en: string, ja: string, main: string) => {
   const spec = { main, accent: OBI_RANKS.black, parts: judogiBack(undefined) };
   return defineGear({ id, en, ja, source: "drawn", model: spec, draw: (o) => drawGear(id, backTitle(en, o?.backnumber), { ...spec, parts: o?.backnumber === undefined ? spec.parts : judogiBack(o.backnumber) }, o) });
 };
+/**
+ * The Judo suit, back view emblem (柔道衣の背面 in Japanese): id `gear:judogi-back`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_JUDOGI_BACK } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_JUDOGI_BACK.id, GEAR_JUDOGI_BACK.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_JUDOGI_BACK = /* @__PURE__ */ backPiece("gear:judogi-back", "Judo suit, back view", "柔道衣の背面", JUDOGI_WHITE);
+/**
+ * The Blue judo suit, back view emblem (青い柔道衣の背面 in Japanese): id `gear:judogi-blue-back`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_JUDOGI_BLUE_BACK } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_JUDOGI_BLUE_BACK.id, GEAR_JUDOGI_BLUE_BACK.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_JUDOGI_BLUE_BACK = /* @__PURE__ */ backPiece("gear:judogi-blue-back", "Blue judo suit, back view", "青い柔道衣の背面", JUDOGI_BLUE);
 
 // ───────────────────────────── the karate-gi ─────────────────────────────
@@ -458,6 +535,14 @@ function karateFlat(): Part[] {
   return parts;
 }
 
+/**
+ * The Karate suit emblem (空手衣 in Japanese): id `gear:karate-gi`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_KARATE_GI } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_KARATE_GI.id, GEAR_KARATE_GI.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_KARATE_GI = /* @__PURE__ */ drawn("gear:karate-gi", "Karate suit", "空手衣", { main: "#fbfaf6", accent: "#c4202e", parts: karateFlat() });
 
 // ───────────────────────────── the belts ─────────────────────────────
@@ -467,17 +552,95 @@ const obiSpec = (extra?: Partial<BeltSpec>): readonly Part[] =>
 
 const obiPiece = (id: string, en: string, ja: string, main: string, parts: readonly Part[], accent?: string) => drawn(id, en, ja, { main, accent, parts });
 
+/**
+ * The Belt emblem (武道の帯 in Japanese): id `gear:obi`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI.id, GEAR_OBI.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI = /* @__PURE__ */ obiPiece("gear:obi", "Belt", "武道の帯", OBI_RANKS.black, obiSpec({ edge: BELT_EDGE }));
+/**
+ * The White belt emblem (白帯 in Japanese): id `gear:obi-white`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_WHITE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_WHITE.id, GEAR_OBI_WHITE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_WHITE = /* @__PURE__ */ obiPiece("gear:obi-white", "White belt", "白帯", OBI_RANKS.white, obiSpec());
+/**
+ * The Yellow belt emblem (黄帯 in Japanese): id `gear:obi-yellow`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_YELLOW } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_YELLOW.id, GEAR_OBI_YELLOW.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_YELLOW = /* @__PURE__ */ obiPiece("gear:obi-yellow", "Yellow belt", "黄帯", OBI_RANKS.yellow, obiSpec());
+/**
+ * The Orange belt emblem (橙帯 in Japanese): id `gear:obi-orange`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_ORANGE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_ORANGE.id, GEAR_OBI_ORANGE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_ORANGE = /* @__PURE__ */ obiPiece("gear:obi-orange", "Orange belt", "橙帯", OBI_RANKS.orange, obiSpec());
+/**
+ * The Green belt emblem (緑帯 in Japanese): id `gear:obi-green`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_GREEN } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_GREEN.id, GEAR_OBI_GREEN.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_GREEN = /* @__PURE__ */ obiPiece("gear:obi-green", "Green belt", "緑帯", OBI_RANKS.green, obiSpec());
+/**
+ * The Blue belt emblem (青帯 in Japanese): id `gear:obi-blue`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_BLUE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_BLUE.id, GEAR_OBI_BLUE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_BLUE = /* @__PURE__ */ obiPiece("gear:obi-blue", "Blue belt", "青帯", OBI_RANKS.blue, obiSpec());
+/**
+ * The Brown belt emblem (茶帯 in Japanese): id `gear:obi-brown`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_BROWN } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_BROWN.id, GEAR_OBI_BROWN.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_BROWN = /* @__PURE__ */ obiPiece("gear:obi-brown", "Brown belt", "茶帯", OBI_RANKS.brown, obiSpec());
+/**
+ * The Red belt emblem (紅帯 in Japanese): id `gear:obi-red`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_RED } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_RED.id, GEAR_OBI_RED.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_RED = /* @__PURE__ */ obiPiece("gear:obi-red", "Red belt", "紅帯", OBI_RANKS.red, obiSpec());
-/** The red-and-white belt of the 6th to 8th dan: panels of red and white (about 21 cm long), red at both ends. */
+/**
+ * The red-and-white belt of the 6th to 8th dan: panels of red and white (about 21 cm long), red at both ends.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_KOHAKU } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_KOHAKU.id, GEAR_OBI_KOHAKU.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_KOHAKU = /* @__PURE__ */ obiPiece("gear:obi-kohaku", "Red and white belt", "紅白帯", OBI_RANKS.kohaku, obiSpec({ alt: "$accent", panels: { upper: [19, 45], lower: [11, 53], tail: "$main" }, bars: false }), "#f6f4ee");
-/** The black belt of a woman in Japan: a white stripe down the middle of the belt along its whole length. */
+/**
+ * The black belt of a woman in Japan: a white stripe down the middle of the belt along its whole length.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_WOMEN } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_WOMEN.id, GEAR_OBI_WOMEN.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_WOMEN = /* @__PURE__ */ obiPiece("gear:obi-women", "Women's black belt", "女子用の黒帯", OBI_RANKS.black, obiSpec({ stripe: true, edge: BELT_EDGE }));
 
 const OBI_BY_RANK = { white: GEAR_OBI_WHITE, yellow: GEAR_OBI_YELLOW, orange: GEAR_OBI_ORANGE, green: GEAR_OBI_GREEN, blue: GEAR_OBI_BLUE, brown: GEAR_OBI_BROWN, black: GEAR_OBI, kohaku: GEAR_OBI_KOHAKU, red: GEAR_OBI_RED } as const;
@@ -486,15 +649,64 @@ const OBI_BY_RANK = { white: GEAR_OBI_WHITE, yellow: GEAR_OBI_YELLOW, orange: GE
 // belt's width, running the whole length. `tint` is the colour of the upper half and `accent` the colour of the lower.
 const SPLIT = obiSpec({ half: true, alt: "$accent", bars: false });
 const split = (id: string, en: string, ja: string, a: ObiRank, b: ObiRank) => obiPiece(id, en, ja, OBI_RANKS[a], SPLIT, OBI_RANKS[b]);
+/**
+ * The White and yellow belt emblem (白と黄の二色帯 in Japanese): id `gear:obi-white-yellow`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_WHITE_YELLOW } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_WHITE_YELLOW.id, GEAR_OBI_WHITE_YELLOW.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_WHITE_YELLOW = /* @__PURE__ */ split("gear:obi-white-yellow", "White and yellow belt", "白と黄の二色帯", "white", "yellow");
+/**
+ * The Yellow and orange belt emblem (黄と橙の二色帯 in Japanese): id `gear:obi-yellow-orange`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_YELLOW_ORANGE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_YELLOW_ORANGE.id, GEAR_OBI_YELLOW_ORANGE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_YELLOW_ORANGE = /* @__PURE__ */ split("gear:obi-yellow-orange", "Yellow and orange belt", "黄と橙の二色帯", "yellow", "orange");
+/**
+ * The Orange and green belt emblem (橙と緑の二色帯 in Japanese): id `gear:obi-orange-green`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_ORANGE_GREEN } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_ORANGE_GREEN.id, GEAR_OBI_ORANGE_GREEN.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_ORANGE_GREEN = /* @__PURE__ */ split("gear:obi-orange-green", "Orange and green belt", "橙と緑の二色帯", "orange", "green");
+/**
+ * The Green and blue belt emblem (緑と青の二色帯 in Japanese): id `gear:obi-green-blue`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_GREEN_BLUE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_GREEN_BLUE.id, GEAR_OBI_GREEN_BLUE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_GREEN_BLUE = /* @__PURE__ */ split("gear:obi-green-blue", "Green and blue belt", "緑と青の二色帯", "green", "blue");
+/**
+ * The Blue and brown belt emblem (青と茶の二色帯 in Japanese): id `gear:obi-blue-brown`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_BLUE_BROWN } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_BLUE_BROWN.id, GEAR_OBI_BLUE_BROWN.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_BLUE_BROWN = /* @__PURE__ */ split("gear:obi-blue-brown", "Blue and brown belt", "青と茶の二色帯", "blue", "brown");
 /** Any two colours: the belt `obi` draws for a pair. */
 const OBI_SPLIT = /* @__PURE__ */ split("gear:obi-split", "Two-colour belt", "二色の帯", "white", "yellow");
 
-/** What `obi` takes beside the usual options. `tint` may be one colour or a pair (a two-colour belt, the first colour above and the second below); `women` draws the white stripe of the women's black belt (only the black belt has one; every other belt ignores it). */
+/**
+ * What `obi` takes beside the usual options. `tint` may be one colour or a pair (a two-colour belt, the first colour above and the second below); `women` draws the white stripe of the women's black belt (only the black belt has one; every other belt ignores it).
+ * @example
+ * ```ts
+ * import { obi } from "@johnmorrisdotca/dougu-sports";
+ * import type { ObiOptions } from "@johnmorrisdotca/dougu-sports";
+ * const options: ObiOptions = { tint: ["#f2efe8", "#f2c21b"], size: 64 };
+ * console.log(obi(["white", "yellow"], options).startsWith("<svg"));
+ * ```
+ */
 export interface ObiOptions extends Omit<PieceOptions, "tint"> {
   tint?: string | readonly [string, string];
   women?: boolean;
@@ -504,6 +716,14 @@ export interface ObiOptions extends Omit<PieceOptions, "tint"> {
  * The belt of a rank: `"white"`, `"yellow"`, `"orange"`, `"green"`, `"blue"`, `"brown"` (the kyu), `"black"` (1st to 5th dan), `"kohaku"` (red and white panels, 6th to 8th dan) or `"red"` (9th and 10th dan), or
  * a pair of ranks (`["white", "yellow"]`) for a two-colour belt. An unknown rank is the black belt. `tint` takes one colour, or a pair for a two-colour belt. `women: true` adds the white stripe that women wear on a
  * black belt in Japan.
+ * @param rank - A rank, or a pair of ranks for a two-colour belt.
+ * @param options - The usual options; `tint` takes a colour or a pair; `women` adds the stripe.
+ * @returns The belt as a document of SVG.
+ * @example
+ * ```ts
+ * import { obi } from "@johnmorrisdotca/dougu-sports";
+ * console.log(obi("brown", { size: 64 }).startsWith("<svg"), obi(["white", "yellow"]).startsWith("<svg"));
+ * ```
  */
 export const obi = (rank: ObiRank | readonly [ObiRank, ObiRank], options?: ObiOptions): string => {
   const { women, tint, ...rest } = options ?? {};

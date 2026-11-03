@@ -3,7 +3,14 @@
 // windows left out, and the plates are left plain.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Conn Smythe Trophy: a fan of maple leaves over a silver building on tiers of honey-brown wood. */
+/**
+ * The Conn Smythe Trophy: a fan of maple leaves over a silver building on tiers of honey-brown wood.
+ * @example
+ * ```ts
+ * import { TROPHY_CONN_SMYTHE_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_CONN_SMYTHE_TROPHY.id, TROPHY_CONN_SMYTHE_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_CONN_SMYTHE_TROPHY = /* @__PURE__ */ defineLathe("trophy:conn-smythe-trophy", "Conn Smythe Trophy", "コーン・スマイス賞", "ours", {
   metal: "silver",
   box: "-0.8 0 65.5 65.5",

@@ -3,7 +3,14 @@
 import { defineLathe } from "../emblem.lathe.ts";
 import { LATHE_EXTRAS } from "../lathe.extras.ts";
 
-/** The Calder Cup of the American Hockey League: a two-handled bowl with a laurel band on a knobbed stem, over a black plinth and two stepped black blocks. */
+/**
+ * The Calder Cup of the American Hockey League: a two-handled bowl with a laurel band on a knobbed stem, over a black plinth and two stepped black blocks.
+ * @example
+ * ```ts
+ * import { TROPHY_CALDER_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_CALDER_CUP.id, TROPHY_CALDER_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_CALDER_CUP = /* @__PURE__ */ defineLathe("trophy:calder-cup", "Calder Cup", "カルダー・カップ", "ours", {
   extras: LATHE_EXTRAS,
   metal: "silver",

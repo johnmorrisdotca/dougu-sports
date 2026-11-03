@@ -3,7 +3,14 @@
 // plates are left plain.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Frank J. Selke Trophy: a crowned silver bowl with garlands and ring handles over a flared foot and a dark hexagonal base. */
+/**
+ * The Frank J. Selke Trophy: a crowned silver bowl with garlands and ring handles over a flared foot and a dark hexagonal base.
+ * @example
+ * ```ts
+ * import { TROPHY_SELKE_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_SELKE_TROPHY.id, TROPHY_SELKE_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_SELKE_TROPHY = /* @__PURE__ */ defineLathe("trophy:selke-trophy", "Selke Trophy", "セルキー賞", "ours", {
   metal: "silver",
   box: "-2.3 -1.6 68.5 68.5",

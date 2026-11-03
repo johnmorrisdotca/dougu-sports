@@ -2,7 +2,14 @@
 // Drawn for this package from a photograph (docs/likeness.md); the medallion's portrait and all the lettering (the ring's, the diamond's and the plate's) are left out, and the plate takes the engraving option.
 import { circlePath, defineFlat, polygon } from "../emblem.shapes.ts";
 
-/** The Kenesaw Mountain Landis Memorial Baseball Award, the Most Valuable Player Award of each major league: a dark octagon with a silver ring and diamond, a medallion, a plate and crossed bats. */
+/**
+ * The Kenesaw Mountain Landis Memorial Baseball Award, the Most Valuable Player Award of each major league: a dark octagon with a silver ring and diamond, a medallion, a plate and crossed bats.
+ * @example
+ * ```ts
+ * import { TROPHY_MLB_MVP_AWARD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_MLB_MVP_AWARD.id, TROPHY_MLB_MVP_AWARD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_MLB_MVP_AWARD = /* @__PURE__ */ defineFlat("trophy:mlb-mvp-award", "Baseball MVP award", "野球のMVP賞", "ours", {
   metal: "silver",
   ribbon: "#202226",

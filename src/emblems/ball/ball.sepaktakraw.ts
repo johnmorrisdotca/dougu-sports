@@ -20,6 +20,14 @@ const crossings = (i: number, j: number): V3[] => {
   return [c, [-c[0], -c[1], -c[2]]];
 };
 
+/**
+ * The Sepak takraw ball emblem (セパタクローボール in Japanese): id `ball:sepak-takraw`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SEPAK_TAKRAW } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SEPAK_TAKRAW.id, BALL_SEPAK_TAKRAW.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SEPAK_TAKRAW = /* @__PURE__ */ defineBall({
   id: "ball:sepak-takraw",
   en: "Sepak takraw ball",

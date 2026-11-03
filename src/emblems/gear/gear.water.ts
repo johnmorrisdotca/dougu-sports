@@ -1,6 +1,14 @@
 // Swimming and diving gear drawn by us: a diving board over water, and a pair of goggles.
 import { capsule, drawn, ellipse, rect } from "./gear.core.ts";
 
+/**
+ * The Diving board emblem (飛び込み板 in Japanese): id `gear:diving-board`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_DIVING_BOARD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_DIVING_BOARD.id, GEAR_DIVING_BOARD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_DIVING_BOARD = /* @__PURE__ */ drawn("gear:diving-board", "Diving board", "飛び込み板", {
   box: "-1.4 -0.8 66.8 66.8",
   main: "#4b84b8",
@@ -13,6 +21,14 @@ export const GEAR_DIVING_BOARD = /* @__PURE__ */ drawn("gear:diving-board", "Div
   ],
 });
 
+/**
+ * The Swim goggles emblem (水泳のゴーグル in Japanese): id `gear:swim-goggles`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_SWIM_GOGGLES } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_SWIM_GOGGLES.id, GEAR_SWIM_GOGGLES.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_SWIM_GOGGLES = /* @__PURE__ */ drawn("gear:swim-goggles", "Swim goggles", "水泳のゴーグル", {
   box: "-2.1 -2.1 68.2 68.2",
   main: "#2a7fd0",

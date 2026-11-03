@@ -2,6 +2,14 @@
 import { defineBall } from "./ball.engine.ts";
 import { octants8 } from "./ball.family.panelled.ts";
 
+/**
+ * The Roundnet ball emblem (ラウンドネットボール in Japanese): id `ball:roundnet`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_ROUNDNET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_ROUNDNET.id, BALL_ROUNDNET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_ROUNDNET = /* @__PURE__ */ defineBall({
   id: "ball:roundnet",
   en: "Roundnet ball",

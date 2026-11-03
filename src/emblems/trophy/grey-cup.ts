@@ -2,7 +2,14 @@
 // package from photographs (docs/likeness.md); the panels are left plain, for the engraving option, and the cone's dark bands are rings.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Grey Cup of the Canadian Football League: a two-handled silver cup on a tall flared cone of panels. */
+/**
+ * The Grey Cup of the Canadian Football League: a two-handled silver cup on a tall flared cone of panels.
+ * @example
+ * ```ts
+ * import { TROPHY_GREY_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_GREY_CUP.id, TROPHY_GREY_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_GREY_CUP = /* @__PURE__ */ defineLathe("trophy:grey-cup", "Grey Cup", "グレイカップ", "ours", {
   metal: "silver",
   turnBox: "-8.9 -7.6 81.7 81.7",

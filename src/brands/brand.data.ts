@@ -3,29 +3,73 @@
 
 import type { LetterStyle } from "./brand.letters.ts";
 
+/**
+ * Which colour of a palette a part of a mark takes: `a`, `b` or `c`.
+ * @example
+ * ```ts
+ * import type { PartRole } from "@johnmorrisdotca/dougu-sports/brands";
+ * const role: PartRole = "b";
+ * console.log(role);
+ * ```
+ */
 export type PartRole = "a" | "b" | "c";
 
-/** One flat shape of a mark: an SVG path (drawn with the even-odd rule, so a hole is a hole) and the colour it takes. */
+/**
+ * One flat shape of a mark: an SVG path (drawn with the even-odd rule, so a hole is a hole) and the colour it takes.
+ * @example
+ * ```ts
+ * import type { LogoPart } from "@johnmorrisdotca/dougu-sports/brands";
+ * const part: LogoPart = { d: "M0 0h10v10z", role: "a" };
+ * console.log(part.role);
+ * ```
+ */
 export interface LogoPart {
   d: string;
   role: PartRole;
 }
 
-/** The colours of a maker on a light page or a dark one: the two of its mark and the ink of its wordmark. */
+/**
+ * The colours of a maker on a light page or a dark one: the two of its mark and the ink of its wordmark.
+ * @example
+ * ```ts
+ * import { MAKERS } from "@johnmorrisdotca/dougu-sports/brands";
+ * import type { MakerPalette } from "@johnmorrisdotca/dougu-sports/brands";
+ * const palette: MakerPalette = MAKERS.arvane.light;
+ * console.log(palette.a, palette.b, palette.ink);
+ * ```
+ */
 export interface MakerPalette {
   a: string;
   b: string;
   ink: string;
 }
 
-/** The three colours of a team logo on a light page or a dark one. */
+/**
+ * The three colours of a team logo on a light page or a dark one.
+ * @example
+ * ```ts
+ * import { TEAMS } from "@johnmorrisdotca/dougu-sports/brands";
+ * import type { TeamPalette } from "@johnmorrisdotca/dougu-sports/brands";
+ * const palette: TeamPalette = TEAMS.saltmere.dark;
+ * console.log(palette.a, palette.b, palette.c);
+ * ```
+ */
 export interface TeamPalette {
   a: string;
   b: string;
   c: string;
 }
 
-/** A fictional maker of balls and sports gear: a mark, a name to set as a wordmark, two palettes and the note of how it differs from the nearest real brand. */
+/**
+ * A fictional maker of balls and sports gear: a mark, a name to set as a wordmark, two palettes and the note of how it differs from the nearest real brand.
+ * @example
+ * ```ts
+ * import { MAKERS } from "@johnmorrisdotca/dougu-sports/brands";
+ * import type { MakerData } from "@johnmorrisdotca/dougu-sports/brands";
+ * const maker: MakerData = MAKERS.arvane;
+ * console.log(maker.name, maker.parts.length);
+ * ```
+ */
 export interface MakerData {
   id: MakerId;
   name: string;
@@ -37,7 +81,16 @@ export interface MakerData {
   lettering: LetterStyle;
 }
 
-/** A fictional team: a city and a nickname, a logo, two palettes and a note. */
+/**
+ * A fictional team: a city and a nickname, a logo, two palettes and a note.
+ * @example
+ * ```ts
+ * import { TEAMS } from "@johnmorrisdotca/dougu-sports/brands";
+ * import type { TeamData } from "@johnmorrisdotca/dougu-sports/brands";
+ * const team: TeamData = TEAMS.saltmere;
+ * console.log(team.city, team.nickname);
+ * ```
+ */
 export interface TeamData {
   id: TeamId;
   city: string;
@@ -49,13 +102,55 @@ export interface TeamData {
   dark: TeamPalette;
 }
 
+/**
+ * The ids of the fictional makers.
+ * @example
+ * ```ts
+ * import { MAKER_IDS } from "@johnmorrisdotca/dougu-sports/brands";
+ * console.log(MAKER_IDS.length, MAKER_IDS[0]);
+ * ```
+ */
 export const MAKER_IDS = ["arvane", "tarsin", "ravelle", "kovreth", "dunmar", "ostrel", "vexlin", "quillan", "tenzar", "marenko", "halvane", "solvik"] as const;
+/**
+ * The id of a fictional maker.
+ * @example
+ * ```ts
+ * import type { MakerId } from "@johnmorrisdotca/dougu-sports/brands";
+ * const id: MakerId = "arvane";
+ * console.log(id);
+ * ```
+ */
 export type MakerId = (typeof MAKER_IDS)[number];
+/**
+ * The ids of the fictional teams.
+ * @example
+ * ```ts
+ * import { TEAM_IDS } from "@johnmorrisdotca/dougu-sports/brands";
+ * console.log(TEAM_IDS.length, TEAM_IDS[0]);
+ * ```
+ */
 export const TEAM_IDS = ["saltmere", "greywick", "brightwater", "cinderfell", "valmere", "larkmoor", "ironport", "pinecrest", "redfern", "tarn"] as const;
+/**
+ * The id of a fictional team.
+ * @example
+ * ```ts
+ * import type { TeamId } from "@johnmorrisdotca/dougu-sports/brands";
+ * const id: TeamId = "saltmere";
+ * console.log(id);
+ * ```
+ */
 export type TeamId = (typeof TEAM_IDS)[number];
 
 const part = (role: PartRole, d: string): LogoPart => ({ role, d });
 
+/**
+ * The fictional makers of balls and sports gear, by id: each a mark, a name, two palettes and a note on how it differs from the nearest real brand.
+ * @example
+ * ```ts
+ * import { MAKERS } from "@johnmorrisdotca/dougu-sports/brands";
+ * console.log(Object.keys(MAKERS).length);
+ * ```
+ */
 export const MAKERS: Readonly<Record<MakerId, MakerData>> = Object.freeze({
   arvane: {
     id: "arvane",
@@ -222,6 +317,14 @@ export const MAKERS: Readonly<Record<MakerId, MakerData>> = Object.freeze({
   },
 });
 
+/**
+ * The fictional teams, by id: each a city, a nickname, a logo, two palettes and a note.
+ * @example
+ * ```ts
+ * import { TEAMS } from "@johnmorrisdotca/dougu-sports/brands";
+ * console.log(Object.keys(TEAMS).length);
+ * ```
+ */
 export const TEAMS: Readonly<Record<TeamId, TeamData>> = Object.freeze({
   saltmere: {
     id: "saltmere",

@@ -11,6 +11,15 @@ import { fitSize, linePath } from "../ball/ball.letters.ts";
 import type { PieceOptions } from "../ball/ball.core.ts";
 import { BELT_EDGE, type Pt, belt, dark, f, judogiFlat, light, lerp, path, strip } from "./gear.budo.ts";
 
+/**
+ * A step of tying the belt, 1 to 6.
+ * @example
+ * ```ts
+ * import type { ObiStep } from "@johnmorrisdotca/dougu-sports";
+ * const step: ObiStep = 3;
+ * console.log(step);
+ * ```
+ */
 export type ObiStep = 1 | 2 | 3 | 4 | 5 | 6;
 
 /** The belt's width in the jacket's own units (the judogi's), the two wraps' tops, and the middle of the belly. */
@@ -148,14 +157,72 @@ const stepPiece = (step: ObiStep) => {
   return defineGear({ id, en, ja, source: "drawn", model: spec, draw: (o?: PieceOptions) => drawGear(id, en, spec, o) });
 };
 
+/**
+ * The Belt step 1: centre emblem (帯の結び方（1）中心 in Japanese): id `gear:obi-step-1`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_STEP_1 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_STEP_1.id, GEAR_OBI_STEP_1.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_STEP_1 = /* @__PURE__ */ stepPiece(1);
+/**
+ * The Belt step 2: two wraps emblem (帯の結び方（2）二重巻き in Japanese): id `gear:obi-step-2`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_STEP_2 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_STEP_2.id, GEAR_OBI_STEP_2.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_STEP_2 = /* @__PURE__ */ stepPiece(2);
+/**
+ * The Belt step 3: cross emblem (帯の結び方（3）交差 in Japanese): id `gear:obi-step-3`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_STEP_3 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_STEP_3.id, GEAR_OBI_STEP_3.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_STEP_3 = /* @__PURE__ */ stepPiece(3);
+/**
+ * The Belt step 4: tuck under emblem (帯の結び方（4）下に通す in Japanese): id `gear:obi-step-4`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_STEP_4 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_STEP_4.id, GEAR_OBI_STEP_4.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_STEP_4 = /* @__PURE__ */ stepPiece(4);
+/**
+ * The Belt step 5: square knot emblem (帯の結び方（5）本結び in Japanese): id `gear:obi-step-5`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_STEP_5 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_STEP_5.id, GEAR_OBI_STEP_5.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_STEP_5 = /* @__PURE__ */ stepPiece(5);
+/**
+ * The Belt step 6: even ends emblem (帯の結び方（6）仕上げ in Japanese): id `gear:obi-step-6`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_OBI_STEP_6 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_OBI_STEP_6.id, GEAR_OBI_STEP_6.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_OBI_STEP_6 = /* @__PURE__ */ stepPiece(6);
 
 const BY_STEP = [GEAR_OBI_STEP_1, GEAR_OBI_STEP_2, GEAR_OBI_STEP_3, GEAR_OBI_STEP_4, GEAR_OBI_STEP_5, GEAR_OBI_STEP_6] as const;
 
-/** One step of tying the belt, 1 to 6, with the usual options (`tint` is the jacket's colour, `accent` the belt's). A number that is not a step from 1 to 6 draws the last one. */
+/**
+ * One step of tying the belt, 1 to 6, with the usual options (`tint` is the jacket's colour, `accent` the belt's). A number that is not a step from 1 to 6 draws the last one.
+ * @param step - 1 to 6; any other number draws the last step.
+ * @param options - The usual options.
+ * @returns The step as a document of SVG.
+ * @example
+ * ```ts
+ * import { obiStep } from "@johnmorrisdotca/dougu-sports";
+ * console.log(obiStep(1).startsWith("<svg"), obiStep(6).startsWith("<svg"));
+ * ```
+ */
 export const obiStep = (step: ObiStep, options?: PieceOptions): string => (BY_STEP[Number.isInteger(step) && step >= 1 && step <= 6 ? step - 1 : 5] as (typeof BY_STEP)[number]).svg(options);

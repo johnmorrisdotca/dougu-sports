@@ -3,6 +3,14 @@ import { capsule, drawn, ellipse, seg } from "./gear.core.ts";
 
 const T = "rotate(40 32 32) translate(32 33) scale(1.25) translate(-32 -33)";
 
+/**
+ * The Bamboo sword emblem (竹刀 in Japanese): id `gear:shinai`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_SHINAI } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_SHINAI.id, GEAR_SHINAI.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_SHINAI = /* @__PURE__ */ drawn("gear:shinai", "Bamboo sword", "竹刀", {
   main: "#e2c47c",
   accent: "#27345f",
@@ -28,6 +36,14 @@ const BARS = ((): string => {
   return d;
 })();
 
+/**
+ * The Kendo helmet emblem (剣道の面 in Japanese): id `gear:kendo-men`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_KENDO_MEN } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_KENDO_MEN.id, GEAR_KENDO_MEN.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_KENDO_MEN = /* @__PURE__ */ drawn("gear:kendo-men", "Kendo helmet", "剣道の面", {
   main: "#34478a",
   accent: "#c8cfd8",

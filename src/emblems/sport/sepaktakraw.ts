@@ -1,7 +1,14 @@
 // Woven ball: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
-/** Woven ball. */
+/**
+ * Woven ball.
+ * @example
+ * ```ts
+ * import { SPORT_SEPAKTAKRAW } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_SEPAKTAKRAW.id, SPORT_SEPAKTAKRAW.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_SEPAKTAKRAW = /* @__PURE__ */ defineIcon("sport:sepaktakraw", "Woven ball", "セパタクローのボール", "ours", {
   metal: "flat",
   ink: true,

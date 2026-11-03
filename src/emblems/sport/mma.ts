@@ -2,7 +2,14 @@
 // no name on it. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { defineIcon, polygon } from "../emblem.shapes.ts";
 
-/** Mixed martial arts. */
+/**
+ * Mixed martial arts.
+ * @example
+ * ```ts
+ * import { SPORT_MMA } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_MMA.id, SPORT_MMA.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_MMA = /* @__PURE__ */ defineIcon("sport:mma", "MMA", "総合格闘技", "ours", {
   metal: "flat",
   ink: true,

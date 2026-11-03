@@ -197,22 +197,142 @@ function make(construction: Construction, way: Way): ReturnType<typeof defineBal
   return defineBall({ id: `ball:${n.id}`, en: n.en, ja: n.ja, size: SOCCER_SIZE, spec: specOf(construction, way, VIEWS[construction]) });
 }
 
+/**
+ * The Soccer ball, 26 panels emblem (26枚貼りサッカーボール in Japanese): id `ball:soccer-26`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_26 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_26.id, BALL_SOCCER_26.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_26 = /* @__PURE__ */ make(26, "white");
+/**
+ * The Soccer ball, 18 panels emblem (18枚貼りサッカーボール in Japanese): id `ball:soccer-18`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_18 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_18.id, BALL_SOCCER_18.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_18 = /* @__PURE__ */ make(18, "white");
+/**
+ * The Soccer ball, 14 panels emblem (14枚貼りサッカーボール in Japanese): id `ball:soccer-14`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_14 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_14.id, BALL_SOCCER_14.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_14 = /* @__PURE__ */ make(14, "white");
+/**
+ * The Soccer ball, 12 panels emblem (12枚貼りサッカーボール in Japanese): id `ball:soccer-12`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_12 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_12.id, BALL_SOCCER_12.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_12 = /* @__PURE__ */ make(12, "white");
+/**
+ * The Soccer ball, 6 panels emblem (6枚貼りサッカーボール in Japanese): id `ball:soccer-6`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_6 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_6.id, BALL_SOCCER_6.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_6 = /* @__PURE__ */ make(6, "white");
 
 export const BALL_SOCCER_ORANGE = /* @__PURE__ */ make("classic", "orange");
+/**
+ * The Soccer 26 panels, orange emblem (26枚貼り・オレンジ in Japanese): id `ball:soccer-26-orange`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_26_ORANGE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_26_ORANGE.id, BALL_SOCCER_26_ORANGE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_26_ORANGE = /* @__PURE__ */ make(26, "orange");
+/**
+ * The Soccer 18 panels, orange emblem (18枚貼り・オレンジ in Japanese): id `ball:soccer-18-orange`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_18_ORANGE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_18_ORANGE.id, BALL_SOCCER_18_ORANGE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_18_ORANGE = /* @__PURE__ */ make(18, "orange");
+/**
+ * The Soccer 14 panels, orange emblem (14枚貼り・オレンジ in Japanese): id `ball:soccer-14-orange`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_14_ORANGE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_14_ORANGE.id, BALL_SOCCER_14_ORANGE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_14_ORANGE = /* @__PURE__ */ make(14, "orange");
+/**
+ * The Soccer 12 panels, orange emblem (12枚貼り・オレンジ in Japanese): id `ball:soccer-12-orange`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_12_ORANGE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_12_ORANGE.id, BALL_SOCCER_12_ORANGE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_12_ORANGE = /* @__PURE__ */ make(12, "orange");
+/**
+ * The Soccer 6 panels, orange emblem (6枚貼り・オレンジ in Japanese): id `ball:soccer-6-orange`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_6_ORANGE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_6_ORANGE.id, BALL_SOCCER_6_ORANGE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_6_ORANGE = /* @__PURE__ */ make(6, "orange");
 
 export const BALL_SOCCER_YELLOW = /* @__PURE__ */ make("classic", "yellow");
+/**
+ * The Soccer 26 panels, yellow emblem (26枚貼り・蛍光イエロー in Japanese): id `ball:soccer-26-yellow`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_26_YELLOW } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_26_YELLOW.id, BALL_SOCCER_26_YELLOW.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_26_YELLOW = /* @__PURE__ */ make(26, "yellow");
+/**
+ * The Soccer 18 panels, yellow emblem (18枚貼り・蛍光イエロー in Japanese): id `ball:soccer-18-yellow`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_18_YELLOW } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_18_YELLOW.id, BALL_SOCCER_18_YELLOW.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_18_YELLOW = /* @__PURE__ */ make(18, "yellow");
+/**
+ * The Soccer 14 panels, yellow emblem (14枚貼り・蛍光イエロー in Japanese): id `ball:soccer-14-yellow`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_14_YELLOW } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_14_YELLOW.id, BALL_SOCCER_14_YELLOW.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_14_YELLOW = /* @__PURE__ */ make(14, "yellow");
+/**
+ * The Soccer 12 panels, yellow emblem (12枚貼り・蛍光イエロー in Japanese): id `ball:soccer-12-yellow`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_12_YELLOW } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_12_YELLOW.id, BALL_SOCCER_12_YELLOW.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_12_YELLOW = /* @__PURE__ */ make(12, "yellow");
+/**
+ * The Soccer 6 panels, yellow emblem (6枚貼り・蛍光イエロー in Japanese): id `ball:soccer-6-yellow`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_6_YELLOW } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_6_YELLOW.id, BALL_SOCCER_6_YELLOW.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_6_YELLOW = /* @__PURE__ */ make(6, "yellow");

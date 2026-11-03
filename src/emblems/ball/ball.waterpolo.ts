@@ -9,6 +9,14 @@ const AXES: V3[] = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
 /** How far the grooves run from a seam, in radians. */
 const OFFSETS = [0.17];
 
+/**
+ * The Water polo ball emblem (水球ボール in Japanese): id `ball:water-polo`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_WATER_POLO } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_WATER_POLO.id, BALL_WATER_POLO.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_WATER_POLO = /* @__PURE__ */ defineBall({
   id: "ball:water-polo",
   en: "Water polo ball",

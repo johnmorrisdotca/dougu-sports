@@ -3,7 +3,14 @@
 // plinth takes the engraving option.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Webb Ellis Cup: a gilt lidded two-handled cup with a pineapple finial on a round plinth. */
+/**
+ * The Webb Ellis Cup: a gilt lidded two-handled cup with a pineapple finial on a round plinth.
+ * @example
+ * ```ts
+ * import { TROPHY_WEBB_ELLIS_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_WEBB_ELLIS_CUP.id, TROPHY_WEBB_ELLIS_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_WEBB_ELLIS_CUP = /* @__PURE__ */ defineLathe("trophy:webb-ellis-cup", "Webb Ellis Cup", "ウェブ・エリス・カップ", "ours", {
   metal: "gold",
   turnBox: "-5.6 -2.7 75.3 75.3",

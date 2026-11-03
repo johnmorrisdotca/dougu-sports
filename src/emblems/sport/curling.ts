@@ -1,7 +1,14 @@
 // Curling stone: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { defineIcon, ellipsePath as ell } from "../emblem.shapes.ts";
 
-/** Curling stone. */
+/**
+ * Curling stone.
+ * @example
+ * ```ts
+ * import { SPORT_CURLING } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_CURLING.id, SPORT_CURLING.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_CURLING = /* @__PURE__ */ defineIcon("sport:curling", "Curling stone", "カーリングのストーン", "ours", {
   metal: "flat",
   ink: true,

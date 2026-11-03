@@ -5,7 +5,14 @@ import { skater } from "../emblem.figure.ts";
 
 const figure = skater(3, 28.2, "bronze", "bronze", 0.8, false);
 
-/** The Lester Patrick Trophy: a bronze standing figure on a tall square pedestal of reddish wood. */
+/**
+ * The Lester Patrick Trophy: a bronze standing figure on a tall square pedestal of reddish wood.
+ * @example
+ * ```ts
+ * import { TROPHY_LESTER_PATRICK_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_LESTER_PATRICK_TROPHY.id, TROPHY_LESTER_PATRICK_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_LESTER_PATRICK_TROPHY = /* @__PURE__ */ defineLathe("trophy:lester-patrick-trophy", "Lester Patrick Trophy", "レスター・パトリック賞", "ours", {
   metal: "silver",
   turnBox: "-4.4 0 72.8 72.8",

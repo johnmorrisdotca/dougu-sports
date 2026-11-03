@@ -3,6 +3,14 @@ import { circle, drawn } from "./gear.core.ts";
 
 const T = "rotate(30 32 32)";
 
+/**
+ * The Table-tennis paddle emblem (卓球のラケット in Japanese): id `gear:table-tennis-paddle`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_TABLE_TENNIS_PADDLE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_TABLE_TENNIS_PADDLE.id, GEAR_TABLE_TENNIS_PADDLE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_TABLE_TENNIS_PADDLE = /* @__PURE__ */ drawn("gear:table-tennis-paddle", "Table-tennis paddle", "卓球のラケット", {
   main: "#d9392b",
   accent: "#d8a868",

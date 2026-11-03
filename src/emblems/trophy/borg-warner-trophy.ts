@@ -3,7 +3,14 @@
 // body of revolution, and the lettering is left out (the drum takes the engraving option).
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Borg-Warner Trophy of the Indianapolis 500: a tall tapering silver body of relief faces under a figure with a flag, on a drum base. */
+/**
+ * The Borg-Warner Trophy of the Indianapolis 500: a tall tapering silver body of relief faces under a figure with a flag, on a drum base.
+ * @example
+ * ```ts
+ * import { TROPHY_BORG_WARNER_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_BORG_WARNER_TROPHY.id, TROPHY_BORG_WARNER_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_BORG_WARNER_TROPHY = /* @__PURE__ */ defineLathe("trophy:borg-warner-trophy", "Borg-Warner Trophy", "ボルグ・ワーナー", "ours", {
   metal: "silver",
   turnBox: "-3.8 -2 71.7 71.7",

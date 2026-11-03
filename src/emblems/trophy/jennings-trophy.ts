@@ -2,7 +2,14 @@
 // a plate and rows of crossed sticks. Drawn for this package from a photograph (docs/likeness.md); the crossed sticks are left out and the plate is left plain.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The William M. Jennings Trophy: a wide silver bowl on a stepped foot over three tiers of dark red wood. */
+/**
+ * The William M. Jennings Trophy: a wide silver bowl on a stepped foot over three tiers of dark red wood.
+ * @example
+ * ```ts
+ * import { TROPHY_JENNINGS_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_JENNINGS_TROPHY.id, TROPHY_JENNINGS_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_JENNINGS_TROPHY = /* @__PURE__ */ defineLathe("trophy:jennings-trophy", "Jennings Trophy", "ジェニングス賞", "ours", {
   metal: "silver",
   box: "-2.1 -1.7 68.2 68.2",

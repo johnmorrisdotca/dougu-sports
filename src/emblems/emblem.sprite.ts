@@ -3,13 +3,31 @@ import { EMBLEM_INK, escape, resolve, type EmblemLocale, type EmblemOptions } fr
 import { emblemOf, parseEmblem, renderEmblem, type EmblemRef } from "./emblem.api.ts";
 import { IdSpace, partsOf } from "./emblem.compose.ts";
 
-/** What `emblemSprite` takes: the options every symbol is drawn with, and the prefix of its ids. */
+/**
+ * What `emblemSprite` takes: the options every symbol is drawn with, and the prefix of its ids.
+ * @example
+ * ```ts
+ * import { emblemSprite } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { SpriteOptions } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const options: SpriteOptions = { style: "line", prefix: "my" };
+ * console.log(emblemSprite(["medal:gold"], options).sheet.includes("my"));
+ * ```
+ */
 export interface SpriteOptions extends EmblemOptions {
   /** The start of every id in the sheet (letters, digits and hyphens, starting with a letter). By default it is made from the emblems and the options, so the same call gives the same sheet. */
   prefix?: string;
 }
 
-/** What one `<use>` takes. */
+/**
+ * What one `<use>` takes.
+ * @example
+ * ```ts
+ * import { emblemSprite } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { UseOptions } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const options: UseOptions = { size: 24, class: "icon", title: false };
+ * console.log(emblemSprite(["medal:gold"]).use("medal:gold", options).includes("icon"));
+ * ```
+ */
 export interface UseOptions {
   /** The width and height in pixels (64 by default). */
   size?: number;
@@ -21,7 +39,16 @@ export interface UseOptions {
   locale?: EmblemLocale;
 }
 
-/** A sheet of symbols and the snippets that draw them. */
+/**
+ * A sheet of symbols and the snippets that draw them.
+ * @example
+ * ```ts
+ * import { emblemSprite } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { Sprite } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const sprite: Sprite = emblemSprite(["ball:soccer", "medal:gold"]);
+ * console.log(sprite.sheet.startsWith("<svg"));
+ * ```
+ */
 export interface Sprite {
   /** One hidden `<svg>` of `<symbol>`s; put it once in the page, anywhere in `<body>`. */
   sheet: string;
@@ -47,6 +74,9 @@ function keyOf(ref: EmblemRef): string {
  * A sprite sheet: every emblem in `ids` drawn once as a `<symbol>`, with the gradients and other definitions shared and every id unique across the sheet, and a `use(id, { size, class, title })` that returns the
  * markup for one more of it. Put `sheet` in the page once; a bracket or a table that shows the same ball or medal fifty times then adds a few nodes each time, not the whole drawing. The symbols are drawn without the
  * grain a large ball has by default (pass `grain: true` to keep it). `style`, `tint`, `accent` and `theme` are the sheet's, for every symbol; a different look is another sprite, or an id that names its style (`"medal:gold/line"`).
+ * @param ids - The emblems to draw once each.
+ * @param options - The options every symbol is drawn with, and the id prefix.
+ * @returns The sheet to put in the page once, and `use` to make each reference to a symbol.
  * @example
  * ```ts
  * import { emblemSprite } from "@johnmorrisdotca/dougu-sports/emblems";

@@ -2,7 +2,14 @@
 // photograph of the 1998 trophy (docs/likeness.md), at a small size; the ball's panels are the engine's own and the plate takes the engraving option. The trophy has changed in detail over the years, and this is its overall form.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Ballon d'Or: a gilt soccer ball on a black domed base. */
+/**
+ * The Ballon d'Or: a gilt soccer ball on a black domed base.
+ * @example
+ * ```ts
+ * import { TROPHY_BALLON_DOR } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_BALLON_DOR.id, TROPHY_BALLON_DOR.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_BALLON_DOR = /* @__PURE__ */ defineLathe("trophy:ballon-dor", "Ballon d'Or", "バロンドール", "ours", {
   metal: "gold",
   box: "-0.6 0 65.1 65.1",

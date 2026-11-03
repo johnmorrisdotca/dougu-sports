@@ -10,7 +10,14 @@ const SKATER: readonly (readonly [number, number])[] = [
 ];
 const outline = (points: readonly (readonly [number, number])[], flip: boolean): string => `M${points.map(([x, y]) => `${flip ? 60.4 - x : x} ${y}`).join("L")}Z`;
 
-/** The O'Brien Cup of the National Hockey Association and the early NHL: a gilt bowl between two bronze skaters on a long dark base. */
+/**
+ * The O'Brien Cup of the National Hockey Association and the early NHL: a gilt bowl between two bronze skaters on a long dark base.
+ * @example
+ * ```ts
+ * import { TROPHY_OBRIEN_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_OBRIEN_CUP.id, TROPHY_OBRIEN_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_OBRIEN_CUP = /* @__PURE__ */ defineFlat("trophy:obrien-cup", "O'Brien Cup", "オブライエン・カップ", "ours", {
   metal: "gold",
   ribbon: "#4a3322",

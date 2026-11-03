@@ -2,7 +2,14 @@
 // photograph of the award in a case (docs/likeness.md); the band's lettering and the plate's are left out, and the plate takes the engraving option.
 import { circlePath, defineFlat } from "../emblem.shapes.ts";
 
-/** The Cy Young Award: a dark plaque with a curved silver band, a V and a hand holding a baseball over a plate. */
+/**
+ * The Cy Young Award: a dark plaque with a curved silver band, a V and a hand holding a baseball over a plate.
+ * @example
+ * ```ts
+ * import { TROPHY_CY_YOUNG_AWARD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_CY_YOUNG_AWARD.id, TROPHY_CY_YOUNG_AWARD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_CY_YOUNG_AWARD = /* @__PURE__ */ defineFlat("trophy:cy-young-award", "Cy Young Award", "サイ・ヤング賞", "ours", {
   metal: "silver",
   ribbon: "#1f2125",

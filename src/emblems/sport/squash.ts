@@ -1,7 +1,14 @@
 // Squash racket and ball: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { circlePath as circ, defineIcon, ellipsePath as ell } from "../emblem.shapes.ts";
 
-/** Squash racket and ball. */
+/**
+ * Squash racket and ball.
+ * @example
+ * ```ts
+ * import { SPORT_SQUASH } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_SQUASH.id, SPORT_SQUASH.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_SQUASH = /* @__PURE__ */ defineIcon("sport:squash", "Squash racket", "スカッシュのラケット", "ours", {
   metal: "flat",
   ink: true,

@@ -3,6 +3,14 @@ import { capsule, drawn, ellipse, rect, seg } from "./gear.core.ts";
 
 const BAT = "rotate(-38 32 32)";
 
+/**
+ * The Baseball bat emblem (野球のバット in Japanese): id `gear:baseball-bat`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_BASEBALL_BAT } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_BASEBALL_BAT.id, GEAR_BASEBALL_BAT.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_BASEBALL_BAT = /* @__PURE__ */ drawn("gear:baseball-bat", "Baseball bat", "野球のバット", {
   main: "#d9b57a",
   accent: "#3a2a1a",
@@ -13,6 +21,14 @@ export const GEAR_BASEBALL_BAT = /* @__PURE__ */ drawn("gear:baseball-bat", "Bas
   ],
 });
 
+/**
+ * The Basketball hoop emblem (バスケットゴール in Japanese): id `gear:basketball-hoop`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_BASKETBALL_HOOP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_BASKETBALL_HOOP.id, GEAR_BASKETBALL_HOOP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_BASKETBALL_HOOP = /* @__PURE__ */ drawn("gear:basketball-hoop", "Basketball hoop", "バスケットゴール", {
   main: "#e8501a",
   accent: "#f4f1ea",
@@ -32,6 +48,14 @@ const MESH = ((): string => {
   return d;
 })();
 
+/**
+ * The Volleyball net emblem (バレーボールのネット in Japanese): id `gear:volleyball-net`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_VOLLEYBALL_NET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_VOLLEYBALL_NET.id, GEAR_VOLLEYBALL_NET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_VOLLEYBALL_NET = /* @__PURE__ */ drawn("gear:volleyball-net", "Volleyball net", "バレーボールのネット", {
   main: "#f4f1ea",
   accent: "#c8202c",
@@ -46,6 +70,14 @@ export const GEAR_VOLLEYBALL_NET = /* @__PURE__ */ drawn("gear:volleyball-net", 
   ],
 });
 
+/**
+ * The Goal posts emblem (ゴールポスト in Japanese): id `gear:goalposts`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_GOALPOSTS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_GOALPOSTS.id, GEAR_GOALPOSTS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_GOALPOSTS = /* @__PURE__ */ drawn("gear:goalposts", "Goal posts", "ゴールポスト", {
   main: "#f2c21b",
   accent: "#2b6cb5",
@@ -58,6 +90,14 @@ export const GEAR_GOALPOSTS = /* @__PURE__ */ drawn("gear:goalposts", "Goal post
   ],
 });
 
+/**
+ * The Cricket wicket emblem (クリケットのウィケット in Japanese): id `gear:wicket`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_WICKET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_WICKET.id, GEAR_WICKET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_WICKET = /* @__PURE__ */ drawn("gear:wicket", "Cricket wicket", "クリケットのウィケット", {
   main: "#ecd9a8",
   accent: "#c28a48",
@@ -71,6 +111,14 @@ export const GEAR_WICKET = /* @__PURE__ */ drawn("gear:wicket", "Cricket wicket"
   ],
 });
 
+/**
+ * The Roundnet set emblem (ラウンドネットのセット in Japanese): id `gear:roundnet-set`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_ROUNDNET_SET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_ROUNDNET_SET.id, GEAR_ROUNDNET_SET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_ROUNDNET_SET = /* @__PURE__ */ drawn("gear:roundnet-set", "Roundnet set", "ラウンドネットのセット", {
   main: "#1f2328",
   accent: "#f0b429",

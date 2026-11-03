@@ -2,7 +2,14 @@
 // back; on a dark hexagonal base of wood that widens toward its foot and carries rows of round silver plates. Drawn for this package from a photograph (docs/likeness.md); the chasing and the round plates are left out.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Clarence S. Campbell Bowl: a lidded two-handled silver bowl on a hexagonal base of dark wood with round plates. */
+/**
+ * The Clarence S. Campbell Bowl: a lidded two-handled silver bowl on a hexagonal base of dark wood with round plates.
+ * @example
+ * ```ts
+ * import { TROPHY_CAMPBELL_BOWL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_CAMPBELL_BOWL.id, TROPHY_CAMPBELL_BOWL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_CAMPBELL_BOWL = /* @__PURE__ */ defineLathe("trophy:campbell-bowl", "Campbell Bowl", "キャンベル・ボウル", "ours", {
   metal: "silver",
   turnBox: "-5.4 0 74.7 74.7",

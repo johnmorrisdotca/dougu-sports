@@ -4,6 +4,14 @@ import { capsule, drawn, swell } from "./gear.core.ts";
 /** The bow's limbs: a long upper limb and a short lower one, thickest at the hand and thin at the tips. */
 const BOW = swell([44, 2], [12, 10], [16, 52], [38, 62], (t) => 1.6 + 2.6 * Math.sin(Math.PI * Math.min(1, t * 1.15)) ** 0.6, 22);
 
+/**
+ * The Long bow emblem (弓道の弓 in Japanese): id `gear:yumi`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_YUMI } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_YUMI.id, GEAR_YUMI.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_YUMI = /* @__PURE__ */ drawn("gear:yumi", "Long bow", "弓道の弓", {
   main: "#4a2e1e",
   accent: "#d9b66a",
@@ -19,6 +27,14 @@ export const GEAR_YUMI = /* @__PURE__ */ drawn("gear:yumi", "Long bow", "弓道�
 
 const T = "rotate(40 32 32) translate(32 33) scale(1.22) translate(-32 -33)";
 
+/**
+ * The Arrow emblem (弓道の矢 in Japanese): id `gear:ya`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_YA } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_YA.id, GEAR_YA.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_YA = /* @__PURE__ */ drawn("gear:ya", "Arrow", "弓道の矢", {
   main: "#d6ae63",
   accent: "#f4f1ea",

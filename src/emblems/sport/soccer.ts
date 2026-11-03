@@ -21,7 +21,14 @@ const EDGE = ((): string => {
   return d;
 })();
 
-/** Soccer. */
+/**
+ * Soccer.
+ * @example
+ * ```ts
+ * import { SPORT_SOCCER } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_SOCCER.id, SPORT_SOCCER.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_SOCCER = /* @__PURE__ */ defineIcon("sport:soccer", "Soccer", "サッカー", "ours", {
   metal: "flat",
   ink: true,

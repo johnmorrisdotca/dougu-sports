@@ -1,6 +1,14 @@
 // Padel ball: a yellow felt ball a little larger than a tennis ball's, with a seam of its own proportions.
 import { seamedBall } from "./ball.family.seamed.ts";
 
+/**
+ * The Padel ball emblem (パデルボール in Japanese): id `ball:padel`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_PADEL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_PADEL.id, BALL_PADEL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_PADEL = /* @__PURE__ */ seamedBall({
   id: "ball:padel",
   en: "Padel ball",

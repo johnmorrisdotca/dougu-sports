@@ -6,7 +6,14 @@ import { LATHE_BALL } from "../lathe.extras.ts";
 import { NBA_TONES, WEST_BAND, westBase } from "../nba.parts.ts";
 
 
-/** The Oscar Robertson Trophy: the Western Conference champions' trophy, a silver ball in crossed gold bands on a round black and gold base. */
+/**
+ * The Oscar Robertson Trophy: the Western Conference champions' trophy, a silver ball in crossed gold bands on a round black and gold base.
+ * @example
+ * ```ts
+ * import { TROPHY_OSCAR_ROBERTSON_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_OSCAR_ROBERTSON_TROPHY.id, TROPHY_OSCAR_ROBERTSON_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_OSCAR_ROBERTSON_TROPHY = /* @__PURE__ */ defineLathe("trophy:oscar-robertson-trophy", "Oscar Robertson Trophy", "オスカー・ロバートソン・トロフィー", "ours", {
   ballExtras: LATHE_BALL,
   metal: "gold",

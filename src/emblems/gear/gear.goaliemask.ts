@@ -9,6 +9,14 @@ const CAGE = ((): string => {
   return d;
 })();
 
+/**
+ * The Goalie mask emblem (ゴールキーパーマスク in Japanese): id `gear:goalie-mask`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_GOALIE_MASK } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_GOALIE_MASK.id, GEAR_GOALIE_MASK.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_GOALIE_MASK = /* @__PURE__ */ drawn("gear:goalie-mask", "Goalie mask", "ゴールキーパーマスク", {
   main: "#eef0f2",
   accent: "#c8202c",

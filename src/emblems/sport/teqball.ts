@@ -1,7 +1,14 @@
 // Curved table and ball: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
-/** Curved table and ball. */
+/**
+ * Curved table and ball.
+ * @example
+ * ```ts
+ * import { SPORT_TEQBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_TEQBALL.id, SPORT_TEQBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_TEQBALL = /* @__PURE__ */ defineIcon("sport:teqball", "Curved table", "テックボールの台", "ours", {
   metal: "flat",
   ink: true,

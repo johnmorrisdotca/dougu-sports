@@ -5,7 +5,14 @@ import { defineLathe } from "../emblem.lathe.ts";
 const BLADE = [[3.2, 47.4], [7.6, 35.5], [11.6, 24.5], [15.2, 14], [17.8, 5.8], [18.4, 3], [17.3, 1.4], [14.8, 1.6], [12, 3.8], [10.3, 7.2], [9.9, 9.6]] as const;
 const strips = (a: number) => [-2.6, 2.6].map((d) => ({ a: a + d, w: 2.2, pts: BLADE }));
 
-/** The MLS Cup (the Philip F. Anschutz Trophy): a tall silver goblet with a gilt rim on a flared pedestal, with four blades that sweep out and curl in over the rim. */
+/**
+ * The MLS Cup (the Philip F. Anschutz Trophy): a tall silver goblet with a gilt rim on a flared pedestal, with four blades that sweep out and curl in over the rim.
+ * @example
+ * ```ts
+ * import { TROPHY_MLS_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_MLS_CUP.id, TROPHY_MLS_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_MLS_CUP = /* @__PURE__ */ defineLathe("trophy:mls-cup", "MLS Cup", "MLSカップ", "ours", {
   metal: "silver",
   box: "-1.8 -2 67.6 67.6",

@@ -1,7 +1,14 @@
 // Table tennis paddle and ball: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
-/** Table tennis paddle and ball. */
+/**
+ * Table tennis paddle and ball.
+ * @example
+ * ```ts
+ * import { SPORT_TABLETENNIS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_TABLETENNIS.id, SPORT_TABLETENNIS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_TABLETENNIS = /* @__PURE__ */ defineIcon("sport:tabletennis", "Table tennis paddle", "卓球のラケット", "ours", {
   metal: "flat",
   ink: true, ribbon: "#c0392b",

@@ -2,7 +2,14 @@
 import { bar, defineIcon, ellipsePath as ell } from "../emblem.shapes.ts";
 
 
-/** Ice hockey. */
+/**
+ * Ice hockey.
+ * @example
+ * ```ts
+ * import { SPORT_NHL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_NHL.id, SPORT_NHL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_NHL = /* @__PURE__ */ defineIcon("sport:nhl", "Ice hockey", "アイスホッケー", "ours", {
   metal: "flat",
   ink: true,

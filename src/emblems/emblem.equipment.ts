@@ -2,7 +2,16 @@
 // draws a sport's equipment, or a card for a team of that sport, asks for the list and draws each id with `renderEmblem`.
 import type { BallId, GearId, MedalId, SportName, TrophyId } from "./emblem.ids.ts";
 
-/** The equipment of one sport. */
+/**
+ * The equipment of one sport.
+ * @example
+ * ```ts
+ * import { sportEquipment } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { SportEquipment } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const nhl: SportEquipment = sportEquipment("nhl");
+ * console.log(nhl.ball, nhl.trophy);
+ * ```
+ */
 export interface SportEquipment {
   sport: SportName;
   /** The ball, or the implement that stands for one (the puck, the shuttlecock, the shot). Swimming, diving, artistic swimming, skating, the Japanese sports (sumo, kendo, judo, kyudo, karate) and the combat sports (MMA, boxing, wrestling, professional wrestling) have none. */
@@ -66,6 +75,8 @@ const TABLE: Readonly<Record<SportName, Entry>> = {
 
 /**
  * What a sport is played and won with, as ids of the registry: `sportEquipment("nhl")` is the puck, a stick, a skate, a goalie's mask and a net, and the hockey cup. The arrays are new each call. An unknown sport is an error.
+ * @param sport - A name from `SPORT_NAMES`.
+ * @returns The sport's ball, gear, trophy and medal, as emblem ids.
  * @example
  * ```ts
  * import { sportEquipment } from "@johnmorrisdotca/dougu-sports/emblems";

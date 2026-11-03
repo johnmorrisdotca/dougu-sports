@@ -3,7 +3,14 @@
 // lip is a tube and the foot takes the engraving option. The old photograph is black and white, so the metal is the usual silver.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The America's Cup: a tall silver ewer with a spout and a great spiral handle. */
+/**
+ * The America's Cup: a tall silver ewer with a spout and a great spiral handle.
+ * @example
+ * ```ts
+ * import { TROPHY_AMERICAS_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_AMERICAS_CUP.id, TROPHY_AMERICAS_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_AMERICAS_CUP = /* @__PURE__ */ defineLathe("trophy:americas-cup", "America's Cup", "アメリカズカップ", "ours", {
   metal: "silver",
   turnBox: "-7.9 -8.6 79.8 79.8",

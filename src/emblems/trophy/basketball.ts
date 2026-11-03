@@ -1,7 +1,14 @@
 // A ball resting over a rim and a net, on a tapered column and a stepped base, all in gold. Drawn for this package; a generic trophy.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A gold ball resting over a net and rim, on a tapered column and base. */
+/**
+ * A gold ball resting over a net and rim, on a tapered column and base.
+ * @example
+ * ```ts
+ * import { TROPHY_BASKETBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_BASKETBALL.id, TROPHY_BASKETBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_BASKETBALL = /* @__PURE__ */ defineLathe("trophy:basketball", "Basketball trophy", "バスケットボールのトロフィー", "ours", {
   metal: "gold",
   turnBox: "-5 0 74 74",

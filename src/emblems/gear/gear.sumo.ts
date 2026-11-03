@@ -1,6 +1,14 @@
 // Sumo gear, drawn for this package: the referee's war fan with its tassel, and the wrestler's belt with its stiff hanging cords.
 import { capsule, circle, drawn, seg } from "./gear.core.ts";
 
+/**
+ * The Referee's war fan emblem (軍配 in Japanese): id `gear:gunbai`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_GUNBAI } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_GUNBAI.id, GEAR_GUNBAI.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_GUNBAI = /* @__PURE__ */ drawn("gear:gunbai", "Referee's war fan", "軍配", {
   box: "-0.4 0 64.7 64.7",
   main: "#4a2428",
@@ -32,6 +40,14 @@ const CORDS = ((): { cords: string; ends: string } => {
   return { cords, ends };
 })();
 
+/**
+ * The Sumo belt emblem (廻し in Japanese): id `gear:mawashi`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_MAWASHI } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_MAWASHI.id, GEAR_MAWASHI.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_MAWASHI = /* @__PURE__ */ drawn("gear:mawashi", "Sumo belt", "廻し", {
   main: "#3b3f8c",
   accent: "#d9a620",

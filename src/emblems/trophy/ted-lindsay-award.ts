@@ -5,7 +5,14 @@ import { skater } from "../emblem.figure.ts";
 
 const figure = skater(3, 23.8, "bronze", "skin", 1.3);
 
-/** The Ted Lindsay Award: a skater on a tall black hexagonal pillar over a flared silver base. */
+/**
+ * The Ted Lindsay Award: a skater on a tall black hexagonal pillar over a flared silver base.
+ * @example
+ * ```ts
+ * import { TROPHY_TED_LINDSAY_AWARD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_TED_LINDSAY_AWARD.id, TROPHY_TED_LINDSAY_AWARD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_TED_LINDSAY_AWARD = /* @__PURE__ */ defineLathe("trophy:ted-lindsay-award", "Ted Lindsay Award", "テッド・リンゼイ賞", "ours", {
   metal: "silver",
   box: "-0.3 0 64.6 64.6",

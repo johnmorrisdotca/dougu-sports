@@ -2,7 +2,14 @@
 // widens a little toward a black base. Drawn for this package from photographs of the cup standing alone (docs/likeness.md): the heights and radii are measured on them, and the bands are left plain, for the engraving option.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Stanley Cup of the National Hockey League: a fluted bowl, a beaded neck, three stepped rings and a barrel of five bands on a black base. */
+/**
+ * The Stanley Cup of the National Hockey League: a fluted bowl, a beaded neck, three stepped rings and a barrel of five bands on a black base.
+ * @example
+ * ```ts
+ * import { TROPHY_STANLEY_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_STANLEY_CUP.id, TROPHY_STANLEY_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_STANLEY_CUP = /* @__PURE__ */ defineLathe("trophy:stanley-cup", "Stanley Cup", "スタンレー・カップ", "ours", {
   metal: "silver",
   turnBox: "-6.9 -6.4 77.7 77.7",

@@ -8,10 +8,26 @@ import {
 } from "./emblem.core.ts";
 import { type Band, cylinderText, engravingInk, engravingOf, flatText, sideText } from "./emblem.engrave.ts";
 
-/** A point of the profile: the height `y` (0 at the top of the 64 unit box), the radius `r` from the axis (x = 32), 1 for a sharp corner (a smooth run of points ends at one), and the tone of the piece that starts here. */
+/**
+ * A point of the profile: the height `y` (0 at the top of the 64 unit box), the radius `r` from the axis (x = 32), 1 for a sharp corner (a smooth run of points ends at one), and the tone of the piece that starts here.
+ * @example
+ * ```ts
+ * import type { Pt } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const point: Pt = [10, 4];
+ * console.log(point);
+ * ```
+ */
 export type Pt = readonly [y: number, r: number, corner?: 0 | 1, tone?: string];
 
-/** Something drawn on the surface, by height and angle (90 degrees is the right side, 0 faces the eye): a `ring` round the body at a height; `mer`idians from one height to another; `helix` strands that wind `turns` times; a diamond `net`; `dots` (beads) round at a height with a size; on an open top, a `disc` of a tone out to a radius and `pills`, short rounded marks, round a radius. */
+/**
+ * Something drawn on the surface, by height and angle (90 degrees is the right side, 0 faces the eye): a `ring` round the body at a height; `mer`idians from one height to another; `helix` strands that wind `turns` times; a diamond `net`; `dots` (beads) round at a height with a size; on an open top, a `disc` of a tone out to a radius and `pills`, short rounded marks, round a radius.
+ * @example
+ * ```ts
+ * import type { Decor } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const decor: Decor[] = [["ring", 20], ["dots", 30, 8, 1]];
+ * console.log(decor.length);
+ * ```
+ */
 export type Decor =
   | readonly ["ring", y: number]
   | readonly ["mer", y0: number, y1: number, n: number, off?: number]
@@ -43,7 +59,15 @@ export interface DecorCtx {
   where: (R: number, y: number, deg: number) => string;
 }
 
-/** One solid of revolution: a profile from the top down, whether its top is an open rim, how many flat sides it has (none: round) and what is drawn on it. */
+/**
+ * One solid of revolution: a profile from the top down, whether its top is an open rim, how many flat sides it has (none: round) and what is drawn on it.
+ * @example
+ * ```ts
+ * import type { Solid } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const solid: Solid = { p: [[2, 6], [20, 10], [40, 4]], open: true };
+ * console.log(solid.p.length);
+ * ```
+ */
 export interface Solid {
   p: readonly Pt[];
   open?: boolean;
@@ -58,7 +82,15 @@ export interface Solid {
   decor?: readonly Decor[];
 }
 
-/** A handle: a curve through points `[r, y]` (the distance from the axis and the height) in the plane of the azimuth `a`, drawn as a tube `w` thick. The handle of the other side is `a + 180`. */
+/**
+ * A handle: a curve through points `[r, y]` (the distance from the axis and the height) in the plane of the azimuth `a`, drawn as a tube `w` thick. The handle of the other side is `a + 180`.
+ * @example
+ * ```ts
+ * import type { Handle } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const handle: Handle = { a: 90, pts: [[10, 20], [16, 28], [10, 36]], w: 2 };
+ * console.log(handle.pts.length);
+ * ```
+ */
 export interface Handle {
   a: number;
   pts: readonly (readonly [r: number, y: number])[];
@@ -66,11 +98,26 @@ export interface Handle {
   tone?: string;
 }
 
+/**
+ * What a ball on a body is drawn as: plain, basketball, soccer, baseball, globe, football or pine cone.
+ * @example
+ * ```ts
+ * import type { BallKind } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const kind: BallKind = "globe";
+ * console.log(kind);
+ * ```
+ */
 export type BallKind = "plain" | "basket" | "soccer" | "base" | "globe" | "football" | "pine";
 /**
  * A ball on the body: `cy` its centre, `r` its radius (and `ry` when it is longer than it is wide), `rot` the lean of a football in degrees. `fwd` sets the ball that far from the axis, toward the eye or, with `dir`, toward that angle (and so round the axis with the turn).
  * `nba` gives it the seams of a basketball as grooves, drawn by the model's `ballExtras` (`LATHE_BALL`): in the tone `seam` when given, the ball leaning by `lean` (degrees about the line of sight, then about the horizontal)
  * and, when `grain` is a number, that many specks of a grained finish.
+ * @example
+ * ```ts
+ * import type { Ball } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const ball: Ball = { kind: "soccer", cy: 12, r: 6 };
+ * console.log(ball.kind);
+ * ```
  */
 export interface Ball {
   kind: BallKind;
@@ -100,7 +147,15 @@ export interface BallCtx {
   tone: (name?: string) => Tone;
 }
 
-/** A ring of `n` poles that stand from a ring of radius `r0` at `y0` up to a ring of radius `r1`, their tops stepping from the height `top1` down to `top2` once round, each with a pennant `size` tall. */
+/**
+ * A ring of `n` poles that stand from a ring of radius `r0` at `y0` up to a ring of radius `r1`, their tops stepping from the height `top1` down to `top2` once round, each with a pennant `size` tall.
+ * @example
+ * ```ts
+ * import type { Poles } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const poles: Poles = { n: 6, y0: 40, r0: 8, r1: 14, top1: 20, top2: 28, size: 2 };
+ * console.log(poles.n);
+ * ```
+ */
 export interface Poles {
   n: number;
   y0: number;
@@ -200,7 +255,16 @@ export interface Block {
 
 export type Part = Cut | Ribbon | Block;
 
-/** What a body of revolution is made of. All of it is in the 64 by 64 box with the axis at x = 32. */
+/**
+ * What a body of revolution is made of. All of it is in the 64 by 64 box with the axis at x = 32.
+ * @example
+ * ```ts
+ * import { emblemModel } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { LatheModel } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const model = emblemModel("trophy:hockey-cup") as LatheModel;
+ * console.log(model.solids.length > 0);
+ * ```
+ */
 export interface LatheModel {
   metal: Metal;
   /** The main colour when the caller gives no tint and the metal is `flat` (the clay of an urn). */

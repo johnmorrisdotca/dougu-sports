@@ -2,7 +2,14 @@
 import { bar, circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
 
-/** Cricket. */
+/**
+ * Cricket.
+ * @example
+ * ```ts
+ * import { SPORT_CRICKET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_CRICKET.id, SPORT_CRICKET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_CRICKET = /* @__PURE__ */ defineIcon("sport:cricket", "Cricket", "クリケット", "ours", {
   metal: "flat",
   ink: true,

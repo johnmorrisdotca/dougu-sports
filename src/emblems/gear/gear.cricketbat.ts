@@ -3,6 +3,14 @@ import { capsule, circle, drawn } from "./gear.core.ts";
 
 const T = "rotate(34 32 32)";
 
+/**
+ * The Cricket bat emblem (クリケットのバット in Japanese): id `gear:cricket-bat`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_CRICKET_BAT } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_CRICKET_BAT.id, GEAR_CRICKET_BAT.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_CRICKET_BAT = /* @__PURE__ */ drawn("gear:cricket-bat", "Cricket bat", "クリケットのバット", {
   main: "#e6b96e",
   accent: "#2a2f38",

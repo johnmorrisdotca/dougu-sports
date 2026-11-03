@@ -2,6 +2,14 @@
 import { defineBall } from "./ball.engine.ts";
 import { basketballSpec } from "./ball.basketball.ts";
 
+/**
+ * The Basketball, size 6 emblem (バスケットボール6号球 in Japanese): id `ball:basketball-6`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_BASKETBALL_6 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_BASKETBALL_6.id, BALL_BASKETBALL_6.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_BASKETBALL_6 = /* @__PURE__ */ defineBall({
   id: "ball:basketball-6",
   en: "Basketball, size 6",

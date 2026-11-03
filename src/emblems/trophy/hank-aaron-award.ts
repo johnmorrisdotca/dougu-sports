@@ -2,7 +2,14 @@
 // the lower one falling. Drawn for this package from a photograph of the award held in the hands of the winners (docs/likeness-sources.md); the lettering on the ribbons, the league's mark under them and the engraving are left out.
 import { defineFlat } from "../emblem.shapes.ts";
 
-/** The Hank Aaron Award: a home-plate block of mahogany with a grey metal face, a bat and two ribbons. */
+/**
+ * The Hank Aaron Award: a home-plate block of mahogany with a grey metal face, a bat and two ribbons.
+ * @example
+ * ```ts
+ * import { TROPHY_HANK_AARON_AWARD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_HANK_AARON_AWARD.id, TROPHY_HANK_AARON_AWARD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_HANK_AARON_AWARD = /* @__PURE__ */ defineFlat("trophy:hank-aaron-award", "Hank Aaron Award", "ハンク・アーロン賞", "ours", {
   metal: "silver",
   ribbon: "#6b2f22",

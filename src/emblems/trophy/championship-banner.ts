@@ -33,7 +33,14 @@ const FRINGE = ((): string => {
 const POLE = ["r", "M7 8h4.4v54H7z"] as const;
 const FINIAL = ["r", "M9.2 1.4L12.4 8.4H6z"] as const;
 
-/** A fringed banner on a pole. */
+/**
+ * A fringed banner on a pole.
+ * @example
+ * ```ts
+ * import { TROPHY_CHAMPIONSHIP_BANNER } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_CHAMPIONSHIP_BANNER.id, TROPHY_CHAMPIONSHIP_BANNER.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_CHAMPIONSHIP_BANNER = /* @__PURE__ */ defineFlat("trophy:championship-banner", "Championship banner", "優勝旗", "ours", {
   metal: "flat",
   color: "#4b2a6b",

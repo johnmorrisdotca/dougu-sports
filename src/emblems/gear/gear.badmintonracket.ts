@@ -4,6 +4,14 @@ import { capsule, drawn, ellipse, seg, strings } from "./gear.core.ts";
 const T = "rotate(34 32 32)";
 const S = "translate(50.5 50) rotate(48) scale(.95) translate(-32 -13)";
 
+/**
+ * The Badminton racket emblem (バドミントンのラケット in Japanese): id `gear:badminton-racket`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_BADMINTON_RACKET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_BADMINTON_RACKET.id, GEAR_BADMINTON_RACKET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_BADMINTON_RACKET = /* @__PURE__ */ drawn("gear:badminton-racket", "Badminton racket", "バドミントンのラケット", {
   main: "#2f8fe0",
   accent: "#2a2f38",

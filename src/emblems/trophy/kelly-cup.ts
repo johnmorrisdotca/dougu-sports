@@ -2,7 +2,14 @@
 // from a photograph of the cup on its base (docs/likeness.md): the heights and radii are measured on it, and the plate bands are left plain, for the engraving option.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Kelly Cup of the ECHL: a two-handled silver cup on three black drums with silver-edged bands. */
+/**
+ * The Kelly Cup of the ECHL: a two-handled silver cup on three black drums with silver-edged bands.
+ * @example
+ * ```ts
+ * import { TROPHY_KELLY_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_KELLY_CUP.id, TROPHY_KELLY_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_KELLY_CUP = /* @__PURE__ */ defineLathe("trophy:kelly-cup", "Kelly Cup", "ケリー・カップ", "ours", {
   metal: "silver",
   box: "-1.4 -1 66.9 66.9",

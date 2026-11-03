@@ -1,7 +1,14 @@
 // Ice skate: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { defineIcon } from "../emblem.shapes.ts";
 
-/** Ice skate. */
+/**
+ * Ice skate.
+ * @example
+ * ```ts
+ * import { SPORT_SKATING } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_SKATING.id, SPORT_SKATING.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_SKATING = /* @__PURE__ */ defineIcon("sport:skating", "Ice skate", "スケート靴", "ours", {
   metal: "flat",
   ink: true,

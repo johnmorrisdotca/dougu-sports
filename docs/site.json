@@ -1,0 +1,39 @@
+{
+  "job": "Sports emblems as SVG for JavaScript",
+  "pitch": {
+    "en": "Trophies, medals, crests, sport icons, and the ball and gear of every sport, as SVG strings you can turn in 3D, with a tag for any page.",
+    "ja": "トロフィー、メダル、紋章、スポーツのアイコン、あらゆるスポーツのボールと用具をSVGで描きます。3Dで回すことも、タグでどのページに置くこともできます。"
+  },
+  "name": {
+    "en": "Dougu is the Japanese word 道具 for equipment: the things a task is done with.",
+    "ja": "「道具」(どうぐ) は、何かをするために使うものです。"
+  },
+  "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a1130'/%3E%3Ccircle cx='50' cy='60' r='24' fill='%23f0c64a'/%3E%3Cpath d='M32 14h14l14 34H46zM68 14H54L40 48h14z' fill='%23b3362b'/%3E%3C/svg%3E",
+  "entries": {
+    ".": {
+      "en": "Everything: the registry, every emblem and the turning",
+      "ja": "すべて: 一覧、全エンブレム、回転",
+      "platform": "node"
+    },
+    "./emblems": {
+      "en": "The registry: draw any emblem by its id",
+      "ja": "一覧: id でどのエンブレムも描く",
+      "platform": "node"
+    },
+    "./brands": {
+      "en": "Made-up maker marks and team logos",
+      "ja": "架空のメーカーのマークとチームのロゴ",
+      "platform": "node"
+    },
+    "./turn": {
+      "en": "Turning an emblem by hand or by itself",
+      "ja": "エンブレムを手や自動で回す",
+      "platform": "browser"
+    },
+    "./element": {
+      "en": "The <dougu-emblem> element",
+      "ja": "<dougu-emblem> 要素",
+      "platform": "browser"
+    }
+  }
+}

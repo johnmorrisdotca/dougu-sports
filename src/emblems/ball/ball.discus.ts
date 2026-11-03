@@ -2,6 +2,14 @@
 import { defineBall } from "./ball.engine.ts";
 import { greatCircle, smallCircle } from "./ball.math.ts";
 
+/**
+ * The Discus emblem (円盤 in Japanese): id `ball:discus`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_DISCUS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_DISCUS.id, BALL_DISCUS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_DISCUS = /* @__PURE__ */ defineBall({
   id: "ball:discus",
   en: "Discus",

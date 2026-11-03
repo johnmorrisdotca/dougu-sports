@@ -4,7 +4,14 @@
 import { defineLathe } from "../emblem.lathe.ts";
 import { LATHE_SCULPT } from "../lathe.sculpt.ts";
 
-/** The Mark Messier NHL Leadership Award: a silver player cut-out, stacked in depth, on a black stepped base with a nameplate and rows of jerseys. */
+/**
+ * The Mark Messier NHL Leadership Award: a silver player cut-out, stacked in depth, on a black stepped base with a nameplate and rows of jerseys.
+ * @example
+ * ```ts
+ * import { TROPHY_MESSIER_LEADERSHIP_AWARD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_MESSIER_LEADERSHIP_AWARD.id, TROPHY_MESSIER_LEADERSHIP_AWARD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_MESSIER_LEADERSHIP_AWARD = /* @__PURE__ */ defineLathe("trophy:messier-leadership-award", "Messier Leadership Award", "メシエ・リーダーシップ賞", "ours", {
   metal: "silver",
   sculptor: LATHE_SCULPT,

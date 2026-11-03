@@ -4,7 +4,14 @@ import { defineLathe } from "../emblem.lathe.ts";
 
 const STICK = [[-9, 13.2], [-8.5, 12.3], [-4, 10.5], [0, 9.3], [4.6, 5.2]] as const;
 
-/** The Presidents' Trophy: a shallow dish and crossed sticks on three columns, over a dark plinth. */
+/**
+ * The Presidents' Trophy: a shallow dish and crossed sticks on three columns, over a dark plinth.
+ * @example
+ * ```ts
+ * import { TROPHY_PRESIDENTS_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_PRESIDENTS_TROPHY.id, TROPHY_PRESIDENTS_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_PRESIDENTS_TROPHY = /* @__PURE__ */ defineLathe("trophy:presidents-trophy", "Presidents' Trophy", "プレジデンツ・トロフィー", "ours", {
   metal: "silver",
   box: "-0.4 -0.6 64.9 64.9",

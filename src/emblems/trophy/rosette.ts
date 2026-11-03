@@ -14,7 +14,14 @@ function scallops(cx: number, cy: number, r: number, n: number): string {
   return `${d}z`;
 }
 
-/** A scalloped rosette with a centre and two tails of ribbon. */
+/**
+ * A scalloped rosette with a centre and two tails of ribbon.
+ * @example
+ * ```ts
+ * import { TROPHY_ROSETTE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_ROSETTE.id, TROPHY_ROSETTE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_ROSETTE = /* @__PURE__ */ defineFlat("trophy:rosette", "Rosette with ribbons", "リボン付きのロゼット", "ours", {
   metal: "gold",
   ribbon: "#2f6fb3",

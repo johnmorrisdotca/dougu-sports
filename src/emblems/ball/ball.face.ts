@@ -7,13 +7,37 @@ import { safeImage, type SafeImage } from "./ball.image.ts";
 import { type Lettering, arcPath, fitSize, linePath } from "./ball.letters.ts";
 import { signaturePath } from "./ball.signature.ts";
 
-/** The designs a face starts from. */
+/**
+ * The designs a face starts from.
+ * @example
+ * ```ts
+ * import type { PuckDesign } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const design: PuckDesign = "souvenir";
+ * console.log(design);
+ * ```
+ */
 export type PuckDesign = "canada" | "canada-red" | "canada-white" | "usa" | "usa-navy" | "player" | "souvenir";
 
-/** How a flag is framed: `round` in a circle, `square`, or `rect` in its own proportions (the puck asks for `rect`). */
+/**
+ * How a flag is framed: `round` in a circle, `square`, or `rect` in its own proportions (the puck asks for `rect`).
+ * @example
+ * ```ts
+ * import type { FlagShape } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const shape: FlagShape = "round";
+ * console.log(shape);
+ * ```
+ */
 export type FlagShape = "round" | "square" | "rect";
 
-/** What a drawing asks a `flags` renderer for: the shape, a width and height in pixels, and the look (`inherit` for a page whose ink is its own). */
+/**
+ * What a drawing asks a `flags` renderer for: the shape, a width and height in pixels, and the look (`inherit` for a page whose ink is its own).
+ * @example
+ * ```ts
+ * import type { FlagRequest } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const request: FlagRequest = { shape: "rect", size: 24, theme: "light" };
+ * console.log(request.shape);
+ * ```
+ */
 export interface FlagRequest {
   shape: FlagShape;
   size: number;
@@ -23,10 +47,24 @@ export interface FlagRequest {
 /**
  * A function from a country code and a request to an SVG string, or `null` or `undefined` for a code it has no flag for: the same renderer taisen-brackets and kyogijo take, so one adapter over hata serves them
  * all. It must be synchronous (a drawing is a pure function of its options): hata's `flag()` is asynchronous, so load the flags first and pass `(code) => loaded[code]`. Pass it as the `flags` option of the call.
+ * @example
+ * ```ts
+ * import type { FlagRenderer } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const flags: FlagRenderer = (code, request) => (code === "ca" ? `<svg width="${request.size}" height="${request.size}"/>` : undefined);
+ * console.log(flags("ca", { shape: "round", size: 24, theme: "inherit" }));
+ * ```
  */
 export type FlagRenderer = (code: string, request: FlagRequest) => string | null | undefined;
 
-/** The colours of a face, by name. The array form is the same list in this order: field, ring, ink, accent, signature. */
+/**
+ * The colours of a face, by name. The array form is the same list in this order: field, ring, ink, accent, signature.
+ * @example
+ * ```ts
+ * import type { FaceColors } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const colors: FaceColors = { field: "#111111", ring: "#c4202e", ink: "#ffffff" };
+ * console.log(colors.field);
+ * ```
+ */
 export interface FaceColors {
   /** The disc's own colour. */
   field?: string;
@@ -43,6 +81,12 @@ export interface FaceColors {
 /**
  * The print on a puck's top face. Everything is optional, and what is not given comes from the design (the puck's own id says which, or `design`). Text is cleaned (no control characters, 24 letters a line) and
  * drawn in our own vector lettering, so any letter, digit or `- . , ' / : &` is available and any other character is left out.
+ * @example
+ * ```ts
+ * import type { PuckFace } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const face: PuckFace = { design: "souvenir", text: "CHAMPIONS", number: 9, colors: { field: "#111111" } };
+ * console.log(face.text);
+ * ```
  */
 export interface PuckFace {
   /** The design to start from. A puck with an id of its own already has one; `puck:souvenir` and `ball:puck` take it from here. */

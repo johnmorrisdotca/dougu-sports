@@ -1,7 +1,14 @@
 // A broad gold dish with a raised rim on a low foot. Drawn for this package.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A broad dish on a low foot, with a banded rim. */
+/**
+ * A broad dish on a low foot, with a banded rim.
+ * @example
+ * ```ts
+ * import { TROPHY_SALVER } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_SALVER.id, TROPHY_SALVER.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_SALVER = /* @__PURE__ */ defineLathe("trophy:salver", "Salver", "足付きの丸盆", "ours", {
   metal: "gold",
   turnBox: "-4.5 -8.4 72.9 72.9",

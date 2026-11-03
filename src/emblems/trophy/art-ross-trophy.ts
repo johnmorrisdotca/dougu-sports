@@ -2,7 +2,14 @@
 // package from a photograph taken from one corner (docs/likeness.md); the round plates are left out and the plate band is left plain.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Art Ross Trophy: a wide chased silver bowl on a tall tapering wooden pyramid. */
+/**
+ * The Art Ross Trophy: a wide chased silver bowl on a tall tapering wooden pyramid.
+ * @example
+ * ```ts
+ * import { TROPHY_ART_ROSS_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_ART_ROSS_TROPHY.id, TROPHY_ART_ROSS_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_ART_ROSS_TROPHY = /* @__PURE__ */ defineLathe("trophy:art-ross-trophy", "Art Ross Trophy", "アート・ロス賞", "ours", {
   metal: "silver",
   box: "-1.9 -1.1 67.8 67.8",

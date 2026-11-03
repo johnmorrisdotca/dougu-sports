@@ -2,6 +2,14 @@
 import { defineBall } from "./ball.engine.ts";
 import { basketballSpec } from "./ball.basketball.ts";
 
+/**
+ * The Basketball, 3x3 emblem (3x3バスケットボール in Japanese): id `ball:basketball-3x3`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_BASKETBALL_3X3 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_BASKETBALL_3X3.id, BALL_BASKETBALL_3X3.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_BASKETBALL_3X3 = /* @__PURE__ */ defineBall({
   id: "ball:basketball-3x3",
   en: "Basketball, 3x3",

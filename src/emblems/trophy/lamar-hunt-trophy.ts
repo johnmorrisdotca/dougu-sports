@@ -3,5 +3,12 @@
 import { defineLathe } from "../emblem.lathe.ts";
 import { NFL_CONFERENCE } from "../lathe.conference.ts";
 
-/** The Lamar Hunt Trophy: an open football of polished silver, a laced ribbon in front and two curved bands behind, standing on its tip on a round flared base over a black foot. */
+/**
+ * The Lamar Hunt Trophy: an open football of polished silver, a laced ribbon in front and two curved bands behind, standing on its tip on a round flared base over a black foot.
+ * @example
+ * ```ts
+ * import { TROPHY_LAMAR_HUNT_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_LAMAR_HUNT_TROPHY.id, TROPHY_LAMAR_HUNT_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_LAMAR_HUNT_TROPHY = /* @__PURE__ */ defineLathe("trophy:lamar-hunt-trophy", "Lamar Hunt Trophy", "ハント・トロフィー", "ours", NFL_CONFERENCE);

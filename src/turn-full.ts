@@ -6,8 +6,12 @@ import { bindTurnWith, type TurnContainer, type TurnControlOptions, type TurnCon
 /**
  * Binds an emblem to an element so that a drag, the arrow keys, Space or a clock turn it; see `bindTurn` of `@johnmorrisdotca/dougu-sports/turn`, which takes an emblem object and loads nothing else. This one is
  * from the main entry: an id is read from the registry and drawn at once, with no `await`.
+ * @param container - The element to draw into.
+ * @param ref - An emblem or an id; an id is drawn at once.
+ * @param options - The first angles, the sensitivity and the auto-turn.
+ * @returns The controller that turns, plays, pauses and removes it.
  * @example
- * ```ts
+ * ```ts no-run
  * import { bindTurn } from "@johnmorrisdotca/dougu-sports";
  * const turner = bindTurn(document.getElementById("cup")!, "trophy:tennis-cup", { size: 160 });
  * turner.setAngles({ yaw: 40 });

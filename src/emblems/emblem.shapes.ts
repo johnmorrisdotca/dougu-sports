@@ -12,14 +12,37 @@ import { flipSvg } from "./emblem.flip.ts";
  * What a shape is for. `m` the main metal, shaded across a sheet; `o` the main metal on a round, lit from a corner; `e` a bevelled ring (a line the width of the third item, bright on one side and dark on
  * the other); `s` its shade; `l` a glint (a fill with no outline, left out of the line style); `r` the second colour (a ribbon, a band: the `accent` option); `f` a fixed colour (the third item); `p` white
  * ink at a tenth; `k` ink; `n` an outline with no fill; `t` a thin line (a detail); `b` a bold line in ink (a limb, a shaft); `d` a bold line in a fixed dark colour (a numeral on a medal).
+ * @example
+ * ```ts
+ * import type { Role } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const role: Role = "m";
+ * console.log(role);
+ * ```
  */
 export type Role = DropRole | "m" | "o" | "e" | "s" | "l" | "r" | "f" | "p" | "k" | "n" | "t" | "b" | "d";
 /** A role in capitals is the same shape, left out of a face that is engraved (the star of a medal, the numeral of a place badge, the lines of a plaque). */
 type DropRole = "M" | "D" | "T" | "E";
-/** A path, its role, and for `f` its colour and for `e` its width. */
+/**
+ * A path, its role, and for `f` its colour and for `e` its width.
+ * @example
+ * ```ts
+ * import type { Shape } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const shape: Shape = ["m", "M8 8h48v48H8z"];
+ * console.log(shape[0]);
+ * ```
+ */
 export type Shape = readonly [Role, string, string?];
 
-/** A flat object or an icon. */
+/**
+ * A flat object or an icon.
+ * @example
+ * ```ts
+ * import { emblemModel } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { FlatModel } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const model = emblemModel("medal:gold") as FlatModel;
+ * console.log(model.front.length > 0);
+ * ```
+ */
 export interface FlatModel {
   /** The view box; "0 0 64 64" unless the drawing came from elsewhere. */
   box?: string;

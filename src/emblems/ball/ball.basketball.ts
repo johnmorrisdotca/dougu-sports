@@ -35,4 +35,12 @@ export function basketballSpec(base: string, lower?: string): BallSpec {
 
 const SIZE7: PieceSize = { extentMm: 241.9, diameterMm: 241.9, circumferenceMm: 760.0, massG: [580, 620], rule: "FIBA Basketball Equipment 2026, Rule 2 Basketballs, 2.4 and Table 1 (size 7 = men's competitions)", note: "Diameter worked out from the middle of the circumference range." };
 
+/**
+ * The Basketball emblem (バスケットボール in Japanese): id `ball:basketball`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_BASKETBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_BASKETBALL.id, BALL_BASKETBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_BASKETBALL = /* @__PURE__ */ defineBall({ id: "ball:basketball", en: "Basketball", ja: "バスケットボール", size: SIZE7, spec: basketballSpec("#e0701f") });

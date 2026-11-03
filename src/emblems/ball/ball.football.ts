@@ -48,6 +48,30 @@ function football(id: string, en: string, ja: string, size: BallDef["size"], sha
 
 const NFL_SHAPE = { width: 0.6044, point: 0.541 };
 const SIZE: BallDef["size"] = { extentMm: 282.6, lengthMm: 282.6, circumferenceMm: 536.58, longCircumferenceMm: 717.55, massG: [396.89, 425.24], rule: "NFL Rulebook, Rule 2 The Ball, Section 1 (Dimensions)" };
+/**
+ * The Football (NFL) emblem (アメフトボール（NFL） in Japanese): id `ball:football`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_FOOTBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_FOOTBALL.id, BALL_FOOTBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_FOOTBALL = /* @__PURE__ */ football("ball:football", "Football (NFL)", "アメフトボール（NFL）", SIZE, NFL_SHAPE, "none", BROWN);
+/**
+ * The Football (CFL) emblem (フットボール（CFL） in Japanese): id `ball:football-cfl`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_FOOTBALL_CFL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_FOOTBALL_CFL.id, BALL_FOOTBALL_CFL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_FOOTBALL_CFL = /* @__PURE__ */ football("ball:football-cfl", "Football (CFL)", "フットボール（CFL）", { extentMm: 282.6, lengthMm: 282.6, circumferenceMm: 536.58, longCircumferenceMm: 717.55, massG: [396.89, 425.24], rule: "CFL Official Playing Rules, Rule 1 Conduct of the Game, Section 2 The Ball" }, NFL_SHAPE, "ring", BROWN);
+/**
+ * The Football (IFAF) emblem (アメフトボール（IFAF） in Japanese): id `ball:football-ifaf`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_FOOTBALL_IFAF } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_FOOTBALL_IFAF.id, BALL_FOOTBALL_IFAF.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_FOOTBALL_IFAF = /* @__PURE__ */ football("ball:football-ifaf", "Football (IFAF)", "アメフトボール（IFAF）", { extentMm: 283.4, lengthMm: 283.4, circumferenceMm: 533.4, longCircumferenceMm: 714.38, massG: [396.89, 425.24], rule: "IFAF Football Rules and Interpretations 2026, Rule 1 (The Game, Field, Players and Equipment), Section 3 The Ball, Article 1 a-i", note: "The IFAF figures are in a diagram of the rules, read from the rendered page." }, { width: 0.599, point: 0.567 }, "top", "#a8693a");

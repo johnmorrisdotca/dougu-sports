@@ -2,7 +2,14 @@
 // dark octagonal base with a plate. Drawn for this package from a photograph (docs/likeness.md); the feathers of the finial are one gilt knob, the ornament of the band is a ring, and the plate is left plain.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Prince of Wales Trophy: a tall flared silver vase on three stick-shaped legs round a crystal, on a dark octagonal base. */
+/**
+ * The Prince of Wales Trophy: a tall flared silver vase on three stick-shaped legs round a crystal, on a dark octagonal base.
+ * @example
+ * ```ts
+ * import { TROPHY_PRINCE_OF_WALES_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_PRINCE_OF_WALES_TROPHY.id, TROPHY_PRINCE_OF_WALES_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_PRINCE_OF_WALES_TROPHY = /* @__PURE__ */ defineLathe("trophy:prince-of-wales-trophy", "Prince of Wales Trophy", "ウェールズ杯", "ours", {
   metal: "silver",
   turnBox: "-5 0 74 74",

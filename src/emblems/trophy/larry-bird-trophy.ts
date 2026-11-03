@@ -6,7 +6,14 @@ import { NBA_TONES, TRUMPET } from "../nba.parts.ts";
 
 const POST = (deg: number) => ({ at: [8.6, deg] as const, p: [[18.6, 0.8, 1], [23, 0.8, 1]] as const });
 
-/** The Larry Bird Trophy: the Eastern Conference finals MVP trophy, a silver ball on three gold posts over a flared gold trumpet. */
+/**
+ * The Larry Bird Trophy: the Eastern Conference finals MVP trophy, a silver ball on three gold posts over a flared gold trumpet.
+ * @example
+ * ```ts
+ * import { TROPHY_LARRY_BIRD_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_LARRY_BIRD_TROPHY.id, TROPHY_LARRY_BIRD_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_LARRY_BIRD_TROPHY = /* @__PURE__ */ defineLathe("trophy:larry-bird-trophy", "Larry Bird Trophy", "ラリー・バード・トロフィー", "ours", {
   extras: LATHE_EXTRAS,
   ballExtras: LATHE_BALL,

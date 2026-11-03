@@ -3,7 +3,14 @@
 // band and the base is left out, and the base's band is plain, for the engraving option.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Commissioner's Trophy of Major League Baseball: thirty poles with pennants in a ring over a wide round base. */
+/**
+ * The Commissioner's Trophy of Major League Baseball: thirty poles with pennants in a ring over a wide round base.
+ * @example
+ * ```ts
+ * import { TROPHY_COMMISSIONERS_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_COMMISSIONERS_TROPHY.id, TROPHY_COMMISSIONERS_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_COMMISSIONERS_TROPHY = /* @__PURE__ */ defineLathe("trophy:commissioners-trophy", "Commissioner's Trophy", "MLB優勝トロフィー", "ours", {
   metal: "silver",
   turnBox: "-9 -6.5 81.9 81.9",

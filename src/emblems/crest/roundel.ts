@@ -1,7 +1,14 @@
 // A round badge with a ring inside its edge, tinted by a team's colours, with the team's letters on it or a star. Drawn for this package.
 import { circlePath, defineFlat, starPath } from "../emblem.shapes.ts";
 
-/** A round badge with a ring inside its edge. */
+/**
+ * A round badge with a ring inside its edge.
+ * @example
+ * ```ts
+ * import { CREST_ROUNDEL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(CREST_ROUNDEL.id, CREST_ROUNDEL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const CREST_ROUNDEL = /* @__PURE__ */ defineFlat("crest:roundel", "Round crest", "丸形のエンブレム", "ours", {
   metal: "flat",
   color: "#2d5a8c",

@@ -9,7 +9,14 @@ import { BALL_BASEBALL } from "./ball.baseball.ts";
 
 const SIZE = BALL_BASEBALL.size!;
 
-/** The 1850s and 1860s: a cover of four pieces sewn along four seams that run from one point to the opposite one, like the peel of a lemon, in aged leather with a dark thread. No rule fixed the ball then, so it is drawn at the size of today's. */
+/**
+ * The 1850s and 1860s: a cover of four pieces sewn along four seams that run from one point to the opposite one, like the peel of a lemon, in aged leather with a dark thread. No rule fixed the ball then, so it is drawn at the size of today's.
+ * @example
+ * ```ts
+ * import { BALL_BASEBALL_LEMON_PEEL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_BASEBALL_LEMON_PEEL.id, BALL_BASEBALL_LEMON_PEEL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_BASEBALL_LEMON_PEEL = /* @__PURE__ */ defineBall({
   id: "ball:baseball-lemon-peel",
   en: "Baseball, lemon-peel",
@@ -35,13 +42,34 @@ const STITCH = { count: 108, half: 0.075, width: 0.85, lean: 0.032 } as const;
 const WHITE = "#f4f0e6";
 const common = { size: SIZE, base: WHITE, b: 0.4, view: { yaw: 18, pitch: 28, roll: -10 }, mat: { gloss: 0.3, shade: "#4a3a2a", grain: { f: 1.4, a: 0.12 } }, groove: "#8a7a62" } as const;
 
-/** The figure-8 seam stitched with alternate red and blue stitches (the American League's laces, in the recollection of a 1930s player). */
+/**
+ * The figure-8 seam stitched with alternate red and blue stitches (the American League's laces, in the recollection of a 1930s player).
+ * @example
+ * ```ts
+ * import { BALL_BASEBALL_RED_BLUE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_BASEBALL_RED_BLUE.id, BALL_BASEBALL_RED_BLUE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_BASEBALL_RED_BLUE = /* @__PURE__ */ seamedBall({ ...common, id: "ball:baseball-red-blue", en: "Baseball, red and blue", ja: "赤青の縫い糸の野球ボール", stitch: { ...STITCH, colour: "#c4262e", colour2: "#2257a8" } });
 
-/** The figure-8 seam stitched with alternate black and red stitches (the National League's laces, in the same recollection). */
+/**
+ * The figure-8 seam stitched with alternate black and red stitches (the National League's laces, in the same recollection).
+ * @example
+ * ```ts
+ * import { BALL_BASEBALL_BLACK_RED } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_BASEBALL_BLACK_RED.id, BALL_BASEBALL_BLACK_RED.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_BASEBALL_BLACK_RED = /* @__PURE__ */ seamedBall({ ...common, id: "ball:baseball-black-red", en: "Baseball, black and red", ja: "黒赤の縫い糸の野球ボール", stitch: { ...STITCH, colour: "#c4262e", colour2: "#1d1d20" } });
 
-/** An old ball: the leather gone the colour of tea and scuffed, the red thread faded. */
+/**
+ * An old ball: the leather gone the colour of tea and scuffed, the red thread faded.
+ * @example
+ * ```ts
+ * import { BALL_BASEBALL_VINTAGE_LEATHER } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_BASEBALL_VINTAGE_LEATHER.id, BALL_BASEBALL_VINTAGE_LEATHER.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_BASEBALL_VINTAGE_LEATHER = /* @__PURE__ */ seamedBall({
   ...common,
   id: "ball:baseball-vintage-leather",
@@ -54,7 +82,14 @@ export const BALL_BASEBALL_VINTAGE_LEATHER = /* @__PURE__ */ seamedBall({
   wear: { dark: 16, pale: 8, seed: 6 },
 });
 
-/** The optic yellow 11 inch softball: 27.9 cm (circumference 27.6 to 28.3 cm, 166.5 to 173.6 g), red stitch, as the WBSC's Slow Pitch rules set it for women and girls. */
+/**
+ * The optic yellow 11 inch softball: 27.9 cm (circumference 27.6 to 28.3 cm, 166.5 to 173.6 g), red stitch, as the WBSC's Slow Pitch rules set it for women and girls.
+ * @example
+ * ```ts
+ * import { BALL_SOFTBALL_11_OPTIC } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOFTBALL_11_OPTIC.id, BALL_SOFTBALL_11_OPTIC.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOFTBALL_11_OPTIC = /* @__PURE__ */ seamedBall({
   id: "ball:softball-11-optic",
   en: "Softball, 11 in, optic",

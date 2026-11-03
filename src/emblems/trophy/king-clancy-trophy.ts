@@ -2,7 +2,14 @@
 // stem and a domed foot, on a round base of honey-brown wood in two stepped tiers with a band of plates. Drawn for this package from a photograph (docs/likeness.md); the plates and the wreath are left out.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The King Clancy Memorial Trophy: a tall lidded two-handled silver cup on a knopped stem over a round wooden base. */
+/**
+ * The King Clancy Memorial Trophy: a tall lidded two-handled silver cup on a knopped stem over a round wooden base.
+ * @example
+ * ```ts
+ * import { TROPHY_KING_CLANCY_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_KING_CLANCY_TROPHY.id, TROPHY_KING_CLANCY_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_KING_CLANCY_TROPHY = /* @__PURE__ */ defineLathe("trophy:king-clancy-trophy", "King Clancy Trophy", "キング・クランシー賞", "ours", {
   metal: "silver",
   turnBox: "-4.2 0 72.2 72.2",

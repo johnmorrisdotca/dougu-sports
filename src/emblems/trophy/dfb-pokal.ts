@@ -2,7 +2,14 @@
 // this package from a clear rendering of the trophy (docs/likeness.md): the half widths are measured down its silhouette; the relief figures, the stones' green and the lettering are left out (the band takes the engraving option).
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The DFB-Pokal: a tall gilt cup with a band round its bowl, a slim waist and a ringed foot. */
+/**
+ * The DFB-Pokal: a tall gilt cup with a band round its bowl, a slim waist and a ringed foot.
+ * @example
+ * ```ts
+ * import { TROPHY_DFB_POKAL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_DFB_POKAL.id, TROPHY_DFB_POKAL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_DFB_POKAL = /* @__PURE__ */ defineLathe("trophy:dfb-pokal", "DFB-Pokal", "DFBポカール", "ours", {
   metal: "gold",
   turnBox: "-9.7 -10.1 83.4 83.4",

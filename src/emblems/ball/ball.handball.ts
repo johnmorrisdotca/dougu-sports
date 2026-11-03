@@ -3,6 +3,14 @@ import { defineBall } from "./ball.engine.ts";
 import { truncatedIcosahedron } from "./ball.polyhedra.ts";
 import { mix } from "./ball.core.ts";
 
+/**
+ * The Handball emblem (ハンドボール in Japanese): id `ball:handball`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_HANDBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_HANDBALL.id, BALL_HANDBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_HANDBALL = /* @__PURE__ */ defineBall({
   id: "ball:handball",
   en: "Handball",

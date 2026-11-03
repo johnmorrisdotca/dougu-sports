@@ -32,5 +32,12 @@ export function footballModel(stripes: "none" | "ring" | "top"): FlatModel {
   return { metal: "flat", ink: true, front };
 }
 
-/** American football. */
+/**
+ * American football.
+ * @example
+ * ```ts
+ * import { SPORT_NFL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_NFL.id, SPORT_NFL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_NFL = /* @__PURE__ */ defineIcon("sport:nfl", "American football", "アメリカンフットボール", "ours", footballModel("none"));

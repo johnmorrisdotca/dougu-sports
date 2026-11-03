@@ -1,7 +1,14 @@
 // Round ball with seams: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
-/** Round ball with seams. */
+/**
+ * Round ball with seams.
+ * @example
+ * ```ts
+ * import { SPORT_GAELIC } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_GAELIC.id, SPORT_GAELIC.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_GAELIC = /* @__PURE__ */ defineIcon("sport:gaelic", "Round ball", "ゲーリックフットボール", "ours", {
   metal: "flat",
   ink: true,

@@ -5,7 +5,14 @@ import { defineLathe } from "../emblem.lathe.ts";
 /** The handle of one side: it swings out from the bowl, rises past the rim, and ends in a crest that curls over like a bird's head. */
 const side = (a: number) => ({ a, w: 2.4, tone: "gilt", pts: [[8.4, 27], [14, 25], [18.4, 18], [17.6, 10], [15.2, 3.8], [18, 1.6], [20.2, 3.6]] }) as const;
 
-/** A tall silver cup with phoenix-crested handles on a tall stand. */
+/**
+ * A tall silver cup with phoenix-crested handles on a tall stand.
+ * @example
+ * ```ts
+ * import { TROPHY_SUMO_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_SUMO_CUP.id, TROPHY_SUMO_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_SUMO_CUP = /* @__PURE__ */ defineLathe("trophy:sumo-cup", "Phoenix-handle cup", "鳳凰飾りの銀杯", "ours", {
   metal: "silver",
   turnBox: "-12.9 -17.9 89.9 89.9",

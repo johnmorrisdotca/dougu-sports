@@ -1,7 +1,14 @@
 // Kendo: a pictogram of the helmet, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { defineIcon, ellipsePath as ell } from "../emblem.shapes.ts";
 
-/** Kendo. */
+/**
+ * Kendo.
+ * @example
+ * ```ts
+ * import { SPORT_KENDO } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_KENDO.id, SPORT_KENDO.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_KENDO = /* @__PURE__ */ defineIcon("sport:kendo", "Kendo", "剣道", "ours", {
   metal: "flat",
   ink: true,

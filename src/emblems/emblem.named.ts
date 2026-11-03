@@ -2,10 +2,27 @@
 // in `src/emblems/trophy/` and carry no lettering, mark or logo. Imports only the ids, so a page that wants the facts and one drawing takes no other drawing.
 import type { TrophyId } from "./emblem.ids.ts";
 
-/** What a named trophy is given for: the winner of a competition, a player, a coach or manager, a team, an executive, or something else. */
+/**
+ * What a named trophy is given for: the winner of a competition, a player, a coach or manager, a team, an executive, or something else.
+ * @example
+ * ```ts
+ * import type { NamedKind } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const kind: NamedKind = "champion";
+ * console.log(kind);
+ * ```
+ */
 export type NamedKind = "champion" | "player" | "coach" | "team" | "executive" | "other";
 
-/** One real trophy that an emblem is a likeness of. */
+/**
+ * One real trophy that an emblem is a likeness of.
+ * @example
+ * ```ts
+ * import { namedTrophy } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { NamedTrophy } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const cup: NamedTrophy | undefined = namedTrophy("trophy:stanley-cup");
+ * console.log(cup?.sport, cup?.first);
+ * ```
+ */
 export interface NamedTrophy {
   /** The emblem that draws it. */
   readonly id: TrophyId;
@@ -24,7 +41,14 @@ export interface NamedTrophy {
   readonly reference: string;
 }
 
-/** Every named trophy, in the order they were drawn. */
+/**
+ * Every named trophy, in the order they were drawn.
+ * @example
+ * ```ts
+ * import { NAMED_TROPHIES } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(NAMED_TROPHIES.length, NAMED_TROPHIES[0]);
+ * ```
+ */
 export const NAMED_TROPHIES: readonly NamedTrophy[] = [
   {
     id: "trophy:paterson-cup",
@@ -688,7 +712,16 @@ export const NAMED_TROPHIES: readonly NamedTrophy[] = [
   },
 ];
 
-/** The facts of a named trophy by its emblem id, or `undefined` for a generic trophy. */
+/**
+ * The facts of a named trophy by its emblem id, or `undefined` for a generic trophy.
+ * @param id - The emblem id, such as `trophy:stanley-cup`.
+ * @returns The trophy's facts, or `undefined` when the id is a generic trophy or not a trophy at all.
+ * @example
+ * ```ts
+ * import { namedTrophy } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(namedTrophy("trophy:stanley-cup")?.name, namedTrophy("trophy:cup"));
+ * ```
+ */
 export function namedTrophy(id: string): NamedTrophy | undefined {
   return NAMED_TROPHIES.find((t) => t.id === id);
 }

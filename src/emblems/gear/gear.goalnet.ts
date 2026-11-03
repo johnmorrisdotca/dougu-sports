@@ -10,6 +10,14 @@ const MESH = ((): string => {
   return d;
 })();
 
+/**
+ * The Goal net emblem (ゴールネット in Japanese): id `gear:goal-net`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_GOAL_NET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_GOAL_NET.id, GEAR_GOAL_NET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_GOAL_NET = /* @__PURE__ */ drawn("gear:goal-net", "Goal net", "ゴールネット", {
   main: "#d62b2b",
   accent: "#dfe4ea",

@@ -1,7 +1,14 @@
 // A football standing on one end, leaning as if ready for a kick, on a tapered three-sided stand with a stepped base. Drawn for this package; a generic trophy.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A silver football standing on end, tilted as if ready for a kick, on a tapered three-sided stand. */
+/**
+ * A silver football standing on end, tilted as if ready for a kick, on a tapered three-sided stand.
+ * @example
+ * ```ts
+ * import { TROPHY_FOOTBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_FOOTBALL.id, TROPHY_FOOTBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_FOOTBALL = /* @__PURE__ */ defineLathe("trophy:football", "Football trophy", "アメフトのトロフィー", "ours", {
   metal: "silver",
   turnBox: "-5.1 0 74.1 74.1",

@@ -3,6 +3,14 @@ import { capsule, circle, drawn, ellipse, seg, strings } from "./gear.core.ts";
 
 const T = "rotate(32 32 32)";
 
+/**
+ * The Tennis racket and ball emblem (テニスのラケットとボール in Japanese): id `gear:tennis-racket`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_TENNIS_RACKET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_TENNIS_RACKET.id, GEAR_TENNIS_RACKET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_TENNIS_RACKET = /* @__PURE__ */ drawn("gear:tennis-racket", "Tennis racket and ball", "テニスのラケットとボール", {
   main: "#2b64c8",
   accent: "#2a2f38",

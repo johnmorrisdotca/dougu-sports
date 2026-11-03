@@ -2,6 +2,14 @@
 import { defineBall } from "./ball.engine.ts";
 import { greatCircle } from "./ball.math.ts";
 
+/**
+ * The Lacrosse ball emblem (ラクロスボール in Japanese): id `ball:lacrosse`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_LACROSSE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_LACROSSE.id, BALL_LACROSSE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_LACROSSE = /* @__PURE__ */ defineBall({
   id: "ball:lacrosse",
   en: "Lacrosse ball",
@@ -15,6 +23,14 @@ export const BALL_LACROSSE = /* @__PURE__ */ defineBall({
   },
 });
 
+/**
+ * The Racquetball emblem (ラケットボール in Japanese): id `ball:racquetball`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_RACQUETBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_RACQUETBALL.id, BALL_RACQUETBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_RACQUETBALL = /* @__PURE__ */ defineBall({
   id: "ball:racquetball",
   en: "Racquetball",
@@ -28,6 +44,14 @@ export const BALL_RACQUETBALL = /* @__PURE__ */ defineBall({
   },
 });
 
+/**
+ * The Table-tennis ball emblem (卓球ボール in Japanese): id `ball:table-tennis`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_TABLE_TENNIS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_TABLE_TENNIS.id, BALL_TABLE_TENNIS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_TABLE_TENNIS = /* @__PURE__ */ defineBall({
   id: "ball:table-tennis",
   en: "Table-tennis ball",
@@ -41,6 +65,14 @@ export const BALL_TABLE_TENNIS = /* @__PURE__ */ defineBall({
   },
 });
 
+/**
+ * The Shot emblem (砲丸 in Japanese): id `ball:shot`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SHOT } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SHOT.id, BALL_SHOT.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SHOT = /* @__PURE__ */ defineBall({
   id: "ball:shot",
   en: "Shot",

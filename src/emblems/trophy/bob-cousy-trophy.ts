@@ -5,7 +5,14 @@ import { defineLathe } from "../emblem.lathe.ts";
 import { LATHE_BALL } from "../lathe.extras.ts";
 import { NBA_TONES, eastBase, eastTop } from "../nba.parts.ts";
 
-/** The Bob Cousy Trophy: the Eastern Conference champions' trophy, a silver ball on three gold posts over a round black and gold base. */
+/**
+ * The Bob Cousy Trophy: the Eastern Conference champions' trophy, a silver ball on three gold posts over a round black and gold base.
+ * @example
+ * ```ts
+ * import { TROPHY_BOB_COUSY_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_BOB_COUSY_TROPHY.id, TROPHY_BOB_COUSY_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_BOB_COUSY_TROPHY = /* @__PURE__ */ defineLathe("trophy:bob-cousy-trophy", "Bob Cousy Trophy", "ボブ・クージー・トロフィー", "ours", {
   ballExtras: LATHE_BALL,
   metal: "gold",

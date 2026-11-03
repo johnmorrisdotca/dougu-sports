@@ -5,7 +5,15 @@ import { emblemOf, renderEmblem, type EmblemRef } from "./emblem.api.ts";
 import { IdSpace, nest, partsOf } from "./emblem.compose.ts";
 import { encodeSvg } from "./emblem.uri.ts";
 
-/** The options both displays share. */
+/**
+ * The options both displays share.
+ * @example
+ * ```ts
+ * import type { DisplayOptions } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const options: DisplayOptions = { width: 400, style: "color", locale: "ja" };
+ * console.log(options.width);
+ * ```
+ */
 export interface DisplayOptions {
   /** The width in pixels; the height follows the drawing's proportions. A podium is 320 by default, an award case as wide as its cells. */
   width?: number;
@@ -21,7 +29,15 @@ export interface DisplayOptions {
   desc?: string;
 }
 
-/** One place of a podium. */
+/**
+ * One place of a podium.
+ * @example
+ * ```ts
+ * import type { PodiumPlace } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const place: PodiumPlace = { emblem: "medal:gold", name: "Aoki", label: "9.80" };
+ * console.log(place.name);
+ * ```
+ */
 export interface PodiumPlace {
   /** The medal or trophy for the place: any emblem. By default the gold, silver and bronze medals. */
   emblem?: EmblemRef;
@@ -33,10 +49,27 @@ export interface PodiumPlace {
   label?: string;
 }
 
-/** What `podium` takes. */
+/**
+ * What `podium` takes.
+ * @example
+ * ```ts
+ * import { podium } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { PodiumOptions } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const options: PodiumOptions = { width: 360 };
+ * console.log(podium([{ name: "Aoki" }], options).startsWith("<svg"));
+ * ```
+ */
 export type PodiumOptions = DisplayOptions;
 
-/** One kind of trophy in an award case. */
+/**
+ * One kind of trophy in an award case.
+ * @example
+ * ```ts
+ * import type { AwardItem } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const item: AwardItem = { emblem: "trophy:hockey-cup", count: 4, label: "2012 to 2024" };
+ * console.log(item.count);
+ * ```
+ */
 export interface AwardItem {
   /** The trophy, medal or crest: any emblem. */
   emblem: EmblemRef;
@@ -46,7 +79,16 @@ export interface AwardItem {
   label?: string;
 }
 
-/** What `awardCase` takes. */
+/**
+ * What `awardCase` takes.
+ * @example
+ * ```ts
+ * import { awardCase } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { AwardCaseOptions } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const options: AwardCaseOptions = { perRow: 3, layout: "row" };
+ * console.log(awardCase([{ emblem: "medal:gold" }], options).startsWith("<svg"));
+ * ```
+ */
 export interface AwardCaseOptions extends DisplayOptions {
   /** Items in a row before the case wraps into another (5 by default, 1 to 12). */
   perRow?: number;
@@ -139,6 +181,9 @@ function step(style: EmblemStyle, place: number, x: number, y: number, w: number
  * A podium: first, second and third on tiered steps (second on the left, first in the middle, third on the right), each with a medal or a trophy, and optionally a name, a flag and a line of text. `places[0]` is first;
  * a place left out is an empty step. The drawing is the page's text colour on tinted steps, so it reads on light and dark; it has a title and a description that says who stands where. A flag is SVG markup or a URL
  * and is drawn as an `<image>`, so it cannot run script or reach anything it was not given; anything that is neither is left out.
+ * @param places - First, second and third; a place left out is an empty step.
+ * @param options - The width, style, theme and labels.
+ * @returns The podium as a document of SVG.
  * @example
  * ```ts
  * import { podium } from "@johnmorrisdotca/dougu-sports/emblems";
@@ -199,6 +244,9 @@ export function podium(places: readonly (PodiumPlace | null | undefined)[], opti
 /**
  * An award case: a team's trophies on a shelf (or in a row), each drawn once with a `×N` badge when the team has won it more than once, wrapping into more rows after `perRow` items. Each item can carry a line of
  * text, such as its years. The drawing follows the page's text colour, has a title and a description that lists what is in the case, and holds at most 60 items.
+ * @param items - The trophies, each with how many and a line of text.
+ * @param options - The width, rows, layout, style and labels.
+ * @returns The case as a document of SVG.
  * @example
  * ```ts
  * import { awardCase } from "@johnmorrisdotca/dougu-sports/emblems";

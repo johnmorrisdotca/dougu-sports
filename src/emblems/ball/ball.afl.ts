@@ -4,6 +4,14 @@ import { footballSeams } from "./ball.family.prolate.ts";
 import { stitches } from "./ball.stitch.ts";
 import { mix } from "./ball.core.ts";
 
+/**
+ * The Australian football emblem (オージーボール in Japanese): id `ball:afl`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_AFL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_AFL.id, BALL_AFL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_AFL = /* @__PURE__ */ defineBall({
   id: "ball:afl",
   en: "Australian football",

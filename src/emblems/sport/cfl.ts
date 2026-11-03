@@ -2,5 +2,12 @@
 import { defineIcon } from "../emblem.shapes.ts";
 import { footballModel } from "./nfl.ts";
 
-/** Canadian football. */
+/**
+ * Canadian football.
+ * @example
+ * ```ts
+ * import { SPORT_CFL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_CFL.id, SPORT_CFL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_CFL = /* @__PURE__ */ defineIcon("sport:cfl", "Canadian football", "カナディアンフットボール", "ours", footballModel("ring"));

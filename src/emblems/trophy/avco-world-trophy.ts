@@ -2,7 +2,14 @@
 // silver plates and a large plate, and a wide silver foot. Drawn for this package from photographs (docs/likeness.md); the chasing, the small plates and the lettering are left out.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Avco World Trophy of the World Hockey Association: a silver bowl on a stem over a glass cylinder and a tall black drum with plates. */
+/**
+ * The Avco World Trophy of the World Hockey Association: a silver bowl on a stem over a glass cylinder and a tall black drum with plates.
+ * @example
+ * ```ts
+ * import { TROPHY_AVCO_WORLD_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_AVCO_WORLD_TROPHY.id, TROPHY_AVCO_WORLD_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_AVCO_WORLD_TROPHY = /* @__PURE__ */ defineLathe("trophy:avco-world-trophy", "Avco World Trophy", "アブコ・トロフィー", "ours", {
   metal: "silver",
   turnBox: "-7.4 -7.4 78.8 78.8",

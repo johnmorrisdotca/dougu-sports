@@ -13,7 +13,15 @@ import { scriptRuns, scriptWidth } from "./ball.script.ts";
 import { signaturePath } from "./ball.signature.ts";
 import { type P2, type PlaneMap, drawPicture, drawShapes, flattenPath, shapesOf } from "./ball.warp.ts";
 
-/** The colours of a painted ball: `body` is the ball (or a soccer ball's hexagons), `second` the other half of a two-tone ball (or a soccer ball's pentagons). */
+/**
+ * The colours of a painted ball: `body` is the ball (or a soccer ball's hexagons), `second` the other half of a two-tone ball (or a soccer ball's pentagons).
+ * @example
+ * ```ts
+ * import type { BallPaint } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const paint: BallPaint = { body: "#f2c230", second: "#1f2228", split: "half", angle: 20 };
+ * console.log(paint.split);
+ * ```
+ */
 export interface BallPaint {
   /** The ball's colour: `#rgb`, `#rrggbb` or `rgb()`; anything else is ignored. */
   body?: string;
@@ -27,19 +35,43 @@ export interface BallPaint {
   stitch?: string;
 }
 
-/** A place on the ball in degrees from the middle of its default view: `lon` toward the right, `lat` toward the top, in the ball's own frame (it turns with the ball). */
+/**
+ * A place on the ball in degrees from the middle of its default view: `lon` toward the right, `lat` toward the top, in the ball's own frame (it turns with the ball).
+ * @example
+ * ```ts
+ * import type { Spot } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const spot: Spot = { lon: 20, lat: -10 };
+ * console.log(spot.lon);
+ * ```
+ */
 export interface Spot {
   lon?: number;
   lat?: number;
 }
 
-/** Where the logo and the lettering go, as a place on the ball in degrees from the middle of its default view. By default the logo is there and so is the lettering, or the lettering is on the far side of the ball (`lon: 180`) when there is a logo. */
+/**
+ * Where the logo and the lettering go, as a place on the ball in degrees from the middle of its default view. By default the logo is there and so is the lettering, or the lettering is on the far side of the ball (`lon: 180`) when there is a logo.
+ * @example
+ * ```ts
+ * import type { BallSpots } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const spots: BallSpots = { decal: { lon: -20, lat: 10 }, label: { lon: 25 } };
+ * console.log(spots.decal?.lon);
+ * ```
+ */
 export interface BallSpots {
   decal?: Spot;
   label?: Spot;
 }
 
-/** A logo printed on the ball. */
+/**
+ * A logo printed on the ball.
+ * @example
+ * ```ts
+ * import type { BallDecal } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const decal: BallDecal = { svg: '<svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4"/></svg>', size: 40, turn: 15 };
+ * console.log(decal.size);
+ * ```
+ */
 export interface BallDecal {
   /** An SVG string. It is made safe first (only shapes, gradients and groups survive; no script, text, image, style or address), a gradient is its mean colour, and it is wrapped exactly onto the sphere. */
   svg?: string;
@@ -51,7 +83,15 @@ export interface BallDecal {
   turn?: number;
 }
 
-/** The stamp: lines of bold block lettering, the first with a small star on each side, and an optional signature-style line under them. */
+/**
+ * The stamp: lines of bold block lettering, the first with a small star on each side, and an optional signature-style line under them.
+ * @example
+ * ```ts
+ * import type { BallStamp } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const stamp: BallStamp = { lines: ["PRACTICE", "BASEBALL"], stars: true, sign: 7 };
+ * console.log(stamp.lines?.length);
+ * ```
+ */
 export interface BallStamp {
   /** The lines (up to three, 24 letters each, any letter, digit or `- . , ' / : &`; the ball's own default is `UNOFFICIAL` and `DIGITAL BASEBALL`). */
   lines?: readonly string[];
@@ -63,14 +103,30 @@ export interface BallStamp {
   colour?: string;
 }
 
-/** The cursive word where a maker's mark would sit. */
+/**
+ * The cursive word where a maker's mark would sit.
+ * @example
+ * ```ts
+ * import type { BallScript } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const script: BallScript = { text: "Practice", colour: "#1f4e8c" };
+ * console.log(script.text);
+ * ```
+ */
 export interface BallScript {
   /** The word (up to 16 letters; a-z and a space; a capital without a drawing of its own is a tall small letter). By default the ball's own: `Baseball`, `Softball` or `Soccer`. */
   text?: string;
   colour?: string;
 }
 
-/** The small mark under the script: a letter in a circle, or a mark of your own. */
+/**
+ * The small mark under the script: a letter in a circle, or a mark of your own.
+ * @example
+ * ```ts
+ * import type { BallMark } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const mark: BallMark = { letter: "D", colour: "#c4202e" };
+ * console.log(mark.letter);
+ * ```
+ */
 export interface BallMark {
   /** The letter in the circle (one letter or digit). By default the first letter of the script. */
   letter?: string;
@@ -344,6 +400,14 @@ export const printKey = (p: PrintOptions | undefined): string => (p === undefine
 /**
  * A ball that can be printed. The balls themselves carry no printing code (a ball bundled alone stays small): `renderEmblem` and the registry use this, and so can you for one ball taken from its own module:
  * `const ball = printed(BALL_BASEBALL); ball.svg({ stamp: true })`. The same ball with the printer in its options; options that ask for no print draw exactly what the plain ball draws.
+ * @param piece - A ball taken from its own module.
+ * @returns The same ball with the printer in its options.
+ * @example
+ * ```ts
+ * import { BALL_BASEBALL, printed } from "@johnmorrisdotca/dougu-sports";
+ * const ball = printed(BALL_BASEBALL);
+ * console.log(ball.svg({ stamp: true }).startsWith("<svg"));
+ * ```
  */
 export const printed = <P extends Piece<BallSpec>>(piece: P): P => ({
   ...piece,

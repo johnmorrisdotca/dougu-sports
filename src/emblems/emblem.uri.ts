@@ -3,7 +3,16 @@
 import { EMBLEM_INK, hexOf, readColour, type EmblemOptions } from "./emblem.core.ts";
 import { renderEmblem, type EmblemRef } from "./emblem.api.ts";
 
-/** What `emblemDataUri` takes: the emblem's options, and the colour of the line. */
+/**
+ * What `emblemDataUri` takes: the emblem's options, and the colour of the line.
+ * @example
+ * ```ts
+ * import { emblemDataUri } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { DataUriOptions } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const options: DataUriOptions = { size: 32, color: "#333333" };
+ * console.log(emblemDataUri("medal:gold", options).startsWith("data:image/svg+xml"));
+ * ```
+ */
 export interface DataUriOptions extends EmblemOptions {
   /** The colour of the outline and of anything drawn in the ink: `#rgb`, `#rrggbb` or `rgb()`. It wins over `theme`. Anything else is ignored. */
   color?: string;
@@ -18,6 +27,9 @@ export function encodeSvg(svg: string): string {
  * An emblem as a data address, `data:image/svg+xml;utf8,…`, with every character that could break an attribute or a CSS `url()` percent-encoded, so the string goes anywhere: `img.src`, `background-image:
  * url("…")`, `new Image().src` for a canvas. The ink is settled for you, because `currentColor` does not cross an `<img>` boundary: `color` is the line's colour; without it `theme: "dark"` is pale ink, and `"light"`
  * and `"inherit"` (the default) are dark ink. `theme: "auto"` keeps the page's colour scheme (`prefers-color-scheme`) in the image.
+ * @param ref - An id, a short name, an id with a style, or an emblem.
+ * @param options - The emblem options and the line colour.
+ * @returns A `data:image/svg+xml` address.
  * @example
  * ```ts
  * import { emblemDataUri } from "@johnmorrisdotca/dougu-sports/emblems";

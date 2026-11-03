@@ -3,7 +3,14 @@
 // (the band takes the engraving option).
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The FIFA World Cup: a gilt globe held up by two spiral figures, over a malachite and gilt base. */
+/**
+ * The FIFA World Cup: a gilt globe held up by two spiral figures, over a malachite and gilt base.
+ * @example
+ * ```ts
+ * import { TROPHY_FIFA_WORLD_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_FIFA_WORLD_CUP.id, TROPHY_FIFA_WORLD_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_FIFA_WORLD_CUP = /* @__PURE__ */ defineLathe("trophy:fifa-world-cup", "FIFA World Cup", "FIFAワールドカップ", "ours", {
   metal: "gold",
   turnBox: "-3 0 69.9 69.9",

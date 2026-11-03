@@ -1,7 +1,14 @@
 // A tall slender trophy: a gilt flame-shaped bulb that comes to a point, on a long tapering silver column that swells into a domed bell, standing on a dark octagonal base that widens toward the foot and carries silver plates. Drawn for this package from photographs (docs/likeness.md); the plates are left plain.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Hart Memorial Trophy: a gilt bulb on a tall silver stem over an octagonal plated base. */
+/**
+ * The Hart Memorial Trophy: a gilt bulb on a tall silver stem over an octagonal plated base.
+ * @example
+ * ```ts
+ * import { TROPHY_HART_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_HART_TROPHY.id, TROPHY_HART_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_HART_TROPHY = /* @__PURE__ */ defineLathe("trophy:hart-trophy", "Hart Trophy", "ハート賞", "ours", {
   metal: "silver",
   turnBox: "-2.8 0 69.6 69.6",

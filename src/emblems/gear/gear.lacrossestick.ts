@@ -11,6 +11,14 @@ const NET = ((): string => {
   return d;
 })();
 
+/**
+ * The Lacrosse stick and ball emblem (ラクロスのクロスとボール in Japanese): id `gear:lacrosse-stick`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_LACROSSE_STICK } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_LACROSSE_STICK.id, GEAR_LACROSSE_STICK.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_LACROSSE_STICK = /* @__PURE__ */ drawn("gear:lacrosse-stick", "Lacrosse stick and ball", "ラクロスのクロスとボール", {
   main: "#aeb6c0",
   accent: "#1f4f9c",

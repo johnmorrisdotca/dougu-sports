@@ -2,7 +2,14 @@
 // generic cup and carries no name, mark or engraving.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A tall silver cup: a small bowl on a collar over a tall tiered barrel of widening bands. */
+/**
+ * A tall silver cup: a small bowl on a collar over a tall tiered barrel of widening bands.
+ * @example
+ * ```ts
+ * import { TROPHY_HOCKEY_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_HOCKEY_CUP.id, TROPHY_HOCKEY_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_HOCKEY_CUP = /* @__PURE__ */ defineLathe("trophy:hockey-cup", "Banded silver cup", "段付きの銀カップ", "ours", {
   metal: "silver",
   box: "-0.4 -0.8 64.8 64.8",

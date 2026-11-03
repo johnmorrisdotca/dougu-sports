@@ -3,7 +3,14 @@
 // proportions, the shape of the ears and the stages of the base were measured on it; docs/likeness.md); the band is left plain, for the engraving option. The ribbon the cup is shown with is not drawn.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The cup of the Pacific Coast Hockey Association, 1912: a wide bowl with a straight band, scrolled ear handles and a dark wooden base. */
+/**
+ * The cup of the Pacific Coast Hockey Association, 1912: a wide bowl with a straight band, scrolled ear handles and a dark wooden base.
+ * @example
+ * ```ts
+ * import { TROPHY_PATERSON_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_PATERSON_CUP.id, TROPHY_PATERSON_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_PATERSON_CUP = /* @__PURE__ */ defineLathe("trophy:paterson-cup", "Paterson Cup", "パターソン・カップ", "ours", {
   metal: "silver",
   tilt: 8,

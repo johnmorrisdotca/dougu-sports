@@ -1,6 +1,14 @@
 // Field hockey ball: a hard white plastic ball with dimples.
 import { dottedBall } from "./ball.family.dotted.ts";
 
+/**
+ * The Field hockey ball emblem (フィールドホッケーボール in Japanese): id `ball:field-hockey`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_FIELD_HOCKEY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_FIELD_HOCKEY.id, BALL_FIELD_HOCKEY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_FIELD_HOCKEY = /* @__PURE__ */ dottedBall({
   id: "ball:field-hockey",
   en: "Field hockey ball",

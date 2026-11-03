@@ -2,7 +2,14 @@
 // carries no maker's mark. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { defineIcon } from "../emblem.shapes.ts";
 
-/** Boxing. */
+/**
+ * Boxing.
+ * @example
+ * ```ts
+ * import { SPORT_BOXING } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_BOXING.id, SPORT_BOXING.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_BOXING = /* @__PURE__ */ defineIcon("sport:boxing", "Boxing", "ボクシング", "ours", {
   metal: "flat",
   ink: true,

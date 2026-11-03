@@ -2,7 +2,14 @@
 // along the front edge. The metal style paints the canvas with a grey sheet, the line style draws one outline.
 import { defineIcon } from "../emblem.shapes.ts";
 
-/** Professional wrestling. */
+/**
+ * Professional wrestling.
+ * @example
+ * ```ts
+ * import { SPORT_PROWRESTLING } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_PROWRESTLING.id, SPORT_PROWRESTLING.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_PROWRESTLING = /* @__PURE__ */ defineIcon("sport:prowrestling", "Pro wrestling", "プロレス", "ours", {
   metal: "flat",
   ink: true,

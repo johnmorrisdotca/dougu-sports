@@ -80,6 +80,14 @@ const drawShuttle = (c: ObjectContext, p: Parts): { defs: string; body: string }
 
 const VIEW = { yaw: 0, pitch: 22, roll: -32 };
 
+/**
+ * The Shuttlecock, feather emblem (水鳥シャトル in Japanese): id `ball:shuttlecock-feather`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SHUTTLECOCK_FEATHER } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SHUTTLECOCK_FEATHER.id, BALL_SHUTTLECOCK_FEATHER.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SHUTTLECOCK_FEATHER = /* @__PURE__ */ defineObject({
   id: "ball:shuttlecock-feather",
   en: "Shuttlecock, feather",
@@ -92,6 +100,14 @@ export const BALL_SHUTTLECOCK_FEATHER = /* @__PURE__ */ defineObject({
   draw: (c) => drawShuttle(c, { feather: "#fbfaf4", shaft: "#b5ac94", cork: "#c8925a", band: "#f6f2e8", thread: "#8a826a", nylon: false }),
 });
 
+/**
+ * The Shuttlecock, nylon emblem (ナイロンシャトル in Japanese): id `ball:shuttlecock-nylon`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SHUTTLECOCK_NYLON } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SHUTTLECOCK_NYLON.id, BALL_SHUTTLECOCK_NYLON.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SHUTTLECOCK_NYLON = /* @__PURE__ */ defineObject({
   id: "ball:shuttlecock-nylon",
   en: "Shuttlecock, nylon",

@@ -35,7 +35,14 @@ function wreath(): { leaves: string; stems: string } {
 }
 const W = /* @__PURE__ */ wreath();
 
-/** Two branches of leaves that curve round, open at the top. */
+/**
+ * Two branches of leaves that curve round, open at the top.
+ * @example
+ * ```ts
+ * import { TROPHY_LAUREL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_LAUREL.id, TROPHY_LAUREL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_LAUREL = /* @__PURE__ */ defineFlat("trophy:laurel", "Laurel wreath", "月桂樹の冠", "ours", {
   metal: "gold",
   front: [["t", W.stems], ["m", W.leaves]],

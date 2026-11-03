@@ -5,7 +5,14 @@
 import { defineLathe } from "../emblem.lathe.ts";
 import { LATHE_BALL, LATHE_EXTRAS } from "../lathe.extras.ts";
 
-/** The Bill Russell NBA Finals Most Valuable Player Trophy: a gold basketball with silver seams in a net-etched gold trumpet over a stepped round foot. */
+/**
+ * The Bill Russell NBA Finals Most Valuable Player Trophy: a gold basketball with silver seams in a net-etched gold trumpet over a stepped round foot.
+ * @example
+ * ```ts
+ * import { TROPHY_BILL_RUSSELL_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_BILL_RUSSELL_TROPHY.id, TROPHY_BILL_RUSSELL_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_BILL_RUSSELL_TROPHY = /* @__PURE__ */ defineLathe("trophy:bill-russell-trophy", "Bill Russell Trophy", "ビル・ラッセル・トロフィー", "ours", {
   extras: LATHE_EXTRAS,
   ballExtras: LATHE_BALL,

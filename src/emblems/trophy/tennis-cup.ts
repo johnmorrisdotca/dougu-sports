@@ -1,7 +1,14 @@
 // A gilded two-handled cup with a domed lid and a small pineapple on top, on a stem and a round plinth. Drawn for this package; a generic trophy.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A two-handled cup with a lid and a small pineapple finial. */
+/**
+ * A two-handled cup with a lid and a small pineapple finial.
+ * @example
+ * ```ts
+ * import { TROPHY_TENNIS_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_TENNIS_CUP.id, TROPHY_TENNIS_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_TENNIS_CUP = /* @__PURE__ */ defineLathe("trophy:tennis-cup", "Pineapple cup", "パイナップル飾りのカップ", "ours", {
   metal: "gold",
   turnBox: "-3.6 -4.2 71.2 71.2",

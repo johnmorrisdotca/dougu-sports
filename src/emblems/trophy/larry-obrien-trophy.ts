@@ -5,7 +5,14 @@
 import { defineLathe } from "../emblem.lathe.ts";
 import { LATHE_BALL, LATHE_EXTRAS } from "../lathe.extras.ts";
 
-/** The Larry O'Brien Championship Trophy (2022 design): a gold ball with silver seams over a tapering gold vase with a silver net, on two round discs. */
+/**
+ * The Larry O'Brien Championship Trophy (2022 design): a gold ball with silver seams over a tapering gold vase with a silver net, on two round discs.
+ * @example
+ * ```ts
+ * import { TROPHY_LARRY_OBRIEN_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_LARRY_OBRIEN_TROPHY.id, TROPHY_LARRY_OBRIEN_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_LARRY_OBRIEN_TROPHY = /* @__PURE__ */ defineLathe("trophy:larry-obrien-trophy", "Larry O'Brien Trophy", "ラリー・オブライエン・トロフィー", "ours", {
   extras: LATHE_EXTRAS,
   ballExtras: LATHE_BALL,

@@ -1,7 +1,14 @@
 // A broad strap with a large central plate and a smaller plate on each side. Drawn for this package.
 import { defineFlat, ellipsePath, starPath } from "../emblem.shapes.ts";
 
-/** A broad strap with a large central plate and a smaller plate on each side. */
+/**
+ * A broad strap with a large central plate and a smaller plate on each side.
+ * @example
+ * ```ts
+ * import { TROPHY_BELT } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_BELT.id, TROPHY_BELT.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_BELT = /* @__PURE__ */ defineFlat("trophy:belt", "Championship belt", "チャンピオンベルト", "ours", {
   metal: "gold",
   ribbon: "#2b2f36",

@@ -41,7 +41,14 @@ function laidTriads(s: Surface, t: Truncated, frames: ReturnType<typeof hexFrame
   return out;
 }
 
-/** The 1970s: twelve dark slate pentagons and twenty white hexagons that each hold a pale dished hexagon. */
+/**
+ * The 1970s: twelve dark slate pentagons and twenty white hexagons that each hold a pale dished hexagon.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_RETRO_PENTAGONS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_RETRO_PENTAGONS.id, BALL_SOCCER_RETRO_PENTAGONS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_RETRO_PENTAGONS = /* @__PURE__ */ ball("ball:soccer-retro-pentagons", "Soccer, 1970s black-white", "70年代風・白黒", {
   view: VIEW,
   base: "#262c3b",
@@ -59,7 +66,14 @@ export const BALL_SOCCER_RETRO_PENTAGONS = /* @__PURE__ */ ball("ball:soccer-ret
   },
 });
 
-/** The late 1970s: a trefoil of three straight leaves on each of the twenty hexagons, navy on white, each pointing at a pentagon. */
+/**
+ * The late 1970s: a trefoil of three straight leaves on each of the twenty hexagons, navy on white, each pointing at a pentagon.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_RETRO_LEAVES } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_RETRO_LEAVES.id, BALL_SOCCER_RETRO_LEAVES.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_RETRO_LEAVES = /* @__PURE__ */ ball("ball:soccer-retro-leaves", "Soccer, late-1970s triads", "70年代後期風・三つ巴", {
   view: VIEW,
   base: "#243a63",
@@ -73,7 +87,14 @@ export const BALL_SOCCER_RETRO_LEAVES = /* @__PURE__ */ ball("ball:soccer-retro-
   },
 });
 
-/** The 1980s: a five-petal rosette on each hexagon in a warm clay, each petal ornamented with a row of white beads along its spine, and gold-ringed dark pentagons. */
+/**
+ * The 1980s: a five-petal rosette on each hexagon in a warm clay, each petal ornamented with a row of white beads along its spine, and gold-ringed dark pentagons.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_RETRO_ROSETTE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_RETRO_ROSETTE.id, BALL_SOCCER_RETRO_ROSETTE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_RETRO_ROSETTE = /* @__PURE__ */ ball("ball:soccer-retro-rosette", "Soccer, decorated rosette", "80年代風・飾りロゼット", {
   view: VIEW,
   base: "#d1633a",
@@ -97,7 +118,14 @@ export const BALL_SOCCER_RETRO_ROSETTE = /* @__PURE__ */ ball("ball:soccer-retro
   },
 });
 
-/** The 1980s, second version: a six-armed star on each hexagon in deep teal with a saffron centre, over cream hexagons, with navy pentagons ringed in cream. */
+/**
+ * The 1980s, second version: a six-armed star on each hexagon in deep teal with a saffron centre, over cream hexagons, with navy pentagons ringed in cream.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_RETRO_STAR } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_RETRO_STAR.id, BALL_SOCCER_RETRO_STAR.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_RETRO_STAR = /* @__PURE__ */ ball("ball:soccer-retro-star", "Soccer, 1980s star", "80年代風・星形", {
   view: VIEW,
   base: "#1f7f86",
@@ -119,7 +147,14 @@ export const BALL_SOCCER_RETRO_STAR = /* @__PURE__ */ ball("ball:soccer-retro-st
   },
 });
 
-/** The 1990s: a pinwheel of three curved leaves in three colours (green, amber and plum) on a white ground, turning the other way from the 1970s, a solid deep green circle where the three meet, and deep green pentagons. */
+/**
+ * The 1990s: a pinwheel of three curved leaves in three colours (green, amber and plum) on a white ground, turning the other way from the 1970s, a solid deep green circle where the three meet, and deep green pentagons.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_RETRO_PINWHEEL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_RETRO_PINWHEEL.id, BALL_SOCCER_RETRO_PINWHEEL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_RETRO_PINWHEEL = /* @__PURE__ */ ball("ball:soccer-retro-pinwheel", "Soccer, coloured triads", "90年代風・色つき三つ巴", {
   view: VIEW,
   base: "#2f9e63",
@@ -137,7 +172,14 @@ export const BALL_SOCCER_RETRO_PINWHEEL = /* @__PURE__ */ ball("ball:soccer-retr
   },
 });
 
-/** The early 2000s: long kites that sweep across each hexagon, in slate blue and silver, over charcoal pentagons. */
+/**
+ * The early 2000s: long kites that sweep across each hexagon, in slate blue and silver, over charcoal pentagons.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_RETRO_KITES } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_RETRO_KITES.id, BALL_SOCCER_RETRO_KITES.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_RETRO_KITES = /* @__PURE__ */ ball("ball:soccer-retro-kites", "Soccer, kite sweep", "2000年代風・凧の流れ", {
   view: VIEW,
   base: "#3d5a80",
@@ -159,7 +201,14 @@ export const BALL_SOCCER_RETRO_KITES = /* @__PURE__ */ ball("ball:soccer-retro-k
   },
 });
 
-/** The mid 2000s: the 14-panel layout (six propellers and eight triangles) with a double border: two parallel black lines along every seam (a thin gap between them), and two parallel red lines inside each propeller; white propellers, dark triangles with a red dot. */
+/**
+ * The mid 2000s: the 14-panel layout (six propellers and eight triangles) with a double border: two parallel black lines along every seam (a thin gap between them), and two parallel red lines inside each propeller; white propellers, dark triangles with a red dot.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_14_PANEL_DOUBLE_BORDER } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_14_PANEL_DOUBLE_BORDER.id, BALL_SOCCER_14_PANEL_DOUBLE_BORDER.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_14_PANEL_DOUBLE_BORDER = /* @__PURE__ */ ball("ball:soccer-14-panel-double-border", "Soccer, 14-panel borders", "14枚貼り・二重縁取り", {
   view: { yaw: 40, pitch: 36, roll: 0 },
   base: "#23282f",
@@ -183,7 +232,14 @@ export const BALL_SOCCER_14_PANEL_DOUBLE_BORDER = /* @__PURE__ */ ball("ball:soc
   },
 });
 
-/** The early 2010s: the 8-panel layout, an octahedron whose edges are bent into S curves, with plain seams: the white panels are plain, and the slate-blue ones carry three white contour lines. */
+/**
+ * The early 2010s: the 8-panel layout, an octahedron whose edges are bent into S curves, with plain seams: the white panels are plain, and the slate-blue ones carry three white contour lines.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_8_PANEL_PLAIN } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_8_PANEL_PLAIN.id, BALL_SOCCER_8_PANEL_PLAIN.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_8_PANEL_PLAIN = /* @__PURE__ */ ball("ball:soccer-8-panel-plain", "Soccer, 8-panel plain", "8枚貼り・無地と等高線", {
   view: { yaw: 32, pitch: 26, roll: 0 },
   base: "#f6f8f8",
@@ -235,7 +291,14 @@ function poleDiamonds(s: Surface, at: (i: number, u: number, s: number) => V3, c
   return out;
 }
 
-/** The mid 2010s: six twisted panels in white, crossed by straight bands along each panel in blue, amber and magenta, and a series of diamonds at each pole where the seams meet. */
+/**
+ * The mid 2010s: six twisted panels in white, crossed by straight bands along each panel in blue, amber and magenta, and a series of diamonds at each pole where the seams meet.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_6_PANEL_BANDS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_6_PANEL_BANDS.id, BALL_SOCCER_6_PANEL_BANDS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_6_PANEL_BANDS = /* @__PURE__ */ ball("ball:soccer-6-panel-bands", "Soccer, 6-panel bands", "6枚貼り・帯柄", {
   view: { yaw: 20, pitch: 22, roll: 0 },
   base: "#3b6fb6",
@@ -269,7 +332,14 @@ export const BALL_SOCCER_6_PANEL_BANDS = /* @__PURE__ */ ball("ball:soccer-6-pan
   },
 });
 
-/** The late 2010s: six panels covered with small diamonds, thick on one side and thinning out toward the other, and a series of diamonds at each pole where the seams meet. */
+/**
+ * The late 2010s: six panels covered with small diamonds, thick on one side and thinning out toward the other, and a series of diamonds at each pole where the seams meet.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_6_PANEL_DIAMONDS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_6_PANEL_DIAMONDS.id, BALL_SOCCER_6_PANEL_DIAMONDS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_6_PANEL_DIAMONDS = /* @__PURE__ */ ball("ball:soccer-6-panel-diamonds", "Soccer, 6-panel diamonds", "6枚貼り・ひし形柄", {
   view: { yaw: 20, pitch: 22, roll: 0 },
   base: "#2a2f3a",
@@ -303,7 +373,14 @@ export const BALL_SOCCER_6_PANEL_DIAMONDS = /* @__PURE__ */ ball("ball:soccer-6-
   },
 });
 
-/** The early 2020s: twenty triangles (an icosahedron) in deep blue, cream and sand, each carrying one inner outline and a dot at its middle. */
+/**
+ * The early 2020s: twenty triangles (an icosahedron) in deep blue, cream and sand, each carrying one inner outline and a dot at its middle.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_20_PANEL_DOTS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_20_PANEL_DOTS.id, BALL_SOCCER_20_PANEL_DOTS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_20_PANEL_DOTS = /* @__PURE__ */ ball("ball:soccer-20-panel-dots", "Soccer, 20-panel dots", "20枚貼り・点と輪郭", {
   view: { yaw: 30, pitch: 24, roll: 8 },
   base: "#1f4f7d",
@@ -327,7 +404,14 @@ export const BALL_SOCCER_20_PANEL_DOTS = /* @__PURE__ */ ball("ball:soccer-20-pa
   },
 });
 
-/** A modern high-visibility training ball: 32 panels in fluorescent yellow-green, hot pink pentagons ringed in black, and three dark speed marks across each hexagon. */
+/**
+ * A modern high-visibility training ball: 32 panels in fluorescent yellow-green, hot pink pentagons ringed in black, and three dark speed marks across each hexagon.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_TRAINING_HIGH_VIS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_TRAINING_HIGH_VIS.id, BALL_SOCCER_TRAINING_HIGH_VIS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_TRAINING_HIGH_VIS = /* @__PURE__ */ ball("ball:soccer-training-high-vis", "Soccer, high-vis training", "蛍光トレーニングボール", {
   view: VIEW,
   base: "#ff2f7d",

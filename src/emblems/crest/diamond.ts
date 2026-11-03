@@ -1,7 +1,14 @@
 // A diamond with a thin diamond inside it, tinted by a team's colours, with the team's letters on it or a star. Drawn for this package.
 import { defineFlat, starPath } from "../emblem.shapes.ts";
 
-/** A diamond with a thin diamond inside it. */
+/**
+ * A diamond with a thin diamond inside it.
+ * @example
+ * ```ts
+ * import { CREST_DIAMOND } from "@johnmorrisdotca/dougu-sports";
+ * console.log(CREST_DIAMOND.id, CREST_DIAMOND.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const CREST_DIAMOND = /* @__PURE__ */ defineFlat("crest:diamond", "Diamond crest", "ひし形のエンブレム", "ours", {
   metal: "flat",
   color: "#2d5a8c",

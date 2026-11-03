@@ -1,7 +1,14 @@
 // Kyudo: a pictogram of the long bow, its string and an arrow, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { defineIcon } from "../emblem.shapes.ts";
 
-/** Kyudo. */
+/**
+ * Kyudo.
+ * @example
+ * ```ts
+ * import { SPORT_KYUDO } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_KYUDO.id, SPORT_KYUDO.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_KYUDO = /* @__PURE__ */ defineIcon("sport:kyudo", "Kyudo", "弓道", "ours", {
   metal: "flat",
   ink: true,

@@ -31,6 +31,14 @@ const TAKRAW_MESH = ((): string => {
 })();
 
 
+/**
+ * The Sepak takraw net emblem (セパタクローのネット in Japanese): id `gear:takraw-net`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_TAKRAW_NET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_TAKRAW_NET.id, GEAR_TAKRAW_NET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_TAKRAW_NET = /* @__PURE__ */ drawn("gear:takraw-net", "Sepak takraw net", "セパタクローのネット", {
   main: "#f4f1ea",
   accent: "#c8202c",
@@ -69,6 +77,14 @@ const NETBALL_MESH = ((): string => {
   return d;
 })();
 
+/**
+ * The Netball goalpost emblem (ネットボールのポスト in Japanese): id `gear:netball-post`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_NETBALL_POST } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_NETBALL_POST.id, GEAR_NETBALL_POST.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_NETBALL_POST = /* @__PURE__ */ drawn("gear:netball-post", "Netball goalpost", "ネットボールのポスト", {
   main: "#2b6cb5",
   accent: "#d9dde2",
@@ -100,6 +116,14 @@ const TEQ_THICK = 2.4;
 const teqAt = (t: number): number => (1 - t) * (1 - t) * TEQ_LOW + 2 * t * (1 - t) * TEQ_CTRL + t * t * TEQ_LOW;
 const teqLeg = (t: number): string => `M${f(TEQ_X0 + 3000 * TEQ_S * t)} ${f(TEQ_FLOOR)}V${f(teqAt(t) + TEQ_THICK - 0.4)}`;
 
+/**
+ * The Teqball table emblem (テックボールのテーブル in Japanese): id `gear:teqball-table`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_TEQBALL_TABLE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_TEQBALL_TABLE.id, GEAR_TEQBALL_TABLE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_TEQBALL_TABLE = /* @__PURE__ */ drawn("gear:teqball-table", "Teqball table", "テックボールのテーブル", {
   main: "#3f7fb5",
   accent: "#e9eef2",

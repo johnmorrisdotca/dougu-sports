@@ -2,7 +2,14 @@
 // photographs of the cup being carried, taken from the side and at a distance (docs/likeness.md), so it is approximate: the blades are tubes in the lathe, the bowl is a body of revolution, and the lettering on the base is left out.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Walter Cup of the Professional Women's Hockey League: a shallow bowl between two stick-shaped blades over a round base. */
+/**
+ * The Walter Cup of the Professional Women's Hockey League: a shallow bowl between two stick-shaped blades over a round base.
+ * @example
+ * ```ts
+ * import { TROPHY_WALTER_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_WALTER_CUP.id, TROPHY_WALTER_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_WALTER_CUP = /* @__PURE__ */ defineLathe("trophy:walter-cup", "Walter Cup", "ウォルター・カップ", "ours", {
   metal: "silver",
   box: "-0.5 0 65 65",

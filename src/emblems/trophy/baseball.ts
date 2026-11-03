@@ -1,7 +1,14 @@
 // A ring of thirty pennants on poles that stand round a baseball, the tops of the poles stepping up once round, on a round base. Drawn for this package; a generic trophy.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A ring of about thirty gold pennants standing round a silver baseball on a round base. */
+/**
+ * A ring of about thirty gold pennants standing round a silver baseball on a round base.
+ * @example
+ * ```ts
+ * import { TROPHY_BASEBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_BASEBALL.id, TROPHY_BASEBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_BASEBALL = /* @__PURE__ */ defineLathe("trophy:baseball", "Baseball trophy", "野球のトロフィー", "ours", {
   metal: "silver",
   turnBox: "-9.3 -7.3 82.6 82.6",

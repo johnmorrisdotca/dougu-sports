@@ -1,7 +1,14 @@
 // Running track: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { defineIcon } from "../emblem.shapes.ts";
 
-/** Running track. */
+/**
+ * Running track.
+ * @example
+ * ```ts
+ * import { SPORT_ATHLETICS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_ATHLETICS.id, SPORT_ATHLETICS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_ATHLETICS = /* @__PURE__ */ defineIcon("sport:athletics", "Running track", "陸上競技のトラック", "ours", {
   box: "-3.7 -3.7 71.4 71.4",
   metal: "flat",

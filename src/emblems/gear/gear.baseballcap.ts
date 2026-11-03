@@ -2,6 +2,14 @@
 // button and a front seam set off to the right of the middle, three eyelets, and a brim that is a wide curved shield with its edge, its underside and rows of stitching. No team mark, lettering or brand. It turns with the gear coin-flip.
 import { drawn, ellipse } from "./gear.core.ts";
 
+/**
+ * The Baseball cap emblem (野球帽 in Japanese): id `gear:baseball-cap`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_BASEBALL_CAP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_BASEBALL_CAP.id, GEAR_BASEBALL_CAP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_BASEBALL_CAP = /* @__PURE__ */ drawn("gear:baseball-cap", "Baseball cap", "野球帽", {
   main: "#243656",
   accent: "#d5dde6",

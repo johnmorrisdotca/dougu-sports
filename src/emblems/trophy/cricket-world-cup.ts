@@ -3,7 +3,14 @@
 // lettering on the ring are left out (the ring takes the engraving option).
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The ICC Cricket World Cup trophy: a gilt globe in a silver ring on swept silver bands over a black dome. */
+/**
+ * The ICC Cricket World Cup trophy: a gilt globe in a silver ring on swept silver bands over a black dome.
+ * @example
+ * ```ts
+ * import { TROPHY_CRICKET_WORLD_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_CRICKET_WORLD_CUP.id, TROPHY_CRICKET_WORLD_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_CRICKET_WORLD_CUP = /* @__PURE__ */ defineLathe("trophy:cricket-world-cup", "Cricket World Cup", "クリケットW杯", "ours", {
   metal: "silver",
   turnBox: "-3.8 0 71.6 71.6",

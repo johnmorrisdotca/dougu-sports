@@ -4,7 +4,14 @@
 import { defineLathe } from "../emblem.lathe.ts";
 import { LATHE_EXTRAS } from "../lathe.extras.ts";
 
-/** The Larry O'Brien Championship Trophy as given up to 2021: a smooth gold ball on a tapering gold vase with a lower net, on a square plinth. */
+/**
+ * The Larry O'Brien Championship Trophy as given up to 2021: a smooth gold ball on a tapering gold vase with a lower net, on a square plinth.
+ * @example
+ * ```ts
+ * import { TROPHY_LARRY_OBRIEN_TROPHY_1977 } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_LARRY_OBRIEN_TROPHY_1977.id, TROPHY_LARRY_OBRIEN_TROPHY_1977.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_LARRY_OBRIEN_TROPHY_1977 = /* @__PURE__ */ defineLathe("trophy:larry-obrien-trophy-1977", "Larry O'Brien Trophy 1977", "ラリー・オブライエン・トロフィー(旧デザイン)", "ours", {
   extras: LATHE_EXTRAS,
   metal: "gold",

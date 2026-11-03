@@ -1,7 +1,14 @@
 // A gold soccer ball held up on a tapering stand with a stepped base. Drawn for this package.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A soccer ball held up on a tapering stand. */
+/**
+ * A soccer ball held up on a tapering stand.
+ * @example
+ * ```ts
+ * import { TROPHY_SOCCER_BALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_SOCCER_BALL.id, TROPHY_SOCCER_BALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_SOCCER_BALL = /* @__PURE__ */ defineLathe("trophy:soccer-ball", "Soccer ball trophy", "サッカーのトロフィー", "ours", {
   metal: "gold",
   turnBox: "-5.4 0 74.7 74.7",

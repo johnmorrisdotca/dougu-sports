@@ -1,7 +1,15 @@
 // The lettering of the maker wordmarks: our own alphabet of capitals, drawn as strokes. Each letter is a few polylines on a unit box (x across, y down, 0 to 1); a style sets the weight, how the corners are
 // treated (sharp, rounded or cut), the width, the spacing, the slant and the line ends, so that each maker's wordmark has a lettering of its own from one set of skeletons. It is not a copy of any typeface.
 
-/** How a wordmark is lettered. */
+/**
+ * How a wordmark is lettered.
+ * @example
+ * ```ts
+ * import type { LetterStyle } from "@johnmorrisdotca/dougu-sports/brands";
+ * const style: LetterStyle = { weight: 12, corner: "round", radius: 6, width: 1, gap: 8, slant: 6, cap: "round" };
+ * console.log(style.weight);
+ * ```
+ */
 export interface LetterStyle {
   /** Stroke weight, in units of a letter 100 high. */
   weight: number;
@@ -64,7 +72,14 @@ const SKELETONS: Readonly<Record<string, Skeleton>> = {
 const OPEN = "LTFPYRVAW";
 const LEAN = "AVWYT";
 
-/** The letters the alphabet draws. */
+/**
+ * The letters the alphabet draws.
+ * @example
+ * ```ts
+ * import { LETTERS } from "@johnmorrisdotca/dougu-sports/brands";
+ * console.log(LETTERS.length, LETTERS[0]);
+ * ```
+ */
 export const LETTERS = Object.freeze(Object.keys(SKELETONS));
 
 const round1 = (value: number): string => String(Math.round(value * 10) / 10 + 0);
@@ -94,7 +109,16 @@ function strokePath(points: readonly (readonly [number, number])[], closed: bool
   return closed ? `${d}Z` : d;
 }
 
-/** A word laid out: the path of all its letters (stroked, not filled) and the box it fills. */
+/**
+ * A word laid out: the path of all its letters (stroked, not filled) and the box it fills.
+ * @example
+ * ```ts
+ * import { MAKERS, lettering } from "@johnmorrisdotca/dougu-sports/brands";
+ * import type { Lettering } from "@johnmorrisdotca/dougu-sports/brands";
+ * const word: Lettering = lettering("ARVANE", MAKERS.arvane.lettering);
+ * console.log(word.d.startsWith("M"), word.weight);
+ * ```
+ */
 export interface Lettering {
   d: string;
   width: number;
@@ -106,7 +130,18 @@ export interface Lettering {
 /** The unit height the lettering is drawn at. */
 export const LETTER_HEIGHT = 100;
 
-/** A word in capitals, in a style. A letter the alphabet does not have is left out. The box includes the stroke's half weight and the room a lean needs. */
+/**
+ * A word in capitals, in a style. A letter the alphabet does not have is left out. The box includes the stroke's half weight and the room a lean needs.
+ * @param word - The word, in capitals.
+ * @param style - The weight, corners, width, gap, slant and line ends.
+ * @returns The path of the letters and the box it fills.
+ * @example
+ * ```ts
+ * import { MAKERS, lettering } from "@johnmorrisdotca/dougu-sports/brands";
+ * const word = lettering("ARVANE", MAKERS.arvane.lettering);
+ * console.log(word.width > 0, word.height > 0);
+ * ```
+ */
 export function lettering(word: string, style: LetterStyle): Lettering {
   const lean = Math.tan((style.slant * Math.PI) / 180);
   const half = style.weight / 2;

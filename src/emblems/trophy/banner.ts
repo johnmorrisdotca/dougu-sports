@@ -10,7 +10,14 @@ const cloth: readonly Shape[] = [
   ["r", "M13 46L32 59L51 46L51 42.4L32 55.4L13 42.4z"],
 ];
 
-/** A rafter banner. */
+/**
+ * A rafter banner.
+ * @example
+ * ```ts
+ * import { TROPHY_BANNER } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_BANNER.id, TROPHY_BANNER.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_BANNER = /* @__PURE__ */ defineFlat("trophy:banner", "Rafter banner", "優勝バナー", "ours", {
   metal: "flat",
   color: "#1f4e8c",

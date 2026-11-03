@@ -1,7 +1,14 @@
 // A pennant on a pole, tinted by a team's colours, with the team's letters on it or a star. Drawn for this package.
 import { defineFlat, starPath } from "../emblem.shapes.ts";
 
-/** A pennant on a pole. */
+/**
+ * A pennant on a pole.
+ * @example
+ * ```ts
+ * import { CREST_PENNANT } from "@johnmorrisdotca/dougu-sports";
+ * console.log(CREST_PENNANT.id, CREST_PENNANT.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const CREST_PENNANT = /* @__PURE__ */ defineFlat("crest:pennant", "Pennant crest", "ペナント形のエンブレム", "ours", {
   metal: "flat",
   color: "#2d5a8c",

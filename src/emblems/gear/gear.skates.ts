@@ -1,6 +1,14 @@
 // Ice skates drawn by us, all facing right: a hockey skate, a figure skate and a speed skate.
 import { capsule, drawn, rect, seg } from "./gear.core.ts";
 
+/**
+ * The Hockey skate emblem (アイスホッケースケート in Japanese): id `gear:hockey-skate`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_HOCKEY_SKATE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_HOCKEY_SKATE.id, GEAR_HOCKEY_SKATE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_HOCKEY_SKATE = /* @__PURE__ */ drawn("gear:hockey-skate", "Hockey skate", "アイスホッケースケート", {
   box: "-0.9 -0.9 65.8 65.8",
   main: "#232a36",
@@ -16,6 +24,14 @@ export const GEAR_HOCKEY_SKATE = /* @__PURE__ */ drawn("gear:hockey-skate", "Hoc
   ],
 });
 
+/**
+ * The Figure skate emblem (フィギュアスケート靴 in Japanese): id `gear:figure-skate`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_FIGURE_SKATE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_FIGURE_SKATE.id, GEAR_FIGURE_SKATE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_FIGURE_SKATE = /* @__PURE__ */ drawn("gear:figure-skate", "Figure skate", "フィギュアスケート靴", {
   box: "-1.4 -1.4 66.8 66.8",
   main: "#f6f2ea",
@@ -31,6 +47,14 @@ export const GEAR_FIGURE_SKATE = /* @__PURE__ */ drawn("gear:figure-skate", "Fig
   ],
 });
 
+/**
+ * The Speed skate emblem (スピードスケート靴 in Japanese): id `gear:speed-skate`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_SPEED_SKATE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_SPEED_SKATE.id, GEAR_SPEED_SKATE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_SPEED_SKATE = /* @__PURE__ */ drawn("gear:speed-skate", "Speed skate", "スピードスケート靴", {
   box: "-1.2 -1.2 66.4 66.4",
   main: "#2a5fb0",

@@ -1,7 +1,14 @@
 // A heraldic shield with a band across the top, tinted by a team's colours, with the team's letters on it or a star. Drawn for this package.
 import { defineFlat, starPath } from "../emblem.shapes.ts";
 
-/** A heraldic shield with a band across the top. */
+/**
+ * A heraldic shield with a band across the top.
+ * @example
+ * ```ts
+ * import { CREST_SHIELD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(CREST_SHIELD.id, CREST_SHIELD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const CREST_SHIELD = /* @__PURE__ */ defineFlat("crest:shield", "Shield crest", "盾形のエンブレム", "ours", {
   metal: "flat",
   color: "#2d5a8c",

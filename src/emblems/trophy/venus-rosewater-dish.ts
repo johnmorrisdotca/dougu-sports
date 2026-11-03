@@ -5,7 +5,14 @@ import { circlePath, defineFlat } from "../emblem.shapes.ts";
 /** A ring of `n` small circles of radius `r` at `radius` from the centre. */
 const ring = (n: number, radius: number, r: number): string => Array.from({ length: n }, (_, i) => circlePath(32 + radius * Math.cos((2 * Math.PI * i) / n), 32 + radius * Math.sin((2 * Math.PI * i) / n), r)).join("");
 
-/** The Venus Rosewater Dish of the Wimbledon ladies' singles: a broad round dish of relief rings and a central boss. */
+/**
+ * The Venus Rosewater Dish of the Wimbledon ladies' singles: a broad round dish of relief rings and a central boss.
+ * @example
+ * ```ts
+ * import { TROPHY_VENUS_ROSEWATER_DISH } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_VENUS_ROSEWATER_DISH.id, TROPHY_VENUS_ROSEWATER_DISH.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_VENUS_ROSEWATER_DISH = /* @__PURE__ */ defineFlat("trophy:venus-rosewater-dish", "Venus Rosewater Dish", "ウィンブルドン女子", "ours", {
   metal: "silver",
   front: [

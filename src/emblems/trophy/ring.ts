@@ -24,7 +24,14 @@ const front: readonly Shape[] = [
 ];
 const back: readonly Shape[] = [["o", annulus(32, 44, 19, 11)], ["o", HEAD], ["e", BEZEL, "1.6"]];
 
-/** A championship ring. */
+/**
+ * A championship ring.
+ * @example
+ * ```ts
+ * import { TROPHY_RING } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_RING.id, TROPHY_RING.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_RING = /* @__PURE__ */ defineFlat("trophy:ring", "Championship ring", "優勝リング", "ours", {
   metal: "gold",
   ribbon: "#b3262e",

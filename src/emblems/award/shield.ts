@@ -1,7 +1,14 @@
 // Shield: a shield with a bevelled face, drawn for this package, in metal, line and flat colour.
 import { defineIcon } from "../emblem.shapes.ts";
 
-/** Shield. */
+/**
+ * Shield.
+ * @example
+ * ```ts
+ * import { AWARD_SHIELD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(AWARD_SHIELD.id, AWARD_SHIELD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const AWARD_SHIELD = /* @__PURE__ */ defineIcon("award:shield", "Shield", "盾", "ours", {
   metal: "silver",
   front: [

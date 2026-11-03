@@ -8,6 +8,14 @@ import { SOCCER_SIZE } from "./ball.soccer.size.ts";
 
 const FUTSAL_BLUE = "#1673e6";
 
+/**
+ * The Futsal ball emblem (フットサルボール in Japanese): id `ball:futsal`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_FUTSAL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_FUTSAL.id, BALL_FUTSAL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_FUTSAL = /* @__PURE__ */ defineBall({
   id: "ball:futsal",
   en: "Futsal ball",
@@ -40,6 +48,14 @@ export const BALL_FUTSAL = /* @__PURE__ */ defineBall({
   },
 });
 
+/**
+ * The Beach soccer ball emblem (ビーチサッカーボール in Japanese): id `ball:beach-soccer`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_BEACH_SOCCER } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_BEACH_SOCCER.id, BALL_BEACH_SOCCER.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_BEACH_SOCCER = /* @__PURE__ */ defineBall({
   id: "ball:beach-soccer",
   en: "Beach soccer ball",

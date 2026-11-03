@@ -2,7 +2,14 @@
 // shapes with a grey sheet, the line style draws one outline.
 import { defineIcon } from "../emblem.shapes.ts";
 
-/** Sumo. */
+/**
+ * Sumo.
+ * @example
+ * ```ts
+ * import { SPORT_SUMO } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_SUMO.id, SPORT_SUMO.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_SUMO = /* @__PURE__ */ defineIcon("sport:sumo", "Sumo", "相撲", "ours", {
   box: "-0.7 0 65.3 65.3",
   metal: "flat",

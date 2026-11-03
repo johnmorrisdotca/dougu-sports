@@ -5,7 +5,14 @@ import { defineLathe } from "../emblem.lathe.ts";
 import { LATHE_EXTRAS } from "../lathe.extras.ts";
 import { LATHE_SCULPT } from "../lathe.sculpt.ts";
 
-/** The Willie O'Ree Community Hero Award: a gold fedora on three twisting ribbons over a round gold and black base. */
+/**
+ * The Willie O'Ree Community Hero Award: a gold fedora on three twisting ribbons over a round gold and black base.
+ * @example
+ * ```ts
+ * import { TROPHY_WILLIE_OREE_AWARD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_WILLIE_OREE_AWARD.id, TROPHY_WILLIE_OREE_AWARD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_WILLIE_OREE_AWARD = /* @__PURE__ */ defineLathe("trophy:willie-oree-award", "Willie O'Ree Award", "ウィリー・オリー賞", "ours", {
   metal: "gold",
   color: "#b8923f",

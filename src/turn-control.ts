@@ -14,15 +14,38 @@ export interface TurnRegistry {
 /**
  * Which way the auto-turn goes, seen from above. `"counterclockwise"` is how it has always turned: the front swings to the viewer's right. `"clockwise"` is the other way: the front swings to the viewer's left.
  * A drag, the arrow keys and `setAngles` are not reversed.
+ * @example
+ * ```ts
+ * import type { TurnDirection } from "@johnmorrisdotca/dougu-sports/turn";
+ * const direction: TurnDirection = "clockwise";
+ * console.log(direction);
+ * ```
  */
 export type TurnDirection = "clockwise" | "counterclockwise";
 
-/** A direction from anything: `"clockwise"` is clockwise, and everything else is the default, `"counterclockwise"`. */
+/**
+ * A direction from anything: `"clockwise"` is clockwise, and everything else is the default, `"counterclockwise"`.
+ * @param value - Anything.
+ * @returns `clockwise` when the value is `clockwise`, otherwise `counterclockwise`.
+ * @example
+ * ```ts
+ * import { turnDirection } from "@johnmorrisdotca/dougu-sports/turn";
+ * console.log(turnDirection("clockwise"), turnDirection("sideways"));
+ * ```
+ */
 export function turnDirection(value: unknown): TurnDirection {
   return value === "clockwise" ? "clockwise" : "counterclockwise";
 }
 
-/** The three angles of a turn, in degrees. */
+/**
+ * The three angles of a turn, in degrees.
+ * @example
+ * ```ts
+ * import type { TurnAngles } from "@johnmorrisdotca/dougu-sports/turn";
+ * const angles: TurnAngles = { yaw: 30, pitch: -10, roll: 0 };
+ * console.log(angles.yaw);
+ * ```
+ */
 export interface TurnAngles {
   /** About the vertical axis, from -180 (excluded) to 180. */
   yaw: number;
@@ -32,7 +55,15 @@ export interface TurnAngles {
   roll: number;
 }
 
-/** What `bindTurn` takes: the frame options (`style`, `size`, `tint`, `theme`, and the first `yaw`, `pitch` and `roll`) and how the turning behaves. */
+/**
+ * What `bindTurn` takes: the frame options (`style`, `size`, `tint`, `theme`, and the first `yaw`, `pitch` and `roll`) and how the turning behaves.
+ * @example
+ * ```ts
+ * import type { TurnControlOptions } from "@johnmorrisdotca/dougu-sports/turn";
+ * const options: TurnControlOptions = { size: 160, sensitivity: 1, autoPlay: false, speed: 24, direction: "clockwise" };
+ * console.log(options.speed);
+ * ```
+ */
 export interface TurnControlOptions extends FrameOptions {
   /** Degrees of turn for each pixel the pointer moves (1.5 by default). */
   sensitivity?: number;
@@ -57,7 +88,16 @@ export interface TurnControlOptions extends FrameOptions {
   onPlayChange?: (playing: boolean) => void;
 }
 
-/** What `bindTurn` returns. */
+/**
+ * What `bindTurn` returns.
+ * @example
+ * ```ts no-run
+ * import { bindTurn } from "@johnmorrisdotca/dougu-sports/turn";
+ * import type { TurnController } from "@johnmorrisdotca/dougu-sports/turn";
+ * const start = (element: HTMLElement): TurnController => bindTurn(element, "trophy:hockey-cup");
+ * console.log(typeof start);
+ * ```
+ */
 export interface TurnController {
   /** The angles now (a copy). */
   readonly angles: TurnAngles;
@@ -88,7 +128,15 @@ export interface TurnController {
   destroy(): void;
 }
 
-/** An event, as much of it as `bindTurn` reads: a pointer's or a key's. */
+/**
+ * An event, as much of it as `bindTurn` reads: a pointer's or a key's.
+ * @example
+ * ```ts
+ * import type { TurnEvent } from "@johnmorrisdotca/dougu-sports/turn";
+ * const event: TurnEvent = { key: "ArrowLeft", shiftKey: true, preventDefault() {} };
+ * console.log(event.key);
+ * ```
+ */
 export interface TurnEvent {
   button?: number;
   isPrimary?: boolean;
@@ -103,7 +151,15 @@ export interface TurnEvent {
   preventDefault(): void;
 }
 
-/** What `bindTurn` needs of an element: any `HTMLElement` is one, and so is a small fake in a test. */
+/**
+ * What `bindTurn` needs of an element: any `HTMLElement` is one, and so is a small fake in a test.
+ * @example
+ * ```ts
+ * import type { TurnContainer } from "@johnmorrisdotca/dougu-sports/turn";
+ * const use = (container: TurnContainer) => container.getAttribute("role");
+ * console.log(typeof use);
+ * ```
+ */
 export interface TurnContainer {
   innerHTML: string;
   style: { touchAction: string; userSelect: string; cursor: string; webkitUserSelect?: string };
@@ -176,8 +232,12 @@ const load = (): Promise<TurnRegistry> => {
  *
  * Pass the emblem itself (`TROPHY_HOCKEY_CUP`, from its own module) and nothing but the turning and that one emblem is in the bundle. Pass an id (`"trophy:hockey-cup"`) and the registry is loaded on
  * demand: the element is drawn when `ready` resolves, not before. The main entry's `bindTurn` has the registry already and draws an id at once.
+ * @param container - The element to draw into.
+ * @param ref - An emblem, or an id (drawn once `ready` resolves).
+ * @param options - The first angles, the sensitivity and the auto-turn.
+ * @returns The controller that turns, plays, pauses and removes it.
  * @example
- * ```ts
+ * ```ts no-run
  * import { bindTurn } from "@johnmorrisdotca/dougu-sports/turn";
  * import { TROPHY_TENNIS_CUP } from "@johnmorrisdotca/dougu-sports/trophy/tennis-cup";
  * const turner = bindTurn(document.getElementById("cup")!, TROPHY_TENNIS_CUP, { size: 160 });

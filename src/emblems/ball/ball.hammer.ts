@@ -8,6 +8,14 @@ const HEAD = mul(D, -1.25);
 const WIRE_START = -0.25;
 const WIRE_END = 1.25;
 
+/**
+ * The Hammer emblem (ハンマー（ハンマー投） in Japanese): id `ball:hammer`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_HAMMER } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_HAMMER.id, BALL_HAMMER.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_HAMMER = /* @__PURE__ */ defineBall({
   id: "ball:hammer",
   en: "Hammer",

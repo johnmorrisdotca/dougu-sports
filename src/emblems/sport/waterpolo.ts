@@ -4,7 +4,14 @@ import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 /** Waves: a wavy line across the box at a height. */
 const wave = (y: number): string => `M3 ${y}q7-6 14 0t14 0 14 0 14 0`;
 
-/** Water polo ball. */
+/**
+ * Water polo ball.
+ * @example
+ * ```ts
+ * import { SPORT_WATERPOLO } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_WATERPOLO.id, SPORT_WATERPOLO.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_WATERPOLO = /* @__PURE__ */ defineIcon("sport:waterpolo", "Water polo ball", "水球のボール", "ours", {
   metal: "gold",
   ink: true,

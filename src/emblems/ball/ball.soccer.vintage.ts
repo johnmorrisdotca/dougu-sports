@@ -42,7 +42,14 @@ function paintGores(s: Surface, g: ReturnType<typeof gores>, base: string): stri
 
 const POLES: Array<(g: ReturnType<typeof gores>) => V3> = [(g) => g.seams[0][0], (g) => g.seams[0][g.seams[0].length - 1]];
 
-/** The late 1800s: eight long panels sewn by hand with a visible cross of thread, and a button where they meet at each end. */
+/**
+ * The late 1800s: eight long panels sewn by hand with a visible cross of thread, and a button where they meet at each end.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_1870_HAND_STITCHED } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_1870_HAND_STITCHED.id, BALL_SOCCER_1870_HAND_STITCHED.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_1870_HAND_STITCHED = /* @__PURE__ */ defineBall({
   id: "ball:soccer-1870-hand-stitched",
   en: "Soccer ball, hand-stitched",
@@ -62,7 +69,14 @@ export const BALL_SOCCER_1870_HAND_STITCHED = /* @__PURE__ */ defineBall({
   }),
 });
 
-/** The 1900s: eight panels, a round cap at each end, and a slit across which a lace is drawn to shut the casing once the bladder is in. */
+/**
+ * The 1900s: eight panels, a round cap at each end, and a slit across which a lace is drawn to shut the casing once the bladder is in.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_1900_LACED } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_1900_LACED.id, BALL_SOCCER_1900_LACED.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_1900_LACED = /* @__PURE__ */ defineBall({
   id: "ball:soccer-1900-laced",
   en: "Soccer ball, laced",
@@ -89,7 +103,14 @@ export const BALL_SOCCER_1900_LACED = /* @__PURE__ */ defineBall({
   }),
 });
 
-/** The 1930s: eighteen strips, six panels of three, in two tones of leather, the seams stitched in two rows. */
+/**
+ * The 1930s: eighteen strips, six panels of three, in two tones of leather, the seams stitched in two rows.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_1930_18_PANEL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_1930_18_PANEL.id, BALL_SOCCER_1930_18_PANEL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_1930_18_PANEL = /* @__PURE__ */ defineBall({
   id: "ball:soccer-1930-18-panel",
   en: "Soccer ball, 18 strips",
@@ -106,7 +127,14 @@ export const BALL_SOCCER_1930_18_PANEL = /* @__PURE__ */ defineBall({
   }),
 });
 
-/** The 1950s: twelve pentagons, in four tones of chestnut leather so that no two that touch match, the seams stitched. */
+/**
+ * The 1950s: twelve pentagons, in four tones of chestnut leather so that no two that touch match, the seams stitched.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_1950_12_PANEL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_1950_12_PANEL.id, BALL_SOCCER_1950_12_PANEL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_1950_12_PANEL = /* @__PURE__ */ defineBall({
   id: "ball:soccer-1950-12-panel",
   en: "Soccer ball, 12 panels",
@@ -126,7 +154,14 @@ export const BALL_SOCCER_1950_12_PANEL = /* @__PURE__ */ defineBall({
   }),
 });
 
-/** The 1960s: the 32 panels (twelve pentagons and twenty hexagons) in leather, tan hexagons and chestnut pentagons, stitched along the seams. */
+/**
+ * The 1960s: the 32 panels (twelve pentagons and twenty hexagons) in leather, tan hexagons and chestnut pentagons, stitched along the seams.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_1960_32_PANEL_LEATHER } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_1960_32_PANEL_LEATHER.id, BALL_SOCCER_1960_32_PANEL_LEATHER.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_1960_32_PANEL_LEATHER = /* @__PURE__ */ defineBall({
   id: "ball:soccer-1960-32-panel-leather",
   en: "Soccer ball, 32 leather",

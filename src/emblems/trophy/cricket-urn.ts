@@ -1,7 +1,14 @@
 // A small terracotta urn: a flared lip, a narrow neck with two square handles, an egg-shaped belly, a stem and a round foot on a wooden base. Drawn for this package; a generic trophy.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A small terracotta urn. */
+/**
+ * A small terracotta urn.
+ * @example
+ * ```ts
+ * import { TROPHY_CRICKET_URN } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_CRICKET_URN.id, TROPHY_CRICKET_URN.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_CRICKET_URN = /* @__PURE__ */ defineLathe("trophy:cricket-urn", "Urn", "取っ手付きの壺", "ours", {
   metal: "flat",
   turnBox: "-2.2 0 68.4 68.4",

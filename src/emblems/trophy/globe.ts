@@ -1,7 +1,14 @@
 // A gold globe, drawn with its lines of latitude and longitude, standing on a column and a stepped base. Drawn for this package.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A globe in a stand. */
+/**
+ * A globe in a stand.
+ * @example
+ * ```ts
+ * import { TROPHY_GLOBE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_GLOBE.id, TROPHY_GLOBE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_GLOBE = /* @__PURE__ */ defineLathe("trophy:globe", "Globe on a stand", "台座の上の地球儀", "ours", {
   metal: "gold",
   turnBox: "-5.5 0 74.9 74.9",

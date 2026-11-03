@@ -3,6 +3,14 @@
 import { defineBall } from "./ball.engine.ts";
 import { strips18 } from "./ball.family.panelled.ts";
 
+/**
+ * The Gaelic football emblem (ゲーリックフットボール in Japanese): id `ball:gaelic-football`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_GAELIC_FOOTBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_GAELIC_FOOTBALL.id, BALL_GAELIC_FOOTBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_GAELIC_FOOTBALL = /* @__PURE__ */ defineBall({
   id: "ball:gaelic-football",
   en: "Gaelic football",
@@ -17,6 +25,14 @@ export const BALL_GAELIC_FOOTBALL = /* @__PURE__ */ defineBall({
   },
 });
 
+/**
+ * The Netball emblem (ネットボール in Japanese): id `ball:netball`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_NETBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_NETBALL.id, BALL_NETBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_NETBALL = /* @__PURE__ */ defineBall({
   id: "ball:netball",
   en: "Netball",

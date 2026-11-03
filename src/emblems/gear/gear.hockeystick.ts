@@ -3,6 +3,14 @@ import { capsule, drawn } from "./gear.core.ts";
 
 const T = "rotate(28 32 32)";
 
+/**
+ * The Hockey stick and puck emblem (スティックとパック in Japanese): id `gear:hockey-stick`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_HOCKEY_STICK } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_HOCKEY_STICK.id, GEAR_HOCKEY_STICK.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_HOCKEY_STICK = /* @__PURE__ */ drawn("gear:hockey-stick", "Hockey stick and puck", "スティックとパック", {
   main: "#c8202c",
   accent: "#f2efe8",

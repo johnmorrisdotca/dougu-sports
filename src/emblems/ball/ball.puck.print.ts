@@ -45,13 +45,77 @@ function definePuck(def: PuckDef): Piece<{ slices: number; design: PuckDesign; v
   });
 }
 
+/**
+ * The Canada flag puck emblem (カナダ国旗のパック in Japanese): id `puck:canada`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { PUCK_CANADA } from "@johnmorrisdotca/dougu-sports";
+ * console.log(PUCK_CANADA.id, PUCK_CANADA.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const PUCK_CANADA = /* @__PURE__ */ definePuck({ id: "puck:canada", en: "Canada flag puck", ja: "カナダ国旗のパック", design: "canada" });
+/**
+ * The Canada red puck emblem (カナダ赤地のパック in Japanese): id `puck:canada-red`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { PUCK_CANADA_RED } from "@johnmorrisdotca/dougu-sports";
+ * console.log(PUCK_CANADA_RED.id, PUCK_CANADA_RED.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const PUCK_CANADA_RED = /* @__PURE__ */ definePuck({ id: "puck:canada-red", en: "Canada red puck", ja: "カナダ赤地のパック", design: "canada-red" });
+/**
+ * The Canada white puck emblem (カナダ白地のパック in Japanese): id `puck:canada-white`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { PUCK_CANADA_WHITE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(PUCK_CANADA_WHITE.id, PUCK_CANADA_WHITE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const PUCK_CANADA_WHITE = /* @__PURE__ */ definePuck({ id: "puck:canada-white", en: "Canada white puck", ja: "カナダ白地のパック", design: "canada-white" });
+/**
+ * The USA stripes puck emblem (アメリカ星条旗のパック in Japanese): id `puck:usa`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { PUCK_USA } from "@johnmorrisdotca/dougu-sports";
+ * console.log(PUCK_USA.id, PUCK_USA.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const PUCK_USA = /* @__PURE__ */ definePuck({ id: "puck:usa", en: "USA stripes puck", ja: "アメリカ星条旗のパック", design: "usa" });
+/**
+ * The USA navy puck emblem (アメリカ紺地のパック in Japanese): id `puck:usa-navy`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { PUCK_USA_NAVY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(PUCK_USA_NAVY.id, PUCK_USA_NAVY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const PUCK_USA_NAVY = /* @__PURE__ */ definePuck({ id: "puck:usa-navy", en: "USA navy puck", ja: "アメリカ紺地のパック", design: "usa-navy" });
+/**
+ * The Player number puck emblem (選手名と背番号のパック in Japanese): id `puck:player`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { PUCK_PLAYER } from "@johnmorrisdotca/dougu-sports";
+ * console.log(PUCK_PLAYER.id, PUCK_PLAYER.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const PUCK_PLAYER = /* @__PURE__ */ definePuck({ id: "puck:player", en: "Player number puck", ja: "選手名と背番号のパック", design: "player" });
+/**
+ * The Signed puck emblem (サイン入りパック in Japanese): id `puck:signed`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { PUCK_SIGNED } from "@johnmorrisdotca/dougu-sports";
+ * console.log(PUCK_SIGNED.id, PUCK_SIGNED.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const PUCK_SIGNED = /* @__PURE__ */ definePuck({ id: "puck:signed", en: "Signed puck", ja: "サイン入りパック", design: "usa-navy", own: { signature: 7, text: "" } });
+/**
+ * The Souvenir puck emblem (記念パック in Japanese): id `puck:souvenir`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { PUCK_SOUVENIR } from "@johnmorrisdotca/dougu-sports";
+ * console.log(PUCK_SOUVENIR.id, PUCK_SOUVENIR.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const PUCK_SOUVENIR = /* @__PURE__ */ definePuck({ id: "puck:souvenir", en: "Souvenir puck", ja: "記念パック", design: "souvenir" });
 
 /** Every printed puck, in the order a gallery shows them. */

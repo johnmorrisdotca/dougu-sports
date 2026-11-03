@@ -3,7 +3,14 @@
 import { defineLathe } from "../emblem.lathe.ts";
 import { LATHE_SCULPT } from "../lathe.sculpt.ts";
 
-/** The NHL Foundation Player Award: a tall block of clear crystal with two V-cut facets. */
+/**
+ * The NHL Foundation Player Award: a tall block of clear crystal with two V-cut facets.
+ * @example
+ * ```ts
+ * import { TROPHY_FOUNDATION_PLAYER_AWARD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_FOUNDATION_PLAYER_AWARD.id, TROPHY_FOUNDATION_PLAYER_AWARD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_FOUNDATION_PLAYER_AWARD = /* @__PURE__ */ defineLathe("trophy:foundation-player-award", "Foundation Player Award", "NHL財団選手賞", "ours", {
   metal: "silver",
   sculptor: LATHE_SCULPT,

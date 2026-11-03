@@ -2,7 +2,14 @@
 // Drawn for this package from photographs (docs/likeness.md); the columns are tubes placed round the axis, and the plates are left plain.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Vezina Trophy: a pavilion of four columns under a dome and a dark ball, on a bell and a stepped wooden base. */
+/**
+ * The Vezina Trophy: a pavilion of four columns under a dome and a dark ball, on a bell and a stepped wooden base.
+ * @example
+ * ```ts
+ * import { TROPHY_VEZINA_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_VEZINA_TROPHY.id, TROPHY_VEZINA_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_VEZINA_TROPHY = /* @__PURE__ */ defineLathe("trophy:vezina-trophy", "Vezina Trophy", "ベジーナ賞", "ours", {
   metal: "silver",
   turnBox: "-7.9 0 79.8 79.8",

@@ -2,7 +2,14 @@
 // and sweep down the sides almost to the foot. Drawn for this package from a photograph taken square on (docs/likeness.md); the lettering and the roundel on the body are left out, and the body is left plain for the engraving option.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The UEFA Champions League trophy: a tall silver urn with two long looping handles. */
+/**
+ * The UEFA Champions League trophy: a tall silver urn with two long looping handles.
+ * @example
+ * ```ts
+ * import { TROPHY_CHAMPIONS_LEAGUE_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_CHAMPIONS_LEAGUE_TROPHY.id, TROPHY_CHAMPIONS_LEAGUE_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_CHAMPIONS_LEAGUE_TROPHY = /* @__PURE__ */ defineLathe("trophy:champions-league-trophy", "Champions League Trophy", "CLトロフィー", "ours", {
   metal: "silver",
   turnBox: "-7.7 -9.1 79.3 79.3",

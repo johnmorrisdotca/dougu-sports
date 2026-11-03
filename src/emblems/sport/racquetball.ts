@@ -1,7 +1,14 @@
 // Racquetball racket and ball: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
-/** Racquetball racket and ball. */
+/**
+ * Racquetball racket and ball.
+ * @example
+ * ```ts
+ * import { SPORT_RACQUETBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_RACQUETBALL.id, SPORT_RACQUETBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_RACQUETBALL = /* @__PURE__ */ defineIcon("sport:racquetball", "Racquetball racket", "ラケットボールのラケット", "ours", {
   box: "-0.3 0 64.6 64.6",
   metal: "flat",

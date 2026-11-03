@@ -3,6 +3,14 @@ import { defineBall } from "./ball.engine.ts";
 import { shrink, truncatedIcosahedron } from "./ball.polyhedra.ts";
 import { blend, mix } from "./ball.core.ts";
 
+/**
+ * The Teqball ball emblem (テックボール用ボール in Japanese): id `ball:teqball`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_TEQBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_TEQBALL.id, BALL_TEQBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_TEQBALL = /* @__PURE__ */ defineBall({
   id: "ball:teqball",
   en: "Teqball ball",

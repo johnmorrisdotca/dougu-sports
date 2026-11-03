@@ -1,7 +1,14 @@
 // A round gold bowl on a short stem and a foot. Drawn for this package.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A round bowl on a short foot. */
+/**
+ * A round bowl on a short foot.
+ * @example
+ * ```ts
+ * import { TROPHY_BOWL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_BOWL.id, TROPHY_BOWL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_BOWL = /* @__PURE__ */ defineLathe("trophy:bowl", "Bowl", "ボウル", "ours", {
   metal: "gold",
   turnBox: "-6.7 -9.2 77.4 77.4",

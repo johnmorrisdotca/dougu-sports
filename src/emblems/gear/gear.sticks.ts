@@ -3,6 +3,14 @@ import { capsule, drawn, poly, rect, seg } from "./gear.core.ts";
 
 const TURN = "translate(30 29) rotate(28) scale(.78) translate(-32 -33)";
 
+/**
+ * The Goalie stick emblem (ゴーリーのスティック in Japanese): id `gear:goalie-stick`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_GOALIE_STICK } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_GOALIE_STICK.id, GEAR_GOALIE_STICK.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_GOALIE_STICK = /* @__PURE__ */ drawn("gear:goalie-stick", "Goalie stick", "ゴーリーのスティック", {
   main: "#d9b57a",
   accent: "#1d1f24",
@@ -15,6 +23,14 @@ export const GEAR_GOALIE_STICK = /* @__PURE__ */ drawn("gear:goalie-stick", "Goa
   ],
 });
 
+/**
+ * The Hurley emblem (ハーリングのスティック in Japanese): id `gear:hurley`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_HURLEY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_HURLEY.id, GEAR_HURLEY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_HURLEY = /* @__PURE__ */ drawn("gear:hurley", "Hurley", "ハーリングのスティック", {
   main: "#e0c48e",
   accent: "#8a949f",
@@ -26,6 +42,14 @@ export const GEAR_HURLEY = /* @__PURE__ */ drawn("gear:hurley", "Hurley", "ハ�
   ],
 });
 
+/**
+ * The Curling broom emblem (カーリングのブラシ in Japanese): id `gear:curling-broom`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_CURLING_BROOM } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_CURLING_BROOM.id, GEAR_CURLING_BROOM.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_CURLING_BROOM = /* @__PURE__ */ drawn("gear:curling-broom", "Curling broom", "カーリングのブラシ", {
   main: "#2a5fb0",
   accent: "#f4efe4",

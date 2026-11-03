@@ -1,7 +1,14 @@
 // A wide silver bowl with two handles on a short stem, over a tall base that widens like a cone, with a dark band and a dark foot. Drawn for this package; a generic trophy.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A wide silver bowl with two handles on a tall tiered base. */
+/**
+ * A wide silver bowl with two handles on a tall tiered base.
+ * @example
+ * ```ts
+ * import { TROPHY_CANADIAN_BOWL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_CANADIAN_BOWL.id, TROPHY_CANADIAN_BOWL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_CANADIAN_BOWL = /* @__PURE__ */ defineLathe("trophy:canadian-bowl", "Wide two-handled bowl", "取っ手が二つの広いボウル", "ours", {
   metal: "silver",
   turnBox: "-10.7 -9.6 85.3 85.3",

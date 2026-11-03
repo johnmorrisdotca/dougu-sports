@@ -1,7 +1,14 @@
 // A wooden board with a metal plate and lines for the words. Drawn for this package.
 import { defineFlat } from "../emblem.shapes.ts";
 
-/** A wooden board with a plate and lines for the words. */
+/**
+ * A wooden board with a plate and lines for the words.
+ * @example
+ * ```ts
+ * import { TROPHY_PLAQUE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_PLAQUE.id, TROPHY_PLAQUE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_PLAQUE = /* @__PURE__ */ defineFlat("trophy:plaque", "Plaque", "記念盾", "ours", {
   metal: "gold",
   ribbon: "#7a5230",

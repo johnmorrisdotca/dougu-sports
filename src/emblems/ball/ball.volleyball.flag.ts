@@ -67,14 +67,102 @@ function nation(id: string, en: string, ja: string, laid: VolleyballPlan, view: 
   });
 }
 
+/**
+ * The Volleyball, three colours emblem (三色のバレーボール in Japanese): id `ball:volleyball-colours`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_VOLLEYBALL_COLOURS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_VOLLEYBALL_COLOURS.id, BALL_VOLLEYBALL_COLOURS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_VOLLEYBALL_COLOURS = /* @__PURE__ */ nation("ball:volleyball-colours", "Volleyball, three colours", "三色のバレーボール", plan(["#f3c81c", "#1f5fbf", WHITE], "aba bcb cac aca bab cbc"));
+/**
+ * The Volleyball, Brazil emblem (バレー（ブラジル） in Japanese): id `ball:volleyball-brazil`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_VOLLEYBALL_BRAZIL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_VOLLEYBALL_BRAZIL.id, BALL_VOLLEYBALL_BRAZIL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_VOLLEYBALL_BRAZIL = /* @__PURE__ */ nation("ball:volleyball-brazil", "Volleyball, Brazil", "バレー（ブラジル）", VOLLEYBALL_PLANS.brazil);
+/**
+ * The Volleyball, Japan emblem (バレー（日本） in Japanese): id `ball:volleyball-japan`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_VOLLEYBALL_JAPAN } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_VOLLEYBALL_JAPAN.id, BALL_VOLLEYBALL_JAPAN.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_VOLLEYBALL_JAPAN = /* @__PURE__ */ nation("ball:volleyball-japan", "Volleyball, Japan", "バレー（日本）", VOLLEYBALL_PLANS.japan);
+/**
+ * The Volleyball, Canada emblem (バレー（カナダ） in Japanese): id `ball:volleyball-canada`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_VOLLEYBALL_CANADA } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_VOLLEYBALL_CANADA.id, BALL_VOLLEYBALL_CANADA.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_VOLLEYBALL_CANADA = /* @__PURE__ */ nation("ball:volleyball-canada", "Volleyball, Canada", "バレー（カナダ）", VOLLEYBALL_PLANS.canada);
+/**
+ * The Volleyball, USA emblem (バレー（アメリカ） in Japanese): id `ball:volleyball-usa`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_VOLLEYBALL_USA } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_VOLLEYBALL_USA.id, BALL_VOLLEYBALL_USA.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_VOLLEYBALL_USA = /* @__PURE__ */ nation("ball:volleyball-usa", "Volleyball, USA", "バレー（アメリカ）", VOLLEYBALL_PLANS.usa);
+/**
+ * The Volleyball, Italy emblem (バレー（イタリア） in Japanese): id `ball:volleyball-italy`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_VOLLEYBALL_ITALY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_VOLLEYBALL_ITALY.id, BALL_VOLLEYBALL_ITALY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_VOLLEYBALL_ITALY = /* @__PURE__ */ nation("ball:volleyball-italy", "Volleyball, Italy", "バレー（イタリア）", VOLLEYBALL_PLANS.italy);
+/**
+ * The Volleyball, Poland emblem (バレー（ポーランド） in Japanese): id `ball:volleyball-poland`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_VOLLEYBALL_POLAND } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_VOLLEYBALL_POLAND.id, BALL_VOLLEYBALL_POLAND.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_VOLLEYBALL_POLAND = /* @__PURE__ */ nation("ball:volleyball-poland", "Volleyball, Poland", "バレー（ポーランド）", VOLLEYBALL_PLANS.poland);
+/**
+ * The Volleyball, France emblem (バレー（フランス） in Japanese): id `ball:volleyball-france`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_VOLLEYBALL_FRANCE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_VOLLEYBALL_FRANCE.id, BALL_VOLLEYBALL_FRANCE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_VOLLEYBALL_FRANCE = /* @__PURE__ */ nation("ball:volleyball-france", "Volleyball, France", "バレー（フランス）", VOLLEYBALL_PLANS.france);
+/**
+ * The Volleyball, Serbia emblem (バレー（セルビア） in Japanese): id `ball:volleyball-serbia`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_VOLLEYBALL_SERBIA } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_VOLLEYBALL_SERBIA.id, BALL_VOLLEYBALL_SERBIA.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_VOLLEYBALL_SERBIA = /* @__PURE__ */ nation("ball:volleyball-serbia", "Volleyball, Serbia", "バレー（セルビア）", VOLLEYBALL_PLANS.serbia);
+/**
+ * The Volleyball, Netherlands emblem (バレー（オランダ） in Japanese): id `ball:volleyball-netherlands`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_VOLLEYBALL_NETHERLANDS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_VOLLEYBALL_NETHERLANDS.id, BALL_VOLLEYBALL_NETHERLANDS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_VOLLEYBALL_NETHERLANDS = /* @__PURE__ */ nation("ball:volleyball-netherlands", "Volleyball, Netherlands", "バレー（オランダ）", VOLLEYBALL_PLANS.netherlands);
+/**
+ * The Volleyball, Germany emblem (バレー（ドイツ） in Japanese): id `ball:volleyball-germany`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_VOLLEYBALL_GERMANY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_VOLLEYBALL_GERMANY.id, BALL_VOLLEYBALL_GERMANY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_VOLLEYBALL_GERMANY = /* @__PURE__ */ nation("ball:volleyball-germany", "Volleyball, Germany", "バレー（ドイツ）", VOLLEYBALL_PLANS.germany);

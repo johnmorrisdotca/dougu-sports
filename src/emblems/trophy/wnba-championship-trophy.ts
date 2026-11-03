@@ -4,5 +4,12 @@
 import { defineLathe } from "../emblem.lathe.ts";
 import { BALL_ON_RODS } from "../lathe.ballrods.ts";
 
-/** The WNBA Championship Trophy: a silver basketball on three leaning rods over a low triangular plinth. */
+/**
+ * The WNBA Championship Trophy: a silver basketball on three leaning rods over a low triangular plinth.
+ * @example
+ * ```ts
+ * import { TROPHY_WNBA_CHAMPIONSHIP_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_WNBA_CHAMPIONSHIP_TROPHY.id, TROPHY_WNBA_CHAMPIONSHIP_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_WNBA_CHAMPIONSHIP_TROPHY = /* @__PURE__ */ defineLathe("trophy:wnba-championship-trophy", "WNBA Championship Trophy", "WNBA優勝トロフィー", "ours", BALL_ON_RODS);

@@ -16,7 +16,14 @@ const SEAMS = ((): string => {
   return d;
 })();
 
-/** Volleyball. */
+/**
+ * Volleyball.
+ * @example
+ * ```ts
+ * import { SPORT_VOLLEYBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_VOLLEYBALL.id, SPORT_VOLLEYBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_VOLLEYBALL = /* @__PURE__ */ defineIcon("sport:volleyball", "Volleyball", "バレーボール", "ours", {
   metal: "flat",
   ink: true,

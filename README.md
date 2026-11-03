@@ -11,7 +11,7 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
   <img alt="TypeScript" src="https://img.shields.io/badge/types-TypeScript-3178c6">
 </p>
 
-<p align="center"><a href="https://johnmorrisdotca.github.io/dougu-sports/"><strong>Open the demo →</strong></a> · <a href="https://johnmorrisdotca.github.io/dougu-sports/gallery.html">Gallery</a> · <a href="./docs/gallery.md">Every id</a> · <a href="./docs/turning.md">Turning</a> · <a href="./docs/engraving.md">Engraving</a> · <a href="./docs/layout.md">Layout</a> · <a href="./docs/japanese-sports.md">Japanese sports</a></p>
+<p align="center"><a href="https://johnmorrisdotca.github.io/dougu-sports/"><strong>Open the demo →</strong></a> · <a href="https://johnmorrisdotca.github.io/dougu-sports/embed.html?emblem=trophy:stanley-cup&size=120&turnable=1">Embed page</a> · <a href="https://johnmorrisdotca.github.io/dougu-sports/docs/">Documentation</a> · <a href="https://johnmorrisdotca.github.io/dougu-sports/gallery.html">Gallery</a> · <a href="./docs/gallery.md">Every id</a> · <a href="./docs/turning.md">Turning</a> · <a href="./docs/engraving.md">Engraving</a> · <a href="./docs/layout.md">Layout</a> · <a href="./docs/japanese-sports.md">Japanese sports</a></p>
 
 <p align="center">
 <picture>
@@ -88,7 +88,7 @@ The ball and the gear of every sport, trophies, medals, crests and the icon of e
 </picture>
 </p>
 
-- **A slotted plastic practice baseball**, a hollow white ball with eight oblong slots on one half, drawn with the same see-through holes ([slotted ball](./docs/slotted-ball.md)).
+- **Two plastic practice baseballs**: a hollow white one with eight oblong slots on one half, and the common one with slots all over both halves, in two-tone yellow and black, white and orange (`ball:plastic-baseball-practice`, `-white`, `-orange`), drawn with the same see-through holes ([slotted ball](./docs/slotted-ball.md)).
 
 <p align="center">
 <picture>
@@ -199,6 +199,7 @@ The alias is a name in your `package.json` only: the same package, the same code
 | `@johnmorrisdotca/dougu-sports` | The full registry: every emblem by id, the functions, and each emblem as a constant |
 | `@johnmorrisdotca/dougu-sports/emblems` | `renderEmblem`, the ids and the types, with no single drawing imported by name |
 | `@johnmorrisdotca/dougu-sports/brands` | Experimental, designs will change: twelve made-up maker marks and ten made-up team logos as SVG (`makerLogo`, `teamLogo`, `makerBall`, `renderMakerBall`, the groups to place in a drawing and the data); see [docs/brands.md](./docs/brands.md) |
+| `@johnmorrisdotca/dougu-sports/element` | `<dougu-emblem>`, the tag that draws an emblem in any page, still or turning (the only entry with a side effect: it registers the tag) |
 | `@johnmorrisdotca/dougu-sports/turn` | `emblemFrame`, `ballFrame` and `bindTurn`; `bindTurn` with an emblem object takes nothing else with it |
 | `@johnmorrisdotca/dougu-sports/<group>/<name>` | One emblem, alone: `trophy/hockey-cup`, `medal/gold`, `crest/shield`, `sport/nhl`, `award/crown`, `ball/soccer`, `pennant/championship`, `gear/<name>` |
 
@@ -211,9 +212,67 @@ console.log(TROPHY_HOCKEY_CUP.id); // trophy:hockey-cup
 console.log(TROPHY_HOCKEY_CUP.svg({ size: 24 }).includes('width="24"')); // true
 ```
 
-A bundler that imports this module takes the cup and the renderer for a body of revolution, and no other emblem: the package says `"sideEffects": false` and each constant is marked pure. `test/size.test.ts` bundles one item with esbuild and holds it to a limit for its kind (a ball 7.6 kB, a medal or a crest 4.6 kB, a cup 7.1 kB gzipped, most of that the renderer); `pnpm test:package` does the same from the packed tarball.
+A bundler that imports this module takes the cup and the renderer for a body of revolution, and no other emblem: the package's `sideEffects` names only `./dist/element.js`, and each constant is marked pure. `test/size.test.ts` bundles one item with esbuild and holds it to a limit for its kind (a ball 7.6 kB, a medal or a crest 4.6 kB, a cup 7.1 kB gzipped, most of that the renderer); `pnpm test:package` does the same from the packed tarball.
 
-### In a page
+### Put it in your page
+
+One script tag and the tag `<dougu-emblem>` (from jsDelivr, as in [plain HTML](./docs/guides/html-and-cdn.md)):
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dougu Sports from jsDelivr</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@johnmorrisdotca/dougu-sports/element/+esm"></script>
+  </head>
+  <body>
+    <dougu-emblem emblem="trophy:stanley-cup" size="200" turnable></dougu-emblem>
+  </body>
+</html>
+```
+
+Or one iframe of the embed page, with no script on your page ([iframe guide](./docs/guides/embed-in-an-iframe.md)):
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dougu Sports in an iframe</title>
+  </head>
+  <body>
+    <iframe
+      src="https://johnmorrisdotca.github.io/dougu-sports/embed.html?emblem=trophy:stanley-cup&size=200&turnable=1"
+      title="The Stanley Cup"
+      width="216"
+      height="216"
+      loading="lazy"
+      style="border: 0"
+    ></iframe>
+  </body>
+</html>
+```
+
+In React (Vue, Svelte, Angular and Vite or webpack are in the [guides](./docs/guides/frameworks.md)); the element is imported where a browser is, so a server render still works:
+
+```tsx
+import { useEffect } from "react";
+
+export function DouguEmblem({ emblem = "trophy:stanley-cup", size = 200 }: { emblem?: string; size?: number }) {
+  useEffect(() => {
+    // The element needs a browser, so it is imported here, never at the top of the file: a server render never reaches an effect.
+    void import("@johnmorrisdotca/dougu-sports/element");
+  }, []);
+  return <dougu-emblem emblem={emblem} size={size} turnable />;
+}
+```
+
+`emblemEmbedCode(ref, options)` writes all of these (the tag, an iframe, an ES module, an `<img>` with a data address, and the raw SVG) for the emblem you have set up; the demo's "Put it in your page" panel is that function with buttons. Every example in the guides is a file in `examples/` that `pnpm test:usage` builds, type-checks or runs against the package as npm packs it. The [documentation site](https://johnmorrisdotca.github.io/dougu-sports/docs/) has a page for every export, guides in English and in Japanese, and a Vite, webpack, TypeScript and Node example each.
+
+### In a page, as a string
 
 ```html
 <span id="trophy"></span>

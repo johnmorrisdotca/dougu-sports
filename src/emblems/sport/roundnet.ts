@@ -1,7 +1,14 @@
 // Round net: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { circlePath as circ, defineIcon, ellipsePath as ell } from "../emblem.shapes.ts";
 
-/** Round net. */
+/**
+ * Round net.
+ * @example
+ * ```ts
+ * import { SPORT_ROUNDNET } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_ROUNDNET.id, SPORT_ROUNDNET.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_ROUNDNET = /* @__PURE__ */ defineIcon("sport:roundnet", "Round net", "ラウンドネット", "ours", {
   metal: "flat",
   ink: true, ribbon: "#e0a81c",

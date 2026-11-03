@@ -2,7 +2,14 @@
 // stepped foot and a column of plates. Drawn for this package from a photograph (docs/likeness.md); the flames are single gilt bodies of revolution, which is simpler than the real leaping shapes, and the plates are left plain.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Bill Masterton Memorial Trophy: two silver cones with gilt flames on a dish over an octagonal wooden base. */
+/**
+ * The Bill Masterton Memorial Trophy: two silver cones with gilt flames on a dish over an octagonal wooden base.
+ * @example
+ * ```ts
+ * import { TROPHY_MASTERTON_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_MASTERTON_TROPHY.id, TROPHY_MASTERTON_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_MASTERTON_TROPHY = /* @__PURE__ */ defineLathe("trophy:masterton-trophy", "Masterton Trophy", "マスタートン賞", "ours", {
   metal: "silver",
   box: "-0.4 0 64.7 64.7",

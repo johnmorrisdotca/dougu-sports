@@ -4,7 +4,14 @@ import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 /** Waves: a wavy line across the box at a height. */
 const wave = (y: number): string => `M3 ${y}q7-6 14 0t14 0 14 0 14 0`;
 
-/** Swimmer. */
+/**
+ * Swimmer.
+ * @example
+ * ```ts
+ * import { SPORT_SWIMMING } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_SWIMMING.id, SPORT_SWIMMING.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_SWIMMING = /* @__PURE__ */ defineIcon("sport:swimming", "Swimmer", "競泳の選手", "ours", {
   metal: "flat",
   ink: true,

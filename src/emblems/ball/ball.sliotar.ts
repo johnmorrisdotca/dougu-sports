@@ -1,6 +1,14 @@
 // Sliotar: a cork-cored leather ball for hurling, with a raised rib along its seam.
 import { seamedBall } from "./ball.family.seamed.ts";
 
+/**
+ * The Sliotar emblem (シリター in Japanese): id `ball:sliotar`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SLIOTAR } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SLIOTAR.id, BALL_SLIOTAR.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SLIOTAR = /* @__PURE__ */ seamedBall({
   id: "ball:sliotar",
   en: "Sliotar",

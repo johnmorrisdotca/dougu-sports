@@ -5,7 +5,14 @@ import { skater } from "../emblem.figure.ts";
 
 const figure = skater(3.4, 30.4, "gilt", "gilt", 1.1);
 
-/** The Maurice Richard Trophy: a gilt skater in a flared amber funnel on a dark tapering base. */
+/**
+ * The Maurice Richard Trophy: a gilt skater in a flared amber funnel on a dark tapering base.
+ * @example
+ * ```ts
+ * import { TROPHY_ROCKET_RICHARD_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_ROCKET_RICHARD_TROPHY.id, TROPHY_ROCKET_RICHARD_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_ROCKET_RICHARD_TROPHY = /* @__PURE__ */ defineLathe("trophy:rocket-richard-trophy", "Rocket Richard Trophy", "モーリス・リシャール賞", "ours", {
   metal: "silver",
   box: "-0.8 0 65.6 65.6",

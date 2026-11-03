@@ -5,19 +5,59 @@ import type { FlagRenderer, PuckFace } from "./ball/ball.face.ts";
 import type { Backnumber } from "./ball/ball.core.ts";
 import type { BallDecal, BallMark, BallPaint, BallScript, BallSpots, BallStamp } from "./ball/ball.print.ts";
 
-/** `metal`: full colour with a gradient. `line`: one outline in `currentColor`. `color`: flat fills of the main colour, with no gradient. */
+/**
+ * `metal`: full colour with a gradient. `line`: one outline in `currentColor`. `color`: flat fills of the main colour, with no gradient.
+ * @example
+ * ```ts
+ * import type { EmblemStyle } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const style: EmblemStyle = "color";
+ * console.log(style);
+ * ```
+ */
 export type EmblemStyle = "metal" | "line" | "color";
+/**
+ * The three styles an emblem is drawn in: `metal`, `line` and `color`.
+ * @example
+ * ```ts
+ * import { EMBLEM_STYLES } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(EMBLEM_STYLES.length, EMBLEM_STYLES[0]);
+ * ```
+ */
 export const EMBLEM_STYLES = ["metal", "line", "color"] as const satisfies readonly EmblemStyle[];
 
 /**
  * Where the outline's colour comes from. `inherit` (the default for markup you put in a page): the page's text colour, `currentColor`. `auto`: dark ink on a light device and pale ink on a dark
  * one, for an image (an `<img>`, a data address) that cannot inherit. `light` and `dark` force one.
+ * @example
+ * ```ts
+ * import type { EmblemTheme } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const theme: EmblemTheme = "auto";
+ * console.log(theme);
+ * ```
  */
 export type EmblemTheme = "inherit" | "auto" | "light" | "dark";
 
-/** The languages an emblem's `<title>` can be written in. */
+/**
+ * The languages an emblem's `<title>` can be written in.
+ * @example
+ * ```ts
+ * import type { EmblemLocale } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const locale: EmblemLocale = "ja";
+ * console.log(locale);
+ * ```
+ */
 export type EmblemLocale = "en" | "ja";
 
+/**
+ * What every emblem takes: its style, size, colours, theme, title and engraving.
+ * @example
+ * ```ts
+ * import { renderEmblem } from "@johnmorrisdotca/dougu-sports/emblems";
+ * import type { EmblemOptions } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const options: EmblemOptions = { style: "line", size: 48, locale: "ja" };
+ * console.log(renderEmblem("medal:gold", options).includes("<title>"));
+ * ```
+ */
 export interface EmblemOptions {
   /** `metal` (the default), `line` or `color`. */
   style?: EmblemStyle;
@@ -85,7 +125,16 @@ export interface EmblemOptions {
   spots?: BallSpots;
 }
 
-/** A turn, in degrees from the resting view (0 and 0 is the still drawing): `yaw` about the vertical axis, `pitch` the tilt toward the eye. */
+/**
+ * A turn, in degrees from the resting view (0 and 0 is the still drawing): `yaw` about the vertical axis, `pitch` the tilt toward the eye.
+ * @example
+ * ```ts
+ * import { emblemFrame } from "@johnmorrisdotca/dougu-sports/turn";
+ * import type { FrameOptions } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const options: FrameOptions = { yaw: 40, pitch: 10, size: 96 };
+ * console.log(emblemFrame("trophy:cup", options).startsWith("<svg"));
+ * ```
+ */
 export interface FrameOptions extends EmblemOptions {
   yaw?: number;
   pitch?: number;
@@ -93,18 +142,56 @@ export interface FrameOptions extends EmblemOptions {
   roll?: number;
 }
 
-/** The ink of a drawing when a theme sets it, and the page it is made to read on. */
+/**
+ * The ink of a drawing when a theme sets it, and the page it is made to read on.
+ * @example
+ * ```ts
+ * import { EMBLEM_INK } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(Object.keys(EMBLEM_INK).length);
+ * ```
+ */
 export const EMBLEM_INK = { light: "#20262d", dark: "#eef1f3" } as const;
+/**
+ * The page colour the line style is drawn against, for a light and for a dark page.
+ * @example
+ * ```ts
+ * import { EMBLEM_PAGE } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(Object.keys(EMBLEM_PAGE).length);
+ * ```
+ */
 export const EMBLEM_PAGE = { light: "#ffffff", dark: "#14181c" } as const;
 
-/** The metals. */
+/**
+ * The metals.
+ * @example
+ * ```ts
+ * import { METALS } from "@johnmorrisdotca/dougu-sports/emblems";
+ * console.log(Object.keys(METALS).length);
+ * ```
+ */
 export const METALS = { gold: "#d9a620", silver: "#aeb6c0", bronze: "#b8733a" } as const;
 /** A metal by name, or `flat` for a colour that is no metal (a crest's blue, a sport's plain ink). */
 export type Metal = keyof typeof METALS | "flat";
 
-/** Where an emblem's art comes from: drawn for this package (`ours`, `drawn`) or made by this package's own code (`generated`). Nothing is copied from another project. */
+/**
+ * Where an emblem's art comes from: drawn for this package (`ours`, `drawn`) or made by this package's own code (`generated`). Nothing is copied from another project.
+ * @example
+ * ```ts
+ * import type { EmblemSource } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const source: EmblemSource = "drawn";
+ * console.log(source);
+ * ```
+ */
 export type EmblemSource = "ours" | "generated" | "drawn";
-/** What an emblem is: a flat object (a front and a back, to flip), a ball (a sphere or a solid, turned in 3D), a body of revolution (`lathe`), an icon (one drawing, not turned) or a piece of gear (a flat drawing, not turned). */
+/**
+ * What an emblem is: a flat object (a front and a back, to flip), a ball (a sphere or a solid, turned in 3D), a body of revolution (`lathe`), an icon (one drawing, not turned) or a piece of gear (a flat drawing, not turned).
+ * @example
+ * ```ts
+ * import type { EmblemKind } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const kind: EmblemKind = "lathe";
+ * console.log(kind);
+ * ```
+ */
 export type EmblemKind = "flat" | "ball" | "lathe" | "icon" | "gear";
 
 export type Rgb = readonly [number, number, number];
@@ -300,7 +387,16 @@ export function wrap(o: { title: string; size: number; style: EmblemStyle; theme
   );
 }
 
-/** One emblem: its id and names, where its art comes from, and the functions that draw it. Importing one of these pulls in its own module and the small renderer it needs, not the other emblems. */
+/**
+ * One emblem: its id and names, where its art comes from, and the functions that draw it. Importing one of these pulls in its own module and the small renderer it needs, not the other emblems.
+ * @example
+ * ```ts
+ * import { TROPHY_CUP } from "@johnmorrisdotca/dougu-sports";
+ * import type { Emblem } from "@johnmorrisdotca/dougu-sports/emblems";
+ * const emblem: Emblem = TROPHY_CUP;
+ * console.log(emblem.id, emblem.kind);
+ * ```
+ */
 export interface Emblem<Model = unknown> {
   readonly id: string;
   readonly en: string;

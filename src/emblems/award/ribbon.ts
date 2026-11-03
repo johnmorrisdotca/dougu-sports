@@ -1,7 +1,14 @@
 // Ribbon: a banner ribbon, a gold band with two red notched tails hanging behind it, drawn for this package, in metal, line and flat colour. It stands alone (a prize ribbon without a rosette); `trophy:rosette` is the one with ribbons.
 import { defineFlat } from "../emblem.shapes.ts";
 
-/** Ribbon. */
+/**
+ * Ribbon.
+ * @example
+ * ```ts
+ * import { AWARD_RIBBON } from "@johnmorrisdotca/dougu-sports";
+ * console.log(AWARD_RIBBON.id, AWARD_RIBBON.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const AWARD_RIBBON = /* @__PURE__ */ defineFlat("award:ribbon", "Ribbon", "リボン", "ours", {
   metal: "gold",
   ribbon: "#c0392b",

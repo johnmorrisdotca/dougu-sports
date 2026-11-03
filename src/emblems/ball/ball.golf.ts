@@ -1,6 +1,14 @@
 // Golf ball (not one of our sports; a bonus): white, with a dimple pattern. The rules fix the size and mass, not the dimples.
 import { dottedBall } from "./ball.family.dotted.ts";
 
+/**
+ * The Golf ball emblem (ゴルフボール in Japanese): id `ball:golf`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_GOLF } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_GOLF.id, BALL_GOLF.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_GOLF = /* @__PURE__ */ dottedBall({
   id: "ball:golf",
   en: "Golf ball",

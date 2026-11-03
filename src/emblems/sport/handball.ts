@@ -2,7 +2,14 @@
 // metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
-/** Handball. */
+/**
+ * Handball.
+ * @example
+ * ```ts
+ * import { SPORT_HANDBALL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_HANDBALL.id, SPORT_HANDBALL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_HANDBALL = /* @__PURE__ */ defineIcon("sport:handball", "Handball", "ハンドボール", "ours", {
   metal: "flat",
   ink: true,

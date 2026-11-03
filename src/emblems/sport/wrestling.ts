@@ -2,7 +2,14 @@
 // The metal style paints the heads and the mat with a grey sheet, the line style draws one outline.
 import { circlePath as circ, defineIcon, ellipsePath } from "../emblem.shapes.ts";
 
-/** Wrestling. */
+/**
+ * Wrestling.
+ * @example
+ * ```ts
+ * import { SPORT_WRESTLING } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_WRESTLING.id, SPORT_WRESTLING.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_WRESTLING = /* @__PURE__ */ defineIcon("sport:wrestling", "Wrestling", "レスリング", "ours", {
   metal: "flat",
   ink: true,

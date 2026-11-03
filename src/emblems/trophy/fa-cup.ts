@@ -3,7 +3,14 @@
 // belly and the lettering are left out, and the waist takes the engraving option. The ribbons the cup is shown with are not drawn.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The FA Cup: a tall lidded silver cup with scrolled ear handles, a rounded belly and a wide foot. */
+/**
+ * The FA Cup: a tall lidded silver cup with scrolled ear handles, a rounded belly and a wide foot.
+ * @example
+ * ```ts
+ * import { TROPHY_FA_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_FA_CUP.id, TROPHY_FA_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_FA_CUP = /* @__PURE__ */ defineLathe("trophy:fa-cup", "FA Cup", "FAカップ", "ours", {
   metal: "silver",
   turnBox: "-5.2 0 74.4 74.4",

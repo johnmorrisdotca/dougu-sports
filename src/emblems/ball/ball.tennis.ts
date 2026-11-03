@@ -1,6 +1,14 @@
 // Tennis ball: optic-yellow felt with a white strip of rubber along the seam. The felt's fuzz is the grain.
 import { seamedBall } from "./ball.family.seamed.ts";
 
+/**
+ * The Tennis ball emblem (テニスボール in Japanese): id `ball:tennis`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_TENNIS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_TENNIS.id, BALL_TENNIS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_TENNIS = /* @__PURE__ */ seamedBall({
   id: "ball:tennis",
   en: "Tennis ball",

@@ -2,7 +2,14 @@
 // the front. Drawn for this package from a photograph (docs/likeness.md); the chasing is left out and the plate is left plain.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Lady Byng Memorial Trophy: a lidded two-handled silver cup on a knopped stem over a wooden block. */
+/**
+ * The Lady Byng Memorial Trophy: a lidded two-handled silver cup on a knopped stem over a wooden block.
+ * @example
+ * ```ts
+ * import { TROPHY_LADY_BYNG_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_LADY_BYNG_TROPHY.id, TROPHY_LADY_BYNG_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_LADY_BYNG_TROPHY = /* @__PURE__ */ defineLathe("trophy:lady-byng-trophy", "Lady Byng Trophy", "レディ・ビング賞", "ours", {
   metal: "silver",
   turnBox: "-7.1 0 78.2 78.2",

@@ -14,7 +14,14 @@ const GOLD_DARK = "#8d6e2b";
 const BLACK = "#16171a";
 const PANEL = "#3b2b1e";
 
-/** The Jackie Robinson Rookie of the Year Award: a walnut plaque with a black nameplate, a gold emblem, a bronze relief of a slide at the plate, a plate and a green pin. */
+/**
+ * The Jackie Robinson Rookie of the Year Award: a walnut plaque with a black nameplate, a gold emblem, a bronze relief of a slide at the plate, a plate and a green pin.
+ * @example
+ * ```ts
+ * import { TROPHY_JACKIE_ROBINSON_AWARD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_JACKIE_ROBINSON_AWARD.id, TROPHY_JACKIE_ROBINSON_AWARD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_JACKIE_ROBINSON_AWARD = /* @__PURE__ */ defineFlat("trophy:jackie-robinson-award", "Jackie Robinson Award", "ジャッキー・ロビンソン賞", "ours", {
   metal: "gold",
   ribbon: "#8a4a22",

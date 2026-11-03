@@ -1,7 +1,14 @@
 // Padel racket and ball: a pictogram of the equipment, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { circlePath as circ, defineIcon } from "../emblem.shapes.ts";
 
-/** Padel racket and ball. */
+/**
+ * Padel racket and ball.
+ * @example
+ * ```ts
+ * import { SPORT_PADEL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_PADEL.id, SPORT_PADEL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_PADEL = /* @__PURE__ */ defineIcon("sport:padel", "Padel racket and ball", "パデルのラケットとボール", "ours", {
   metal: "flat",
   ink: true,

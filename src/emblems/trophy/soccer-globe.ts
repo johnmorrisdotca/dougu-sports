@@ -1,7 +1,14 @@
 // A globe held up by figures that spiral round a column flaring out from a slim waist, over a base with bands of green. Drawn for this package; a generic trophy.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** Gold spiral figures rising to hold up a globe, with green bands at the base. */
+/**
+ * Gold spiral figures rising to hold up a globe, with green bands at the base.
+ * @example
+ * ```ts
+ * import { TROPHY_SOCCER_GLOBE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_SOCCER_GLOBE.id, TROPHY_SOCCER_GLOBE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_SOCCER_GLOBE = /* @__PURE__ */ defineLathe("trophy:soccer-globe", "Globe on a column", "柱の上の地球儀", "ours", {
   metal: "gold",
   turnBox: "-3.8 -0.4 71.6 71.6",

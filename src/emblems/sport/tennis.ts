@@ -1,7 +1,14 @@
 // Tennis: a pictogram of a racket and a ball, drawn for this package, in a 64 by 64 box. The metal style paints its main shapes with a grey sheet, the line style draws one outline.
 import { circlePath as circ, defineIcon, ellipsePath as ell } from "../emblem.shapes.ts";
 
-/** Tennis. */
+/**
+ * Tennis.
+ * @example
+ * ```ts
+ * import { SPORT_TENNIS } from "@johnmorrisdotca/dougu-sports";
+ * console.log(SPORT_TENNIS.id, SPORT_TENNIS.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const SPORT_TENNIS = /* @__PURE__ */ defineIcon("sport:tennis", "Tennis", "テニス", "ours", {
   metal: "flat",
   ink: true,

@@ -7,7 +7,14 @@ import { NBA_TONES, TRUMPET } from "../nba.parts.ts";
 
 const BAND = [[0, 22.9], [2.4, 22.5], [4.9, 21.5], [7.1, 20.1], [8.7, 18.6], [9.4, 17.5]] as const;
 
-/** The Magic Johnson Trophy: the Western Conference finals MVP trophy, a silver ball in a gold cradle on a flared gold trumpet. */
+/**
+ * The Magic Johnson Trophy: the Western Conference finals MVP trophy, a silver ball in a gold cradle on a flared gold trumpet.
+ * @example
+ * ```ts
+ * import { TROPHY_MAGIC_JOHNSON_TROPHY } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_MAGIC_JOHNSON_TROPHY.id, TROPHY_MAGIC_JOHNSON_TROPHY.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_MAGIC_JOHNSON_TROPHY = /* @__PURE__ */ defineLathe("trophy:magic-johnson-trophy", "Magic Johnson Trophy", "マジック・ジョンソン・トロフィー", "ours", {
   extras: LATHE_EXTRAS,
   ballExtras: LATHE_BALL,

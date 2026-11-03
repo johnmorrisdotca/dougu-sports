@@ -4,10 +4,27 @@ import { escape, hexOf, readColour } from "../emblems/emblem.core.ts";
 import { LETTER_HEIGHT, lettering } from "./brand.letters.ts";
 import { MAKERS, TEAMS, type LogoPart, type MakerData, type MakerId, type TeamData, type TeamId } from "./brand.data.ts";
 
-/** What a maker's logo is made of: its mark alone (the default), its wordmark alone, the two side by side or the wordmark under the mark. */
+/**
+ * What a maker's logo is made of: its mark alone (the default), its wordmark alone, the two side by side or the wordmark under the mark.
+ * @example
+ * ```ts
+ * import type { LogoLayout } from "@johnmorrisdotca/dougu-sports/brands";
+ * const layout: LogoLayout = "stacked";
+ * console.log(layout);
+ * ```
+ */
 export type LogoLayout = "mark" | "wordmark" | "horizontal" | "stacked";
 
-/** The options every logo takes. */
+/**
+ * The options every logo takes.
+ * @example
+ * ```ts
+ * import { teamLogo } from "@johnmorrisdotca/dougu-sports/brands";
+ * import type { LogoOptions } from "@johnmorrisdotca/dougu-sports/brands";
+ * const options: LogoOptions = { color: "mono", ink: "#222222", size: 48 };
+ * console.log(teamLogo("saltmere", options).startsWith("<svg"));
+ * ```
+ */
 export interface LogoOptions {
   /** `"full"` (the default) draws the logo in its own colours; `"mono"` draws it in one colour, `ink`. */
   color?: "full" | "mono";
@@ -21,13 +38,30 @@ export interface LogoOptions {
   title?: string | false;
 }
 
-/** The options of a maker's logo. */
+/**
+ * The options of a maker's logo.
+ * @example
+ * ```ts
+ * import { makerLogo } from "@johnmorrisdotca/dougu-sports/brands";
+ * import type { MakerLogoOptions } from "@johnmorrisdotca/dougu-sports/brands";
+ * const options: MakerLogoOptions = { layout: "horizontal", theme: "dark", size: 48 };
+ * console.log(makerLogo("arvane", options).startsWith("<svg"));
+ * ```
+ */
 export interface MakerLogoOptions extends LogoOptions {
   /** Which parts to draw. By default only the mark: the name is optional. */
   layout?: LogoLayout;
 }
 
-/** Where a logo goes inside another drawing: its top left corner and its height, in that drawing's units. */
+/**
+ * Where a logo goes inside another drawing: its top left corner and its height, in that drawing's units.
+ * @example
+ * ```ts
+ * import type { LogoPlace } from "@johnmorrisdotca/dougu-sports/brands";
+ * const place: LogoPlace = { x: 12, y: 8, size: 30 };
+ * console.log(place.size);
+ * ```
+ */
 export interface LogoPlace {
   x?: number;
   y?: number;
@@ -122,6 +156,9 @@ function team(id: TeamId): TeamData {
 
 /**
  * A fictional maker's logo as an SVG document: its mark by default, or its wordmark, or both (`layout`). In its own colours for a light or a dark page, or in one colour (`color: "mono"`, `ink`).
+ * @param id - A maker id from `MAKER_IDS`.
+ * @param o - The layout, colours, size and title.
+ * @returns The logo as a document of SVG.
  * @example
  * ```ts
  * import { makerLogo } from "@johnmorrisdotca/dougu-sports/brands";
@@ -135,7 +172,17 @@ export function makerLogo(id: MakerId, o?: MakerLogoOptions): string {
   return document(makerBody(data, layoutOf(o?.layout), o), data.name, o);
 }
 
-/** A fictional team's logo as an SVG document, in its own colours for a light or a dark page, or in one colour. */
+/**
+ * A fictional team's logo as an SVG document, in its own colours for a light or a dark page, or in one colour.
+ * @param id - A team id from `TEAM_IDS`.
+ * @param o - The colours, size and title.
+ * @returns The logo as a document of SVG.
+ * @example
+ * ```ts
+ * import { teamLogo } from "@johnmorrisdotca/dougu-sports/brands";
+ * console.log(teamLogo("saltmere", { size: 64 }).startsWith("<svg"));
+ * ```
+ */
 export function teamLogo(id: TeamId, o?: LogoOptions): string {
   const data = team(id);
   return document(teamBody(data, o), `${data.city} ${data.nickname}`, o);
@@ -143,12 +190,32 @@ export function teamLogo(id: TeamId, o?: LogoOptions): string {
 
 /**
  * A maker's logo as a `<g>` to put inside another SVG: a jersey, a cap, a T-shirt, a card. It has no id, no gradient and no `<title>`, so any number of them can sit in one document. `x`, `y` and `size` place it in that drawing's units.
+ * @param id - A maker id from `MAKER_IDS`.
+ * @param place - Where the logo goes: its top left corner and height.
+ * @param o - The layout and colours.
+ * @returns A `<g>` element to place inside another SVG.
+ * @example
+ * ```ts
+ * import { makerLogoGroup } from "@johnmorrisdotca/dougu-sports/brands";
+ * console.log(makerLogoGroup("arvane", { x: 10, y: 10, size: 40 }).startsWith("<g"));
+ * ```
  */
 export function makerLogoGroup(id: MakerId, place?: LogoPlace, o?: Omit<MakerLogoOptions, "size" | "title">): string {
   return group(makerBody(maker(id), layoutOf(o?.layout), o), place);
 }
 
-/** A team's logo as a `<g>` to put inside another SVG (see `makerLogoGroup`). */
+/**
+ * A team's logo as a `<g>` to put inside another SVG (see `makerLogoGroup`).
+ * @param id - A team id from `TEAM_IDS`.
+ * @param place - Where the logo goes: its top left corner and height.
+ * @param o - The colours.
+ * @returns A `<g>` element to place inside another SVG.
+ * @example
+ * ```ts
+ * import { teamLogoGroup } from "@johnmorrisdotca/dougu-sports/brands";
+ * console.log(teamLogoGroup("saltmere", { x: 0, y: 0, size: 40 }).startsWith("<g"));
+ * ```
+ */
 export function teamLogoGroup(id: TeamId, place?: LogoPlace, o?: Omit<LogoOptions, "size" | "title">): string {
   return group(teamBody(team(id), o), place);
 }

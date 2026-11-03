@@ -2,7 +2,14 @@
 // left out and the base takes the engraving option. Drawn for this package from a photograph (docs/likeness.md).
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** The Ashes urn: a small terracotta urn with square handles on a turned wooden base. */
+/**
+ * The Ashes urn: a small terracotta urn with square handles on a turned wooden base.
+ * @example
+ * ```ts
+ * import { TROPHY_ASHES_URN } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_ASHES_URN.id, TROPHY_ASHES_URN.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_ASHES_URN = /* @__PURE__ */ defineLathe("trophy:ashes-urn", "The Ashes urn", "アッシズの壺", "ours", {
   metal: "bronze",
   turnBox: "-6.7 -3.1 77.4 77.4",

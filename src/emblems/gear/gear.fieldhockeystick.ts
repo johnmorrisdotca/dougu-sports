@@ -3,6 +3,14 @@ import { capsule, circle, drawn } from "./gear.core.ts";
 
 const T = "rotate(24 32 32)";
 
+/**
+ * The Field hockey stick emblem (ホッケーのスティック in Japanese): id `gear:field-hockey-stick`, a piece of gear.
+ * @example
+ * ```ts
+ * import { GEAR_FIELD_HOCKEY_STICK } from "@johnmorrisdotca/dougu-sports";
+ * console.log(GEAR_FIELD_HOCKEY_STICK.id, GEAR_FIELD_HOCKEY_STICK.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const GEAR_FIELD_HOCKEY_STICK = /* @__PURE__ */ drawn("gear:field-hockey-stick", "Field hockey stick", "ホッケーのスティック", {
   main: "#dcb06a",
   accent: "#2a2f38",

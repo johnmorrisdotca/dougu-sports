@@ -1,7 +1,14 @@
 // A gilded two-handled cup with a lid: tall scrolled handles that rise above the rim, a domed lid with a tall finial, a rounded bowl on a knopped stem, and a plain plinth. Drawn for this package; a generic trophy.
 import { defineLathe } from "../emblem.lathe.ts";
 
-/** A gilded two-handled cup with a lid. */
+/**
+ * A gilded two-handled cup with a lid.
+ * @example
+ * ```ts
+ * import { TROPHY_RUGBY_CUP } from "@johnmorrisdotca/dougu-sports";
+ * console.log(TROPHY_RUGBY_CUP.id, TROPHY_RUGBY_CUP.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const TROPHY_RUGBY_CUP = /* @__PURE__ */ defineLathe("trophy:rugby-cup", "Gilded cup with a lid", "ふた付きの金色のカップ", "ours", {
   metal: "gold",
   turnBox: "-6 -8.8 76.1 76.1",

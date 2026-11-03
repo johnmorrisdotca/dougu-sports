@@ -167,26 +167,170 @@ const GOLD: Way = { ground: "#e3b73a", main: "#e3b73a", dark: "#7a560f" };
 const SILVER: Way = { ground: "#cdd3db", main: "#cdd3db", dark: "#4d5662" };
 const COBALT: Way = { ground: "#5b93e0", main: "#5b93e0", dark: "#15306a" };
 
+/**
+ * The Soccer, stars, blue emblem (星柄・青 in Japanese): id `ball:soccer-stars-blue`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_STARS_BLUE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_STARS_BLUE.id, BALL_SOCCER_STARS_BLUE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_STARS_BLUE = /* @__PURE__ */ ball("ball:soccer-stars-blue", "Soccer, stars, blue", "星柄・青", stars(BLUE));
+/**
+ * The Soccer, stars, red emblem (星柄・赤 in Japanese): id `ball:soccer-stars-red`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_STARS_RED } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_STARS_RED.id, BALL_SOCCER_STARS_RED.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_STARS_RED = /* @__PURE__ */ ball("ball:soccer-stars-red", "Soccer, stars, red", "星柄・赤", stars(RED));
+/**
+ * The Soccer, stars, night emblem (星柄・夜空 in Japanese): id `ball:soccer-stars-night`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_STARS_NIGHT } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_STARS_NIGHT.id, BALL_SOCCER_STARS_NIGHT.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_STARS_NIGHT = /* @__PURE__ */ ball("ball:soccer-stars-night", "Soccer, stars, night", "星柄・夜空", stars(NIGHT));
 
+/**
+ * The Soccer, hexagons, cyan emblem (六角形柄・シアン in Japanese): id `ball:soccer-hexagons-cyan`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_HEXAGONS_CYAN } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_HEXAGONS_CYAN.id, BALL_SOCCER_HEXAGONS_CYAN.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_HEXAGONS_CYAN = /* @__PURE__ */ ball("ball:soccer-hexagons-cyan", "Soccer, hexagons, cyan", "六角形柄・シアン", hexagons(CYAN));
+/**
+ * The Soccer, hexagons, magenta emblem (六角形柄・マゼンタ in Japanese): id `ball:soccer-hexagons-magenta`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_HEXAGONS_MAGENTA } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_HEXAGONS_MAGENTA.id, BALL_SOCCER_HEXAGONS_MAGENTA.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_HEXAGONS_MAGENTA = /* @__PURE__ */ ball("ball:soccer-hexagons-magenta", "Soccer, hexagons, magenta", "六角形柄・マゼンタ", hexagons(MAGENTA));
+/**
+ * The Soccer, hexagons, lime emblem (六角形柄・ライム in Japanese): id `ball:soccer-hexagons-lime`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_HEXAGONS_LIME } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_HEXAGONS_LIME.id, BALL_SOCCER_HEXAGONS_LIME.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_HEXAGONS_LIME = /* @__PURE__ */ ball("ball:soccer-hexagons-lime", "Soccer, hexagons, lime", "六角形柄・ライム", hexagons(LIME));
 
+/**
+ * The Soccer, flames, fire emblem (炎柄・ファイア in Japanese): id `ball:soccer-flames-fire`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_FLAMES_FIRE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_FLAMES_FIRE.id, BALL_SOCCER_FLAMES_FIRE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_FLAMES_FIRE = /* @__PURE__ */ ball("ball:soccer-flames-fire", "Soccer, flames, fire", "炎柄・ファイア", flames(FIRE, "#ffd21f"));
+/**
+ * The Soccer, flames, ice emblem (炎柄・アイス in Japanese): id `ball:soccer-flames-ice`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_FLAMES_ICE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_FLAMES_ICE.id, BALL_SOCCER_FLAMES_ICE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_FLAMES_ICE = /* @__PURE__ */ ball("ball:soccer-flames-ice", "Soccer, flames, ice", "炎柄・アイス", flames(ICE, "#c4e8ff"));
+/**
+ * The Soccer, flames, toxic emblem (炎柄・トキシック in Japanese): id `ball:soccer-flames-toxic`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_FLAMES_TOXIC } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_FLAMES_TOXIC.id, BALL_SOCCER_FLAMES_TOXIC.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_FLAMES_TOXIC = /* @__PURE__ */ ball("ball:soccer-flames-toxic", "Soccer, flames, toxic", "炎柄・トキシック", flames(TOXIC, "#dcf23a"));
 
+/**
+ * The Soccer, chevrons, red emblem (シェブロン柄・赤 in Japanese): id `ball:soccer-chevrons-red`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_CHEVRONS_RED } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_CHEVRONS_RED.id, BALL_SOCCER_CHEVRONS_RED.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_CHEVRONS_RED = /* @__PURE__ */ ball("ball:soccer-chevrons-red", "Soccer, chevrons, red", "シェブロン柄・赤", chevrons(CHEV_RED));
+/**
+ * The Soccer, chevrons, green emblem (シェブロン柄・緑 in Japanese): id `ball:soccer-chevrons-green`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_CHEVRONS_GREEN } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_CHEVRONS_GREEN.id, BALL_SOCCER_CHEVRONS_GREEN.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_CHEVRONS_GREEN = /* @__PURE__ */ ball("ball:soccer-chevrons-green", "Soccer, chevrons, green", "シェブロン柄・緑", chevrons(CHEV_GREEN));
+/**
+ * The Soccer, chevrons, blue emblem (シェブロン柄・青 in Japanese): id `ball:soccer-chevrons-blue`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_CHEVRONS_BLUE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_CHEVRONS_BLUE.id, BALL_SOCCER_CHEVRONS_BLUE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_CHEVRONS_BLUE = /* @__PURE__ */ ball("ball:soccer-chevrons-blue", "Soccer, chevrons, blue", "シェブロン柄・青", chevrons(CHEV_BLUE));
 
+/**
+ * The Soccer, swirl, blue emblem (渦巻き柄・青 in Japanese): id `ball:soccer-swirl-blue`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_SWIRL_BLUE } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_SWIRL_BLUE.id, BALL_SOCCER_SWIRL_BLUE.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_SWIRL_BLUE = /* @__PURE__ */ ball("ball:soccer-swirl-blue", "Soccer, swirl, blue", "渦巻き柄・青", swirl(SWIRL_BLUE));
+/**
+ * The Soccer, swirl, red emblem (渦巻き柄・赤 in Japanese): id `ball:soccer-swirl-red`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_SWIRL_RED } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_SWIRL_RED.id, BALL_SOCCER_SWIRL_RED.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_SWIRL_RED = /* @__PURE__ */ ball("ball:soccer-swirl-red", "Soccer, swirl, red", "渦巻き柄・赤", swirl(SWIRL_RED));
+/**
+ * The Soccer, swirl, teal emblem (渦巻き柄・ティール in Japanese): id `ball:soccer-swirl-teal`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_SWIRL_TEAL } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_SWIRL_TEAL.id, BALL_SOCCER_SWIRL_TEAL.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_SWIRL_TEAL = /* @__PURE__ */ ball("ball:soccer-swirl-teal", "Soccer, swirl, teal", "渦巻き柄・ティール", swirl(SWIRL_TEAL));
 
+/**
+ * The Soccer, metallic, gold emblem (メタリック・金 in Japanese): id `ball:soccer-metallic-gold`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_METALLIC_GOLD } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_METALLIC_GOLD.id, BALL_SOCCER_METALLIC_GOLD.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_METALLIC_GOLD = /* @__PURE__ */ ball("ball:soccer-metallic-gold", "Soccer, metallic, gold", "メタリック・金", metallic(GOLD));
+/**
+ * The Soccer, metallic, silver emblem (メタリック・銀 in Japanese): id `ball:soccer-metallic-silver`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_METALLIC_SILVER } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_METALLIC_SILVER.id, BALL_SOCCER_METALLIC_SILVER.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_METALLIC_SILVER = /* @__PURE__ */ ball("ball:soccer-metallic-silver", "Soccer, metallic, silver", "メタリック・銀", metallic(SILVER));
+/**
+ * The Soccer, metallic, cobalt emblem (メタリック・コバルト in Japanese): id `ball:soccer-metallic-cobalt`, a ball turned in 3D.
+ * @example
+ * ```ts
+ * import { BALL_SOCCER_METALLIC_COBALT } from "@johnmorrisdotca/dougu-sports";
+ * console.log(BALL_SOCCER_METALLIC_COBALT.id, BALL_SOCCER_METALLIC_COBALT.svg({ size: 48 }).startsWith("<svg"));
+ * ```
+ */
 export const BALL_SOCCER_METALLIC_COBALT = /* @__PURE__ */ ball("ball:soccer-metallic-cobalt", "Soccer, metallic, cobalt", "メタリック・コバルト", metallic(COBALT));
