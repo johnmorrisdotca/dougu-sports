@@ -6,6 +6,7 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+- Docs only (MODULES-247): two more guides, with Japanese twins: architecture (the pipeline from an id to an SVG document, the five rules, the entries and the checks) and podiums, sprites and data addresses; `demo/builder.html`, a page where the group, the emblem, the look, the theme, the size and the tint are chosen and the code that puts the emblem in a page is copied (`emblemEmbedCode`), with `e2e/builder.demo.ts`; the README is under npm's 64,000 characters, its list of releases now the CHANGELOG's.
 - The README opens with the package's thumbnail, and the demo carries it as its link preview (og:image) and publishes the card, a dark card and an icon on Pages at `thumbnail.png`, `thumbnail-dark.png` and `icon.png`.
 
 ## [0.30.0] - 2026-11-03
