@@ -109,6 +109,8 @@ The element gets `tabindex="0"` (unless the page set one), a role (`group`, unle
 
 **Hands of your own: `hands: false`.** A page that has a control with its own hands (the family's `<kazoku-view-controls>` has a drag, the wheel, a pinch, the keys and a bar) passes `hands: false`: nothing is bound to the element, it gets no tab stop, no role and no cursor, and the emblem is drawn and turned by `setAngles` (and the auto-turn, if you start it). The demo's playground does this: the bar's `kazoku-viewchange` event calls `turner.setAngles({ yaw, pitch: 0 - tilt })`, where the minus sign is the one place a drag up (a larger tilt of the bar) lifts the front of the emblem, which is a smaller `pitch`.
 
+The bar's zoom and pan are the page's to draw: the demo moves the stage with a CSS transform from the event's `zoom`, `panX` and `panY`. Three attributes of the bar make that behave (kazoku-ui 0.11): `object-size="w,h"` is the emblem's size at Fit in pixels, so a pan always keeps a quarter of it in view; once the view is zoomed or moved the bar shows a **Centre** button (`element.centre()`, and the Home and 0 keys) that puts the emblem back in the middle at Fit and the resting angle; and for a round ball `grab-radius` is its radius on screen (about 0.39 of the picture across), so a drag keeps the touched point under the pointer. The demo sets all three, and `e2e/centre.demo.ts` holds them with a real pointer and the family's shared `e2e/ground.mjs`.
+
 ### The auto-turn
 
 Nothing moves by itself. `autoPlay` is off by default, `play()`, `pause()` and `togglePlay()` start and stop it, and `speed` is degrees of yaw a second (36, at most 720; a negative speed turns the other way too).

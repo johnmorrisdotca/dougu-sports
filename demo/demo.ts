@@ -86,6 +86,22 @@ function writeAddress() {
   address.setMany(next);
 }
 
+/** The emblem's size at Fit, so a pan keeps a quarter of it in view and the Centre button brings it back; a round ball (about 0.39 of its picture across) is turned with exact grab, so the touched point stays under the pointer. */
+const NOT_ROUND = /^ball:(puck|curling-stone|shuttlecock|football|rugby|afl|discus)/;
+function holdObject() {
+  const svg = view.querySelector("svg");
+  if (!svg) return;
+  const box = svg.getBoundingClientRect();
+  const zoom = bar.state.zoom || 1;
+  const size = `${Math.round(box.width / zoom)},${Math.round(box.height / zoom)}`;
+  if (bar.getAttribute("object-size") !== size) bar.setAttribute("object-size", size);
+  if (D.emblemInfo(state.id).kind === "ball" && !NOT_ROUND.test(state.id)) {
+    const radius = String(Math.round((Math.min(box.width, box.height) / zoom) * 0.39));
+    if (bar.getAttribute("grab-radius") !== radius) bar.setAttribute("grab-radius", radius);
+  } else bar.removeAttribute("grab-radius");
+}
+addEventListener("resize", holdObject);
+
 /** Brings everything but the drawing in line with the turner: the roll slider, the rows that apply, the bar and the call. */
 function sync() {
   const a = turner.angles;
@@ -95,6 +111,7 @@ function sync() {
   $("roll-row").hidden = !(canTurn && ball);
   bar.toggleAttribute("flat", !canTurn);
   bar.hidden = !canTurn;
+  holdObject();
   $<HTMLInputElement>("roll").value = String(a.roll);
   $("roll-out").textContent = `${Math.round(a.roll)}°`;
   const turned = a.yaw !== 0 || a.pitch !== 0 || a.roll !== 0;
