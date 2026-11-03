@@ -69,6 +69,8 @@ function turnOptions(): D.TurnControlOptions {
 /** The "Put it in your page" panel: which way, and whether the embedded emblem turns. */
 const embedState = { way: pick(params.get("embed"), ["element", "iframe", "module", "img", "svg"] as const, "element"), turn: pick(params.get("eturn"), ["still", "turnable", "autoplay"] as const, "still") };
 
+/** True once the reader has used this page's own Look choice, which shares the address's `theme` with the header's theme switch. */
+let lookChosen = false;
 let embedKey = "";
 const view = $("stage-view");
 const turner = D.bindTurn(view, state.id, { ...turnOptions(), roll: number(params.get("roll"), -180, 180) });
@@ -80,7 +82,11 @@ const address = createAddressState({ defaults: { ...DEFAULTS, id: FIRST, embed: 
 /** The address follows. A spin changes it sixty times a second: the shared address state writes it once things settle. */
 function writeAddress() {
   const next: Record<string, string | null> = { id: state.id, turn: state.turn === "1" ? "1" : null, engrave: state.engrave.trim() === "" ? null : state.engrave };
-  for (const key of [...CHOICES, "background"] as const) next[key] = state[key];
+  for (const key of [...CHOICES, "background"] as const) {
+    // The header's theme switch writes `theme` too: until the Look is chosen here, leave it be.
+    if (key === "theme" && !lookChosen && state.theme === "inherit") continue;
+    next[key] = state[key];
+  }
   // The angle, the tilt and the zoom are the view controls' own, in the address beside these; the roll of a ball is this page's.
   next["roll"] = turner.angles.roll !== 0 ? String(turner.angles.roll) : null;
   next["embed"] = embedState.way;
@@ -215,7 +221,7 @@ function drawPicks() {
 $("picks").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b?.dataset.id) { state.id = b.dataset.id as D.EmblemId; draw(); } });
 $("emblem").addEventListener("change", () => { state.id = $<HTMLSelectElement>("emblem").value as D.EmblemId; draw(); });
 for (const group of CHOICES) {
-  $(group).addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { (state as Record<typeof group, string>)[group] = b.dataset.value ?? ""; draw(); } });
+  $(group).addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { (state as Record<typeof group, string>)[group] = b.dataset.value ?? ""; if (group === "theme") lookChosen = true; draw(); } });
 }
 $("background").addEventListener("change", () => { state.background = $<HTMLSelectElement>("background").value; draw(); });
 $<HTMLInputElement>("engrave").value = state.engrave;

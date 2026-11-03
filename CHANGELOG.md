@@ -12,6 +12,10 @@ All notable changes to this project are written here. The format follows
 
 - **The playground takes kazoku-ui 0.12 and its zoom slider.** On a desk the bar under the stage is now `layout="horizontal"` (a phone keeps the classic bar, which fits its width): the turn on one row and, under it, the zoom as a slider marked at 1x, 2x, 3x and 5x with the readout, zoom out, zoom in and Fit, and the Centre button of 0.11 beside More. The angle, tilt, zoom and pan are kept in the address as before.
 
+### Fixed
+
+- The playground no longer drops the header's `theme=dark` from the address when the view moves: its own Look choice shares the `theme` parameter, and it wrote the default over the header's value on the next change of the view. It leaves `theme` alone until the Look is chosen on the page.
+
 ### Also in this release
 
 - Docs only (MODULES-247): two more guides, with Japanese twins: architecture (the pipeline from an id to an SVG document, the five rules, the entries and the checks) and podiums, sprites and data addresses; `demo/builder.html`, a page where the group, the emblem, the look, the theme, the size and the tint are chosen and the code that puts the emblem in a page is copied (`emblemEmbedCode`), with `e2e/builder.demo.ts`; the README is under npm's 64,000 characters, its list of releases now the CHANGELOG's.
