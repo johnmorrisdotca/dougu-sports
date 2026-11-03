@@ -73,6 +73,8 @@ let embedKey = "";
 const view = $("stage-view");
 const turner = D.bindTurn(view, state.id, { ...turnOptions(), roll: number(params.get("roll"), -180, 180) });
 const bar = $<ViewControlsElement>("view-bar");
+// The bar is horizontal, with the zoom as a slider with marks; a phone keeps the classic bar, which fits its width.
+if (!matchMedia("(max-width: 600px)").matches) bar.setAttribute("layout", "horizontal");
 
 const address = createAddressState({ defaults: { ...DEFAULTS, id: FIRST, embed: "element", eturn: "still" } });
 /** The address follows. A spin changes it sixty times a second: the shared address state writes it once things settle. */
