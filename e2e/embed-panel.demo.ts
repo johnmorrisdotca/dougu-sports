@@ -83,3 +83,13 @@ test("every control of the panel is a finger wide", async ({ page }) => {
   });
   expect(bad).toEqual([]);
 });
+
+test("the page stays still when it opens and when the language changes, whatever the panel draws", async ({ page }) => {
+  await page.goto("/");
+  await page.waitForTimeout(800);
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  await page.locator('kazoku-language-picker [data-v="ja"]').click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "ja");
+  await page.waitForTimeout(500);
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+});

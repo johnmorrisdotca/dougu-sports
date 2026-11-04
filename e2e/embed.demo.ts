@@ -103,47 +103,52 @@ test.describe("turning by itself", () => {
 });
 
 test.describe("Put it in your page", () => {
+  const PANEL = "#embed-panel";
+  const tab = (page: Page, kind: string) => page.locator(`${PANEL} button[data-kind="${kind}"]`);
   test("the panel gives the code for the emblem on the stage, in every way, and runs it beside the code", async ({ page }) => {
     await page.goto("/?id=trophy:cup&style=line&size=64");
-    const code = page.getByTestId("embed-code");
+    const code = page.locator(`${PANEL} [part="code"]`);
     await expect(code).toContainText('<dougu-emblem emblem="trophy:cup" variant="line" size="64"');
     await expect(code).toContainText("cdn.jsdelivr.net/npm/@johnmorrisdotca/dougu-sports/element/+esm");
-    await expect(page.locator("#embed-stage dougu-emblem svg")).toBeVisible();
-    await page.getByTestId("embed-way").getByRole("button", { name: "iframe" }).click();
+    await expect(page.locator(`${PANEL} [part="preview"] dougu-emblem svg`)).toBeVisible();
+    await tab(page, "iframe").click();
     await expect(code).toContainText("https://johnmorrisdotca.github.io/dougu-sports/embed.html?emblem=trophy%3Acup");
-    await expect(page.locator("#embed-stage iframe")).toBeVisible();
-    await expect(page.frameLocator("#embed-stage iframe").locator("dougu-emblem svg")).toBeVisible();
-    await page.getByTestId("embed-way").getByRole("button", { name: "ES module" }).click();
+    await expect(page.locator(`${PANEL} [part="preview"] iframe`)).toBeVisible();
+    await expect(page.frameLocator(`${PANEL} [part="preview"] iframe`).locator("dougu-emblem svg")).toBeVisible();
+    await tab(page, "module").click();
     await expect(code).toContainText('import "@johnmorrisdotca/dougu-sports/element";');
-    await page.getByTestId("embed-way").getByRole("button", { name: "Image" }).click();
+    await tab(page, "image").click();
     await expect(code).toContainText('<img src="data:image/svg+xml;utf8,');
-    await expect(page.locator("#embed-stage img")).toBeVisible();
-    await page.getByTestId("embed-way").getByRole("button", { name: "SVG" }).click();
+    await expect(page.locator(`${PANEL} [part="preview"] img`)).toBeVisible();
+    await tab(page, "svg").click();
     await expect(code).toContainText("<svg");
     await expect.poll(() => page.url()).toContain("embed=svg");
   });
 
   test("a choice of turning goes into the code, and a style chosen above changes it", async ({ page }) => {
     await page.goto("/?id=ball:soccer&size=64");
+    const code = page.locator(`${PANEL} [part="code"]`);
     await page.getByTestId("embed-turn").getByRole("button", { name: "By hand" }).click();
-    await expect(page.getByTestId("embed-code")).toContainText(" turnable></dougu-emblem>");
+    await expect(code).toContainText(" turnable></dougu-emblem>");
     await page.getByTestId("embed-turn").getByRole("button", { name: "By itself" }).click();
-    await expect(page.getByTestId("embed-code")).toContainText(" turnable autoplay></dougu-emblem>");
+    await expect(code).toContainText(" turnable autoplay></dougu-emblem>");
     await page.getByRole("group", { name: "Style" }).getByRole("button", { name: "Color" }).click();
-    await expect(page.getByTestId("embed-code")).toContainText('variant="color"');
+    await expect(code).toContainText('variant="color"');
   });
 
   test("it is kept in the address and comes back, in Japanese too", async ({ page }) => {
     await page.goto("/?id=medal:gold&embed=iframe&eturn=turnable");
-    await expect(page.getByTestId("embed-code")).toContainText("turnable=1");
-    await expect(page.getByTestId("embed-way").getByRole("button", { name: "iframe" })).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator(`${PANEL} [part="code"]`)).toContainText("turnable=1");
+    await expect(tab(page, "iframe")).toHaveAttribute("aria-selected", "true");
     await page.locator('kazoku-language-picker [data-v="ja"]').click();
     await expect(page.locator("#embed-h")).toHaveText("ページに入れる");
+    await page.goto("/?id=medal:gold&embed=img");
+    await expect(tab(page, "image")).toHaveAttribute("aria-selected", "true");
   });
 
   test("every control of the panel is in the demo's own style", async ({ page }) => {
     await page.goto("/");
-    const bad = await page.locator("#embed-way button, #embed-turn button, #embed-copy, #embed-download").evaluateAll((els) => els.filter((el) => el.getBoundingClientRect().height < 44 || getComputedStyle(el).borderRadius === "0px").map((el) => el.textContent));
+    const bad = await page.locator("#embed-turn button, #embed-download").evaluateAll((els) => els.filter((el) => el.getBoundingClientRect().height < 44 || getComputedStyle(el).borderRadius === "0px").map((el) => el.textContent));
     expect(bad).toEqual([]);
   });
 });
