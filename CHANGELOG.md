@@ -6,6 +6,8 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+## [0.33.0] - 2026-11-04
+
 "Put it in your page" is the family's embed panel (MODULES-351). No change to the package's drawings.
 
 - **The playground's "Put it in your page" and the builder's code section are kazoku-ui's `<kazoku-embed-panel>`** (kazoku-ui ^0.15.1). Nothing the old panels had is gone, and a test counts it: the five ways (the tag, an iframe, an ES module, an image address and the SVG; the builder also keeps the tag alone), Turning (Still, By hand, By itself), the size row (32, 64, 128, 256, the same as the playground's Size), Copy (now "Copy code"), Download the SVG, and the emblem drawn from the code beside it.
