@@ -47,7 +47,7 @@ test("every emblem draws, in every style, and the address says which", async ({ 
 
 test("the controls change the drawing: size, look and tint", async ({ page }) => {
   await page.goto("/?id=medal:gold");
-  await page.getByRole("button", { name: "256", exact: true }).click();
+  await page.locator(`#size button[data-value="256"]`).click();
   await expect(page.locator("#stage-view > svg")).toHaveAttribute("width", "256");
   await page.locator('button[data-value="dark"]').click();
   await expect(page.locator("#stage")).toHaveAttribute("data-look", "dark");

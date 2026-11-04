@@ -5,9 +5,12 @@ import { createAddressState } from "@johnmorrisdotca/kazoku-ui/address-state";
 import * as D from "../src/index.ts";
 import "../src/element.ts";
 import "@johnmorrisdotca/kazoku-ui/view-controls/define";
+import "@johnmorrisdotca/kazoku-ui/embed-panel/define";
 import "@johnmorrisdotca/kazoku-ui/speed-buttons/define";
 import type { SpeedButtonsElement } from "@johnmorrisdotca/kazoku-ui/speed-buttons/element";
 import type { ViewControlsElement } from "@johnmorrisdotca/kazoku-ui/view-controls/element";
+import type { EmbedChangeDetail, EmbedPanelElement } from "@johnmorrisdotca/kazoku-ui/embed-panel/element";
+import { CREDIT, KINDS, embedCode, type Kind } from "./embed-code.ts";
 import type { ViewState } from "@johnmorrisdotca/kazoku-ui/view-controls";
 import type { BackgroundPresetName } from "../scripts/family-backgrounds.ts";
 
@@ -69,18 +72,18 @@ function turnOptions(): D.TurnControlOptions {
 }
 
 /** The "Put it in your page" panel: which way, and whether the embedded emblem turns. */
-const embedState = { way: pick(params.get("embed"), ["element", "iframe", "module", "img", "svg"] as const, "element"), turn: pick(params.get("eturn"), ["still", "turnable", "autoplay"] as const, "still") };
+const OLD_WAYS: Record<string, string> = { element: "html", img: "image" };
+const embedState = { way: pick(OLD_WAYS[params.get("embed") ?? ""] ?? params.get("embed"), KINDS, "html") as Kind, turn: pick(params.get("eturn"), ["still", "turnable", "autoplay"] as const, "still") };
 
 /** True once the reader has used this page's own Look choice, which shares the address's `theme` with the header's theme switch. */
 let lookChosen = false;
-let embedKey = "";
 const view = $("stage-view");
 const turner = D.bindTurn(view, state.id, { ...turnOptions(), roll: number(params.get("roll"), -180, 180) });
 const bar = $<ViewControlsElement>("view-bar");
 // The bar is horizontal, with the zoom as a slider with marks; a phone keeps the classic bar, which fits its width.
 if (!matchMedia("(max-width: 600px)").matches) bar.setAttribute("layout", "horizontal");
 
-const address = createAddressState({ defaults: { ...DEFAULTS, id: FIRST, embed: "element", eturn: "still" } });
+const address = createAddressState({ defaults: { ...DEFAULTS, id: FIRST, embed: "html", eturn: "still" } });
 /** The address follows. A spin changes it sixty times a second: the shared address state writes it once things settle. */
 function writeAddress() {
   const next: Record<string, string | null> = { id: state.id, turn: state.turn === "1" ? "1" : null, engrave: state.engrave.trim() === "" ? null : state.engrave };
@@ -137,8 +140,10 @@ function sync() {
   writeAddress();
 }
 
-/** The "Put it in your page" panel: the same emblem as the stage, as the code for the way chosen, and that code running beside it. */
-function drawEmbed() {
+/** The "Put it in your page" panel: the same emblem as the stage, as the code for the way chosen, and that code running beside it. The family's <kazoku-embed-panel>. */
+const panel = $<EmbedPanelElement>("embed-panel");
+const here = (): string => new URL(".", location.href).href;
+function embedOptions(): D.EmbedOptions {
   const a = turner.angles;
   const still = embedState.turn === "still" && !bar.state.turning;
   const options: D.EmbedOptions = { style: state.style, size: Number(state.size), theme: state.theme, locale: locale() };
@@ -146,20 +151,38 @@ function drawEmbed() {
   if (still && turner.turnable) Object.assign(options, a.yaw !== 0 ? { yaw: Math.round(a.yaw) } : {}, a.pitch !== 0 ? { pitch: Math.round(a.pitch) } : {});
   if (embedState.turn !== "still") options.turnable = true;
   if (embedState.turn === "autoplay") options.autoplay = true;
-  const key = JSON.stringify([embedState, state.id, options]);
-  for (const b of $("embed-way").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === embedState.way));
-  for (const b of $("embed-turn").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === embedState.turn));
-  if (key === embedKey) return;
-  embedKey = key;
-  const shown = D.emblemEmbedCode(state.id, options);
-  const code = { element: shown.html, iframe: shown.iframe, module: shown.module, img: shown.img, svg: shown.svg }[embedState.way];
-  $("embed-code").firstChild!.textContent = code;
-  const here = D.emblemEmbedCode(state.id, { ...options, site: new URL(".", location.href).href });
-  $("embed-stage").innerHTML = { element: here.element, iframe: here.iframe, module: here.element, img: here.img, svg: here.svg }[embedState.way];
+  return options;
 }
-$("embed-way").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { embedState.way = b.dataset.value as typeof embedState.way; drawEmbed(); writeAddress(); } });
+panel.kinds = KINDS;
+panel.kind = embedState.way;
+panel.generate = ({ kind, preview }) => embedCode(kind as Kind, state.id, { ...embedOptions(), ...(preview ? { site: here() } : {}) });
+panel.preview = ({ kind }) => {
+  const options = embedOptions();
+  // The picture turns by hand but never by itself: it adds no loop of its own, and the note says the code does.
+  if (kind === "iframe" && !options.autoplay) return undefined;
+  const code = D.emblemEmbedCode(state.id, { ...options, autoplay: false, site: here() });
+  const holder = document.createElement("div");
+  holder.innerHTML = kind === "image" ? code.img : kind === "svg" ? code.svg : code.element;
+  return holder;
+};
+const STILL_NOTE = { en: "The picture beside the code stays still. The code turns it by itself.", ja: "コードの横の絵は止まっています。このコードを入れると、自動で回ります。" };
+panel.note = () => (embedState.turn === "autoplay" ? STILL_NOTE[locale()] : "");
+panel.credits = CREDIT;
+panel.addEventListener("kazoku-embedchange", (event) => {
+  const { kind, size, reason } = (event as CustomEvent<EmbedChangeDetail>).detail;
+  if (reason === "kind") {
+    embedState.way = kind as Kind;
+    writeAddress();
+  } else if (reason === "size" && String(size) !== state.size) $("size").querySelector<HTMLButtonElement>(`button[data-value="${size}"]`)?.click();
+});
+function drawEmbed() {
+  for (const b of $("embed-turn").querySelectorAll<HTMLButtonElement>("button")) b.setAttribute("aria-pressed", String(b.dataset.value === embedState.turn));
+  panel.setAttribute("lang", locale());
+  panel.size = Number(state.size);
+  panel.openHref = D.emblemEmbedCode(state.id, { ...embedOptions(), site: here() }).address;
+  panel.update();
+}
 $("embed-turn").addEventListener("click", (event) => { const b = (event.target as Element).closest("button"); if (b) { embedState.turn = b.dataset.value as typeof embedState.turn; drawEmbed(); writeAddress(); } });
-$("embed-copy").addEventListener("click", () => { void navigator.clipboard?.writeText($("embed-code").textContent ?? ""); });
 $("embed-download").addEventListener("click", () => {
   const link = document.createElement("a");
   link.href = URL.createObjectURL(new Blob([D.renderEmblem(state.id, { style: state.style, size: Number(state.size), theme: state.theme, ...(state.tint ? { tint: state.tint } : {}) })], { type: "image/svg+xml" }));
@@ -277,7 +300,7 @@ function turnOnHover(stage: HTMLElement, control: { readonly playing: boolean; r
   turnOnHover($("stage"), barTurn, hover);
 }
 // The language chooser changes <html lang>; the stage's spoken description follows it.
-new MutationObserver(() => { turner.update(state.id, turnOptions()); drawPicks(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+new MutationObserver(() => { turner.update(state.id, turnOptions()); drawPicks(); drawEmbed(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
 
 drawPicks();
 draw();

@@ -45,21 +45,17 @@
   </section>
   <section class="more" aria-labelledby="embed-h">
     <h2 id="embed-h" data-say="embedHeading">Put it in your page</h2>
-    <p class="fam-fine" data-say="embedNote">The emblem you set up above, as code to paste: a tag, an iframe, an ES module, an image address or the SVG itself. What is drawn beside the code is that code, running.</p>
+    <p class="fam-fine" data-say="embedNote">The emblem you set up above, as code to paste: HTML, an ES module, React, Vue, Angular, Svelte, an iframe, an image address or the SVG itself. What is drawn beside the code is that code, running.</p>
     <div class="fam-panels">
       <div class="fam-panel controls">
-        <div class="fam-row"><span class="fam-label" data-say="embedWay">How</span>
-          <div class="fam-seg" role="group" aria-label="How to put it in a page" data-say-label="embedWayLabel" id="embed-way" data-testid="embed-way">
-            <button type="button" data-value="element">Element</button><button type="button" data-value="iframe">iframe</button><button type="button" data-value="module">ES module</button><button type="button" data-value="img" data-say="embedImg">Image</button><button type="button" data-value="svg">SVG</button>
-          </div></div>
-        <div class="fam-row"><span class="fam-label" data-say="embedTurn">Turning</span>
-          <div class="fam-seg" role="group" aria-label="Whether the embedded emblem turns" data-say-label="embedTurnLabel" id="embed-turn" data-testid="embed-turn">
-            <button type="button" data-value="still" data-say="embedStill">Still</button><button type="button" data-value="turnable" data-say="embedHand">By hand</button><button type="button" data-value="autoplay" data-say="embedSelf">By itself</button>
-          </div></div>
-        <pre id="embed-code" data-testid="embed-code"><code></code></pre>
-        <div class="fam-row"><button type="button" class="fam-button" id="embed-copy" data-testid="embed-copy" data-say="embedCopy">Copy it</button><button type="button" class="fam-button" id="embed-download" data-testid="embed-download" data-say="embedDownload">Download the SVG</button></div>
+        <kazoku-embed-panel id="embed-panel" data-testid="embed-panel" sizes="32 64 128 256" docs-href="docs/">
+          <div slot="options" class="fam-row"><span class="fam-label" data-say="embedTurn">Turning</span>
+            <div class="fam-seg" role="group" aria-label="Whether the embedded emblem turns" data-say-label="embedTurnLabel" id="embed-turn" data-testid="embed-turn">
+              <button type="button" data-value="still" data-say="embedStill">Still</button><button type="button" data-value="turnable" data-say="embedHand">By hand</button><button type="button" data-value="autoplay" data-say="embedSelf">By itself</button>
+            </div></div>
+          <button slot="actions" type="button" class="fam-button" id="embed-download" data-testid="embed-download" data-say="embedDownload">Download the SVG</button>
+        </kazoku-embed-panel>
       </div>
-      <div class="stage" id="embed-stage" data-testid="embed-stage" role="region" aria-label="The code, running" data-say-label="embedStageLabel"></div>
     </div>
   </section>
 

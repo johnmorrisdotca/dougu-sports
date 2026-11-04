@@ -6,6 +6,14 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+"Put it in your page" is the family's embed panel (MODULES-351). No change to the package's drawings.
+
+- **The playground's "Put it in your page" and the builder's code section are kazoku-ui's `<kazoku-embed-panel>`** (kazoku-ui ^0.15.1). Nothing the old panels had is gone, and a test counts it: the five ways (the tag, an iframe, an ES module, an image address and the SVG; the builder also keeps the tag alone), Turning (Still, By hand, By itself), the size row (32, 64, 128, 256, the same as the playground's Size), Copy (now "Copy code"), Download the SVG, and the emblem drawn from the code beside it.
+- **Added by the panel**: React, Vue, Angular and Svelte tabs, Open the embed page, Read the docs and the credit line. The address keeps the tab (`embed=`), now `html` and `image` for what was `element` and `img` (the old words still open the right tab).
+- The picture beside the code turns by hand but never by itself, so it adds no frame loop; with "By itself" chosen, a note says the code turns it.
+- `demo/embed-code.ts` writes the framework tabs from the tag `emblemEmbedCode` writes; `test/embed-code.test.ts` runs the module against a stand-in page, compares the SVG and the image with `renderEmblem`, and compiles the React, Vue, Angular and Svelte code.
+- `scripts/check-standard.mjs` is kazoku-ui 0.15's (the `embed-panel` item); the demo moves to `@johnmorrisdotca/kazoku-ui` ^0.15.1.
+
 ## [0.32.0] - 2026-11-03
 
 - Demo: the bar's Auto-turn speeds are the family's speed buttons, 0.5×, 1× and 2× (`<kazoku-speed-buttons>`, kazoku-ui 0.14, `^0.14.0`), in place of Slow, Medium and Fast; the choice is kept in the address as `pace` (the key was `speed`). The trophy case, whose four Auto-turn buttons had no speed to choose, has the same three buttons above it (`?casepace=2`), which set each emblem's speed with `update`. The package is unchanged. Browser tests hold the bar's three buttons and the speed each sets, and that 2× in the case for half the time is the same turn as 1×.

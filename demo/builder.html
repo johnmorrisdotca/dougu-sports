@@ -29,12 +29,6 @@
     .fields input { font: inherit; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; min-height: 44px; width: 100%; }
     .stage { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; justify-items: center; align-items: center; min-height: 260px; overflow: auto; }
     .stage svg { max-width: 100%; height: auto; }
-    .tabs { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 3px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; margin: 12px 0 8px; }
-    .tabs button { font: inherit; font-weight: 700; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 0; background: transparent; color: var(--ink); cursor: pointer; }
-    .tabs button[aria-selected="true"] { background: var(--tab); color: var(--tab-ink); }
-    pre { margin: 0 0 8px; padding: 12px 14px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; font-size: .82rem; max-height: 20rem; white-space: pre-wrap; word-break: break-all; }
-    .copy { font: inherit; font-weight: 800; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 0; background: var(--tab); color: var(--tab-ink); cursor: pointer; }
-    #status { margin-left: 10px; color: var(--muted); }
   </style>
 </head>
 <body>
@@ -46,9 +40,7 @@
       <div class="controls" id="controls" data-testid="controls"></div>
       <div>
         <div class="stage" id="stage" data-testid="stage"></div>
-        <div class="tabs" role="tablist" id="tabs" aria-label="The code"></div>
-        <pre><code id="code" data-testid="code"></code></pre>
-        <button type="button" class="copy" id="copy" data-testid="copy">Copy the code</button><span id="status" role="status" aria-live="polite"></span>
+        <kazoku-embed-panel id="embed-panel" data-testid="embed-panel" no-size no-preview docs-href="docs/"></kazoku-embed-panel>
         <p class="note" style="margin-top:12px"><a href="https://github.com/johnmorrisdotca/dougu-sports/blob/main/docs/guides/getting-started.md">Getting started</a> · <a href="https://github.com/johnmorrisdotca/dougu-sports/blob/main/docs/guides/architecture.md">Architecture</a> · <a href="./gallery.html">The gallery</a> · <a href="./compose.html">Compose</a></p>
       </div>
     </div>
@@ -57,6 +49,8 @@
     // The builder: a group, an emblem, a look, a theme, a size and a tint; the emblem is drawn by the package's own build beside this page, and the code under it is what `emblemEmbedCode`
     // writes for the same choices. Nothing is sent or stored.
     import { EMBLEM_GROUPS, emblemEmbedCode, emblemName, renderEmblem } from "./dist/index.js";
+    import "./kazoku-ui/embed-panel/define.js";
+    import { BUILDER_KINDS, CREDIT, embedCode } from "./embed-code.js";
 
     const GROUPS = Object.keys(EMBLEM_GROUPS);
     const CHOICES = {
@@ -69,7 +63,6 @@
     const query = new URLSearchParams(location.search);
     const asked = query.get("emblem");
     if (asked && GROUPS.includes(asked.split(":")[0]) && EMBLEM_GROUPS[asked.split(":")[0]].includes(asked)) { state.emblem = asked; state.group = asked.split(":")[0]; }
-    let way = "html";
     const $ = (id) => document.getElementById(id);
     const options = () => {
       const out = { style: state.style, size: Number(state.size), theme: state.theme };
@@ -115,29 +108,16 @@
     function draw() {
       const o = options();
       $("stage").innerHTML = renderEmblem(state.emblem, o);
-      const code = emblemEmbedCode(state.emblem, { ...o, turnable: state.turnable });
-      $("code").textContent = code[way] ?? code.html;
+      panel.openHref = emblemEmbedCode(state.emblem, { ...o, site: new URL(".", location.href).href }).address;
+      panel.update();
       for (const group of document.querySelectorAll("[data-choice]")) for (const button of group.querySelectorAll("button")) button.setAttribute("aria-pressed", String(button.dataset.value === state[group.dataset.choice]));
-      for (const button of $("tabs").querySelectorAll("button")) button.setAttribute("aria-selected", String(button.dataset.way === way));
       document.body.dataset.ready = "true";
     }
-    for (const [name, text] of [["html", "Script and tag"], ["element", "Tag"], ["iframe", "Frame"], ["module", "Module"], ["img", "Image"], ["svg", "SVG"]]) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.role = "tab";
-      button.dataset.way = name;
-      button.textContent = text;
-      button.addEventListener("click", () => { way = name; draw(); });
-      $("tabs").append(button);
-    }
-    $("copy").addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText($("code").textContent);
-        $("status").textContent = "Copied to the clipboard.";
-      } catch {
-        $("status").textContent = "Could not copy: select the code and copy it.";
-      }
-    });
+    const panel = $("embed-panel");
+    panel.kinds = BUILDER_KINDS;
+    panel.labels = { html: "Script and tag", element: "Tag" };
+    panel.generate = ({ kind }) => embedCode(kind, state.emblem, { ...options(), turnable: state.turnable });
+    panel.credits = CREDIT;
     build();
   </script>
 </body>

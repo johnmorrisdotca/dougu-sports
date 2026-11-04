@@ -279,7 +279,7 @@ export function DouguEmblem({ emblem = "trophy:stanley-cup", size = 200 }: { emb
 }
 ```
 
-`emblemEmbedCode(ref, options)` writes all of these (the tag, an iframe, an ES module, an `<img>` with a data address, and the raw SVG) for the emblem you have set up; the demo's "Put it in your page" panel is that function with buttons. Every example in the guides is a file in `examples/` that `pnpm test:usage` builds, type-checks or runs against the package as npm packs it. The [documentation site](https://johnmorrisdotca.github.io/dougu-sports/docs/) has a page for every export, guides in English and in Japanese, and a Vite, webpack, TypeScript and Node example each.
+`emblemEmbedCode(ref, options)` writes all of these (the tag, an iframe, an ES module, an `<img>` with a data address, and the raw SVG) for the emblem you have set up; the demo's "Put it in your page" panel (kazoku-ui's `<kazoku-embed-panel>`, on the playground and the builder) is that function with buttons: tabs for HTML, ES module, React, Vue, Angular, Svelte, iframe, image and SVG, the size, Turning, the code running beside the code, Copy, Open the embed page, Read the docs and Download the SVG. The four framework tabs put the same `<dougu-emblem>` tag in a component. Every example in the guides is a file in `examples/` that `pnpm test:usage` builds, type-checks or runs against the package as npm packs it. The [documentation site](https://johnmorrisdotca.github.io/dougu-sports/docs/) has a page for every export, guides in English and in Japanese, and a Vite, webpack, TypeScript and Node example each.
 
 ### In a page, as a string
 
@@ -744,7 +744,7 @@ Bug reports and ideas go in the [issues](https://github.com/johnmorrisdotca/doug
 
 ## Changes
 
-See [CHANGELOG.md](./CHANGELOG.md), which has every release from 0.0.1 with its date and what it added. 0.32.0 puts the family's speed buttons (0.5×, 1×, 2×) on the playground's bar and over the trophy case, on kazoku-ui 0.14. 0.31.0 puts the playground's zoom on kazoku-ui 0.12's slider. 0.30.0 makes the three practice baseballs' slots fewer, larger and rounder, like the real ball, and takes kazoku-ui 0.11 in the playground. 0.29.0 adds `<dougu-emblem>` and the embed page, three practice baseballs with slots on both halves, and the documentation site. 0.28.0 adds the Jackie Robinson Rookie of the Year plaque (`trophy:jackie-robinson-award`) and the Halas, Messier, O'Ree and NBA postseason trophies (346 emblems).
+See [CHANGELOG.md](./CHANGELOG.md), which has every release from 0.0.1 with its date and what it added. 0.33.0 puts the family's embed panel in the demo's "Put it in your page", with React, Vue, Angular and Svelte tabs, and keeps everything the old panel had. 0.32.0 puts the family's speed buttons (0.5×, 1×, 2×) on the playground's bar and over the trophy case, on kazoku-ui 0.14. 0.31.0 puts the playground's zoom on kazoku-ui 0.12's slider. 0.30.0 makes the three practice baseballs' slots fewer, larger and rounder, like the real ball, and takes kazoku-ui 0.11 in the playground. 0.29.0 adds `<dougu-emblem>` and the embed page, three practice baseballs with slots on both halves, and the documentation site. 0.28.0 adds the Jackie Robinson Rookie of the Year plaque (`trophy:jackie-robinson-award`) and the Halas, Messier, O'Ree and NBA postseason trophies (346 emblems).
 
 ## Credits
 

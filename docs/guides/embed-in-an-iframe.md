@@ -44,4 +44,4 @@ The emblem is centred in the frame on a transparent background, so it sits on yo
 | `turnable` | `1`: a drag, the arrow keys and Space turn it | off |
 | `autoplay`, `speed` | `1`: it turns by itself, at `speed` degrees a second; a small Pause button appears | off |
 
-By default the frame is still and has no controls. It draws when something changes and nothing while it is out of sight. The demo's "Put it in your page" panel writes this iframe for the emblem you have set up, and the function [emblemEmbedCode](api:emblemEmbedCode) does the same in code.
+By default the frame is still and has no controls. It draws when something changes and nothing while it is out of sight. The demo's "Put it in your page" panel (the family's embed panel) writes this iframe, and the code for HTML, an ES module, React, Vue, Angular, Svelte, an image address and the SVG, for the emblem you have set up, with the emblem running beside the code, and the function [emblemEmbedCode](api:emblemEmbedCode) does the same in code.
