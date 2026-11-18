@@ -138,7 +138,7 @@ test("a ball has a roll slider, a cup has none", async ({ page }) => {
   await page.goto("/?id=ball:soccer");
   await expect(page.locator("#roll-row")).toBeVisible();
   const before = await stageHtml(page);
-  await page.locator("#roll").fill("40");
+  await page.getByTestId("roll").fill("40");
   await expect.poll(() => stageHtml(page)).not.toBe(before);
   await expect(page.locator("#roll-out")).toHaveText("40°");
   await page.goto("/?id=trophy:tennis-cup");
@@ -229,30 +229,30 @@ test("the hint and the bar say it in English and in Japanese", async ({ page }) 
 /** The numbers in a drawing, in order: two frames of one emblem at the same angle have the same ones, to a rounding. */
 const numbers = (html: string) => (html.match(/-?\d+(?:\.\d+)?/g) ?? []).map(Number);
 
-test("the bar's speed buttons are the family's 0.5×, 1× and 2×: they multiply the turn's speed and the address keeps them as pace", async ({ page }) => {
+test("the bar's speed buttons name the time of one turn: they multiply the turn's speed and the address keeps them as pace", async ({ page }) => {
   await page.goto("/?id=trophy:tennis-cup");
   const bar = page.locator("#view-bar");
   const more = bar.locator('[data-b="more"]');
   if ((await more.getAttribute("aria-expanded")) === "false") await more.click();
   const buttons = bar.locator("kazoku-speed-buttons button");
-  await expect(buttons).toHaveText(["0.5×", "1×", "2×"]);
-  await expect(buttons.nth(1)).toHaveAttribute("aria-pressed", "true");
-  // degrees a second the bar turns it at: the base speed (18) times the button
+  await expect(buttons).toHaveText(["2.7 min", "1.3 min", "40 s", "20 s"]);
+  await expect(buttons.nth(3)).toHaveAttribute("aria-pressed", "true");
+  // degrees a second the bar turns it at: the base speed (18) times the button's pace (0.125, 0.25, 0.5 and 1)
   const speed = () => bar.evaluate((el) => (el as unknown as { controller: { speed: number } }).controller.speed);
   expect(await speed()).toBe(18);
   await buttons.nth(2).click();
   await expect(buttons.nth(2)).toHaveAttribute("aria-pressed", "true");
-  expect(await speed()).toBe(36);
-  await expect(page).toHaveURL(/pace=2/);
-  expect(page.url()).not.toMatch(/[?&]speed=/);
-  await buttons.nth(0).click();
   expect(await speed()).toBe(9);
   await expect(page).toHaveURL(/pace=0\.5/);
-  await buttons.nth(1).click();
+  expect(page.url()).not.toMatch(/[?&]speed=/);
+  await buttons.nth(0).click();
+  expect(await speed()).toBe(2.25);
+  await expect(page).toHaveURL(/pace=0\.125/);
+  await buttons.nth(3).click();
   await expect(page).not.toHaveURL(/pace=/);
   // an address opens at its speed
-  await page.goto("/?id=trophy:tennis-cup&pace=2");
-  expect(await speed()).toBe(36);
+  await page.goto("/?id=trophy:tennis-cup&pace=0.5");
+  expect(await speed()).toBe(9);
 });
 
 test("the trophy case has the same speed buttons, kept as casepace: twice as fast at 2× for all four", async ({ page, context }) => {
@@ -311,7 +311,7 @@ test("the trophy case turns each emblem on its own button, and nothing moves bef
 
 test("the bar and the buttons are 44 pixels tall at least, and the page does not scroll sideways", async ({ page }) => {
   await page.goto("/?id=ball:soccer");
-  for (const control of await page.locator("#view-bar button:visible, #roll, #picks button, #case .case-play").all()) expect((await control.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
+  for (const control of await page.locator("#view-bar button:visible, [data-testid=roll], #picks button, #case .case-play").all()) expect((await control.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
 

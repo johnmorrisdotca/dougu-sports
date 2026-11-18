@@ -7,24 +7,27 @@ import { checkExactGrab, checkFollowsTheHand } from "./ground.mjs";
 interface Seen { yaw: number; tilt: number; zoom: number; panX: number; panY: number }
 const seen = (page: Page) => page.locator("#view-bar").evaluate((el) => (el as unknown as { state: Seen }).state);
 const centre = (page: Page) => page.locator('#view-bar [data-b="centre"]');
+/** Ctrl and a drag moves the view; a plain drag turns the emblem. */
 const dragFar = async (page: Page, dx: number, dy: number) => {
   await page.locator("#stage").scrollIntoViewIfNeeded();
   const box = (await page.locator("#stage").boundingBox())!;
   const x = box.x + box.width / 2;
   const y = box.y + box.height / 2;
   await page.mouse.move(x, y);
+  await page.keyboard.down("Control");
   await page.mouse.down();
   for (let i = 1; i <= 8; i++) await page.mouse.move(x + (dx * i) / 8, y + (dy * i) / 8);
   await page.mouse.up();
+  await page.keyboard.up("Control");
 };
-/** How much of the emblem's picture is inside the stage, as a share of its width and of its height, and where the picture's middle is against the stage's middle. */
+/** How much of the emblem's picture is inside the stage, as a share of what the stage can show of its width and of its height (a picture bigger than the stage, as at 50×, is measured against the stage), and where the picture's middle is against the stage's middle. */
 const where = (page: Page) =>
   page.evaluate(() => {
     const stage = document.querySelector("#stage")!.getBoundingClientRect();
     const svg = document.querySelector("#stage-view svg")!.getBoundingClientRect();
     const w = Math.max(0, Math.min(svg.right, stage.right) - Math.max(svg.left, stage.left));
     const h = Math.max(0, Math.min(svg.bottom, stage.bottom) - Math.max(svg.top, stage.top));
-    return { shareX: w / svg.width, shareY: h / svg.height, dx: svg.left + svg.width / 2 - (stage.left + stage.width / 2), dy: svg.top + svg.height / 2 - (stage.top + stage.height / 2) };
+    return { shareX: w / Math.min(svg.width, stage.width), shareY: h / Math.min(svg.height, stage.height), dx: svg.left + svg.width / 2 - (stage.left + stage.width / 2), dy: svg.top + svg.height / 2 - (stage.top + stage.height / 2) };
   });
 
 test("Centre is hidden at Fit, comes in once the view is moved, and puts the emblem back in the middle", async ({ page }) => {

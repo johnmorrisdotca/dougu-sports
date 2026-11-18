@@ -6,6 +6,10 @@ All notable changes to this project are written here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- The demo's `@johnmorrisdotca/kazoku-ui` is 0.53 (MODULES-1504): the plain wheel no longer zooms the view (Ctrl or Command with the wheel does), and a drag turns, Shift and a drag rolls, Ctrl or Command and a drag moves. `e2e/gestures.demo.ts` runs kazoku-ui's `checkGestures` on the playground's emblem.
+
 ## [0.33.0] - 2026-11-04
 
 "Put it in your page" is the family's embed panel (MODULES-351). No change to the package's drawings.
